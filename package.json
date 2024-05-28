@@ -1,0 +1,13 @@
+{
+  "name": "com.tuya",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {},
+  "devDependencies": {
+    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.3.6"
+  },
+  "dependencies": {
+    "homey-oauth2app": "^3.5.7",
+    "socket.io-client": "^4.7.5"
+  }
+}

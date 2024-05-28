@@ -1,0 +1,30 @@
+{
+  "id": "com.tuya",
+  "version": "1.0.0",
+  "compatibility": ">=10.0.0",
+  "brandColor": "#1F7EFF",
+  "sdk": 3,
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "name": {
+    "en": "Tuya Smart Life"
+  },
+  "description": {
+    "en": "Control & monitor any Tuya device with Homey"
+  },
+  "category": [
+    "appliances"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Emile Nijssen",
+    "email": "emile@athom.nl"
+  }
+}
