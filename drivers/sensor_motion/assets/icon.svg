@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600px" height="600px" viewBox="0 0 600 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>drivers/sensor_motion/assets/icon</title>
+    <g id="/drivers/sensor_motion/assets/icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="motion" transform="translate(16.000000, 26.000000)" stroke="#000000">
+            <path d="M280.09451,0 C358.236748,0 425.96432,30.0482628 474.506612,78.608123 C524.132727,128.252197 553.75,197.323458 553.75,273.75 C553.75,284.592831 553.119247,295.288331 551.893176,305.803095 C550.908758,315.158878 549.348823,324.330683 547.249779,333.287465 C533.537751,395.135361 498.918382,449.117 451.180544,487.416133 C404.32268,525.00928 344.834504,547.5 280.09451,547.5 C201.204022,547.5 128.425874,521.056105 76.8575263,470.775627 C29.6970245,424.792914 0,358.796181 0,274.088407 C0,188.38046 28.8553436,121.700413 76.109587,75.506782 C126.619936,26.130127 198.505092,0 280.09451,0 L280.09451,0 Z" id="Combined-Shape" stroke-width="25"></path>
+            <circle id="Oval" stroke-width="12.5" stroke-linecap="round" cx="341.250108" cy="283.225389" r="227.409326"></circle>
+            <ellipse id="Oval" stroke-width="12.5" stroke-linecap="round" cx="357.470178" cy="283.250518" rx="189.846179" ry="191.538212"></ellipse>
+        </g>
+    </g>
+</svg>

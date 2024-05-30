@@ -83,6 +83,138 @@
         "cloud"
       ],
       "images": {
+        "small": "/drivers/sensor_contact/assets/images/small.png",
+        "large": "/drivers/sensor_contact/assets/images/large.png",
+        "xlarge": "/drivers/sensor_contact/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "sensor",
+      "name": {
+        "en": "Door Sensor",
+        "nl": "Deur Sensor"
+      },
+      "id": "sensor_contact"
+    },
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/sensor_motion/assets/images/small.png",
+        "large": "/drivers/sensor_motion/assets/images/large.png",
+        "xlarge": "/drivers/sensor_motion/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "sensor",
+      "name": {
+        "en": "Motion Sensor",
+        "nl": "Bewegingssensor"
+      },
+      "id": "sensor_motion"
+    },
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/sensor_smoke/assets/images/small.png",
+        "large": "/drivers/sensor_smoke/assets/images/large.png",
+        "xlarge": "/drivers/sensor_smoke/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "sensor",
+      "name": {
+        "en": "Smoke Detector",
+        "nl": "Rookmelder"
+      },
+      "id": "sensor_smoke"
+    },
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
         "small": "/drivers/socket/assets/images/small.png",
         "large": "/drivers/socket/assets/images/large.png",
         "xlarge": "/drivers/socket/assets/images/xlarge.png"
