@@ -45,6 +45,9 @@
       },
       "pair": [
         {
+          "id": "select_country"
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -88,6 +91,9 @@
         "xlarge": "/drivers/sensor_contact/assets/images/xlarge.png"
       },
       "pair": [
+        {
+          "id": "select_country"
+        },
         {
           "id": "login_oauth2",
           "template": "login_oauth2"
@@ -133,6 +139,9 @@
       },
       "pair": [
         {
+          "id": "select_country"
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -177,6 +186,9 @@
       },
       "pair": [
         {
+          "id": "select_country"
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -220,6 +232,9 @@
         "xlarge": "/drivers/socket/assets/images/xlarge.png"
       },
       "pair": [
+        {
+          "id": "select_country"
+        },
         {
           "id": "login_oauth2",
           "template": "login_oauth2"
