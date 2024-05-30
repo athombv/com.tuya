@@ -7,7 +7,6 @@
     "@types/homey": "npm:homey-apps-sdk-v3-types@^0.3.6"
   },
   "dependencies": {
-    "homey-oauth2app": "^3.5.7",
-    "socket.io-client": "^4.7.5"
+    "homey-oauth2app": "^3.5.7"
   }
 }
