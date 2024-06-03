@@ -1,20 +1,21 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.tuya",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "compatibility": ">=10.0.0",
-  "brandColor": "#1F7EFF",
+  "brandColor": "#FF4800",
   "sdk": 3,
   "platforms": [
     "local",
     "cloud"
   ],
   "name": {
-    "en": "Tuya Smart Life"
+    "en": "Tuya"
   },
   "tags": {
     "en": [
       "tuya",
+      "tuya smart",
       "smart life",
       "calex",
       "kruidvat",
