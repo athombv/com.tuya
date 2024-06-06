@@ -1,4 +1,7 @@
 {
+  "0.2.0": {
+    "en": "Reworked the app to make API requests directly instead of through the relay."
+  },
   "0.1.0": {
     "en": "First version"
   },
