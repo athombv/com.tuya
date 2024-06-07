@@ -10,5 +10,8 @@
   },
   "0.1.3": {
     "en": "Added better logging."
+  },
+  "0.3.0": {
+    "en": "Added 'Other' driver for unsupported & exotic Tuya devices."
   }
 }
