@@ -53,6 +53,49 @@
         "cloud"
       ],
       "images": {
+        "small": "/drivers/fan/assets/images/small.png",
+        "large": "/drivers/fan/assets/images/large.png",
+        "xlarge": "/drivers/fan/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "fan",
+      "name": {
+        "en": "Fan"
+      },
+      "id": "fan"
+    },
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
         "small": "/drivers/light/assets/images/small.png",
         "large": "/drivers/light/assets/images/large.png",
         "xlarge": "/drivers/light/assets/images/xlarge.png"

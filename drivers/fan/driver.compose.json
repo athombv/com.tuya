@@ -1,0 +1,7 @@
+{
+  "$extends": "tuya",
+  "class": "fan",
+  "name": {
+    "en": "Fan"
+  }
+}
