@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.tuya",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "compatibility": ">=10.0.0",
   "brandColor": "#FF4800",
   "sdk": 3,
@@ -42,6 +42,162 @@
   },
   "support": "https://homey.app/support",
   "source": "https://github.com/athombv/com.tuya",
+  "flow": {
+    "actions": [
+      {
+        "title": {
+          "en": "Send a Tuya Command (Boolean)"
+        },
+        "titleFormatted": {
+          "en": "Set [[code]] to Boolean [[value]]"
+        },
+        "hint": {
+          "en": "This is an advanced Flow card, that can be used to send any command to a Tuya device. You can find the command codes in the Tuya API documentation at https://homey.link/tuya-docs."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "code",
+            "type": "autocomplete",
+            "title": {
+              "en": "Code"
+            }
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ],
+        "id": "send_command_boolean"
+      },
+      {
+        "title": {
+          "en": "Send a Tuya Command (JSON)"
+        },
+        "titleFormatted": {
+          "en": "Set [[code]] to JSON [[value]]"
+        },
+        "hint": {
+          "en": "This is an advanced Flow card, that can be used to send any command to a Tuya device. You can find the command codes in the Tuya API documentation at https://homey.link/tuya-docs."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "code",
+            "type": "autocomplete",
+            "title": {
+              "en": "Code"
+            }
+          },
+          {
+            "name": "value",
+            "type": "text",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ],
+        "id": "send_command_json"
+      },
+      {
+        "title": {
+          "en": "Send a Tuya Command (Number)"
+        },
+        "titleFormatted": {
+          "en": "Set [[code]] to Number [[value]]"
+        },
+        "hint": {
+          "en": "This is an advanced Flow card, that can be used to send any command to a Tuya device. You can find the command codes in the Tuya API documentation at https://homey.link/tuya-docs."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "code",
+            "type": "autocomplete",
+            "title": {
+              "en": "Code"
+            }
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ],
+        "id": "send_command_number"
+      },
+      {
+        "title": {
+          "en": "Send a Tuya Command (String)"
+        },
+        "titleFormatted": {
+          "en": "Set [[code]] to String [[value]]"
+        },
+        "hint": {
+          "en": "This is an advanced Flow card, that can be used to send any command to a Tuya device. You can find the command codes in the Tuya API documentation at https://homey.link/tuya-docs."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "code",
+            "type": "autocomplete",
+            "title": {
+              "en": "Code"
+            }
+          },
+          {
+            "name": "value",
+            "type": "text",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ],
+        "id": "send_command_string"
+      }
+    ]
+  },
   "drivers": [
     {
       "capabilities": [],
@@ -350,108 +506,5 @@
       },
       "id": "socket"
     }
-  ],
-  "flow": {
-    "actions": [
-      {
-        "id": "send_command_string",
-        "title": {
-          "en": "Send a Tuya Command (String)"
-        },
-        "titleFormatted": {
-          "en": "Set [[code]] to String [[value]]"
-        },
-        "hint": {
-          "en": "This is an advanced Flow card, that can be used to send any command to a Tuya device. You can find the command codes in the Tuya API documentation."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=other"
-          },
-          {
-            "name": "code",
-            "type": "text",
-            "title": {
-              "en": "Code"
-            }
-          },
-          {
-            "name": "value",
-            "type": "text",
-            "title": {
-              "en": "Value"
-            }
-          }
-        ]
-      },
-      {
-        "id": "send_command_number",
-        "title": {
-          "en": "Send a Tuya Command (Number)"
-        },
-        "titleFormatted": {
-          "en": "Set [[code]] to Number [[value]]"
-        },
-        "hint": {
-          "en": "This is an advanced Flow card, that can be used to send any command to a Tuya device. You can find the command codes in the Tuya API documentation."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=other"
-          },
-          {
-            "name": "code",
-            "type": "text",
-            "title": {
-              "en": "Code"
-            }
-          },
-          {
-            "name": "value",
-            "type": "number",
-            "title": {
-              "en": "Value"
-            }
-          }
-        ]
-      },
-      {
-        "id": "send_command_boolean",
-        "title": {
-          "en": "Send a Tuya Command (Boolean)"
-        },
-        "titleFormatted": {
-          "en": "Set [[code]] to Boolean [[value]]"
-        },
-        "hint": {
-          "en": "This is an advanced Flow card, that can be used to send any command to a Tuya device. You can find the command codes in the Tuya API documentation."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=other"
-          },
-          {
-            "name": "code",
-            "type": "text",
-            "title": {
-              "en": "Code"
-            }
-          },
-          {
-            "name": "value",
-            "type": "checkbox",
-            "title": {
-              "en": "Value"
-            }
-          }
-        ]
-      }
-    ]
-  }
+  ]
 }

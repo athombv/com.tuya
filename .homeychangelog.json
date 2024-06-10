@@ -13,5 +13,8 @@
   },
   "0.3.0": {
     "en": "Added 'Other' driver for unsupported & exotic Tuya devices."
+  },
+  "0.4.0": {
+    "en": "Added support for Fans, and added Tuya API Flow Cards."
   }
 }
