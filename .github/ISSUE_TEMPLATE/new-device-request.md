@@ -10,7 +10,7 @@ assignees: ''
 To request a new device, please run the Tuya app locally using Homey CLI.
 
 ```bash
-$ git@github.com:athombv/com.tuya.git
+$ git clone git@github.com:athombv/com.tuya.git
 $ cd com.tuya
 $ homey app run 
 ```
