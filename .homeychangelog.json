@@ -16,5 +16,8 @@
   },
   "0.4.0": {
     "en": "Added support for Fans, and added Tuya API Flow Cards."
+  },
+  "0.5.0": {
+    "en": "Added support for online & offline events. Also named multi-switch events in the Timeline."
   }
 }
