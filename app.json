@@ -209,6 +209,50 @@
         "cloud"
       ],
       "images": {
+        "small": "/drivers/camera/assets/images/small.png",
+        "large": "/drivers/camera/assets/images/large.png",
+        "xlarge": "/drivers/camera/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "camera",
+      "name": {
+        "en": "Camera",
+        "nl": "Camera"
+      },
+      "id": "camera"
+    },
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
         "small": "/drivers/fan/assets/images/small.png",
         "large": "/drivers/fan/assets/images/large.png",
         "xlarge": "/drivers/fan/assets/images/xlarge.png"
