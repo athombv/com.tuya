@@ -196,9 +196,68 @@
         ],
         "id": "send_command_string"
       }
+    ],
+    "triggers": [
+      {
+        "id": "doorbell_rang",
+        "title": {
+          "en": "The doorbell rang"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell"
+          }
+        ]
+      }
     ]
   },
   "drivers": [
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/doorbell/assets/images/small.png",
+        "large": "/drivers/doorbell/assets/images/large.png",
+        "xlarge": "/drivers/doorbell/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "doorbell",
+      "name": {
+        "en": "Doorbell",
+        "nl": "Deurbel"
+      },
+      "id": "doorbell"
+    },
     {
       "capabilities": [],
       "connectivity": [

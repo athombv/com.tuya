@@ -1,0 +1,10 @@
+{
+  "triggers": [
+    {
+      "id": "doorbell_rang",
+      "title": {
+        "en": "The doorbell rang"
+      }
+    }
+  ]
+}
