@@ -14,6 +14,13 @@
   },
   "pair": [
     {
+      "$template": "welcome",
+      "id": "welcome",
+      "navigation": {
+        "next": "login_oauth2"
+      }
+    },
+    {
       "id": "login_oauth2",
       "template": "login_oauth2"
     },

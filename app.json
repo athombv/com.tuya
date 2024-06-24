@@ -230,6 +230,12 @@
       },
       "pair": [
         {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -274,6 +280,12 @@
       },
       "pair": [
         {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -316,6 +328,12 @@
         "xlarge": "/drivers/light/assets/images/xlarge.png"
       },
       "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
         {
           "id": "login_oauth2",
           "template": "login_oauth2"
@@ -361,6 +379,12 @@
       },
       "pair": [
         {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -404,6 +428,12 @@
         "xlarge": "/drivers/sensor_contact/assets/images/xlarge.png"
       },
       "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
         {
           "id": "login_oauth2",
           "template": "login_oauth2"
@@ -449,6 +479,12 @@
       },
       "pair": [
         {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -493,6 +529,12 @@
       },
       "pair": [
         {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -536,6 +578,12 @@
         "xlarge": "/drivers/socket/assets/images/xlarge.png"
       },
       "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
         {
           "id": "login_oauth2",
           "template": "login_oauth2"

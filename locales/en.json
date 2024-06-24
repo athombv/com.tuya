@@ -1,3 +1,10 @@
 {
+  "pair": {
+    "welcome": {
+      "title": "Before you proceed...",
+      "text": "To connect a Tuya device to Homey, it should first be connected to the 'Tuya Smart' or 'Smart Life' app for iOS & Android.",
+      "link": "Learn more »"
+    }
+  },
   "device_offline": "The device seems to be offline. Is it powered on, and connected to the internet?"
 }
