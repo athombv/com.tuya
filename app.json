@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.tuya",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "compatibility": ">=10.0.0",
   "brandColor": "#FF4800",
   "sdk": 3,
@@ -230,6 +230,12 @@
       },
       "pair": [
         {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -273,6 +279,12 @@
         "xlarge": "/drivers/fan/assets/images/xlarge.png"
       },
       "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
         {
           "id": "login_oauth2",
           "template": "login_oauth2"
@@ -360,6 +372,12 @@
       },
       "pair": [
         {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -403,6 +421,12 @@
         "xlarge": "/drivers/other/assets/images/xlarge.png"
       },
       "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
         {
           "id": "login_oauth2",
           "template": "login_oauth2"
@@ -448,6 +472,12 @@
       },
       "pair": [
         {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -491,6 +521,12 @@
         "xlarge": "/drivers/sensor_motion/assets/images/xlarge.png"
       },
       "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
         {
           "id": "login_oauth2",
           "template": "login_oauth2"
@@ -536,6 +572,12 @@
       },
       "pair": [
         {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
           "id": "login_oauth2",
           "template": "login_oauth2"
         },
@@ -579,6 +621,12 @@
         "xlarge": "/drivers/socket/assets/images/xlarge.png"
       },
       "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
         {
           "id": "login_oauth2",
           "template": "login_oauth2"

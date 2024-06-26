@@ -22,5 +22,8 @@
   },
   "0.6.0": {
     "en": "Added support for doorbells."
+  },
+  "0.7.0": {
+    "en": "Added an information screen before pairing starts."
   }
 }
