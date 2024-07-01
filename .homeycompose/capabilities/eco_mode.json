@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Eco-Mode"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}

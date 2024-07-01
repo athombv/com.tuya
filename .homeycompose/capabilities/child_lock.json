@@ -1,0 +1,10 @@
+{
+  "title": {
+    "en": "Child Lock"
+  },
+  "type": "boolean",
+  "uiComponent": "button",
+  "getable": true,
+  "setable": true,
+  "icon": "assets/capabilities/child_lock.svg"
+}

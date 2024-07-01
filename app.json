@@ -1547,6 +1547,56 @@
         "cloud"
       ],
       "images": {
+        "small": "/drivers/heater/assets/images/small.png",
+        "large": "/drivers/heater/assets/images/large.png",
+        "xlarge": "/drivers/heater/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "heater",
+      "name": {
+        "en": "Heater",
+        "nl": "Verwarming"
+      },
+      "id": "heater"
+    },
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
         "small": "/drivers/light/assets/images/small.png",
         "large": "/drivers/light/assets/images/large.png",
         "xlarge": "/drivers/light/assets/images/xlarge.png"
@@ -2087,5 +2137,26 @@
         }
       ]
     }
-  ]
+  ],
+  "capabilities": {
+    "child_lock": {
+      "title": {
+        "en": "Child Lock"
+      },
+      "type": "boolean",
+      "uiComponent": "button",
+      "getable": true,
+      "setable": true,
+      "icon": "assets/capabilities/child_lock.svg"
+    },
+    "eco_mode": {
+      "type": "boolean",
+      "title": {
+        "en": "Eco-Mode"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    }
+  }
 }
