@@ -9,7 +9,7 @@ class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
     TuyaOAuth2Constants.DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
   ];
 
-  onTuyaPairListDeviceProperties(device) {
+  onTuyaPairListDeviceProperties(device, specification) {
     const props = super.onTuyaPairListDeviceProperties(device);
 
     const abilityMapping = {
@@ -29,6 +29,17 @@ class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
 
         const homeyCapability = abilityMapping[status.code]
         props.capabilities.push(homeyCapability);
+      }
+    }
+
+    for (const functionSpecification of specification.functions) {
+      if (functionSpecification.code === 'temp_set') {
+        const tempSetSpecs = JSON.parse(functionSpecification.values);
+        props.capabilitiesOptions['target_temperature'] = {
+          step: tempSetSpecs.step,
+          min: tempSetSpecs.min,
+          max: tempSetSpecs.max,
+        };
       }
     }
 
