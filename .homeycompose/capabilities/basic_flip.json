@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Flip Video"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}

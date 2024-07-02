@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Motion Tracking"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}

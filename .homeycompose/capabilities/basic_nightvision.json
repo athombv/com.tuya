@@ -1,0 +1,29 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Night Mode"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "values": [
+    {
+      "id": "0",
+      "title": {
+        "en": "Auto"
+      }
+    },
+    {
+      "id": "1",
+      "title": {
+        "en": "Off"
+      }
+    },
+    {
+      "id": "2",
+      "title": {
+        "en": "On"
+      }
+    }
+  ]
+}

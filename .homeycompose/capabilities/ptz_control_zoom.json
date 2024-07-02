@@ -1,0 +1,29 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Zoom Control"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "ternary",
+  "values": [
+    {
+      "id": "1",
+      "title": {
+        "en": "Increase Zoom"
+      }
+    },
+    {
+      "id": "stop",
+      "title": {
+        "en": "Stop"
+      }
+    },
+    {
+      "id": "0",
+      "title": {
+        "en": "Decrease Zoom"
+      }
+    }
+  ]
+}

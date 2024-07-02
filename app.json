@@ -1397,6 +1397,152 @@
         "cloud"
       ],
       "images": {
+        "small": "/drivers/camera/assets/images/small.png",
+        "large": "/drivers/camera/assets/images/large.png",
+        "xlarge": "/drivers/camera/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "camera",
+      "name": {
+        "en": "Camera",
+        "nl": "Camera"
+      },
+      "id": "camera",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "CAUTION: Some settings are not supported by every camera."
+          },
+          "children": [
+            {
+              "id": "motion_sensitivity",
+              "type": "dropdown",
+              "label": {
+                "en": "Motion Sensitivity"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Low"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Medium"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "High"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "decibel_sensitivity",
+              "type": "dropdown",
+              "label": {
+                "en": "Sound Sensitivity"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Low"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "High"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "basic_anti_flicker",
+              "type": "dropdown",
+              "label": {
+                "en": "Anti-Flicker"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Disabled"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "50 Hz"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "60 Hz"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "basic_osd",
+              "type": "checkbox",
+              "label": {
+                "en": "Show Timestamp"
+              },
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
         "small": "/drivers/dimmer/assets/images/small.png",
         "large": "/drivers/dimmer/assets/images/large.png",
         "xlarge": "/drivers/dimmer/assets/images/xlarge.png"
@@ -2261,6 +2407,101 @@
     }
   ],
   "capabilities": {
+    "alarm_crying_child": {
+      "type": "boolean",
+      "title": {
+        "en": "Crying Child Detected"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Crying Child Detected"
+      }
+    },
+    "alarm_pet": {
+      "type": "boolean",
+      "title": {
+        "en": "Pet Detected"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Pet Detected"
+      }
+    },
+    "alarm_sound": {
+      "type": "boolean",
+      "title": {
+        "en": "Abnormal Sound Detected"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Abnormal Sound Detected"
+      }
+    },
+    "basic_flip": {
+      "type": "boolean",
+      "title": {
+        "en": "Flip Video"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
+    "basic_indicator": {
+      "type": "boolean",
+      "title": {
+        "en": "Indicator"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
+    "basic_nightvision": {
+      "type": "enum",
+      "title": {
+        "en": "Night Mode"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "0",
+          "title": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "1",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "On"
+          }
+        }
+      ]
+    },
+    "basic_private": {
+      "type": "boolean",
+      "title": {
+        "en": "Privacy Mode"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
     "child_lock": {
       "title": {
         "en": "Child Lock"
@@ -2271,6 +2512,33 @@
       "setable": true,
       "icon": "assets/capabilities/child_lock.svg"
     },
+    "cruise_switch": {
+      "type": "boolean",
+      "title": {
+        "en": "Auto Patrol"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
+    "cry_detection_switch": {
+      "type": "boolean",
+      "title": {
+        "en": "Crying Baby Detection"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
+    "decibel_switch": {
+      "type": "boolean",
+      "title": {
+        "en": "Sound Detection"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
     "eco_mode": {
       "type": "boolean",
       "title": {
@@ -2280,6 +2548,129 @@
       "setable": true,
       "uiComponent": "button",
       "icon": "assets/capabilities/eco.svg"
+    },
+    "motion_switch": {
+      "type": "boolean",
+      "title": {
+        "en": "Motion Detection"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
+    "motion_tracking": {
+      "type": "boolean",
+      "title": {
+        "en": "Motion Tracking"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
+    "pet_detection": {
+      "type": "boolean",
+      "title": {
+        "en": "Pet Detection"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
+    "ptz_control_horizontal": {
+      "type": "enum",
+      "title": {
+        "en": "Horizontal Control"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "ternary",
+      "values": [
+        {
+          "id": "6",
+          "title": {
+            "en": "Left"
+          }
+        },
+        {
+          "id": "stop",
+          "title": {
+            "en": "Stop"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "Right"
+          }
+        }
+      ]
+    },
+    "ptz_control_vertical": {
+      "type": "enum",
+      "title": {
+        "en": "Vertical Control"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "ternary",
+      "values": [
+        {
+          "id": "0",
+          "title": {
+            "en": "Up"
+          }
+        },
+        {
+          "id": "stop",
+          "title": {
+            "en": "Stop"
+          }
+        },
+        {
+          "id": "4",
+          "title": {
+            "en": "Down"
+          }
+        }
+      ]
+    },
+    "ptz_control_zoom": {
+      "type": "enum",
+      "title": {
+        "en": "Zoom Control"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "ternary",
+      "values": [
+        {
+          "id": "1",
+          "title": {
+            "en": "Increase Zoom"
+          }
+        },
+        {
+          "id": "stop",
+          "title": {
+            "en": "Stop"
+          }
+        },
+        {
+          "id": "0",
+          "title": {
+            "en": "Decrease Zoom"
+          }
+        }
+      ]
+    },
+    "siren_switch": {
+      "type": "boolean",
+      "title": {
+        "en": "Siren"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
     }
   }
 }

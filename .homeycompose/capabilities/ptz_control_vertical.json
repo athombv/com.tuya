@@ -1,0 +1,29 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Vertical Control"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "ternary",
+  "values": [
+    {
+      "id": "0",
+      "title": {
+        "en": "Up"
+      }
+    },
+    {
+      "id": "stop",
+      "title": {
+        "en": "Stop"
+      }
+    },
+    {
+      "id": "4",
+      "title": {
+        "en": "Down"
+      }
+    }
+  ]
+}

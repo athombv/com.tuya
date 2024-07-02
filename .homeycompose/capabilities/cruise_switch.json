@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Auto Patrol"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}

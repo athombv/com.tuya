@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Motion Detection"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}

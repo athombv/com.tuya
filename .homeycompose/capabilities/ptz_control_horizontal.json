@@ -1,0 +1,29 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Horizontal Control"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "ternary",
+  "values": [
+    {
+      "id": "6",
+      "title": {
+        "en": "Left"
+      }
+    },
+    {
+      "id": "stop",
+      "title": {
+        "en": "Stop"
+      }
+    },
+    {
+      "id": "2",
+      "title": {
+        "en": "Right"
+      }
+    }
+  ]
+}

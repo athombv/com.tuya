@@ -1,0 +1,96 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "CAUTION: Some settings are not supported by every camera."
+    },
+    "children": [
+      {
+        "id": "motion_sensitivity",
+        "type": "dropdown",
+        "label": {
+          "en": "Motion Sensitivity"
+        },
+        "value": "0",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Low"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Medium"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "en": "High"
+            }
+          }
+        ]
+      },
+      {
+        "id": "decibel_sensitivity",
+        "type": "dropdown",
+        "label": {
+          "en": "Sound Sensitivity"
+        },
+        "value": "0",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Low"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "High"
+            }
+          }
+        ]
+      },
+      {
+        "id": "basic_anti_flicker",
+        "type": "dropdown",
+        "label": {
+          "en": "Anti-Flicker"
+        },
+        "value": "0",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Disabled"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "50 Hz"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "en": "60 Hz"
+            }
+          }
+        ]
+      },
+      {
+        "id": "basic_osd",
+        "type": "checkbox",
+        "label": {
+          "en": "Show Timestamp"
+        },
+        "value": true
+      }
+    ]
+  }
+]

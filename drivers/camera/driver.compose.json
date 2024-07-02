@@ -1,0 +1,8 @@
+{
+  "$extends": "tuya",
+  "class": "camera",
+  "name": {
+    "en": "Camera",
+    "nl": "Camera"
+  }
+}
