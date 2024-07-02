@@ -43,113 +43,6 @@
   "support": "https://homey.app/support",
   "source": "https://github.com/athombv/com.tuya",
   "flow": {
-    "triggers": [
-      {
-        "highlight": true,
-        "title": {
-          "en": "Turned switch off"
-        },
-        "titleFormatted": {
-          "en": "Turned [[switch]] off"
-        },
-        "hint": {
-          "en": "A specific switch on the device turned off."
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
-          },
-          {
-            "name": "switch",
-            "type": "autocomplete",
-            "title": {
-              "en": "Switch"
-            },
-            "placeholder": {
-              "en": "Switch 1"
-            }
-          }
-        ],
-        "id": "sub_switch_turned_off"
-      },
-      {
-        "highlight": true,
-        "title": {
-          "en": "Turned switch on"
-        },
-        "titleFormatted": {
-          "en": "Turned [[switch]] on"
-        },
-        "hint": {
-          "en": "A specific switch on the device turned on."
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
-          },
-          {
-            "name": "switch",
-            "type": "autocomplete",
-            "title": {
-              "en": "Switch"
-            },
-            "placeholder": {
-              "en": "Switch 1"
-            }
-          }
-        ],
-        "id": "sub_switch_turned_on"
-      },
-      {
-        "id": "doorbell_rang",
-        "title": {
-          "en": "The doorbell rang"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=doorbell"
-          }
-        ]
-      }
-    ],
-    "conditions": [
-      {
-        "highlight": true,
-        "title": {
-          "en": "Switch is turned !{{on|off}}"
-        },
-        "titleFormatted": {
-          "en": "[[switch]] is turned !{{on|off}}"
-        },
-        "hint": {
-          "en": "A specific switch on the device is turned !{{on|off}}."
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
-          },
-          {
-            "name": "switch",
-            "type": "autocomplete",
-            "title": {
-              "en": "Switch"
-            },
-            "placeholder": {
-              "en": "Switch 1"
-            }
-          }
-        ],
-        "id": "sub_switch_is_on"
-      }
-    ],
     "actions": [
       {
         "title": {
@@ -304,6 +197,7 @@
         "id": "send_command_string"
       },
       {
+        "id": "socket_sub_switch_off",
         "highlight": true,
         "title": {
           "en": "Turn switch off"
@@ -316,8 +210,8 @@
         },
         "args": [
           {
-            "name": "device",
             "type": "device",
+            "name": "device",
             "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
           },
           {
@@ -330,10 +224,10 @@
               "en": "Switch 1"
             }
           }
-        ],
-        "id": "sub_switch_off"
+        ]
       },
       {
+        "id": "socket_sub_switch_on",
         "highlight": true,
         "title": {
           "en": "Turn switch on"
@@ -346,8 +240,8 @@
         },
         "args": [
           {
-            "name": "device",
             "type": "device",
+            "name": "device",
             "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
           },
           {
@@ -360,8 +254,114 @@
               "en": "Switch 1"
             }
           }
-        ],
-        "id": "sub_switch_on"
+        ]
+      }
+    ],
+    "triggers": [
+      {
+        "id": "doorbell_rang",
+        "title": {
+          "en": "The doorbell rang"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell"
+          }
+        ]
+      },
+      {
+        "id": "socket_sub_switch_turned_off",
+        "highlight": true,
+        "title": {
+          "en": "Turned switch off"
+        },
+        "titleFormatted": {
+          "en": "Turned [[switch]] off"
+        },
+        "hint": {
+          "en": "A specific switch on the device turned off."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
+          },
+          {
+            "name": "switch",
+            "type": "autocomplete",
+            "title": {
+              "en": "Switch"
+            },
+            "placeholder": {
+              "en": "Switch 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "socket_sub_switch_turned_on",
+        "highlight": true,
+        "title": {
+          "en": "Turned switch on"
+        },
+        "titleFormatted": {
+          "en": "Turned [[switch]] on"
+        },
+        "hint": {
+          "en": "A specific switch on the device turned on."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
+          },
+          {
+            "name": "switch",
+            "type": "autocomplete",
+            "title": {
+              "en": "Switch"
+            },
+            "placeholder": {
+              "en": "Switch 1"
+            }
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "socket_sub_switch_is_on",
+        "highlight": true,
+        "title": {
+          "en": "Switch is turned !{{on|off}}"
+        },
+        "titleFormatted": {
+          "en": "[[switch]] is turned !{{on|off}}"
+        },
+        "hint": {
+          "en": "A specific switch on the device is turned on/off."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
+          },
+          {
+            "name": "switch",
+            "type": "autocomplete",
+            "title": {
+              "en": "Switch"
+            },
+            "placeholder": {
+              "en": "Switch 1"
+            }
+          }
+        ]
       }
     ]
   },
