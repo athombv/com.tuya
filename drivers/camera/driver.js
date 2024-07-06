@@ -8,6 +8,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     TuyaOAuth2Constants.DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
   ];
 
+  // TODO make translatable
   static CAMERA_SETTING_LABELS = {
     motion_switch: "Motion Detection",
     motion_tracking: "Motion Tracking",
@@ -59,10 +60,12 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
             })
             .catch((err) => {
               if (err.tuyaCode === 2008) {
-                // TODO make translatable
-                const label =
-                  TuyaOAuth2DriverCamera.CAMERA_SETTING_LABELS[setting];
-                throw new Error(`${label} is not supported by the device`);
+                throw new Error(
+                  this.homey.__("setting_unsupported", {
+                    label:
+                      TuyaOAuth2DriverCamera.CAMERA_SETTING_LABELS[setting],
+                  }),
+                );
               } else {
                 throw err;
               }

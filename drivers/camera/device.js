@@ -206,9 +206,8 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     }
 
     if (unsupportedSettings.length > 0) {
-      // TODO make translatable
       let unsupportedSettingsMessage =
-        "Some of the changed settings are not supported by the device: ";
+        this.homey.__("settings_unsupported") + " ";
       const mappedSettingNames = unsupportedSettings.map(
         (settingKey) => CAMERA_SETTING_LABELS[settingKey],
       );
