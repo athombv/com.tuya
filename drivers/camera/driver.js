@@ -8,6 +8,69 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     TuyaOAuth2Constants.DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
   ];
 
+  static CAMERA_SETTING_LABELS = {
+    motion_switch: "Motion Detection",
+    motion_tracking: "Motion Tracking",
+    decibel_switch: "Sound Detection",
+    cry_detection_switch: "Crying Baby Detection",
+    pet_detection: "Pet Detection",
+    motion_sensitivity: "Motion Sensitivity",
+    decibel_sensitivity: "Sound Sensitivity",
+    basic_nightvision: "Night Mode",
+    basic_device_volume: "Device Volume",
+    basic_anti_flicker: "Anti-Flicker",
+    basic_osd: "Video Timestamp",
+    basic_flip: "Flip Video",
+    basic_indicator: "Status Indicator",
+  };
+
+  static SIMPLE_CAMERA_FLOWS = {
+    read_write: ["cruise_switch", "siren_switch"],
+    setting: [
+      "motion_switch",
+      "decibel_switch",
+      "cry_detection_switch",
+      "pet_detection",
+      "motion_tracking",
+      "basic_nightvision",
+    ],
+  };
+
+  async onInit() {
+    await super.onInit();
+
+    for (const capability of TuyaOAuth2DriverCamera.SIMPLE_CAMERA_FLOWS
+      .read_write) {
+      this.homey.flow
+        .getActionCard(`camera_${capability}`)
+        .registerRunListener(async (args, state) => {
+          await args.device.triggerCapabilityListener(capability, args.value);
+        });
+    }
+
+    for (const setting of TuyaOAuth2DriverCamera.SIMPLE_CAMERA_FLOWS.setting) {
+      this.homey.flow
+        .getActionCard(`camera_${setting}`)
+        .registerRunListener(async (args, state) => {
+          await args.device
+            .sendCommand({
+              code: setting,
+              value: args.value,
+            })
+            .catch((err) => {
+              if (err.tuyaCode === 2008) {
+                // TODO make translatable
+                const label =
+                  TuyaOAuth2DriverCamera.CAMERA_SETTING_LABELS[setting];
+                throw new Error(`${label} is not supported by the device`);
+              } else {
+                throw err;
+              }
+            });
+        });
+    }
+  }
+
   /* Read/Write properties:
      - ipc_work_mode         Working mode   Enum   {“range”:[“0”,“1”]}
      + basic_device_volume   Volume control   Integer   {“min”:1,“max”:10,“scale”:0,“step”:1}

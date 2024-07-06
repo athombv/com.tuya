@@ -4,6 +4,7 @@ const TuyaOAuth2Device = require("../../lib/TuyaOAuth2Device");
 const {
   SIMPLE_CAMERA_CAPABILITIES,
   CAMERA_ALARM_EVENT_CAPABILITIES,
+  CAMERA_SETTING_LABELS,
 } = require("./driver");
 
 /**
@@ -137,9 +138,15 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
           if (!this.hasCapability(alarmCapability)) {
             await this.addCapability(alarmCapability).catch(this.error);
           }
+
+          const deviceTriggerCard = this.homey.flow.getDeviceTriggerCard(
+            `camera_${alarmCapability}_true`,
+          );
+          await deviceTriggerCard.trigger(this);
           await this.setCapabilityValue(alarmCapability, true).catch(
             this.error,
           );
+
           const alarmTimeout = Math.round(
             (this.getSetting("alarm_timeout") ?? 10) * 1000,
           );
@@ -184,22 +191,6 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
   async onSettings({ oldSettings, newSettings, changedKeys }) {
     const unsupportedSettings = [];
 
-    const settingLabels = {
-      motion_switch: "Motion Detection",
-      motion_tracking: "Motion Tracking",
-      decibel_switch: "Sound Detection",
-      cry_detection_switch: "Crying Baby Detection",
-      pet_detection: "Pet Detection",
-      motion_sensitivity: "Motion Sensitivity",
-      decibel_sensitivity: "Sound Sensitivity",
-      basic_nightvision: "Night Mode",
-      basic_device_volume: "Device Volume",
-      basic_anti_flicker: "Anti-Flicker",
-      basic_osd: "Video Timestamp",
-      basic_flip: "Flip Video",
-      basic_indicator: "Status Indicator",
-    };
-
     for (const changedKey of changedKeys) {
       const newValue = newSettings[changedKey];
       await this.sendCommand({
@@ -219,7 +210,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
       let unsupportedSettingsMessage =
         "Some of the changed settings are not supported by the device: ";
       const mappedSettingNames = unsupportedSettings.map(
-        (settingKey) => settingLabels[settingKey],
+        (settingKey) => CAMERA_SETTING_LABELS[settingKey],
       );
       unsupportedSettingsMessage += mappedSettingNames.join(", ");
       return unsupportedSettingsMessage;

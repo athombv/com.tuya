@@ -549,6 +549,45 @@
         "id": "receive_status_string"
       },
       {
+        "id": "camera_alarm_crying_child_true",
+        "title": {
+          "en": "A crying child was detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_crying_child"
+          }
+        ]
+      },
+      {
+        "id": "camera_alarm_pet_true",
+        "title": {
+          "en": "A pet was detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_pet"
+          }
+        ]
+      },
+      {
+        "id": "camera_alarm_sound_true",
+        "title": {
+          "en": "A sound was detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_sound"
+          }
+        ]
+      },
+      {
         "id": "dimmer_sub_switch_1_turned_off",
         "title": {
           "en": "Turned channel 1 off"
@@ -946,6 +985,210 @@
           }
         ],
         "id": "trigger_scene"
+      },
+      {
+        "id": "camera_cruise_switch",
+        "title": {
+          "en": "Set auto patrol"
+        },
+        "titleFormatted": {
+          "en": "Set auto patrol [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=cruise_switch"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_siren_switch",
+        "title": {
+          "en": "Set siren"
+        },
+        "titleFormatted": {
+          "en": "Set siren [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=siren_switch"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_motion_switch",
+        "title": {
+          "en": "Set motion detection"
+        },
+        "titleFormatted": {
+          "en": "Set motion detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_motion"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_motion_tracking",
+        "title": {
+          "en": "Set motion tracking"
+        },
+        "titleFormatted": {
+          "en": "Set motion tracking [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_decibel_switch",
+        "title": {
+          "en": "Set sound detection"
+        },
+        "titleFormatted": {
+          "en": "Set sound detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_sound"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_cry_detection_switch",
+        "title": {
+          "en": "Set crying baby detection"
+        },
+        "titleFormatted": {
+          "en": "Set crying baby detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_crying_child"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_pet_detection",
+        "title": {
+          "en": "Set pet detection"
+        },
+        "titleFormatted": {
+          "en": "Set pet detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_pet"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_basic_nightvision",
+        "title": {
+          "en": "Set night mode"
+        },
+        "titleFormatted": {
+          "en": "Set night mode to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          },
+          {
+            "name": "value",
+            "type": "dropdown",
+            "label": {
+              "en": "Value"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Auto"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Off"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "On"
+                }
+              }
+            ]
+          }
+        ]
       },
       {
         "id": "dimmer_sub_switch_1_off",
