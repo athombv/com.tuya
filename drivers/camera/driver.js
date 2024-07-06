@@ -9,6 +9,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
   ];
 
   // TODO make translatable
+  // Map from setting id to human-readable label
   static CAMERA_SETTING_LABELS = {
     motion_switch: "Motion Detection",
     motion_tracking: "Motion Tracking",
@@ -49,6 +50,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
         });
     }
 
+    // Apply the same way as in onSettings, but for an individual value
     for (const setting of TuyaOAuth2DriverCamera.SIMPLE_CAMERA_FLOWS.setting) {
       this.homey.flow
         .getActionCard(`camera_${setting}`)
@@ -73,67 +75,6 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
         });
     }
   }
-
-  /* Read/Write properties:
-     - ipc_work_mode         Working mode   Enum   {“range”:[“0”,“1”]}
-     + basic_device_volume   Volume control   Integer   {“min”:1,“max”:10,“scale”:0,“step”:1}
-     - floodlight_lightness  Floodlight brightness   Integer   {“min”:1,“max”:100,“scale”:0,“step”:1}
-     - wireless_batterylock  Battery lock   Boolean   {}
-     + siren_switch          Siren   Boolean   {}
-     + zoom_stop             Stop zooming   Boolean   {}
-     + cry_detection_switch  Cry detection   Boolean   {}
-     + decibel_switch        Sound detection alarm switch   Boolean   {}
-     - record_switch         SD card video recording switch   Boolean   {}
-     - motion_record         SD card video recording mode   Boolean   {}
-     - sd_umount             Unmount the SD card   Boolean   {}
-     - sd_format             SD card formatting   Boolean   {}
-     - device_restart        Remote restart   Boolean   {}
-     + basic_indicator       Status indicator light   Boolean   {}
-     + basic_private         Privacy mode   Boolean   {}
-     + basic_flip            Flip   Boolean   {}
-     + basic_osd             Time watermark   Boolean   {}
-     - basic_wdr             Wide dynamic range (WDR) mode   Boolean   {}
-     - basic_shimmer         Shimmer full color   Boolean   {}
-     - ptz_calibration       PTZ calibration   Boolean   {}
-     + ptz_stop              Stop PTZ   Boolean   {}
-     + cruise_switch         Cruise switch   Boolean   {}
-     + motion_tracking       Motion tracking   Boolean   {}
-     + motion_switch         Motion alarm switch   Boolean   {}
-     - motion_timer_switch   Motion detection mode selection   Boolean   {}
-     - flight_warn_switch    Warning switch   Boolean   {}
-     - flight_pir_a          PIR sensor 1   Boolean   {}
-     - flight_pir_b          PIR sensor 2   Boolean   {}
-     - flight_pir_c          PIR sensor 3   Boolean   {}
-     - floodlight_switch     Floodlight   Boolean   {}
-     + zoom_control          Zoom control   Enum   {“range”:[“0”,“1”]}
-     + decibel_sensitivity   Sound detection sensitivity   Enum   {“range”:[“0”,“1”]}
-     - record_mode           Video recording mode   Enum   {“range”:[“1”,“2”]}
-     + basic_nightvision     IR night vision   Enum   {“range”:[“0”,“1”,“2”]}
-     + basic_anti_flicker    Anti-flicker   Enum   {“range”:[“0”,“1”,“2”]}
-     + ptz_control           PTZ control   Enum   {“range”:[“0”,“1”,“2”,“3”,“4”,“5”,“6”,“7”]}
-     - motion_interval       Alarm interval   Enum   {“range”:[“1”,“3”,“5”]}
-     + motion_sensitivity    Motion detection sensitivity   Enum   {“range”:[“0”,“1”,“2”]}
-     - flight_bright_mode    Brightness mode   Enum   {“range”:[“0”,“1”]}
-     - pir_sensitivity       PIR sensitivity   Enum   {“range”:[“0”,“1”,“2”]}
-   */
-
-  /* Read-only properties:
-     + wireless_electricity  Battery capacity   Integer   {“min”:0,“max”:100,“scale”:0,“step”:1}
-     - wireless_powermode    Power supply       Enum      {“range”:[“0”,“1”]}
-     - sensor_humidity       Humidity           Integer   {“min”:0,“max”:100,“scale”:0,“step”:1}
-     - sensor_temperature    Temperature        Integer   {“min”:0,“max”:50,“scale”:0,“step”:1}
-     - sd_format_state       Formatting status  Integer   {“min”:-20000,“max”:100,“scale”:0,“step”:1}
-     - sd_status             SD card status     Integer   {“min”:1,“max”:5,“scale”:0,“step”:1}
-     - sd_storge             SD card capacity   String    {“maxlen”:255}
-   */
-
-  /* Unclear properties:
-     https://developer.tuya.com/en/docs/app-development/ptzcontrol?id=Ka6nxw2ky6knr#title-19-Auto-patrol%20mode
-     - cruise_mode > Mentioned in above documentation to switch between panoramic and user defined sites.
-     - cruise_time_mode > Mentioned in above documentation to switch between all-day and user defined times.
-     https://developer.tuya.com/en/docs/app-development/ptzcontrol?id=Ka6nxw2ky6knr#title-23-Preset%20points
-     - ipc_preset_set > unclear from documentation and testing what this does. Might be related to user defined sites.
-   */
 
   // Capabilities that are simple commands/statuses
   static SIMPLE_CAMERA_CAPABILITIES = {

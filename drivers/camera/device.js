@@ -109,6 +109,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
         statusKey === "initiative_message" &&
         changed.includes("initiative_message")
       ) {
+        // Event messages are base64 encoded JSON
         const encoded = status[statusKey];
         const decoded = new Buffer.from(encoded, "base64");
         const data = JSON.parse(decoded.toString());
@@ -118,26 +119,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
         this.log("Notification:", notificationType, dataType);
         // TODO AES decrypt image
 
-        /* Notification types:
-            capabilities seen:
-            + ipc_bang          Abnormal sound
-            + ipc_motion        Motion detection
-            + ipc_baby_cry      Baby cry
-            + ipc_cat           Pet detection
-            not seen:
-            - ipc_doorbell      Doorbell call
-            - ipc_dev_link      Device linkage
-            - ipc_passby        Someone passes by
-            - ipc_linger        Someone lingers
-            - ipc_leave_msg     Leave messages on doorbell
-            - ipc_connected     Doorbell answered
-            - ipc_unconnected   Doorbell missed
-            - ipc_refuse        Doorbell rejected
-            - ipc_human         Human shape detection
-            - ipc_car           Vehicle detection
-            - ipc_antibreak     Tamper alarm
-            - ipc_low_battery   Low battery alert
-        */
+        // Check if the event is for a known alarm
         if (notificationType in CAMERA_ALARM_EVENT_CAPABILITIES) {
           const alarmCapability =
             CAMERA_ALARM_EVENT_CAPABILITIES[notificationType];
@@ -153,6 +135,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
             this.error,
           );
 
+          // Disable the alarm after a set time, since we only get an "on" event
           const alarmTimeout = Math.round(
             (this.getSetting("alarm_timeout") ?? 10) * 1000,
           );
@@ -211,6 +194,8 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
       });
     }
 
+    // Report back which capabilities are unsupported,
+    // since we cannot programmatically remove settings.
     if (unsupportedSettings.length > 0) {
       let unsupportedSettingsMessage =
         this.homey.__("settings_unsupported") + " ";
