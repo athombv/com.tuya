@@ -41,7 +41,6 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
       }
 
       // Other capabilities
-
       if (capability === "onoff") {
         this.registerCapabilityListener(capability, async (value) =>
           this.sendCommand({
@@ -182,11 +181,20 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
   async onSettings({ oldSettings, newSettings, changedKeys }) {
     const unsupportedSettings = [];
 
-    // TODO expand
     const settingLabels = {
+      motion_switch: "Motion Detection",
+      motion_tracking: "Motion Tracking",
+      decibel_switch: "Sound Detection",
+      cry_detection_switch: "Crying Baby Detection",
+      pet_detection: "Pet Detection",
       motion_sensitivity: "Motion Sensitivity",
       decibel_sensitivity: "Sound Sensitivity",
+      basic_nightvision: "Night Mode",
+      basic_device_volume: "Device Volume",
       basic_anti_flicker: "Anti-Flicker",
+      basic_osd: "Video Timestamp",
+      basic_flip: "Flip Video",
+      basic_indicator: "Status Indicator",
     };
 
     for (const changedKey of changedKeys) {

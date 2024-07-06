@@ -10,11 +10,11 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
 
   /* Read/Write properties:
      - ipc_work_mode         Working mode   Enum   {“range”:[“0”,“1”]}
-     - basic_device_volume   Volume control   Integer   {“min”:1,“max”:10,“scale”:0,“step”:1}
+     + basic_device_volume   Volume control   Integer   {“min”:1,“max”:10,“scale”:0,“step”:1}
      - floodlight_lightness  Floodlight brightness   Integer   {“min”:1,“max”:100,“scale”:0,“step”:1}
      - wireless_batterylock  Battery lock   Boolean   {}
      + siren_switch          Siren   Boolean   {}
-     - zoom_stop             Stop zooming   Boolean   {}
+     + zoom_stop             Stop zooming   Boolean   {}
      + cry_detection_switch  Cry detection   Boolean   {}
      + decibel_switch        Sound detection alarm switch   Boolean   {}
      - record_switch         SD card video recording switch   Boolean   {}
@@ -39,7 +39,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
      - flight_pir_b          PIR sensor 2   Boolean   {}
      - flight_pir_c          PIR sensor 3   Boolean   {}
      - floodlight_switch     Floodlight   Boolean   {}
-     - zoom_control          Zoom control   Enum   {“range”:[“0”,“1”]}
+     + zoom_control          Zoom control   Enum   {“range”:[“0”,“1”]}
      + decibel_sensitivity   Sound detection sensitivity   Enum   {“range”:[“0”,“1”]}
      - record_mode           Video recording mode   Enum   {“range”:[“1”,“2”]}
      + basic_nightvision     IR night vision   Enum   {“range”:[“0”,“1”,“2”]}

@@ -166,7 +166,7 @@
         "id": "basic_osd",
         "type": "checkbox",
         "label": {
-          "en": "Show Timestamp"
+          "en": "Video Timestamp"
         },
         "value": true
       },
