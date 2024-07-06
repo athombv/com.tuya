@@ -986,6 +986,52 @@
         ]
       },
       {
+        "id": "heater_set_child_lock",
+        "title": {
+          "en": "Set child lock"
+        },
+        "titleFormatted": {
+          "en": "Set child lock [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=heater&capabilities=child_lock"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "heater_set_eco_mode",
+        "title": {
+          "en": "Set eco-mode"
+        },
+        "titleFormatted": {
+          "en": "Set eco-mode [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=heater&capabilities=eco_mode"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
         "id": "light_switch_pir",
         "title": {
           "en": "Set motion detection"
@@ -1532,13 +1578,7 @@
       "id": "fan"
     },
     {
-      "capabilities": [
-        "onoff",
-        "dim",
-        "light_temperature",
-        "light_hue",
-        "light_saturation"
-      ],
+      "capabilities": [],
       "connectivity": [
         "cloud"
       ],
@@ -1588,7 +1628,13 @@
       "id": "heater"
     },
     {
-      "capabilities": [],
+      "capabilities": [
+        "onoff",
+        "dim",
+        "light_temperature",
+        "light_hue",
+        "light_saturation"
+      ],
       "connectivity": [
         "cloud"
       ],

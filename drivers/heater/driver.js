@@ -5,6 +5,22 @@ const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
 
 class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
 
+  async onInit() {
+    await super.onInit();
+
+    this.homey.flow
+      .getActionCard("heater_set_child_lock")
+      .registerRunListener(async (args) => {
+        await args.device.triggerCapabilityListener("child_lock", args.value);
+      });
+
+    this.homey.flow
+      .getActionCard("heater_set_eco_mode")
+      .registerRunListener(async (args) => {
+        await args.device.triggerCapabilityListener("eco_mode", args.value);
+      });
+  }
+
   static TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
   ];
