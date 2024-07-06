@@ -2543,14 +2543,14 @@
     "alarm_sound": {
       "type": "boolean",
       "title": {
-        "en": "Abnormal Sound Detected"
+        "en": "Sound Detected"
       },
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "insightsTitleTrue": {
-        "en": "Abnormal Sound Detected"
+        "en": "Sound Detected"
       }
     },
     "child_lock": {
