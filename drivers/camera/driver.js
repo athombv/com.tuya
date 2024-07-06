@@ -71,25 +71,22 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
 
   // Capabilities that are simple commands/statuses
   static SIMPLE_CAMERA_CAPABILITIES = {
-    read_write: [
-      "basic_flip",
-      "basic_indicator",
-      "basic_nightvision",
-      "basic_private",
-      "motion_tracking",
-      "motion_switch",
-      "decibel_switch",
-      "cruise_switch",
-      "siren_switch",
-      "cry_detection_switch",
-      "pet_detection",
-    ],
+    read_write: ["cruise_switch", "siren_switch"],
     read_only: [],
     setting: [
+      "motion_switch",
+      "decibel_switch",
+      "cry_detection_switch",
+      "pet_detection",
       "motion_sensitivity",
       "decibel_sensitivity",
+      "basic_nightvision",
+      "basic_device_volume",
       "basic_anti_flicker",
       "basic_osd",
+      "basic_flip",
+      "basic_indicator",
+      "motion_tracking",
     ],
   };
 
@@ -118,6 +115,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     for (const status of device.status) {
       const capability = status.code;
 
+      // Basic capabilities
       if (
         simpleCapabilities.read_write.includes(capability) ||
         simpleCapabilities.read_only.includes(capability)
@@ -134,22 +132,16 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
           "zoom_control",
           "zoom_stop",
           "initiative_message",
-          "basic_device_volume",
+          "basic_private",
         ]
       ) {
         props.store.tuya_capabilities.push(capability);
       }
     }
 
-    if (props.store.tuya_capabilities.includes("basic_device_volume")) {
-      props.capabilities.push("volume_set");
-      props.capabilitiesOptions["volume_set"] = {
-        min: 0.1,
-        max: 1,
-        step: 0.1,
-        decimals: 1,
-        units: null,
-      };
+    // Add privacy mode control if supported
+    if (props.store.tuya_capabilities.includes("basic_private")) {
+      props.capabilities.push("onoff");
     }
 
     // Add camera movement control capabilities if supported

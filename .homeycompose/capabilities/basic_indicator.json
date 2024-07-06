@@ -1,9 +1,0 @@
-{
-  "type": "boolean",
-  "title": {
-    "en": "Indicator"
-  },
-  "getable": true,
-  "setable": true,
-  "uiComponent": "button"
-}

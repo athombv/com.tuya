@@ -14,6 +14,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     await super.onOAuth2Init();
 
     for (const capability of this.getCapabilities()) {
+      // Basic capabilities
       if (SIMPLE_CAMERA_CAPABILITIES.read_write.includes(capability)) {
         this.registerCapabilityListener(capability, async (value) =>
           this.sendCommand({
@@ -23,6 +24,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
         );
       }
 
+      // PTZ control
       if (
         capability === "ptz_control_horizontal" ||
         capability === "ptz_control_vertical"
@@ -38,15 +40,15 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
         );
       }
 
-      if (capability === "volume_set") {
-        this.registerCapabilityListener(capability, async (value) => {
-          // From range [0.1, 1] to [1, 10]
-          const rangedValue = Math.round(value * 10.0);
-          return this.sendCommand({
-            code: "basic_device_volume",
-            value: rangedValue,
-          });
-        });
+      // Other capabilities
+
+      if (capability === "onoff") {
+        this.registerCapabilityListener(capability, async (value) =>
+          this.sendCommand({
+            code: "basic_private",
+            value: !value,
+          }),
+        );
       }
     }
   }
@@ -57,6 +59,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     for (const statusKey in status) {
       const value = status[statusKey];
 
+      // Basic capabilities
       if (
         SIMPLE_CAMERA_CAPABILITIES.read_write.includes(statusKey) ||
         SIMPLE_CAMERA_CAPABILITIES.read_only.includes(statusKey)
@@ -72,6 +75,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
         }).catch((err) => this.error(err));
       }
 
+      // PTZ control
       if (statusKey === "ptz_stop" && value) {
         await this.setCapabilityValue("ptz_control_horizontal", "stop").catch(
           (err) => this.error(err),
@@ -87,14 +91,14 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
         );
       }
 
-      if (statusKey === "basic_device_volume") {
-        // From range [1, 10] to [0.1, 1]
-        const rangedValue = value / 10.0;
-        await this.setCapabilityValue("volume_set", rangedValue).catch((err) =>
+      // Other capabilities
+      if (statusKey === "basic_private") {
+        await this.setCapabilityValue("onoff", !value).catch((err) =>
           this.error(err),
         );
       }
 
+      // Event messages
       if (
         statusKey === "initiative_message" &&
         changed.includes("initiative_message")
@@ -178,6 +182,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
   async onSettings({ oldSettings, newSettings, changedKeys }) {
     const unsupportedSettings = [];
 
+    // TODO expand
     const settingLabels = {
       motion_sensitivity: "Motion Sensitivity",
       decibel_sensitivity: "Sound Sensitivity",

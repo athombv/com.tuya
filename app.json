@@ -1444,6 +1444,46 @@
           },
           "children": [
             {
+              "id": "motion_switch",
+              "type": "checkbox",
+              "label": {
+                "en": "Motion Detection"
+              },
+              "value": false
+            },
+            {
+              "id": "motion_tracking",
+              "type": "checkbox",
+              "label": {
+                "en": "Motion Tracking"
+              },
+              "value": false
+            },
+            {
+              "id": "decibel_switch",
+              "type": "checkbox",
+              "label": {
+                "en": "Sound Detection"
+              },
+              "value": false
+            },
+            {
+              "id": "cry_detection_switch",
+              "type": "checkbox",
+              "label": {
+                "en": "Crying Baby Detection"
+              },
+              "value": false
+            },
+            {
+              "id": "pet_detection",
+              "type": "checkbox",
+              "label": {
+                "en": "Pet Detection"
+              },
+              "value": false
+            },
+            {
               "id": "motion_sensitivity",
               "type": "dropdown",
               "label": {
@@ -1494,6 +1534,45 @@
               ]
             },
             {
+              "id": "basic_nightvision",
+              "type": "dropdown",
+              "label": {
+                "en": "Night Mode"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Auto"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Off"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "On"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "basic_device_volume",
+              "type": "number",
+              "label": {
+                "en": "Device Volume"
+              },
+              "value": 8,
+              "min": 1,
+              "max": 10,
+              "step": 1
+            },
+            {
               "id": "basic_anti_flicker",
               "type": "dropdown",
               "label": {
@@ -1528,6 +1607,22 @@
                 "en": "Show Timestamp"
               },
               "value": true
+            },
+            {
+              "id": "basic_flip",
+              "type": "checkbox",
+              "label": {
+                "en": "Flip Video"
+              },
+              "value": false
+            },
+            {
+              "id": "basic_indicator",
+              "type": "checkbox",
+              "label": {
+                "en": "Status Indicator"
+              },
+              "value": false
             }
           ]
         }
@@ -2446,62 +2541,6 @@
         "en": "Abnormal Sound Detected"
       }
     },
-    "basic_flip": {
-      "type": "boolean",
-      "title": {
-        "en": "Flip Video"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "button"
-    },
-    "basic_indicator": {
-      "type": "boolean",
-      "title": {
-        "en": "Indicator"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "button"
-    },
-    "basic_nightvision": {
-      "type": "enum",
-      "title": {
-        "en": "Night Mode"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "picker",
-      "values": [
-        {
-          "id": "0",
-          "title": {
-            "en": "Auto"
-          }
-        },
-        {
-          "id": "1",
-          "title": {
-            "en": "Off"
-          }
-        },
-        {
-          "id": "2",
-          "title": {
-            "en": "On"
-          }
-        }
-      ]
-    },
-    "basic_private": {
-      "type": "boolean",
-      "title": {
-        "en": "Privacy Mode"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "button"
-    },
     "child_lock": {
       "title": {
         "en": "Child Lock"
@@ -2521,24 +2560,6 @@
       "setable": true,
       "uiComponent": "button"
     },
-    "cry_detection_switch": {
-      "type": "boolean",
-      "title": {
-        "en": "Crying Baby Detection"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "button"
-    },
-    "decibel_switch": {
-      "type": "boolean",
-      "title": {
-        "en": "Sound Detection"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "button"
-    },
     "eco_mode": {
       "type": "boolean",
       "title": {
@@ -2548,33 +2569,6 @@
       "setable": true,
       "uiComponent": "button",
       "icon": "assets/capabilities/eco.svg"
-    },
-    "motion_switch": {
-      "type": "boolean",
-      "title": {
-        "en": "Motion Detection"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "button"
-    },
-    "motion_tracking": {
-      "type": "boolean",
-      "title": {
-        "en": "Motion Tracking"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "button"
-    },
-    "pet_detection": {
-      "type": "boolean",
-      "title": {
-        "en": "Pet Detection"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "button"
     },
     "ptz_control_horizontal": {
       "type": "enum",

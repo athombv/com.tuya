@@ -1,9 +1,0 @@
-{
-  "type": "boolean",
-  "title": {
-    "en": "Crying Baby Detection"
-  },
-  "getable": true,
-  "setable": true,
-  "uiComponent": "button"
-}

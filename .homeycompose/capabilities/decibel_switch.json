@@ -1,9 +1,0 @@
-{
-  "type": "boolean",
-  "title": {
-    "en": "Sound Detection"
-  },
-  "getable": true,
-  "setable": true,
-  "uiComponent": "button"
-}
