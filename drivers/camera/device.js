@@ -98,6 +98,12 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
         );
       }
 
+      if (statusKey === "wireless_electricity") {
+        await this.setCapabilityValue("measure_battery", value).catch((err) =>
+          this.error(err),
+        );
+      }
+
       // Event messages
       if (
         statusKey === "initiative_message" &&

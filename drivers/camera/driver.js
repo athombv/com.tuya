@@ -118,7 +118,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
    */
 
   /* Read-only properties:
-     - wireless_electricity  Battery capacity   Integer   {“min”:0,“max”:100,“scale”:0,“step”:1}
+     + wireless_electricity  Battery capacity   Integer   {“min”:0,“max”:100,“scale”:0,“step”:1}
      - wireless_powermode    Power supply       Enum      {“range”:[“0”,“1”]}
      - sensor_humidity       Humidity           Integer   {“min”:0,“max”:100,“scale”:0,“step”:1}
      - sensor_temperature    Temperature        Integer   {“min”:0,“max”:50,“scale”:0,“step”:1}
@@ -199,10 +199,16 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
           "zoom_stop",
           "initiative_message",
           "basic_private",
+          "wireless_electricity",
         ]
       ) {
         props.store.tuya_capabilities.push(capability);
       }
+    }
+
+    // Add battery capacity if supported
+    if (props.store.tuya_capabilities.includes("wireless_electricity")) {
+      props.capabilities.push("measure_battery");
     }
 
     // Add privacy mode control if supported
