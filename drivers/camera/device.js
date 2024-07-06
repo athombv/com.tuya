@@ -140,11 +140,14 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
           await this.setCapabilityValue(alarmCapability, true).catch(
             this.error,
           );
+          const alarmTimeout = Math.round(
+            (this.getSetting("alarm_timeout") ?? 10) * 1000,
+          );
           setTimeout(async () => {
             await this.setCapabilityValue(alarmCapability, false).catch(
               this.error,
             );
-          }, 5 * 1000); // TODO make setting
+          }, alarmTimeout);
         }
       }
     }
