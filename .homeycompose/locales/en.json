@@ -1,3 +1,4 @@
 {
-  "device_offline": "The device seems to be offline. Is it powered on, and connected to the internet?"
+  "device_offline": "The device seems to be offline. Is it powered on, and connected to the internet?",
+  "switch": "Switch __number__"
 }
