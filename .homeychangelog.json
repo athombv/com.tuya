@@ -25,5 +25,8 @@
   },
   "0.7.0": {
     "en": "Added an information screen before pairing starts."
+  },
+  "1.0.0": {
+    "en": "First release."
   }
 }
