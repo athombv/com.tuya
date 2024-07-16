@@ -1,0 +1,114 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "CAUTION: Some settings are not supported by every dimmer."
+    },
+    "children": [
+      {
+        "id": "brightness_min_1",
+        "type": "number",
+        "label": {
+          "en": "Minimum Brightness 1"
+        },
+        "value": 0,
+        "min": 0,
+        "max": 100,
+        "step": 0.1,
+        "units": "%"
+      },
+      {
+        "id": "brightness_max_1",
+        "type": "number",
+        "label": {
+          "en": "Maximum Brightness 1"
+        },
+        "value": 100,
+        "min": 1,
+        "max": 100,
+        "step": 0.1,
+        "units": "%"
+      },
+      {
+        "id": "led_type_1",
+        "type": "dropdown",
+        "label": {
+          "en": "Lamp Type 1"
+        },
+        "value": "led",
+        "values": [
+          {
+            "id": "led",
+            "label": {
+              "en": "LED"
+            }
+          },
+          {
+            "id": "incandescent",
+            "label": {
+              "en": "Incandescent"
+            }
+          },
+          {
+            "id": "halogen",
+            "label": {
+              "en": "Halogen"
+            }
+          }
+        ]
+      },
+      {
+        "id": "brightness_min_2",
+        "type": "number",
+        "label": {
+          "en": "Minimum Brightness 2"
+        },
+        "value": 0,
+        "min": 0,
+        "max": 100,
+        "step": 0.1,
+        "units": "%"
+      },
+      {
+        "id": "brightness_max_2",
+        "type": "number",
+        "label": {
+          "en": "Maximum Brightness 2"
+        },
+        "value": 100,
+        "min": 1,
+        "max": 100,
+        "step": 0.1,
+        "units": "%"
+      },
+      {
+        "id": "led_type_2",
+        "type": "dropdown",
+        "label": {
+          "en": "Lamp Type 2"
+        },
+        "value": "led",
+        "values": [
+          {
+            "id": "led",
+            "label": {
+              "en": "LED"
+            }
+          },
+          {
+            "id": "incandescent",
+            "label": {
+              "en": "Incandescent"
+            }
+          },
+          {
+            "id": "halogen",
+            "label": {
+              "en": "Halogen"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

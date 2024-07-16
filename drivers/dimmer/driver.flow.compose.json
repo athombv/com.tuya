@@ -1,0 +1,160 @@
+{
+  "actions": [
+    {
+      "id": "dimmer_sub_switch_1_off",
+      "$filter": "capabilities=onoff.1",
+      "title": {
+        "en": "Turn channel 1 off"
+      }
+    },
+    {
+      "id": "dimmer_sub_switch_1_on",
+      "$filter": "capabilities=onoff.1",
+      "title": {
+        "en": "Turn channel 1 on"
+      }
+    },
+    {
+      "id": "dimmer_sub_switch_2_off",
+      "$filter": "capabilities=onoff.2",
+      "title": {
+        "en": "Turn channel 2 off"
+      }
+    },
+    {
+      "id": "dimmer_sub_switch_2_on",
+      "$filter": "capabilities=onoff.2",
+      "title": {
+        "en": "Turn channel 2 on"
+      }
+    },
+    {
+      "id": "dimmer_channel_1_dim",
+      "$filter": "capabilities=dim.1",
+      "highlight": true,
+      "title": {
+        "en": "Dim channel 1"
+      },
+      "titleFormatted": {
+        "en": "Dim channel 1 to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "range",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "value": 0.5,
+          "label": "%",
+          "labelMultiplier": 100,
+          "labelDecimals": 0
+        }
+      ]
+    },
+    {
+      "id": "dimmer_channel_2_dim",
+      "$filter": "capabilities=dim.2",
+      "highlight": true,
+      "title": {
+        "en": "Dim channel 2"
+      },
+      "titleFormatted": {
+        "en": "Dim channel 2 to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "range",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "value": 0.5,
+          "label": "%",
+          "labelMultiplier": 100,
+          "labelDecimals": 0
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "dimmer_sub_switch_1_is_on",
+      "$filter": "capabilities=onoff.1",
+      "title": {
+        "en": "Channel 1 is turned !{{on|off}}"
+      }
+    },
+    {
+      "id": "dimmer_sub_switch_2_is_on",
+      "$filter": "capabilities=onoff.2",
+      "title": {
+        "en": "Channel 2 is turned !{{on|off}}"
+      }
+    }
+  ],
+  "triggers": [
+    {
+      "id": "dimmer_sub_switch_1_turned_off",
+      "$filter": "capabilities=onoff.1",
+      "title": {
+        "en": "Turned channel 1 off"
+      }
+    },
+    {
+      "id": "dimmer_sub_switch_1_turned_on",
+      "$filter": "capabilities=onoff.1",
+      "title": {
+        "en": "Turned channel 1 on"
+      }
+    },
+    {
+      "id": "dimmer_sub_switch_2_turned_off",
+      "$filter": "capabilities=onoff.2",
+      "title": {
+        "en": "Turned channel 2 off"
+      }
+    },
+    {
+      "id": "dimmer_sub_switch_2_turned_on",
+      "$filter": "capabilities=onoff.2",
+      "title": {
+        "en": "Turned channel 2 on"
+      }
+    },
+    {
+      "id": "dimmer_channel_1_dim_changed",
+      "$filter": "capabilities=dim.1",
+      "title": {
+        "en": "Channel 1 dim-level changed"
+      },
+      "tokens": [
+        {
+          "name": "value",
+          "type": "number",
+          "title": {
+            "en": "Level"
+          },
+          "example": 0.5
+        }
+      ]
+    },
+    {
+      "id": "dimmer_channel_2_dim_changed",
+      "$filter": "capabilities=dim.2",
+      "title": {
+        "en": "Channel 2 dim-level changed"
+      },
+      "tokens": [
+        {
+          "name": "value",
+          "type": "number",
+          "title": {
+            "en": "Level"
+          },
+          "example": 0.5
+        }
+      ]
+    }
+  ]
+}
