@@ -763,7 +763,34 @@
         "en": "Plug",
         "nl": "Plug"
       },
-      "id": "socket"
+      "id": "socket",
+      "settings": [
+        {
+          "id": "power_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Power Measurement Scale"
+          },
+          "hint": {
+            "en": "By how much the power reported by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }
