@@ -563,7 +563,20 @@
         "en": "Other",
         "nl": "Onbekend"
       },
-      "id": "other"
+      "id": "other",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": ""
+        }
+      ]
     },
     {
       "capabilities": [],

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "deviceSpecification",
+    "type": "label",
+    "label": {
+      "en": "Device Specification"
+    },
+    "hint": {
+      "en": "The Tuya specification of this device"
+    },
+    "value": ""
+  }
+]
