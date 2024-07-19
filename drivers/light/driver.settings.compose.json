@@ -1,0 +1,145 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "CAUTION: Some settings are not supported by every light."
+    },
+    "children": [
+      {
+        "id": "switch_pir",
+        "type": "checkbox",
+        "label": {
+          "en": "Motion Detection"
+        },
+        "value": false
+      },
+      {
+        "id": "pir_sensitivity",
+        "type": "dropdown",
+        "label": {
+          "en": "Motion Sensitivity"
+        },
+        "value": "middle",
+        "values": [
+          {
+            "id": "low",
+            "label": {
+              "en": "Low"
+            }
+          },
+          {
+            "id": "middle",
+            "label": {
+              "en": "Middle"
+            }
+          },
+          {
+            "id": "high",
+            "label": {
+              "en": "High"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pir_delay",
+        "type": "number",
+        "label": {
+          "en": "Motion Trigger Period"
+        },
+        "hint": {
+          "en": "For how long the motion detection stays in the triggered state before going to the standby state."
+        },
+        "value": 20,
+        "min": 5,
+        "max": 3600,
+        "step": 1,
+        "units": { "en": "seconds" }
+      },
+      {
+        "id": "cds",
+        "type": "dropdown",
+        "label": {
+          "en": "Luminance Detection"
+        },
+        "hint": {
+          "en": "At what brightness the light can be triggered."
+        },
+        "value": "10lux",
+        "values": [
+          {
+            "id": "5lux",
+            "label": {
+              "en": "5 Lux"
+            }
+          },
+          {
+            "id": "10lux",
+            "label": {
+              "en": "10 Lux"
+            }
+          },
+          {
+            "id": "300lux",
+            "label": {
+              "en": "300 Lux"
+            }
+          },
+          {
+            "id": "2000lux",
+            "label": {
+              "en": "2000 Lux"
+            }
+          },
+          {
+            "id": "now",
+            "label": {
+              "en": "Now"
+            }
+          }
+        ]
+      },
+      {
+        "id": "standby_on",
+        "type": "checkbox",
+        "label": {
+          "en": "Standby Light"
+        },
+        "hint": {
+          "en": "Whether the device stays in standby state after the trigger period is over."
+        },
+        "value": false
+      },
+      {
+        "id": "standby_time",
+        "type": "number",
+        "label": {
+          "en": "Standby Time"
+        },
+        "hint": {
+          "en": "How long the device stays in standby state after the trigger period is over."
+        },
+        "value": 360,
+        "min": 1,
+        "max": 480,
+        "step": 1,
+        "units": { "en": "minutes" }
+      },
+      {
+        "id": "standby_bright",
+        "type": "number",
+        "label": {
+          "en": "Standby Brightness"
+        },
+        "hint": {
+          "en": "How bright the device stays in standby state after the trigger period is over."
+        },
+        "value": 0,
+        "min": 0,
+        "max": 100,
+        "step": 0.1,
+        "units": { "en": "%" }
+      }
+    ]
+  }
+]

@@ -1,4 +1,6 @@
 {
   "device_offline": "The device seems to be offline. Is it powered on, and connected to the internet?",
-  "switch": "Switch __number__"
+  "switch": "Switch __number__",
+  "settings_unsupported": "Some of the changed settings are not supported by the device:",
+  "setting_values_unsupported": "Some of the changed values are not supported by the device:"
 }
