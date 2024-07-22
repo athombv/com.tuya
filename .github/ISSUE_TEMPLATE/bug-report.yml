@@ -1,0 +1,25 @@
+name: 🐞 Bug report
+description: Tell us about something that isn't working correctly
+labels:
+  - bug
+body:
+  - type: input
+    attributes:
+      label: Homey version
+      description: Which Homey are you using and with which firmware?
+      placeholder: e.g. 2023 Homey Pro, v12.0.0
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Tuya app version
+      description: Which Tuya app version do you have installed on your Homey?
+      placeholder: e.g. v1.0.1
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: Tell us what isn't working for you: please try to be as descriptive as possible.
+    validations:
+      required: true
