@@ -1,5 +1,5 @@
 name: Device request
-about: Request support for a Tuya device
+description: Request support for a Tuya device
 title: "[Device request]: "
 labels:
   - device request
