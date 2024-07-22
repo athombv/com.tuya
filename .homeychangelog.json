@@ -31,5 +31,11 @@
   },
   "1.0.1": {
     "en": "Add setting to scale socket power measurement"
+  },
+  "1.0.2": {
+    "en": "Update app image"
+  },
+  "1.0.3": {
+    "en": "Update app image"
   }
 }
