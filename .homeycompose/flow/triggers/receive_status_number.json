@@ -1,0 +1,38 @@
+{
+  "title": {
+    "en": "Receive a Tuya Status (Number)"
+  },
+  "titleFormatted": {
+    "en": "Status [[code]] gets a new Number value"
+  },
+  "hint": {
+    "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": {
+        "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+      },
+      "title": {
+        "en": "Device"
+      }
+    },
+    {
+      "name": "code",
+      "type": "autocomplete",
+      "title": {
+        "en": "Code"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "value",
+      "type": "number",
+      "title": { "en": "Value" },
+      "example": 5.6
+    }
+  ]
+}

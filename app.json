@@ -301,6 +301,245 @@
   "support": "https://homey.app/support",
   "source": "https://github.com/athombv/com.tuya",
   "flow": {
+    "triggers": [
+      {
+        "title": {
+          "en": "Receive a Tuya Status (Boolean)"
+        },
+        "titleFormatted": {
+          "en": "Status [[code]] gets a new Boolean value"
+        },
+        "hint": {
+          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "code",
+            "type": "autocomplete",
+            "title": {
+              "en": "Code"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "value",
+            "type": "boolean",
+            "title": {
+              "en": "Value"
+            },
+            "example": true
+          }
+        ],
+        "id": "receive_status_boolean"
+      },
+      {
+        "title": {
+          "en": "Receive a Tuya Status (JSON)"
+        },
+        "titleFormatted": {
+          "en": "Status [[code]] gets a new JSON value"
+        },
+        "hint": {
+          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "code",
+            "type": "autocomplete",
+            "title": {
+              "en": "Code"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "value",
+            "type": "string",
+            "title": {
+              "en": "Value"
+            },
+            "example": "[{\"enabled\": true}]"
+          }
+        ],
+        "id": "receive_status_json"
+      },
+      {
+        "title": {
+          "en": "Receive a Tuya Status (Number)"
+        },
+        "titleFormatted": {
+          "en": "Status [[code]] gets a new Number value"
+        },
+        "hint": {
+          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "code",
+            "type": "autocomplete",
+            "title": {
+              "en": "Code"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "value",
+            "type": "number",
+            "title": {
+              "en": "Value"
+            },
+            "example": 5.6
+          }
+        ],
+        "id": "receive_status_number"
+      },
+      {
+        "title": {
+          "en": "Receive a Tuya Status (String)"
+        },
+        "titleFormatted": {
+          "en": "Status [[code]] gets a new String value"
+        },
+        "hint": {
+          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "code",
+            "type": "autocomplete",
+            "title": {
+              "en": "Code"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "value",
+            "type": "string",
+            "title": {
+              "en": "Value"
+            },
+            "example": "color"
+          }
+        ],
+        "id": "receive_status_string"
+      },
+      {
+        "id": "doorbell_rang",
+        "title": {
+          "en": "The doorbell rang"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell"
+          }
+        ]
+      },
+      {
+        "id": "socket_sub_switch_turned_off",
+        "highlight": true,
+        "title": {
+          "en": "Turned switch off"
+        },
+        "titleFormatted": {
+          "en": "Turned [[switch]] off"
+        },
+        "hint": {
+          "en": "A specific switch on the device turned off."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
+          },
+          {
+            "name": "switch",
+            "type": "autocomplete",
+            "title": {
+              "en": "Switch"
+            },
+            "placeholder": {
+              "en": "Switch 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "socket_sub_switch_turned_on",
+        "highlight": true,
+        "title": {
+          "en": "Turned switch on"
+        },
+        "titleFormatted": {
+          "en": "Turned [[switch]] on"
+        },
+        "hint": {
+          "en": "A specific switch on the device turned on."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
+          },
+          {
+            "name": "switch",
+            "type": "autocomplete",
+            "title": {
+              "en": "Switch"
+            },
+            "placeholder": {
+              "en": "Switch 1"
+            }
+          }
+        ]
+      }
+    ],
     "actions": [
       {
         "title": {
@@ -495,81 +734,6 @@
         },
         "hint": {
           "en": "Turn only a specific switch on the device on."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
-          },
-          {
-            "name": "switch",
-            "type": "autocomplete",
-            "title": {
-              "en": "Switch"
-            },
-            "placeholder": {
-              "en": "Switch 1"
-            }
-          }
-        ]
-      }
-    ],
-    "triggers": [
-      {
-        "id": "doorbell_rang",
-        "title": {
-          "en": "The doorbell rang"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=doorbell"
-          }
-        ]
-      },
-      {
-        "id": "socket_sub_switch_turned_off",
-        "highlight": true,
-        "title": {
-          "en": "Turned switch off"
-        },
-        "titleFormatted": {
-          "en": "Turned [[switch]] off"
-        },
-        "hint": {
-          "en": "A specific switch on the device turned off."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=socket&capabilities=onoff.switch_1|onoff.switch_2|onoff.switch_3|onoff.switch_4|onoff.switch_5|onoff.switch_6"
-          },
-          {
-            "name": "switch",
-            "type": "autocomplete",
-            "title": {
-              "en": "Switch"
-            },
-            "placeholder": {
-              "en": "Switch 1"
-            }
-          }
-        ]
-      },
-      {
-        "id": "socket_sub_switch_turned_on",
-        "highlight": true,
-        "title": {
-          "en": "Turned switch on"
-        },
-        "titleFormatted": {
-          "en": "Turned [[switch]] on"
-        },
-        "hint": {
-          "en": "A specific switch on the device turned on."
         },
         "args": [
           {
