@@ -20,6 +20,6 @@ body:
   - type: textarea
     attributes:
       label: Description
-      description: Tell us what isn't working for you: please try to be as descriptive as possible.
+      description: "Tell us what isn't working for you: please try to be as descriptive as possible."
     validations:
       required: true
