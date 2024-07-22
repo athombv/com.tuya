@@ -323,7 +323,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
             },
             "title": {
               "en": "Device"
@@ -364,7 +364,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
             },
             "title": {
               "en": "Device"
@@ -405,7 +405,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
             },
             "title": {
               "en": "Device"
@@ -446,7 +446,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
             },
             "title": {
               "en": "Device"
@@ -716,7 +716,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
             },
             "title": {
               "en": "Device"
@@ -754,7 +754,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
             },
             "title": {
               "en": "Device"
@@ -792,7 +792,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
             },
             "title": {
               "en": "Device"
@@ -830,7 +830,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
             },
             "title": {
               "en": "Device"
