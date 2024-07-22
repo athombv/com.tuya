@@ -1,6 +1,6 @@
 {
   "id": "com.tuya",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "compatibility": ">=10.0.0",
   "brandColor": "#FF4800",
   "sdk": 3,

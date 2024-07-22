@@ -37,5 +37,8 @@
   },
   "1.0.3": {
     "en": "Update app image"
+  },
+  "1.1.0": {
+    "en": "Added method to retrieve device specifications from device settings"
   }
 }
