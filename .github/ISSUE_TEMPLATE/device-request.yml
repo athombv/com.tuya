@@ -15,17 +15,21 @@ body:
     attributes:
       label: Device specification
       description: |
+        We will need some information about your device. To retrieve, please:
+
         - Install the latest version of the Tuya Homey App
         - Add your device as "Other" device
         - Open its settings and copy the specifications from the "Device Specification" setting
         - Paste the value below (replacing the value between ```json and ```)
+
+        Without this information, we will need to close your request!
       value: |
         <details>
-        
+
         ```json
           { "device": ..., "specifications": ...}
         ```
-        
+
         </details>
     validations:
       required: true

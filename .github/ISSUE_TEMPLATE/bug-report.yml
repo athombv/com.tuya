@@ -23,3 +23,21 @@ body:
       description: "Tell us what isn't working for you: please try to be as descriptive as possible."
     validations:
       required: true
+  - type: textarea
+    attributes:
+      label: Device specification
+      description: |
+        If your bug report is related to a specific device we will need some information about it. To retrieve, please:
+
+        - Install the latest version of the Tuya Homey App
+        - Add your device as "Other" device
+        - Open its settings and copy the specifications from the "Device Specification" setting
+        - Paste the value below (replacing the value between ```json and ```)
+      value: |
+        <details>
+
+        ```json
+          { "device": ..., "specifications": ...}
+        ```
+
+        </details>
