@@ -17,6 +17,11 @@ body:
       placeholder: e.g. v1.0.1
     validations:
       required: true
+  - type: input
+    attributes:
+      label: App diagnostics report ID
+      description: Please generate an app diagnostics report and share it identifier
+      placeholder: e.g. fff30e8b-c5d0-4916-8349-2d938ef29cae
   - type: textarea
     attributes:
       label: Description
