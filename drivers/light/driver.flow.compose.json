@@ -1,0 +1,39 @@
+{
+  "actions": [
+    {
+      "id": "light_switch_pir",
+      "$filter": "capabilities=alarm_motion",
+      "title": {
+        "en": "Set motion detection"
+      },
+      "titleFormatted": {
+        "en": "Set motion detection [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "light_standby_on",
+      "title": {
+        "en": "Set standby light"
+      },
+      "titleFormatted": {
+        "en": "Set standby light [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    }
+  ],
+  "conditions": [],
+  "triggers": []
+}

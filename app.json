@@ -455,6 +455,52 @@
         "id": "send_command_string"
       },
       {
+        "id": "light_switch_pir",
+        "title": {
+          "en": "Set motion detection"
+        },
+        "titleFormatted": {
+          "en": "Set motion detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light&capabilities=alarm_motion"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "light_standby_on",
+        "title": {
+          "en": "Set standby light"
+        },
+        "titleFormatted": {
+          "en": "Set standby light [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
         "id": "socket_sub_switch_off",
         "highlight": true,
         "title": {
