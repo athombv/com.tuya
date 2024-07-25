@@ -1,0 +1,30 @@
+name: Validate
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  lint:
+    name: Validate app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts --audit=false
+
+      - name: Install Homey CLI
+        run: npm -g install homey
+
+      - name: App needs to pass verified level validation
+        run: homey app validate --level=verified
+
+      - name: app.json file needs to be up to date with repository
+        run: git diff --exit-code app.json
