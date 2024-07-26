@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: ❔ First time connecting Tuya with Homey
+    url: https://support.homey.app/hc/en-us/articles/14504423087644-Connecting-Tuya-with-Homey
+    about: Please make sure to check our help document to help get your first device connected with Homey!
