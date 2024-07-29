@@ -40,5 +40,8 @@
   },
   "1.1.0": {
     "en": "Added method to retrieve device specifications from device settings"
+  },
+  "1.1.1": {
+    "en": "Redact privacy sensitive fields from device specification"
   }
 }
