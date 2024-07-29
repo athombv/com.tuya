@@ -12,12 +12,12 @@ module.exports = class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
     const props = super.onTuyaPairListDeviceProperties(device);
 
     const combinedSpecification = {
-      device: device,
+      device: TuyaOAuth2Util.redactFields(device),
       specifications: specifications,
     };
 
     props.settings["deviceSpecification"] = JSON.stringify(
-      TuyaOAuth2Util.redactFields(combinedSpecification),
+      combinedSpecification,
       undefined,
       2,
     );
