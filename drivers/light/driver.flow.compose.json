@@ -25,6 +25,9 @@
       "titleFormatted": {
         "en": "Set standby light [[value]]"
       },
+      "hint": {
+        "en": "CAUTION: This setting is not supported by every light."
+      },
       "args": [
         {
           "name": "value",
@@ -33,7 +36,5 @@
         }
       ]
     }
-  ],
-  "conditions": [],
-  "triggers": []
+  ]
 }
