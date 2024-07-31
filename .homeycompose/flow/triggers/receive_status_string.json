@@ -1,12 +1,12 @@
 {
   "title": {
-    "en": "Send a Tuya Command (String)"
+    "en": "Receive a Tuya Status (String)"
   },
   "titleFormatted": {
-    "en": "Set [[code]] to String [[value]]"
+    "en": "Status [[code]] gets a new String value"
   },
   "hint": {
-    "en": "This is an advanced Flow card, that can be used to send any command to a Tuya device. You can find the command codes in the Tuya API documentation at https://homey.link/tuya-docs."
+    "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs."
   },
   "args": [
     {
@@ -25,13 +25,14 @@
       "title": {
         "en": "Code"
       }
-    },
+    }
+  ],
+  "tokens": [
     {
       "name": "value",
-      "type": "text",
-      "title": {
-        "en": "Value"
-      }
+      "type": "string",
+      "title": { "en": "Value" },
+      "example": "color"
     }
   ]
 }
