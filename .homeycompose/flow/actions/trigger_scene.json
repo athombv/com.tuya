@@ -1,0 +1,17 @@
+{
+  "title": {
+    "en": "Trigger Tuya Scene"
+  },
+  "titleFormatted": {
+    "en": "Trigger [[scene]]"
+  },
+  "args": [
+    {
+      "name": "scene",
+      "type": "autocomplete",
+      "title": {
+        "en": "Tuya Scene"
+      }
+    }
+  ]
+}

@@ -694,6 +694,24 @@
         "id": "send_command_string"
       },
       {
+        "title": {
+          "en": "Trigger Tuya Scene"
+        },
+        "titleFormatted": {
+          "en": "Trigger [[scene]]"
+        },
+        "args": [
+          {
+            "name": "scene",
+            "type": "autocomplete",
+            "title": {
+              "en": "Tuya Scene"
+            }
+          }
+        ],
+        "id": "trigger_scene"
+      },
+      {
         "id": "light_switch_pir",
         "title": {
           "en": "Set motion detection"
