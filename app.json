@@ -317,7 +317,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
             },
             "title": {
               "en": "Device"
@@ -358,7 +358,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
             },
             "title": {
               "en": "Device"
@@ -399,7 +399,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
             },
             "title": {
               "en": "Device"
@@ -440,7 +440,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
             },
             "title": {
               "en": "Device"
@@ -556,7 +556,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
             },
             "title": {
               "en": "Device"
@@ -594,7 +594,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
             },
             "title": {
               "en": "Device"
@@ -632,7 +632,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
             },
             "title": {
               "en": "Device"
@@ -670,7 +670,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
             },
             "title": {
               "en": "Device"
