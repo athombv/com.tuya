@@ -35,6 +35,90 @@
           "title": { "en": "Value" }
         }
       ]
+    },
+    {
+      "id": "light_switch_led_on",
+      "$filter": "capabilities=onoff.switch_led",
+      "highlight": true,
+      "title": {
+        "en": "Turn light on"
+      }
+    },
+    {
+      "id": "light_switch_led_off",
+      "$filter": "capabilities=onoff.switch_led",
+      "highlight": true,
+      "title": {
+        "en": "Turn light off"
+      }
+    },
+    {
+      "id": "light_switch_on",
+      "$filter": "capabilities=onoff.switch",
+      "highlight": true,
+      "title": {
+        "en": "Turn other switch on"
+      }
+    },
+    {
+      "id": "light_switch_off",
+      "$filter": "capabilities=onoff.switch",
+      "highlight": true,
+      "title": {
+        "en": "Turn other switch off"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "id": "light_switch_led_is_on",
+      "$filter": "capabilities=onoff.switch_led",
+      "highlight": true,
+      "title": {
+        "en": "Light is turned !{{on|off}}"
+      }
+    },
+    {
+      "id": "light_switch_is_on",
+      "$filter": "capabilities=onoff.switch",
+      "highlight": true,
+      "title": {
+        "en": "Other switch is turned !{{on|off}}"
+      }
+    }
+  ],
+  "triggers": [
+    {
+      "id": "light_switch_led_turned_on",
+      "$filter": "capabilities=onoff.switch_led",
+      "highlight": true,
+      "title": {
+        "en": "Turned light on"
+      }
+    },
+    {
+      "id": "light_switch_led_turned_off",
+      "$filter": "capabilities=onoff.switch_led",
+      "highlight": true,
+      "title": {
+        "en": "Turned light off"
+      }
+    },
+    {
+      "id": "light_switch_turned_on",
+      "$filter": "capabilities=onoff.switch",
+      "highlight": true,
+      "title": {
+        "en": "Turned other switch on"
+      }
+    },
+    {
+      "id": "light_switch_turned_off",
+      "$filter": "capabilities=onoff.switch",
+      "highlight": true,
+      "title": {
+        "en": "Turned other switch off"
+      }
     }
   ]
 }

@@ -486,6 +486,62 @@
         ]
       },
       {
+        "id": "light_switch_led_turned_on",
+        "highlight": true,
+        "title": {
+          "en": "Turned light on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light&capabilities=onoff.switch_led"
+          }
+        ]
+      },
+      {
+        "id": "light_switch_led_turned_off",
+        "highlight": true,
+        "title": {
+          "en": "Turned light off"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light&capabilities=onoff.switch_led"
+          }
+        ]
+      },
+      {
+        "id": "light_switch_turned_on",
+        "highlight": true,
+        "title": {
+          "en": "Turned other switch on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light&capabilities=onoff.switch"
+          }
+        ]
+      },
+      {
+        "id": "light_switch_turned_off",
+        "highlight": true,
+        "title": {
+          "en": "Turned other switch off"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light&capabilities=onoff.switch"
+          }
+        ]
+      },
+      {
         "id": "socket_sub_switch_turned_off",
         "highlight": true,
         "title": {
@@ -767,6 +823,62 @@
         ]
       },
       {
+        "id": "light_switch_led_on",
+        "highlight": true,
+        "title": {
+          "en": "Turn light on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light&capabilities=onoff.switch_led"
+          }
+        ]
+      },
+      {
+        "id": "light_switch_led_off",
+        "highlight": true,
+        "title": {
+          "en": "Turn light off"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light&capabilities=onoff.switch_led"
+          }
+        ]
+      },
+      {
+        "id": "light_switch_on",
+        "highlight": true,
+        "title": {
+          "en": "Turn other switch on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light&capabilities=onoff.switch"
+          }
+        ]
+      },
+      {
+        "id": "light_switch_off",
+        "highlight": true,
+        "title": {
+          "en": "Turn other switch off"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light&capabilities=onoff.switch"
+          }
+        ]
+      },
+      {
         "id": "socket_sub_switch_off",
         "highlight": true,
         "title": {
@@ -828,6 +940,34 @@
       }
     ],
     "conditions": [
+      {
+        "id": "light_switch_led_is_on",
+        "highlight": true,
+        "title": {
+          "en": "Light is turned !{{on|off}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light&capabilities=onoff.switch_led"
+          }
+        ]
+      },
+      {
+        "id": "light_switch_is_on",
+        "highlight": true,
+        "title": {
+          "en": "Other switch is turned !{{on|off}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=light&capabilities=onoff.switch"
+          }
+        ]
+      },
       {
         "id": "socket_sub_switch_is_on",
         "highlight": true,
