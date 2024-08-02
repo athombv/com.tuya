@@ -1,6 +1,7 @@
 "use strict";
 
 const TuyaOAuth2Driver = require("../../lib/TuyaOAuth2Driver");
+const TuyaOAuth2Util = require("../../lib/TuyaOAuth2Util");
 
 module.exports = class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
   onTuyaPairListDeviceFilter() {
@@ -11,7 +12,7 @@ module.exports = class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
     const props = super.onTuyaPairListDeviceProperties(device);
 
     const combinedSpecification = {
-      device: device,
+      device: TuyaOAuth2Util.redactFields(device),
       specifications: specifications,
     };
 
