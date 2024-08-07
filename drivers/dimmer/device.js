@@ -1,7 +1,7 @@
 "use strict";
 
 const TuyaOAuth2Device = require("../../lib/TuyaOAuth2Device");
-const { DIMMER_SETTING_LABELS } = require("./driver");
+const { DIMMER_SETTING_LABELS } = require("./TuyaDimmerConstants");
 const { TUYA_PERCENTAGE_SCALING } = require("../../lib/TuyaOAuth2Constants");
 
 class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {

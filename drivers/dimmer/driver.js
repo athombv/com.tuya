@@ -3,6 +3,7 @@
 const TuyaOAuth2Driver = require("../../lib/TuyaOAuth2Driver");
 const TuyaOAuth2Constants = require("../../lib/TuyaOAuth2Constants");
 const { TUYA_PERCENTAGE_SCALING } = require("../../lib/TuyaOAuth2Constants");
+const { SIMPLE_DIMMER_CAPABILITIES } = require("./TuyaDimmerConstants")
 
 class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
 
@@ -40,48 +41,17 @@ class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
     }
   }
 
-  // TODO make translatable
-  // Map from setting id to human-readable label
-  static DIMMER_SETTING_LABELS = {
-    brightness_min_1: "Minimum Brightness 1",
-    brightness_max_1: "Maximum Brightness 1",
-    brightness_min_2: "Minimum Brightness 2",
-    brightness_max_2: "Maximum Brightness 2",
-    led_type_1: "Lamp Type 1",
-    led_type_2: "Lamp Type 2",
-  };
-
-  static SIMPLE_DIMMER_CAPABILITIES = {
-    read_write: [
-      "switch_led_1",
-      "bright_value_1",
-      "switch_led_2",
-      "bright_value_2",
-    ],
-    read_only: [],
-    setting: [
-      "brightness_min_1",
-      "brightness_max_1",
-      "brightness_min_2",
-      "brightness_max_2",
-      "led_type_1",
-      "led_type_2",
-    ],
-  };
-
   onTuyaPairListDeviceProperties(device, specification) {
     const props = super.onTuyaPairListDeviceProperties(device);
     props.store.tuya_switches = [];
     props.store.tuya_dimmers = [];
 
-    const simpleCapabilities = TuyaOAuth2DriverDimmer.SIMPLE_DIMMER_CAPABILITIES;
-
     for (const status of device.status) {
       const tuyaCapability = status.code;
 
       if (
-        simpleCapabilities.read_write.includes(tuyaCapability) ||
-        simpleCapabilities.setting.includes(tuyaCapability)
+        SIMPLE_DIMMER_CAPABILITIES.read_write.includes(tuyaCapability) ||
+        SIMPLE_DIMMER_CAPABILITIES.setting.includes(tuyaCapability)
       ) {
         props.store.tuya_capabilities.push(tuyaCapability);
       }
