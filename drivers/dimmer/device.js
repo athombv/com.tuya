@@ -90,26 +90,17 @@ class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
       }
 
       if (typeof brightnessStatus === "number") {
-        const scaleMin =
-          this.getSetting(tuyaBrightnessMin) * TUYA_PERCENTAGE_SCALING;
-        const scaleMax =
-          this.getSetting(tuyaBrightnessMax) * TUYA_PERCENTAGE_SCALING;
-        const scaledValue =
-          (brightnessStatus - scaleMin) / (scaleMax - scaleMin);
+        const scaleMin = this.getSetting(tuyaBrightnessMin) * TUYA_PERCENTAGE_SCALING;
+        const scaleMax = this.getSetting(tuyaBrightnessMax) * TUYA_PERCENTAGE_SCALING;
+        const scaledValue = (brightnessStatus - scaleMin) / (scaleMax - scaleMin);
 
         if (changed.includes(tuyaBrightnessCapability)) {
           const triggerCard = this.homey.flow.getDeviceTriggerCard(
             `dimmer_channel_${switch_i}_dim_changed`,
           );
-          triggerCard
-            .trigger(
-              this,
-              {
-                value: Math.round(scaledValue * 100) / 100, // Round to 2 decimals
-              },
-              {},
-            )
-            .catch(this.error);
+          triggerCard.trigger(this, {
+              value: Math.round(scaledValue * 100) / 100, // Round to 2 decimals
+          }).catch(this.error);
         }
 
         await this.safeSetCapabilityValue(`dim.${switch_i}`, scaledValue).catch(
@@ -130,8 +121,7 @@ class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
       const newValue = newSettings[changedKey];
       await this.sendCommand({
         code: changedKey,
-        value:
-          typeof newValue === "number"
+        value: typeof newValue === "number"
             ? newValue * TUYA_PERCENTAGE_SCALING
             : newValue,
       }).catch((err) => {
@@ -150,8 +140,7 @@ class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
     const messages = [];
 
     if (unsupportedSettings.length > 0) {
-      let unsupportedSettingsMessage =
-        this.homey.__("settings_unsupported") + " ";
+      let unsupportedSettingsMessage = this.homey.__("settings_unsupported") + " ";
       const mappedSettingNames = unsupportedSettings.map(
         (settingKey) => DIMMER_SETTING_LABELS[settingKey],
       );
@@ -159,8 +148,7 @@ class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
       messages.push(unsupportedSettingsMessage);
     }
     if (unsupportedValues.length > 0) {
-      let unsupportedValuesMessage =
-        this.homey.__("setting_values_unsupported") + " ";
+      let unsupportedValuesMessage = this.homey.__("setting_values_unsupported") + " ";
       const mappedSettingNames = unsupportedValues.map(
         (settingKey) => DIMMER_SETTING_LABELS[settingKey],
       );
@@ -205,12 +193,8 @@ class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
 
   async singleDim(value, tuyaCapability) {
     const subSwitch = tuyaCapability.at(tuyaCapability.length - 1);
-    const scaleMin =
-      this.getSetting(`brightness_min_${subSwitch}`) *
-      TUYA_PERCENTAGE_SCALING;
-    const scaleMax =
-      this.getSetting(`brightness_max_${subSwitch}`) *
-      TUYA_PERCENTAGE_SCALING;
+    const scaleMin = this.getSetting(`brightness_min_${subSwitch}`) * TUYA_PERCENTAGE_SCALING;
+    const scaleMax = this.getSetting(`brightness_max_${subSwitch}`) * TUYA_PERCENTAGE_SCALING;
     const scaledValue = Math.round(scaleMin + value * (scaleMax - scaleMin));
 
     await this.sendCommand({

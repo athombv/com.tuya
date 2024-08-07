@@ -5,6 +5,11 @@ const TuyaOAuth2Constants = require("../../lib/TuyaOAuth2Constants");
 const { TUYA_PERCENTAGE_SCALING } = require("../../lib/TuyaOAuth2Constants");
 
 class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
+
+  static TUYA_DEVICE_CATEGORIES = [
+    TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.DIMMER,
+  ];
+
   async onInit() {
     await super.onInit();
 
@@ -34,10 +39,6 @@ class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
         });
     }
   }
-
-  static TUYA_DEVICE_CATEGORIES = [
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.DIMMER,
-  ];
 
   // TODO make translatable
   // Map from setting id to human-readable label
@@ -73,8 +74,7 @@ class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
     props.store.tuya_switches = [];
     props.store.tuya_dimmers = [];
 
-    const simpleCapabilities =
-      TuyaOAuth2DriverDimmer.SIMPLE_DIMMER_CAPABILITIES;
+    const simpleCapabilities = TuyaOAuth2DriverDimmer.SIMPLE_DIMMER_CAPABILITIES;
 
     for (const status of device.status) {
       const tuyaCapability = status.code;
@@ -154,17 +154,13 @@ class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
       const values = JSON.parse(statusSpecification.values);
 
       if (tuyaCapability === "bright_value_1") {
-        props.settings["brightness_min_1"] =
-          values.min / TUYA_PERCENTAGE_SCALING;
-        props.settings["brightness_max_1"] =
-          values.max / TUYA_PERCENTAGE_SCALING;
+        props.settings["brightness_min_1"] = values.min / TUYA_PERCENTAGE_SCALING;
+        props.settings["brightness_max_1"] = values.max / TUYA_PERCENTAGE_SCALING;
       }
 
       if (tuyaCapability === "bright_value_2") {
-        props.settings["brightness_min_2"] =
-          values.min / TUYA_PERCENTAGE_SCALING;
-        props.settings["brightness_max_2"] =
-          values.max / TUYA_PERCENTAGE_SCALING;
+        props.settings["brightness_min_2"] = values.min / TUYA_PERCENTAGE_SCALING;
+        props.settings["brightness_max_2"] = values.max / TUYA_PERCENTAGE_SCALING;
       }
     }
 
