@@ -5,7 +5,7 @@ const {
   SIMPLE_CAMERA_CAPABILITIES,
   CAMERA_ALARM_EVENT_CAPABILITIES,
   CAMERA_SETTING_LABELS,
-} = require("./driver");
+} = require("./TuyaCameraConstants");
 
 /**
  * Device Class for Tuya Smart Cameras
