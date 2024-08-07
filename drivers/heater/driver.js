@@ -5,6 +5,10 @@ const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
 
 class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
 
+  static TUYA_DEVICE_CATEGORIES = [
+    TuyaOAuth2Constants.DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
+  ];
+
   async onInit() {
     await super.onInit();
 
@@ -20,10 +24,6 @@ class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
         await args.device.triggerCapabilityListener("eco_mode", args.value);
       });
   }
-
-  static TUYA_DEVICE_CATEGORIES = [
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
-  ];
 
   onTuyaPairListDeviceProperties(device, specification) {
     const props = super.onTuyaPairListDeviceProperties(device);
