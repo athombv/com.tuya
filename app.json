@@ -2835,19 +2835,19 @@
       "uiComponent": "ternary",
       "values": [
         {
-          "id": "6",
+          "id": "up",
           "title": {
             "en": "Left"
           }
         },
         {
-          "id": "stop",
+          "id": "idle",
           "title": {
             "en": "Stop"
           }
         },
         {
-          "id": "2",
+          "id": "down",
           "title": {
             "en": "Right"
           }
@@ -2864,19 +2864,19 @@
       "uiComponent": "ternary",
       "values": [
         {
-          "id": "0",
+          "id": "up",
           "title": {
             "en": "Up"
           }
         },
         {
-          "id": "stop",
+          "id": "idle",
           "title": {
             "en": "Stop"
           }
         },
         {
-          "id": "4",
+          "id": "down",
           "title": {
             "en": "Down"
           }
@@ -2893,19 +2893,19 @@
       "uiComponent": "ternary",
       "values": [
         {
-          "id": "1",
+          "id": "up",
           "title": {
             "en": "Increase Zoom"
           }
         },
         {
-          "id": "stop",
+          "id": "idle",
           "title": {
             "en": "Stop"
           }
         },
         {
-          "id": "0",
+          "id": "down",
           "title": {
             "en": "Decrease Zoom"
           }

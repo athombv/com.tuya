@@ -8,19 +8,19 @@
   "uiComponent": "ternary",
   "values": [
     {
-      "id": "1",
+      "id": "up",
       "title": {
         "en": "Increase Zoom"
       }
     },
     {
-      "id": "stop",
+      "id": "idle",
       "title": {
         "en": "Stop"
       }
     },
     {
-      "id": "0",
+      "id": "down",
       "title": {
         "en": "Decrease Zoom"
       }

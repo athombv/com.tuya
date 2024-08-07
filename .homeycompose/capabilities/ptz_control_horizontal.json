@@ -8,19 +8,19 @@
   "uiComponent": "ternary",
   "values": [
     {
-      "id": "6",
+      "id": "up",
       "title": {
         "en": "Left"
       }
     },
     {
-      "id": "stop",
+      "id": "idle",
       "title": {
         "en": "Stop"
       }
     },
     {
-      "id": "2",
+      "id": "down",
       "title": {
         "en": "Right"
       }

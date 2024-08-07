@@ -25,11 +25,11 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
       }
 
       // PTZ control
-      if (
-        capability === "ptz_control_horizontal" ||
-        capability === "ptz_control_vertical"
-      ) {
-        this.registerCapabilityListener(capability, (value) => this.ptzCapabilityListener(value));
+      if (capability === "ptz_control_vertical") {
+        this.registerCapabilityListener(capability, (value) => this.ptzCapabilityListener(value, 0, 4));
+      }
+      if (capability === "ptz_control_horizontal") {
+        this.registerCapabilityListener(capability, (value) => this.ptzCapabilityListener(value, 6, 2));
       }
 
       if (capability === "ptz_control_zoom") {
@@ -122,31 +122,20 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     }
   }
 
-  async ptzCapabilityListener(value) {
-    if (value === "stop") {
-      await this.sendCommand({
-        code: "ptz_stop",
-        value: true,
-      });
+  // Map from up/idle/down to commands so the ternary UI shows arrows
+  async ptzCapabilityListener(value, up, down) {
+    if (value === "idle") {
+      await this.sendCommand({ code: "ptz_stop", value: true });
     } else {
-      await this.sendCommand({
-        code: "ptz_control",
-        value: value,
-      });
+      await this.sendCommand({code: "ptz_control", value: value === "up" ? up : down });
     }
   }
 
   async zoomCapabilityListener(value) {
-    if (value === "stop") {
-      await this.sendCommand({
-        code: "zoom_stop",
-        value: true,
-      });
+    if (value === "idle") {
+      await this.sendCommand({ code: "zoom_stop", value: true });
     } else {
-      await this.sendCommand({
-        code: "zoom_control",
-        value: value,
-      });
+      await this.sendCommand({ code: "zoom_control", value: value === "up" ? 1 : 0 });
     }
   }
 
