@@ -17,8 +17,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     for (const capability of this.getCapabilities()) {
       // Basic capabilities
       if (SIMPLE_CAMERA_CAPABILITIES.read_write.includes(capability)) {
-        this.registerCapabilityListener(capability, async (value) =>
-          this.sendCommand({
+        this.registerCapabilityListener(capability, (value) => this.sendCommand({
             code: capability,
             value: value,
           }),
@@ -30,21 +29,16 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
         capability === "ptz_control_horizontal" ||
         capability === "ptz_control_vertical"
       ) {
-        this.registerCapabilityListener(capability, async (value) =>
-          this.ptzCapabilityListener(value),
-        );
+        this.registerCapabilityListener(capability, (value) => this.ptzCapabilityListener(value));
       }
 
       if (capability === "ptz_control_zoom") {
-        this.registerCapabilityListener(capability, async (value) =>
-          this.zoomCapabilityListener(value),
-        );
+        this.registerCapabilityListener(capability, (value) => this.zoomCapabilityListener(value));
       }
 
       // Other capabilities
       if (capability === "onoff") {
-        this.registerCapabilityListener(capability, async (value) =>
-          this.sendCommand({
+        this.registerCapabilityListener(capability, (value) => this.sendCommand({
             code: "basic_private",
             value: !value,
           }),
@@ -64,44 +58,32 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
         SIMPLE_CAMERA_CAPABILITIES.read_write.includes(statusKey) ||
         SIMPLE_CAMERA_CAPABILITIES.read_only.includes(statusKey)
       ) {
-        await this.setCapabilityValue(statusKey, value).catch((err) =>
-          this.error(err),
-        );
+        await this.setCapabilityValue(statusKey, value).catch(this.error);
       }
 
       if (SIMPLE_CAMERA_CAPABILITIES.setting.includes(statusKey)) {
         await this.setSettings({
           [statusKey]: value,
-        }).catch((err) => this.error(err));
+        }).catch(this.error);
       }
 
       // PTZ control
       if (statusKey === "ptz_stop" && value) {
-        await this.setCapabilityValue("ptz_control_horizontal", "stop").catch(
-          (err) => this.error(err),
-        );
-        await this.setCapabilityValue("ptz_control_vertical", "stop").catch(
-          (err) => this.error(err),
-        );
+        await this.setCapabilityValue("ptz_control_horizontal", "stop").catch(this.error);
+        await this.setCapabilityValue("ptz_control_vertical", "stop").catch(this.error);
       }
 
       if (statusKey === "zoom_stop" && value) {
-        await this.setCapabilityValue("ptz_control_zoom", "stop").catch((err) =>
-          this.error(err),
-        );
+        await this.setCapabilityValue("ptz_control_zoom", "stop").catch(this.error);
       }
 
       // Other capabilities
       if (statusKey === "basic_private") {
-        await this.setCapabilityValue("onoff", !value).catch((err) =>
-          this.error(err),
-        );
+        await this.setCapabilityValue("onoff", !value).catch(this.error);
       }
 
       if (statusKey === "wireless_electricity") {
-        await this.setCapabilityValue("measure_battery", value).catch((err) =>
-          this.error(err),
-        );
+        await this.setCapabilityValue("measure_battery", value).catch(this.error);
       }
 
       // Event messages
@@ -113,36 +95,27 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
         const encoded = status[statusKey];
         const decoded = new Buffer.from(encoded, "base64");
         const data = JSON.parse(decoded.toString());
-        // this.log('Notification data:', data)
         const notificationType = data.cmd;
         const dataType = data.type;
         this.log("Notification:", notificationType, dataType);
-        // TODO AES decrypt image
 
         // Check if the event is for a known alarm
         if (notificationType in CAMERA_ALARM_EVENT_CAPABILITIES) {
-          const alarmCapability =
-            CAMERA_ALARM_EVENT_CAPABILITIES[notificationType];
+          const alarmCapability = CAMERA_ALARM_EVENT_CAPABILITIES[notificationType];
           if (!this.hasCapability(alarmCapability)) {
             await this.addCapability(alarmCapability).catch(this.error);
           }
 
-          const deviceTriggerCard = this.homey.flow.getDeviceTriggerCard(
-            `camera_${alarmCapability}_true`,
-          );
+          const deviceTriggerCard = this.homey.flow.getDeviceTriggerCard(`camera_${alarmCapability}_true`);
           await deviceTriggerCard.trigger(this);
-          await this.setCapabilityValue(alarmCapability, true).catch(
-            this.error,
-          );
+          await this.setCapabilityValue(alarmCapability, true).catch(this.error);
 
           // Disable the alarm after a set time, since we only get an "on" event
           const alarmTimeout = Math.round(
             (this.getSetting("alarm_timeout") ?? 10) * 1000,
           );
           setTimeout(async () => {
-            await this.setCapabilityValue(alarmCapability, false).catch(
-              this.error,
-            );
+            await this.setCapabilityValue(alarmCapability, false).catch(this.error);
           }, alarmTimeout);
         }
       }

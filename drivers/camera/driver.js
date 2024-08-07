@@ -41,8 +41,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
   async onInit() {
     await super.onInit();
 
-    for (const capability of TuyaOAuth2DriverCamera.SIMPLE_CAMERA_FLOWS
-      .read_write) {
+    for (const capability of TuyaOAuth2DriverCamera.SIMPLE_CAMERA_FLOWS.read_write) {
       this.homey.flow
         .getActionCard(`camera_${capability}`)
         .registerRunListener(async (args, state) => {
@@ -56,17 +55,11 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
         .getActionCard(`camera_${setting}`)
         .registerRunListener(async (args, state) => {
           await args.device
-            .sendCommand({
-              code: setting,
-              value: args.value,
-            })
+            .sendCommand({ code: setting, value: args.value })
             .catch((err) => {
               if (err.tuyaCode === 2008) {
                 throw new Error(
-                  this.homey.__("setting_unsupported", {
-                    label:
-                      TuyaOAuth2DriverCamera.CAMERA_SETTING_LABELS[setting],
-                  }),
+                  this.homey.__("setting_unsupported", { label: TuyaOAuth2DriverCamera.CAMERA_SETTING_LABELS[setting] }),
                 );
               } else {
                 throw err;
@@ -116,8 +109,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
   onTuyaPairListDeviceProperties(device, specification) {
     const props = super.onTuyaPairListDeviceProperties(device);
 
-    const simpleCapabilities =
-      TuyaOAuth2DriverCamera.SIMPLE_CAMERA_CAPABILITIES;
+    const simpleCapabilities = TuyaOAuth2DriverCamera.SIMPLE_CAMERA_CAPABILITIES;
 
     for (const status of device.status) {
       const capability = status.code;
