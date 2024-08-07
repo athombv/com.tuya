@@ -4,5 +4,9 @@
   "name": {
     "en": "Plug",
     "nl": "Plug"
-  }
+  },
+  "capabilities": [
+    "onoff",
+    "measure_power"
+  ]
 }

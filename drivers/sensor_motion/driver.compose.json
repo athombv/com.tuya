@@ -4,5 +4,8 @@
   "name": {
     "en": "Motion Sensor",
     "nl": "Bewegingssensor"
-  }
+  },
+  "capabilities": [
+    "alarm_motion"
+  ]
 }

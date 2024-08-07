@@ -4,5 +4,12 @@
   "name": {
     "en": "Light",
     "nl": "Lamp"
-  }
+  },
+  "capabilities": [
+    "onoff",
+    "dim",
+    "light_temperature",
+    "light_hue",
+    "light_saturation"
+  ]
 }

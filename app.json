@@ -1052,7 +1052,10 @@
       "id": "doorbell"
     },
     {
-      "capabilities": [],
+      "capabilities": [
+        "onoff",
+        "dim"
+      ],
       "connectivity": [
         "cloud"
       ],
@@ -1101,7 +1104,13 @@
       "id": "fan"
     },
     {
-      "capabilities": [],
+      "capabilities": [
+        "onoff",
+        "dim",
+        "light_temperature",
+        "light_hue",
+        "light_saturation"
+      ],
       "connectivity": [
         "cloud"
       ],
@@ -1365,7 +1374,9 @@
       ]
     },
     {
-      "capabilities": [],
+      "capabilities": [
+        "alarm_contact"
+      ],
       "connectivity": [
         "cloud"
       ],
@@ -1415,7 +1426,9 @@
       "id": "sensor_contact"
     },
     {
-      "capabilities": [],
+      "capabilities": [
+        "alarm_motion"
+      ],
       "connectivity": [
         "cloud"
       ],
@@ -1465,7 +1478,9 @@
       "id": "sensor_motion"
     },
     {
-      "capabilities": [],
+      "capabilities": [
+        "alarm_smoke"
+      ],
       "connectivity": [
         "cloud"
       ],
@@ -1515,7 +1530,10 @@
       "id": "sensor_smoke"
     },
     {
-      "capabilities": [],
+      "capabilities": [
+        "onoff",
+        "measure_power"
+      ],
       "connectivity": [
         "cloud"
       ],
