@@ -11,6 +11,9 @@ const {
  * Device Class for Tuya Smart Cameras
  */
 class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
+
+  alarmTimeouts = {};
+
   async onOAuth2Init() {
     await super.onOAuth2Init();
 
@@ -43,6 +46,14 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
             value: !value,
           }),
         );
+      }
+    }
+
+    // Reset alarms in case a timeout was interrupted
+    for (const tuyaCapability in CAMERA_ALARM_EVENT_CAPABILITIES) {
+      const capability = CAMERA_ALARM_EVENT_CAPABILITIES[tuyaCapability];
+      if (this.hasCapability(capability)) {
+        await this.setCapabilityValue(capability, false);
       }
     }
   }
@@ -105,21 +116,34 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
           if (!this.hasCapability(alarmCapability)) {
             await this.addCapability(alarmCapability).catch(this.error);
           }
-
-          const deviceTriggerCard = this.homey.flow.getDeviceTriggerCard(`camera_${alarmCapability}_true`);
-          await deviceTriggerCard.trigger(this);
-          await this.setCapabilityValue(alarmCapability, true).catch(this.error);
-
-          // Disable the alarm after a set time, since we only get an "on" event
-          const alarmTimeout = Math.round(
-            (this.getSetting("alarm_timeout") ?? 10) * 1000,
-          );
-          setTimeout(async () => {
-            await this.setCapabilityValue(alarmCapability, false).catch(this.error);
-          }, alarmTimeout);
+          await this.setAlarm(alarmCapability);
         }
       }
     }
+  }
+
+  async setAlarm(capability) {
+    if (this.alarmTimeouts[capability] !== undefined) {
+      // Extend the existing timeout if already running
+      clearTimeout(this.alarmTimeouts[capability]);
+    } else {
+      // Trigger capability change if not
+      const deviceTriggerCard = this.homey.flow.getDeviceTriggerCard(`camera_${capability}_true`);
+      await deviceTriggerCard.trigger(this).catch(this.error);
+      await this.setCapabilityValue(capability, true).catch(this.error);
+    }
+    // Disable the alarm after a set time, since we only get an "on" event
+    const alarmTimeout = Math.round((this.getSetting("alarm_timeout") ?? 10) * 1000);
+    this.alarmTimeouts[capability] = setTimeout(() => this.resetAlarm(capability), alarmTimeout);
+  }
+
+  async resetAlarm(capability) {
+    // Clear the timeout for the next event
+    const currentTimeout = this.alarmTimeouts[capability];
+    clearTimeout(currentTimeout);
+    this.alarmTimeouts[capability] = undefined;
+    // Trigger capability change
+    await this.setCapabilityValue(capability, false).catch(this.error);
   }
 
   // Map from up/idle/down to commands so the ternary UI shows arrows
