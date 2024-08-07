@@ -4,5 +4,8 @@
   "name": {
     "en": "Door Sensor",
     "nl": "Deur Sensor"
-  }
+  },
+  "capabilities": [
+    "alarm_contact"
+  ]
 }
