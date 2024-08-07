@@ -1,0 +1,18 @@
+{
+  "title": {
+    "en": "Eco-mode disabled"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": {
+        "driver_id": "heater",
+        "capabilities": "eco_mode"
+      },
+      "title": {
+        "en": "Device"
+      }
+    }
+  ]
+}

@@ -52,7 +52,7 @@ class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     }
 
     if (typeof status['mode_eco'] === 'boolean') {
-      this.setCapabilityValue('eco_mode', status['mode_eco']).catch(this.error)
+      this.setCapabilityValue('eco_mode', status['mode_eco']).catch(this.error);
     }
   }
 

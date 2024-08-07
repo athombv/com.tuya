@@ -310,6 +310,82 @@
     "triggers": [
       {
         "title": {
+          "en": "Child lock disabled"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "heater",
+              "capabilities": "child_lock"
+            },
+            "title": {
+              "en": "Device"
+            }
+          }
+        ],
+        "id": "child_lock_false"
+      },
+      {
+        "title": {
+          "en": "Child lock enabled"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "heater",
+              "capabilities": "child_lock"
+            },
+            "title": {
+              "en": "Device"
+            }
+          }
+        ],
+        "id": "child_lock_true"
+      },
+      {
+        "title": {
+          "en": "Eco-mode disabled"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "heater",
+              "capabilities": "eco_mode"
+            },
+            "title": {
+              "en": "Device"
+            }
+          }
+        ],
+        "id": "eco_mode_false"
+      },
+      {
+        "title": {
+          "en": "Eco-mode enabled"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "heater",
+              "capabilities": "eco_mode"
+            },
+            "title": {
+              "en": "Device"
+            }
+          }
+        ],
+        "id": "eco_mode_true"
+      },
+      {
+        "title": {
           "en": "Receive a Tuya Status (Boolean)"
         },
         "titleFormatted": {
