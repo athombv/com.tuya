@@ -9,5 +9,8 @@
   "insights": true,
   "insightsTitleTrue": {
     "en": "Pet Detected"
+  },
+  "insightsTitleFalse": {
+    "en": "Pet No Longer Detected"
   }
 }

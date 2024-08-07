@@ -9,5 +9,8 @@
   "insights": true,
   "insightsTitleTrue": {
     "en": "Sound Detected"
+  },
+  "insightsTitleFalse": {
+    "en": "Sound No Longer Detected"
   }
 }

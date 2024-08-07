@@ -9,5 +9,8 @@
   "insights": true,
   "insightsTitleTrue": {
     "en": "Crying Child Detected"
+  },
+  "insightsTitleFalse": {
+    "en": "Crying Child No Longer Detected"
   }
 }

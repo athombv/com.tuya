@@ -562,6 +562,19 @@
         ]
       },
       {
+        "id": "camera_alarm_crying_child_false",
+        "title": {
+          "en": "Crying is no longer detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_crying_child"
+          }
+        ]
+      },
+      {
         "id": "camera_alarm_pet_true",
         "title": {
           "en": "A pet was detected"
@@ -575,9 +588,35 @@
         ]
       },
       {
+        "id": "camera_alarm_pet_false",
+        "title": {
+          "en": "Pet is no longer detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_pet"
+          }
+        ]
+      },
+      {
         "id": "camera_alarm_sound_true",
         "title": {
           "en": "A sound was detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_sound"
+          }
+        ]
+      },
+      {
+        "id": "camera_alarm_sound_false",
+        "title": {
+          "en": "Sound is no longer detected"
         },
         "args": [
           {
@@ -2768,6 +2807,9 @@
       "insights": true,
       "insightsTitleTrue": {
         "en": "Crying Child Detected"
+      },
+      "insightsTitleFalse": {
+        "en": "Crying Child No Longer Detected"
       }
     },
     "alarm_pet": {
@@ -2781,6 +2823,9 @@
       "insights": true,
       "insightsTitleTrue": {
         "en": "Pet Detected"
+      },
+      "insightsTitleFalse": {
+        "en": "Pet No Longer Detected"
       }
     },
     "alarm_sound": {
@@ -2794,6 +2839,9 @@
       "insights": true,
       "insightsTitleTrue": {
         "en": "Sound Detected"
+      },
+      "insightsTitleFalse": {
+        "en": "Sound No Longer Detected"
       }
     },
     "child_lock": {

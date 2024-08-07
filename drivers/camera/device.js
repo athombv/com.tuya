@@ -143,6 +143,8 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     clearTimeout(currentTimeout);
     this.alarmTimeouts[capability] = undefined;
     // Trigger capability change
+    const deviceTriggerCard = this.homey.flow.getDeviceTriggerCard(`camera_${capability}_false`);
+    await deviceTriggerCard.trigger(this).catch(this.error);
     await this.setCapabilityValue(capability, false).catch(this.error);
   }
 

@@ -165,9 +165,22 @@
       "$filter": "capabilities=alarm_crying_child"
     },
     {
+      "id": "camera_alarm_crying_child_false",
+      "title": {
+        "en": "Crying is no longer detected"
+      },
+      "$filter": "capabilities=alarm_crying_child"
+    },
+    {
       "id": "camera_alarm_pet_true",
       "title": {
         "en": "A pet was detected"
+      },
+      "$filter": "capabilities=alarm_pet"
+    },    {
+      "id": "camera_alarm_pet_false",
+      "title": {
+        "en": "Pet is no longer detected"
       },
       "$filter": "capabilities=alarm_pet"
     },
@@ -175,6 +188,13 @@
       "id": "camera_alarm_sound_true",
       "title": {
         "en": "A sound was detected"
+      },
+      "$filter": "capabilities=alarm_sound"
+    },
+    {
+      "id": "camera_alarm_sound_false",
+      "title": {
+        "en": "Sound is no longer detected"
       },
       "$filter": "capabilities=alarm_sound"
     }
