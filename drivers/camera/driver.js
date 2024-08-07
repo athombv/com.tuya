@@ -133,7 +133,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
           "initiative_message",
           "basic_private",
           "wireless_electricity",
-        ]
+        ].includes(capability)
       ) {
         props.store.tuya_capabilities.push(capability);
       }
