@@ -2278,7 +2278,8 @@
       },
       "getable": true,
       "setable": true,
-      "uiComponent": "button"
+      "uiComponent": "button",
+      "icon": "assets/capabilities/eco.svg"
     }
   }
 }
