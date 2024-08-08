@@ -323,7 +323,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
             },
             "title": {
               "en": "Device"
@@ -364,7 +364,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
             },
             "title": {
               "en": "Device"
@@ -405,7 +405,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
             },
             "title": {
               "en": "Device"
@@ -446,7 +446,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
             },
             "title": {
               "en": "Device"
@@ -471,6 +471,104 @@
           }
         ],
         "id": "receive_status_string"
+      },
+      {
+        "id": "dimmer_sub_switch_1_turned_off",
+        "title": {
+          "en": "Turned channel 1 off"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=onoff.1"
+          }
+        ]
+      },
+      {
+        "id": "dimmer_sub_switch_1_turned_on",
+        "title": {
+          "en": "Turned channel 1 on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=onoff.1"
+          }
+        ]
+      },
+      {
+        "id": "dimmer_sub_switch_2_turned_off",
+        "title": {
+          "en": "Turned channel 2 off"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=onoff.2"
+          }
+        ]
+      },
+      {
+        "id": "dimmer_sub_switch_2_turned_on",
+        "title": {
+          "en": "Turned channel 2 on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=onoff.2"
+          }
+        ]
+      },
+      {
+        "id": "dimmer_channel_1_dim_changed",
+        "title": {
+          "en": "Channel 1 dim-level changed"
+        },
+        "tokens": [
+          {
+            "name": "value",
+            "type": "number",
+            "title": {
+              "en": "Level"
+            },
+            "example": 0.5
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=dim.1"
+          }
+        ]
+      },
+      {
+        "id": "dimmer_channel_2_dim_changed",
+        "title": {
+          "en": "Channel 2 dim-level changed"
+        },
+        "tokens": [
+          {
+            "name": "value",
+            "type": "number",
+            "title": {
+              "en": "Level"
+            },
+            "example": 0.5
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=dim.2"
+          }
+        ]
       },
       {
         "id": "doorbell_rang",
@@ -618,7 +716,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
             },
             "title": {
               "en": "Device"
@@ -656,7 +754,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
             },
             "title": {
               "en": "Device"
@@ -694,7 +792,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
             },
             "title": {
               "en": "Device"
@@ -732,7 +830,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer"
             },
             "title": {
               "en": "Device"
@@ -772,6 +870,120 @@
           }
         ],
         "id": "trigger_scene"
+      },
+      {
+        "id": "dimmer_sub_switch_1_off",
+        "title": {
+          "en": "Turn channel 1 off"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=onoff.1"
+          }
+        ]
+      },
+      {
+        "id": "dimmer_sub_switch_1_on",
+        "title": {
+          "en": "Turn channel 1 on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=onoff.1"
+          }
+        ]
+      },
+      {
+        "id": "dimmer_sub_switch_2_off",
+        "title": {
+          "en": "Turn channel 2 off"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=onoff.2"
+          }
+        ]
+      },
+      {
+        "id": "dimmer_sub_switch_2_on",
+        "title": {
+          "en": "Turn channel 2 on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=onoff.2"
+          }
+        ]
+      },
+      {
+        "id": "dimmer_channel_1_dim",
+        "highlight": true,
+        "title": {
+          "en": "Dim channel 1"
+        },
+        "titleFormatted": {
+          "en": "Dim channel 1 to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=dim.1"
+          },
+          {
+            "name": "value",
+            "title": {
+              "en": "Level"
+            },
+            "type": "range",
+            "min": 0,
+            "max": 1,
+            "step": 0.1,
+            "value": 0.5,
+            "label": "%",
+            "labelMultiplier": 100,
+            "labelDecimals": 0
+          }
+        ]
+      },
+      {
+        "id": "dimmer_channel_2_dim",
+        "highlight": true,
+        "title": {
+          "en": "Dim channel 2"
+        },
+        "titleFormatted": {
+          "en": "Dim channel 2 to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=dim.2"
+          },
+          {
+            "name": "value",
+            "title": {
+              "en": "Level"
+            },
+            "type": "range",
+            "min": 0,
+            "max": 1,
+            "step": 0.1,
+            "value": 0.5,
+            "label": "%",
+            "labelMultiplier": 100,
+            "labelDecimals": 0
+          }
+        ]
       },
       {
         "id": "light_switch_pir",
@@ -967,6 +1179,32 @@
     ],
     "conditions": [
       {
+        "id": "dimmer_sub_switch_1_is_on",
+        "title": {
+          "en": "Channel 1 is turned !{{on|off}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=onoff.1"
+          }
+        ]
+      },
+      {
+        "id": "dimmer_sub_switch_2_is_on",
+        "title": {
+          "en": "Channel 2 is turned !{{on|off}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dimmer&capabilities=onoff.2"
+          }
+        ]
+      },
+      {
         "id": "light_switch_led_is_on",
         "highlight": true,
         "title": {
@@ -1027,6 +1265,170 @@
     ]
   },
   "drivers": [
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/dimmer/assets/images/small.png",
+        "large": "/drivers/dimmer/assets/images/large.png",
+        "xlarge": "/drivers/dimmer/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "light",
+      "name": {
+        "en": "Dimmer",
+        "nl": "Dimmer"
+      },
+      "id": "dimmer",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "CAUTION: Some settings are not supported by every dimmer."
+          },
+          "children": [
+            {
+              "id": "brightness_min_1",
+              "type": "number",
+              "label": {
+                "en": "Minimum Brightness 1"
+              },
+              "value": 0,
+              "min": 0,
+              "max": 100,
+              "step": 0.1,
+              "units": "%"
+            },
+            {
+              "id": "brightness_max_1",
+              "type": "number",
+              "label": {
+                "en": "Maximum Brightness 1"
+              },
+              "value": 100,
+              "min": 1,
+              "max": 100,
+              "step": 0.1,
+              "units": "%"
+            },
+            {
+              "id": "led_type_1",
+              "type": "dropdown",
+              "label": {
+                "en": "Lamp Type 1"
+              },
+              "value": "led",
+              "values": [
+                {
+                  "id": "led",
+                  "label": {
+                    "en": "LED"
+                  }
+                },
+                {
+                  "id": "incandescent",
+                  "label": {
+                    "en": "Incandescent"
+                  }
+                },
+                {
+                  "id": "halogen",
+                  "label": {
+                    "en": "Halogen"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "brightness_min_2",
+              "type": "number",
+              "label": {
+                "en": "Minimum Brightness 2"
+              },
+              "value": 0,
+              "min": 0,
+              "max": 100,
+              "step": 0.1,
+              "units": "%"
+            },
+            {
+              "id": "brightness_max_2",
+              "type": "number",
+              "label": {
+                "en": "Maximum Brightness 2"
+              },
+              "value": 100,
+              "min": 1,
+              "max": 100,
+              "step": 0.1,
+              "units": "%"
+            },
+            {
+              "id": "led_type_2",
+              "type": "dropdown",
+              "label": {
+                "en": "Lamp Type 2"
+              },
+              "value": "led",
+              "values": [
+                {
+                  "id": "led",
+                  "label": {
+                    "en": "LED"
+                  }
+                },
+                {
+                  "id": "incandescent",
+                  "label": {
+                    "en": "Incandescent"
+                  }
+                },
+                {
+                  "id": "halogen",
+                  "label": {
+                    "en": "Halogen"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       "capabilities": [],
       "connectivity": [

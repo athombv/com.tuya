@@ -6,5 +6,6 @@
   "setting_unsupported": "__label__ is not supported by the device",
   "setting_value_unsupported": "Value is not supported for __label__ by the device",
   "error_retrieving_scenes": "Could not retrieve Tuya scenes.",
-  "error_setting_switch": "Failed to set switch state."
+  "error_setting_switch": "Failed to set switch state.",
+  "error_min_max_brightness": "The minimum brightness must be less than the maximum."
 }
