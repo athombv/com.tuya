@@ -80,12 +80,13 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
       }
 
       // PTZ control
-      if (statusKey === "ptz_stop" && value) {
+      if (statusKey === "ptz_stop" && value && changed.includes("ptz_stop") ||
+        statusKey === "ptz_control" && value === "8" && changed.includes("ptz_control")) {
         await this.setCapabilityValue("ptz_control_horizontal", "idle").catch(this.error);
         await this.setCapabilityValue("ptz_control_vertical", "idle").catch(this.error);
       }
 
-      if (statusKey === "zoom_stop" && value) {
+      if (statusKey === "zoom_stop" && value && changed.includes("zoom_stop")) {
         await this.setCapabilityValue("ptz_control_zoom", "idle").catch(this.error);
       }
 
