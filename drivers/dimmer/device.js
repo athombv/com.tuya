@@ -18,15 +18,11 @@ class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
 
     for (let switch_i = 1; switch_i <= 2; switch_i++) {
       if (this.hasCapability(`onoff.${switch_i}`)) {
-        this.registerCapabilityListener(`onoff.${switch_i}`, (value) =>
-          this.singleOnOff(value, `switch_led_${switch_i}`),
-        );
+        this.registerCapabilityListener(`onoff.${switch_i}`, (value) => this.singleOnOff(value, `switch_led_${switch_i}`));
       }
 
       if (this.hasCapability(`dim.${switch_i}`)) {
-        this.registerCapabilityListener(`dim.${switch_i}`, (value) =>
-          this.singleDim(value, `bright_value_${switch_i}`),
-        );
+        this.registerCapabilityListener(`dim.${switch_i}`, (value) => this.singleDim(value, `bright_value_${switch_i}`));
       }
     }
   }
@@ -59,9 +55,7 @@ class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
         anySwitchOn = anySwitchOn || switchStatus;
 
         if (changed.includes(tuyaSwitchCapability)) {
-          const triggerCard = this.homey.flow.getDeviceTriggerCard(
-            `dimmer_sub_switch_${switch_i}_turned_${switchStatus ? "on" : "off"}`,
-          );
+          const triggerCard = this.homey.flow.getDeviceTriggerCard(`dimmer_sub_switch_${switch_i}_turned_${switchStatus ? "on" : "off"}`);
           triggerCard.trigger(this, {}, {}).catch(this.error);
         }
 
@@ -95,17 +89,13 @@ class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
         const scaledValue = (brightnessStatus - scaleMin) / (scaleMax - scaleMin);
 
         if (changed.includes(tuyaBrightnessCapability)) {
-          const triggerCard = this.homey.flow.getDeviceTriggerCard(
-            `dimmer_channel_${switch_i}_dim_changed`,
-          );
+          const triggerCard = this.homey.flow.getDeviceTriggerCard(`dimmer_channel_${switch_i}_dim_changed`);
           triggerCard.trigger(this, {
-              value: Math.round(scaledValue * 100) / 100, // Round to 2 decimals
+            value: Math.round(scaledValue * 100) / 100, // Round to 2 decimals
           }).catch(this.error);
         }
 
-        await this.safeSetCapabilityValue(`dim.${switch_i}`, scaledValue).catch(
-          this.error,
-        );
+        await this.safeSetCapabilityValue(`dim.${switch_i}`, scaledValue).catch(this.error);
         await this.safeSetCapabilityValue(`dim`, scaledValue).catch(this.error);
       }
     }
@@ -122,8 +112,8 @@ class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
       await this.sendCommand({
         code: changedKey,
         value: typeof newValue === "number"
-            ? newValue * TUYA_PERCENTAGE_SCALING
-            : newValue,
+          ? newValue * TUYA_PERCENTAGE_SCALING
+          : newValue,
       }).catch((err) => {
         if (err.tuyaCode === 2008) {
           unsupportedSettings.push(changedKey);
