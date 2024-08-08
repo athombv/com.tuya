@@ -2,6 +2,7 @@
 
 const TuyaOAuth2Driver = require('../../lib/TuyaOAuth2Driver');
 const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
+const { HEATER_CAPABILITIES_MAPPING } = require('./TuyaHeaterConstants');
 
 class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
 
@@ -28,22 +29,13 @@ class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
   onTuyaPairListDeviceProperties(device, specification) {
     const props = super.onTuyaPairListDeviceProperties(device);
 
-    const abilityMapping = {
-      'switch': 'onoff',
-      'temp_set': 'target_temperature',
-      'temp_current': 'measure_temperature',
-      'lock': 'child_lock',
-      'work_power': 'measure_power',
-      "mode_eco": "eco_mode",
-    };
-
     for (const status of device.status) {
       const tuyaCapability = status.code;
 
-      if (tuyaCapability in abilityMapping) {
+      if (tuyaCapability in HEATER_CAPABILITIES_MAPPING) {
         props.store.tuya_capabilities.push(tuyaCapability);
 
-        const homeyCapability = abilityMapping[status.code];
+        const homeyCapability = HEATER_CAPABILITIES_MAPPING[tuyaCapability];
         props.capabilities.push(homeyCapability);
       }
     }
