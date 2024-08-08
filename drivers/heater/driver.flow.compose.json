@@ -1,0 +1,40 @@
+{
+  "actions": [
+    {
+      "id": "heater_set_child_lock",
+      "$filter": "capabilities=child_lock",
+      "title": {
+        "en": "Set child lock"
+      },
+      "titleFormatted": {
+        "en": "Set child lock [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "heater_set_eco_mode",
+      "$filter": "capabilities=eco_mode",
+      "title": {
+        "en": "Set eco-mode"
+      },
+      "titleFormatted": {
+        "en": "Set eco-mode [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    }
+  ],
+  "conditions": [],
+  "triggers": []
+}
