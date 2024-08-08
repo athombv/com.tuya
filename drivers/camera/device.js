@@ -153,17 +153,17 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
   // Map from up/idle/down to commands so the ternary UI shows arrows
   async ptzCapabilityListener(value, up, down) {
     if (value === "idle") {
-      await this.sendCommand({ code: "ptz_stop", value: true });
+      await this.sendCommand({code: "ptz_stop", value: true});
     } else {
-      await this.sendCommand({code: "ptz_control", value: value === "up" ? up : down });
+      await this.sendCommand({code: "ptz_control", value: value === "up" ? up : down});
     }
   }
 
   async zoomCapabilityListener(value) {
     if (value === "idle") {
-      await this.sendCommand({ code: "zoom_stop", value: true });
+      await this.sendCommand({code: "zoom_stop", value: true});
     } else {
-      await this.sendCommand({ code: "zoom_control", value: value === "up" ? "1" : "0" });
+      await this.sendCommand({code: "zoom_control", value: value === "up" ? "1" : "0"});
     }
   }
 

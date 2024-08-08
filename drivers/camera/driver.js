@@ -32,10 +32,10 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
         .getActionCard(`camera_${setting}`)
         .registerRunListener(async (args, state) => {
           await args.device
-            .sendCommand({ code: setting, value: args.value })
+            .sendCommand({code: setting, value: args.value})
             .catch((err) => {
               if (err.tuyaCode === 2008) {
-                throw new Error(this.homey.__("setting_unsupported", { label: CAMERA_SETTING_LABELS[setting] }));
+                throw new Error(this.homey.__("setting_unsupported", {label: CAMERA_SETTING_LABELS[setting]}));
               } else {
                 throw err;
               }
