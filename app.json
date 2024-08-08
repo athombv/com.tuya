@@ -2810,7 +2810,8 @@
       },
       "insightsTitleFalse": {
         "en": "Crying Child No Longer Detected"
-      }
+      },
+      "icon": "assets/capabilities/detect-baby.svg"
     },
     "alarm_pet": {
       "type": "boolean",
@@ -2826,7 +2827,8 @@
       },
       "insightsTitleFalse": {
         "en": "Pet No Longer Detected"
-      }
+      },
+      "icon": "assets/capabilities/detect-pet.svg"
     },
     "alarm_sound": {
       "type": "boolean",
@@ -2842,7 +2844,8 @@
       },
       "insightsTitleFalse": {
         "en": "Sound No Longer Detected"
-      }
+      },
+      "icon": "assets/capabilities/detect-sound.svg"
     },
     "child_lock": {
       "title": {
@@ -2861,7 +2864,8 @@
       },
       "getable": true,
       "setable": true,
-      "uiComponent": "button"
+      "uiComponent": "button",
+      "icon": "assets/capabilities/auto-patrol.svg"
     },
     "eco_mode": {
       "type": "boolean",
@@ -2967,7 +2971,8 @@
       },
       "getable": true,
       "setable": true,
-      "uiComponent": "button"
+      "uiComponent": "button",
+      "icon": "assets/capabilities/alarm-siren.svg"
     }
   }
 }

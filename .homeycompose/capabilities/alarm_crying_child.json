@@ -12,5 +12,6 @@
   },
   "insightsTitleFalse": {
     "en": "Crying Child No Longer Detected"
-  }
+  },
+  "icon": "assets/capabilities/detect-baby.svg"
 }

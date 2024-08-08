@@ -12,5 +12,6 @@
   },
   "insightsTitleFalse": {
     "en": "Pet No Longer Detected"
-  }
+  },
+  "icon": "assets/capabilities/detect-pet.svg"
 }
