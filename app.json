@@ -937,6 +937,32 @@
             }
           }
         ]
+      },
+      {
+        "id": "socket_child_lock",
+        "title": {
+          "en": "Set child lock"
+        },
+        "titleFormatted": {
+          "en": "Set child lock [[value]]"
+        },
+        "hint": {
+          "en": "CAUTION: This setting is not supported by every socket."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=socket"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
       }
     ],
     "conditions": [
@@ -1582,6 +1608,56 @@
       },
       "id": "socket",
       "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "CAUTION: Some settings are not supported by every socket."
+          },
+          "children": [
+            {
+              "id": "child_lock",
+              "type": "checkbox",
+              "label": {
+                "en": "Child Lock"
+              },
+              "hint": {
+                "en": "Whether the device is prevented from being controlled locally."
+              },
+              "value": false
+            },
+            {
+              "id": "relay_status",
+              "type": "dropdown",
+              "label": {
+                "en": "Turn On Behavior"
+              },
+              "hint": {
+                "en": "What status the device takes on when plugged in."
+              },
+              "value": "last",
+              "values": [
+                {
+                  "id": "power_on",
+                  "label": {
+                    "en": "On"
+                  }
+                },
+                {
+                  "id": "power_off",
+                  "label": {
+                    "en": "Off"
+                  }
+                },
+                {
+                  "id": "last",
+                  "label": {
+                    "en": "Last Status"
+                  }
+                }
+              ]
+            }
+          ]
+        },
         {
           "id": "power_scaling",
           "type": "dropdown",
