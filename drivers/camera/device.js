@@ -6,6 +6,7 @@ const {
   CAMERA_ALARM_EVENT_CAPABILITIES,
   CAMERA_SETTING_LABELS,
 } = require("./TuyaCameraConstants");
+const TuyaOAuth2Util = require("../../lib/TuyaOAuth2Util");
 
 /**
  * Device Class for Tuya Smart Cameras
@@ -165,34 +166,8 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     }
   }
 
-  async onSettings({ oldSettings, newSettings, changedKeys }) {
-    const unsupportedSettings = [];
-
-    for (const changedKey of changedKeys) {
-      const newValue = newSettings[changedKey];
-      await this.sendCommand({
-        code: changedKey,
-        value: newValue,
-      }).catch((err) => {
-        if (err.tuyaCode === 2008) {
-          unsupportedSettings.push(changedKey);
-        } else {
-          throw err;
-        }
-      });
-    }
-
-    // Report back which capabilities are unsupported,
-    // since we cannot programmatically remove settings.
-    if (unsupportedSettings.length > 0) {
-      let unsupportedSettingsMessage =
-        this.homey.__("settings_unsupported") + " ";
-      const mappedSettingNames = unsupportedSettings.map(
-        (settingKey) => CAMERA_SETTING_LABELS[settingKey],
-      );
-      unsupportedSettingsMessage += mappedSettingNames.join(", ");
-      return unsupportedSettingsMessage;
-    }
+  async onSettings(event) {
+    return await TuyaOAuth2Util.onSettings(this, event, CAMERA_SETTING_LABELS);
   }
 }
 
