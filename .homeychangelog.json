@@ -43,5 +43,8 @@
   },
   "1.1.1": {
     "en": "Redact privacy sensitive fields from device specification"
+  },
+  "1.2.0": {
+    "en": "Adds the new device classes camera, heater and dimmer. Switches can also be added using the socket device class. Light and socket device classes have been improved with additional capabilities and settings. Also adds support for flow triggers based on incoming Tuya status codes and starting Tuya scenes with a flow action."
   }
 }
