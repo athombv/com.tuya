@@ -1,0 +1,10 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Siren"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button",
+  "icon": "assets/capabilities/alarm-siren.svg"
+}

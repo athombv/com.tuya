@@ -1,0 +1,203 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "CAUTION: Some settings are not supported by every camera."
+    },
+    "children": [
+      {
+        "id": "motion_switch",
+        "type": "checkbox",
+        "label": {
+          "en": "Motion Detection"
+        },
+        "value": false
+      },
+      {
+        "id": "motion_tracking",
+        "type": "checkbox",
+        "label": {
+          "en": "Motion Tracking"
+        },
+        "value": false
+      },
+      {
+        "id": "decibel_switch",
+        "type": "checkbox",
+        "label": {
+          "en": "Sound Detection"
+        },
+        "value": false
+      },
+      {
+        "id": "cry_detection_switch",
+        "type": "checkbox",
+        "label": {
+          "en": "Crying Baby Detection"
+        },
+        "value": false
+      },
+      {
+        "id": "pet_detection",
+        "type": "checkbox",
+        "label": {
+          "en": "Pet Detection"
+        },
+        "value": false
+      },
+      {
+        "id": "motion_sensitivity",
+        "type": "dropdown",
+        "label": {
+          "en": "Motion Sensitivity"
+        },
+        "value": "0",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Low"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Medium"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "en": "High"
+            }
+          }
+        ]
+      },
+      {
+        "id": "decibel_sensitivity",
+        "type": "dropdown",
+        "label": {
+          "en": "Sound Sensitivity"
+        },
+        "value": "0",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Low"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "High"
+            }
+          }
+        ]
+      },
+      {
+        "id": "basic_nightvision",
+        "type": "dropdown",
+        "label": {
+          "en": "Night Mode"
+        },
+        "value": "0",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Auto"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Off"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "en": "On"
+            }
+          }
+        ]
+      },
+      {
+        "id": "basic_device_volume",
+        "type": "number",
+        "label": {
+          "en": "Device Volume"
+        },
+        "value": 8,
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      {
+        "id": "basic_anti_flicker",
+        "type": "dropdown",
+        "label": {
+          "en": "Anti-Flicker"
+        },
+        "value": "0",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Disabled"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "50 Hz"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "en": "60 Hz"
+            }
+          }
+        ]
+      },
+      {
+        "id": "basic_osd",
+        "type": "checkbox",
+        "label": {
+          "en": "Video Timestamp"
+        },
+        "value": true
+      },
+      {
+        "id": "basic_flip",
+        "type": "checkbox",
+        "label": {
+          "en": "Flip Video"
+        },
+        "value": false
+      },
+      {
+        "id": "basic_indicator",
+        "type": "checkbox",
+        "label": {
+          "en": "Status Indicator"
+        },
+        "value": false
+      }
+    ]
+  },
+  {
+    "id": "alarm_timeout",
+    "type": "number",
+    "label": {
+      "en": "Alarm Timeout"
+    },
+    "value": 10,
+    "min": 1,
+    "units": {
+      "en": "seconds"
+    }
+  }
+]

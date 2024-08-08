@@ -1,0 +1,17 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Crying Child Detected"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "Crying Child Detected"
+  },
+  "insightsTitleFalse": {
+    "en": "Crying Child No Longer Detected"
+  },
+  "icon": "assets/capabilities/detect-baby.svg"
+}

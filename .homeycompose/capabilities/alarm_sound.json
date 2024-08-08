@@ -1,0 +1,17 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Sound Detected"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "Sound Detected"
+  },
+  "insightsTitleFalse": {
+    "en": "Sound No Longer Detected"
+  },
+  "icon": "assets/capabilities/detect-sound.svg"
+}

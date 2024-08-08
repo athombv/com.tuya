@@ -399,7 +399,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater|camera"
             },
             "title": {
               "en": "Device"
@@ -440,7 +440,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater|camera"
             },
             "title": {
               "en": "Device"
@@ -481,7 +481,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|camera"
             },
             "title": {
               "en": "Device"
@@ -522,7 +522,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater|camera"
             },
             "title": {
               "en": "Device"
@@ -547,6 +547,84 @@
           }
         ],
         "id": "receive_status_string"
+      },
+      {
+        "id": "camera_alarm_crying_child_true",
+        "title": {
+          "en": "A crying child was detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_crying_child"
+          }
+        ]
+      },
+      {
+        "id": "camera_alarm_crying_child_false",
+        "title": {
+          "en": "Crying is no longer detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_crying_child"
+          }
+        ]
+      },
+      {
+        "id": "camera_alarm_pet_true",
+        "title": {
+          "en": "A pet was detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_pet"
+          }
+        ]
+      },
+      {
+        "id": "camera_alarm_pet_false",
+        "title": {
+          "en": "Pet is no longer detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_pet"
+          }
+        ]
+      },
+      {
+        "id": "camera_alarm_sound_true",
+        "title": {
+          "en": "A sound was detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_sound"
+          }
+        ]
+      },
+      {
+        "id": "camera_alarm_sound_false",
+        "title": {
+          "en": "Sound is no longer detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_sound"
+          }
+        ]
       },
       {
         "id": "dimmer_sub_switch_1_turned_off",
@@ -792,7 +870,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater|camera"
             },
             "title": {
               "en": "Device"
@@ -830,7 +908,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater|camera"
             },
             "title": {
               "en": "Device"
@@ -868,7 +946,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater|camera"
             },
             "title": {
               "en": "Device"
@@ -906,7 +984,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater"
+              "driver_id": "doorbell|fan|light|other|sensor_contact|sensor_motion|sensor_smoke|socket|dimmer|heater|camera"
             },
             "title": {
               "en": "Device"
@@ -946,6 +1024,210 @@
           }
         ],
         "id": "trigger_scene"
+      },
+      {
+        "id": "camera_cruise_switch",
+        "title": {
+          "en": "Set auto patrol"
+        },
+        "titleFormatted": {
+          "en": "Set auto patrol [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=cruise_switch"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_siren_switch",
+        "title": {
+          "en": "Set siren"
+        },
+        "titleFormatted": {
+          "en": "Set siren [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=siren_switch"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_motion_switch",
+        "title": {
+          "en": "Set motion detection"
+        },
+        "titleFormatted": {
+          "en": "Set motion detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_motion"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_motion_tracking",
+        "title": {
+          "en": "Set motion tracking"
+        },
+        "titleFormatted": {
+          "en": "Set motion tracking [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_decibel_switch",
+        "title": {
+          "en": "Set sound detection"
+        },
+        "titleFormatted": {
+          "en": "Set sound detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_sound"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_cry_detection_switch",
+        "title": {
+          "en": "Set crying baby detection"
+        },
+        "titleFormatted": {
+          "en": "Set crying baby detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_crying_child"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_pet_detection",
+        "title": {
+          "en": "Set pet detection"
+        },
+        "titleFormatted": {
+          "en": "Set pet detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=alarm_pet"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "camera_basic_nightvision",
+        "title": {
+          "en": "Set night mode"
+        },
+        "titleFormatted": {
+          "en": "Set night mode to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          },
+          {
+            "name": "value",
+            "type": "dropdown",
+            "title": {
+              "en": "Value"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Auto"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Off"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "On"
+                }
+              }
+            ]
+          }
+        ]
       },
       {
         "id": "dimmer_sub_switch_1_off",
@@ -1387,6 +1669,259 @@
     ]
   },
   "drivers": [
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/camera/assets/images/small.png",
+        "large": "/drivers/camera/assets/images/large.png",
+        "xlarge": "/drivers/camera/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "camera",
+      "name": {
+        "en": "Camera",
+        "nl": "Camera"
+      },
+      "id": "camera",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "CAUTION: Some settings are not supported by every camera."
+          },
+          "children": [
+            {
+              "id": "motion_switch",
+              "type": "checkbox",
+              "label": {
+                "en": "Motion Detection"
+              },
+              "value": false
+            },
+            {
+              "id": "motion_tracking",
+              "type": "checkbox",
+              "label": {
+                "en": "Motion Tracking"
+              },
+              "value": false
+            },
+            {
+              "id": "decibel_switch",
+              "type": "checkbox",
+              "label": {
+                "en": "Sound Detection"
+              },
+              "value": false
+            },
+            {
+              "id": "cry_detection_switch",
+              "type": "checkbox",
+              "label": {
+                "en": "Crying Baby Detection"
+              },
+              "value": false
+            },
+            {
+              "id": "pet_detection",
+              "type": "checkbox",
+              "label": {
+                "en": "Pet Detection"
+              },
+              "value": false
+            },
+            {
+              "id": "motion_sensitivity",
+              "type": "dropdown",
+              "label": {
+                "en": "Motion Sensitivity"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Low"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Medium"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "High"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "decibel_sensitivity",
+              "type": "dropdown",
+              "label": {
+                "en": "Sound Sensitivity"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Low"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "High"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "basic_nightvision",
+              "type": "dropdown",
+              "label": {
+                "en": "Night Mode"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Auto"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Off"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "On"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "basic_device_volume",
+              "type": "number",
+              "label": {
+                "en": "Device Volume"
+              },
+              "value": 8,
+              "min": 1,
+              "max": 10,
+              "step": 1
+            },
+            {
+              "id": "basic_anti_flicker",
+              "type": "dropdown",
+              "label": {
+                "en": "Anti-Flicker"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Disabled"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "50 Hz"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "60 Hz"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "basic_osd",
+              "type": "checkbox",
+              "label": {
+                "en": "Video Timestamp"
+              },
+              "value": true
+            },
+            {
+              "id": "basic_flip",
+              "type": "checkbox",
+              "label": {
+                "en": "Flip Video"
+              },
+              "value": false
+            },
+            {
+              "id": "basic_indicator",
+              "type": "checkbox",
+              "label": {
+                "en": "Status Indicator"
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "alarm_timeout",
+          "type": "number",
+          "label": {
+            "en": "Alarm Timeout"
+          },
+          "value": 10,
+          "min": 1,
+          "units": {
+            "en": "seconds"
+          }
+        }
+      ]
+    },
     {
       "capabilities": [],
       "connectivity": [
@@ -2261,6 +2796,57 @@
     }
   ],
   "capabilities": {
+    "alarm_crying_child": {
+      "type": "boolean",
+      "title": {
+        "en": "Crying Child Detected"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Crying Child Detected"
+      },
+      "insightsTitleFalse": {
+        "en": "Crying Child No Longer Detected"
+      },
+      "icon": "assets/capabilities/detect-baby.svg"
+    },
+    "alarm_pet": {
+      "type": "boolean",
+      "title": {
+        "en": "Pet Detected"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Pet Detected"
+      },
+      "insightsTitleFalse": {
+        "en": "Pet No Longer Detected"
+      },
+      "icon": "assets/capabilities/detect-pet.svg"
+    },
+    "alarm_sound": {
+      "type": "boolean",
+      "title": {
+        "en": "Sound Detected"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Sound Detected"
+      },
+      "insightsTitleFalse": {
+        "en": "Sound No Longer Detected"
+      },
+      "icon": "assets/capabilities/detect-sound.svg"
+    },
     "child_lock": {
       "title": {
         "en": "Child Lock"
@@ -2271,6 +2857,16 @@
       "setable": true,
       "icon": "assets/capabilities/child_lock.svg"
     },
+    "cruise_switch": {
+      "type": "boolean",
+      "title": {
+        "en": "Auto Patrol"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "assets/capabilities/auto-patrol.svg"
+    },
     "eco_mode": {
       "type": "boolean",
       "title": {
@@ -2280,6 +2876,103 @@
       "setable": true,
       "uiComponent": "button",
       "icon": "assets/capabilities/eco.svg"
+    },
+    "ptz_control_horizontal": {
+      "type": "enum",
+      "title": {
+        "en": "Horizontal Control"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "ternary",
+      "values": [
+        {
+          "id": "up",
+          "title": {
+            "en": "Left"
+          }
+        },
+        {
+          "id": "idle",
+          "title": {
+            "en": "Stop"
+          }
+        },
+        {
+          "id": "down",
+          "title": {
+            "en": "Right"
+          }
+        }
+      ]
+    },
+    "ptz_control_vertical": {
+      "type": "enum",
+      "title": {
+        "en": "Vertical Control"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "ternary",
+      "values": [
+        {
+          "id": "up",
+          "title": {
+            "en": "Up"
+          }
+        },
+        {
+          "id": "idle",
+          "title": {
+            "en": "Stop"
+          }
+        },
+        {
+          "id": "down",
+          "title": {
+            "en": "Down"
+          }
+        }
+      ]
+    },
+    "ptz_control_zoom": {
+      "type": "enum",
+      "title": {
+        "en": "Zoom Control"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "ternary",
+      "values": [
+        {
+          "id": "up",
+          "title": {
+            "en": "Increase Zoom"
+          }
+        },
+        {
+          "id": "idle",
+          "title": {
+            "en": "Stop"
+          }
+        },
+        {
+          "id": "down",
+          "title": {
+            "en": "Decrease Zoom"
+          }
+        }
+      ]
+    },
+    "siren_switch": {
+      "type": "boolean",
+      "title": {
+        "en": "Siren"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "assets/capabilities/alarm-siren.svg"
     }
   }
 }
