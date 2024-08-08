@@ -41,6 +41,9 @@
       "args": [
         {
           "name": "value",
+          "title": {
+            "en": "Level"
+          },
           "type": "range",
           "min": 0,
           "max": 1,
@@ -65,6 +68,9 @@
       "args": [
         {
           "name": "value",
+          "title": {
+            "en": "Level"
+          },
           "type": "range",
           "min": 0,
           "max": 1,
