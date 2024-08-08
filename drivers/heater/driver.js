@@ -35,7 +35,7 @@ class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       'lock': 'child_lock',
       'work_power': 'measure_power',
       "mode_eco": "eco_mode",
-    }
+    };
 
     for (const status of device.status) {
       const tuyaCapability = status.code;
@@ -43,7 +43,7 @@ class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       if (tuyaCapability in abilityMapping) {
         props.store.tuya_capabilities.push(tuyaCapability);
 
-        const homeyCapability = abilityMapping[status.code]
+        const homeyCapability = abilityMapping[status.code];
         props.capabilities.push(homeyCapability);
       }
     }

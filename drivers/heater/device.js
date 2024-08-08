@@ -15,11 +15,11 @@ class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     }
 
     if (this.hasCapability('target_temperature')) {
-      this.registerCapabilityListener('target_temperature', (value) => this.targetTemperatureCapabilityListener(value))
+      this.registerCapabilityListener('target_temperature', (value) => this.targetTemperatureCapabilityListener(value));
     }
 
     if (this.hasCapability('child_lock')) {
-      this.registerCapabilityListener('child_lock', (value) => this.childLockCapabilityListener(value))
+      this.registerCapabilityListener('child_lock', (value) => this.childLockCapabilityListener(value));
     }
 
     if (this.hasCapability('eco_mode')) {
@@ -68,10 +68,10 @@ class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     await this.sendCommand({
       code: 'temp_set',
       value: limitedTemperature,
-    })
+    });
   }
 
-  async childLockCapabilityListener(value){
+  async childLockCapabilityListener(value) {
     await this.sendCommand({
       code: 'lock',
       value: value,
@@ -82,7 +82,7 @@ class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     await this.sendCommand({
       code: 'mode_eco',
       value: value,
-    })
+    });
   }
 }
 
