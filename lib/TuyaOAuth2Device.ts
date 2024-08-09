@@ -4,13 +4,15 @@ const { OAuth2Device } = require('homey-oauth2app');
 const TuyaOAuth2Util = require('./TuyaOAuth2Util');
 const TuyaOAuth2Constants = require("./TuyaOAuth2Constants");
 
+import {TuyaCommand, TuyaStatus, TuyaStatusUpdate} from "../types/TuyaTypes";
+
 /**
  * @extends OAuth2Device
  * @hideconstructor
  */
-class TuyaOAuth2Device extends OAuth2Device {
+export class TuyaOAuth2Device extends OAuth2Device {
 
-  constructor(...props) {
+  constructor(...props: unknown[]) {
     super(...props);
 
     this.__status = {};
@@ -28,7 +30,7 @@ class TuyaOAuth2Device extends OAuth2Device {
     return this.getStore();
   }
 
-  hasTuyaCapability(tuyaCapabilityId) {
+  hasTuyaCapability(tuyaCapabilityId: string) {
     return this.store?.tuya_capabilities?.includes(tuyaCapabilityId) ?? false;
   }
 
@@ -42,9 +44,9 @@ class TuyaOAuth2Device extends OAuth2Device {
 
     this.oAuth2Client.registerDevice({
       ...this.data,
-      onStatus: async statuses => {
+      onStatus: async (statuses: TuyaStatusUpdate<unknown>[]) => {
 
-        const changedStatusCodes = statuses.map(status => status.code);
+        const changedStatusCodes = statuses.map((status: TuyaStatusUpdate<unknown>) => status.code);
 
         console.log('changedStatusCodes', changedStatusCodes);
         const status = TuyaOAuth2Util.convertStatusArrayToStatusObject(statuses);
@@ -92,7 +94,7 @@ class TuyaOAuth2Device extends OAuth2Device {
   /*
    * Tuya
    */
-  async __onTuyaStatus(status, changedStatusCodes = []) {
+  async __onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[] = []) {
     this.__status = {
       ...this.__status,
       ...status,
@@ -128,7 +130,7 @@ class TuyaOAuth2Device extends OAuth2Device {
     await this.onTuyaStatus(this.__status, changedStatusCodes);
   }
 
-  async onTuyaStatus(status) {
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[] = []) {
     this.log('onTuyaStatus', JSON.stringify(status));
 
     if (status.online === true) {
@@ -159,14 +161,14 @@ class TuyaOAuth2Device extends OAuth2Device {
     });
   }
 
-  async sendCommands(commands = []) {
+  async sendCommands(commands: TuyaCommand[] = []) {
     await this.oAuth2Client.sendCommands({
       commands,
       deviceId: this.data.deviceId,
     });
   }
 
-  async sendCommand({ code, value }) {
+  async sendCommand({ code, value }: TuyaCommand) {
     await this.sendCommands([{
       code,
       value,
@@ -185,7 +187,7 @@ class TuyaOAuth2Device extends OAuth2Device {
     return this.oAuth2Client.getWebRTCConfiguration({deviceId})
   }
 
-  async getStreamingLink(type ) {
+  async getStreamingLink(type: "RTSP" | "HLS") {
     const { deviceId } = this.data;
     return this.oAuth2Client.getStreamingLink(deviceId, type);
   }
