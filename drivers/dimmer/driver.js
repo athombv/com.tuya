@@ -119,6 +119,10 @@ class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
       }
     }
 
+    if (!specification || !specification.status) {
+      return props;
+    }
+
     for (const statusSpecification of specification.status) {
       const tuyaCapability = statusSpecification.code;
       const values = JSON.parse(statusSpecification.values);
