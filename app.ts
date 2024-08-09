@@ -6,6 +6,9 @@ const TuyaOAuth2Util = require('./lib/TuyaOAuth2Util');
 
 import {TuyaOAuth2Device} from "./lib/TuyaOAuth2Device";
 import {TuyaScene} from "./types/TuyaTypes";
+import sourceMapSupport from 'source-map-support';
+
+sourceMapSupport.install();
 
 class TuyaOAuth2App extends OAuth2App {
   static OAUTH2_CLIENT = TuyaOAuth2Client;
