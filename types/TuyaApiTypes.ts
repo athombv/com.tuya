@@ -51,7 +51,7 @@ type TuyaStatusDatum<T> = {
   value: T,
 }
 
-export type TuyaStatusData = TuyaStatusDatum<unknown>[]
+export type TuyaStatusResponse = TuyaStatusDatum<unknown>[]
 
 export type TuyaDeviceResponse = {
   "active_time": number,
@@ -67,10 +67,45 @@ export type TuyaDeviceResponse = {
   "owner_id": string,
   "product_id": string,
   "product_name": string,
-  "status": TuyaStatusData,
+  "status": TuyaStatusResponse,
   "sub": boolean,
   "time_zone": string,
   "uid": string,
   "update_time": number,
   "uuid": string
+}
+
+type TuyaSpecificationDatum = {
+  code: string,
+  type: string,
+  values: string,
+}
+
+export type TuyaDeviceSpecificationResponse = {
+  category: string,
+  functions: TuyaSpecificationDatum[],
+  status: TuyaSpecificationDatum[],
+}
+
+type TuyaWebRTCIce = {
+  "ttl"?: number,
+  "urls": string,
+  "credential"?: string,
+  "username"?: string
+};
+
+export type TuyaWebRTC = {
+  "p2p_config": {
+    "ices": TuyaWebRTCIce[]
+  },
+  "auth": string,
+  "supports_webrtc": true,
+  "skill": string,
+  "moto_id": string,
+  "id": string,
+  "vedio_clarity": number,
+  "audio_attributes": {
+    "call_mode": number[],
+    "hardware_capability": number[]
+  }
 }
