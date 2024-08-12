@@ -1,6 +1,6 @@
 'use strict';
 
-import {TuyaCommand, TuyaToken, TuyaUserInfo} from "../types/TuyaApiTypes";
+import {TuyaCommand, TuyaDeviceResponse, TuyaHome, TuyaScene, TuyaToken, TuyaUserInfo} from "../types/TuyaApiTypes";
 
 const { URL } = require('url');
 
@@ -205,48 +205,53 @@ class TuyaOAuth2Client extends OAuth2Client {
     });
   }
 
-  async getDevices() {
+  async getDevices(): Promise<TuyaDeviceResponse[]> {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
+    // https://developer.tuya.com/en/docs/cloud/device-management?id=K9g6rfntdz78a
     return this.get({
       path: `${apiUrl}/v1.0/users/${token.uid}/devices`,
     });
   }
 
-  async getDevice({
+  getDevice({
     deviceId,
-  }: { deviceId: string }) {
-    const token = await this.getToken();
+  }: { deviceId: string }): Promise<TuyaDeviceResponse> {
+    const token = this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
+    // https://developer.tuya.com/en/docs/cloud/device-management?id=K9g6rfntdz78a
     return this.get({
       path: `${apiUrl}/v1.0/devices/${deviceId}`,
     });
   }
 
-  async getHomes() {
-    const token = await this.getToken();
+  async getHomes(): Promise<TuyaHome[]> {
+    const token = this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
+    // https://developer.tuya.com/en/docs/cloud/f5dd40ed14?id=Kawfjh9hpov1n
     return this.get({
       path: `${apiUrl}/v1.0/users/${token.uid}/homes`,
     });
   }
 
-  async getScenes(spaceId: string) {
+  async getScenes(spaceId: string): Promise<TuyaScene[]> {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
+    // https://developer.tuya.com/en/docs/cloud/d7785d8964?id=Kcp2l4i0bo315
     return this.get({
       path: `${apiUrl}/v2.0/cloud/scene/rule?space_id=${spaceId}`,
     });
   }
 
-  async triggerScene(sceneId: string) {
+  async triggerScene(sceneId: string): Promise<boolean> {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
+    // https://developer.tuya.com/en/docs/cloud/89b2c8538b?id=Kcp2l54tos47r
     return this.post({
       path: `${apiUrl}/v2.0/cloud/scene/rule/${sceneId}/actions/trigger`,
     });
