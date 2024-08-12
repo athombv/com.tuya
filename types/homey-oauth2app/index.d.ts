@@ -2,6 +2,7 @@
 declare module 'homey-oauth2app' {
   import Homey, {SimpleClass} from 'homey';
   import {Log} from 'homey-log';
+  const fetch = require('node-fetch');
 
   class OAuth2App extends Homey.App {
     onOAuth2Init(): Promise<void>;
@@ -14,6 +15,8 @@ declare module 'homey-oauth2app' {
     static TOKEN_URL: string;
     static AUTHORIZATION_URL: string;
     static SCOPES: string[];
+
+    homey: Homey;
 
     get<T>(data: {
       path: string,
@@ -45,16 +48,24 @@ declare module 'homey-oauth2app' {
 
     onShouldRefreshToken(args: {status: number}): Promise<boolean>;
 
-    getToken(): {
-      access_token: string,
-      refresh_token: string,
-      token_type: string,
-      expires_in: number,
-    };
+    getToken(): OAuth2Token;
 
     async refreshToken(...args): Promise<void>;
 
     save(): void;
+
+    async onBuildRequest(args: {
+      method: string
+      path: string
+      json: object
+      body: object
+      query: object
+      headers: object
+    }): Promise<{ opts: {
+      method: unknown,
+        body: unknown,
+        headers: object,
+      }, url: string }>
   }
 
   class OAuth2Device<T extends OAuth2Client> extends Homey.Device {
@@ -99,6 +110,29 @@ declare module 'homey-oauth2app' {
         [key: string]: any
       }
     },
+  }
+
+  class OAuth2Token {
+    access_token: string;
+    refresh_token: string;
+    token_type?: string;
+    expires_in?: number;
+
+    constructor(param: {
+      access_token: string;
+      refresh_token: string;
+      token_type?: string;
+      expires_in?: number;
+    });
+
+    isRefreshable(): boolean;
+
+    toJSON(): {
+      access_token: string;
+      refresh_token: string;
+      token_type?: string;
+      expires_in?: number;
+    };
   }
 }
 

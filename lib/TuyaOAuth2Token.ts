@@ -2,25 +2,30 @@
 
 'use strict';
 
-const { OAuth2Token } = require('homey-oauth2app');
+import {OAuth2Token} from 'homey-oauth2app';
 
-/**
- * @extends OAuth2Token
- */
-class TuyaOAuth2Token extends OAuth2Token {
+export default class TuyaOAuth2Token extends OAuth2Token {
+
+  region: string;
+  uid: string;
+  expire_time: number;
 
   constructor({
     region,
     uid,
     expire_time,
     ...props
+  }: {
+    region: string;
+    uid: string;
+    expire_time: number;
+    access_token: string;
+    refresh_token: string;
+    token_type?: string;
+    expires_in?: number;
   }) {
     super({ ...props });
 
-    /**
-     * API Region
-     * @property {String}
-     */
     this.region = region;
 
     /**

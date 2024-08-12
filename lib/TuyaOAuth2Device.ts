@@ -4,7 +4,8 @@ const { OAuth2Device } = require('homey-oauth2app');
 const TuyaOAuth2Util = require('./TuyaOAuth2Util');
 const TuyaOAuth2Constants = require("./TuyaOAuth2Constants");
 
-import {TuyaCommand, TuyaStatus, TuyaStatusUpdate} from "../types/TuyaTypes";
+import {TuyaStatus, TuyaStatusUpdate} from "../types/TuyaTypes";
+import {TuyaCommand} from "../types/TuyaApiTypes";
 
 /**
  * @extends OAuth2Device

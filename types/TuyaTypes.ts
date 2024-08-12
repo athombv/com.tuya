@@ -1,8 +1,3 @@
-export type TuyaCommand = {
-  code: string,
-  value: unknown,
-}
-
 export type TuyaStatus = Record<string, unknown>
 
 export type TuyaStatusUpdate<T> = {
@@ -12,11 +7,10 @@ export type TuyaStatusUpdate<T> = {
   [datapoint: string]: any // Seems to be datapoint index as string to value as string
 }
 
-export type TuyaScene = {
-  id: string
-  name: string
-  running_mode: 'local' | 'lan' | 'cloud'
-  space_id: string
-  status: 'enable' | 'disable'
-  type: 'scene' | 'automation' // tap-to-run or automation
+export type DeviceRegistration = {
+  productId: string,
+  deviceId: string,
+  onStatus: (status: TuyaStatus) => Promise<void>,
+  onOnline: () => Promise<void>,
+  onOffline: () => Promise<void>,
 }

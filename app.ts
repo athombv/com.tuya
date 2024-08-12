@@ -5,8 +5,8 @@ const TuyaOAuth2Client = require('./lib/TuyaOAuth2Client');
 const TuyaOAuth2Util = require('./lib/TuyaOAuth2Util');
 
 import {TuyaOAuth2Device} from "./lib/TuyaOAuth2Device";
-import {TuyaScene} from "./types/TuyaTypes";
 import sourceMapSupport from 'source-map-support';
+import {TuyaScene} from "./types/TuyaApiTypes";
 
 sourceMapSupport.install();
 

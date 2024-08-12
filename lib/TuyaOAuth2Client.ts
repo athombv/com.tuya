@@ -1,11 +1,17 @@
 'use strict';
 
+import {TuyaCommand, TuyaToken, TuyaUserInfo} from "../types/TuyaApiTypes";
+
 const { URL } = require('url');
 
 const Homey = require('homey');
-const { OAuth2Client, fetch } = require('homey-oauth2app');
+import {OAuth2Client, fetch} from 'homey-oauth2app';
 
-const TuyaOAuth2Token = require('./TuyaOAuth2Token');
+import TuyaOAuth2Token from './TuyaOAuth2Token';
+import {Response} from "node-fetch";
+import {CloudWebhook} from "homey";
+import {DeviceRegistration} from "../types/TuyaTypes";
+
 const TuyaOAuth2Error = require('./TuyaOAuth2Error');
 const TuyaOAuth2Constants = require('./TuyaOAuth2Constants');
 const TuyaOAuth2Util = require('./TuyaOAuth2Util');
@@ -18,9 +24,19 @@ class TuyaOAuth2Client extends OAuth2Client {
   static AUTHORIZATION_URL = 'https://openapi.tuyaus.com/login';
   static REDIRECT_URL = 'https://tuya.athom.com/callback';
 
+  _token: TuyaOAuth2Token | undefined;
+  _clientId: unknown;
+  _clientSecret: unknown;
+
+  __updateWebhookTimeout?: NodeJS.Timeout;
+  webhook?: CloudWebhook;
+
   /*
    * OAuth2Client Overloads
    */
+  getToken(): TuyaOAuth2Token {
+    return super.getToken() as unknown as TuyaOAuth2Token;
+  };
 
   // We save this information to eventually enable OAUTH2_MULTI_SESSION.
   // We can then list all authenticated users by name, e-mail and country flag.
@@ -39,7 +55,14 @@ class TuyaOAuth2Client extends OAuth2Client {
   }
 
   // Sign the request
-  async onBuildRequest({ ...props }) {
+  async onBuildRequest(props: {
+    method: string
+    path: string
+    json: object
+    body: object
+    query: object
+    headers: object
+  }) {
     const {
       url,
       opts,
@@ -68,8 +91,9 @@ class TuyaOAuth2Client extends OAuth2Client {
     };
   }
 
-  async onShouldRefreshToken(response) {
-    const json = await response.json();
+  async onShouldRefreshToken(response: Response) {
+    const json = await response.json() as { code: number };
+    // @ts-ignore legacy code
     response.json = () => json;
 
     return json.code === TuyaOAuth2Constants.ERROR_CODES.ACCESS_TOKEN_EXPIRED;
@@ -77,7 +101,7 @@ class TuyaOAuth2Client extends OAuth2Client {
 
   // The authorization code is Base64-encoded by tuya.athom.com to embed the 'region' as well.
   // We need this to determine the API URL.
-  async onGetTokenByCode({ code }) {
+  async onGetTokenByCode({ code }: { code: string }) {
     const {
       region,
       code: authorizationCode,
@@ -99,7 +123,7 @@ class TuyaOAuth2Client extends OAuth2Client {
     });
     const result = await response.json();
 
-    const tokenJSON = await this.onHandleResult({ result });
+    const tokenJSON = await this.onHandleResult({ result }) as TuyaToken;
     this._token = new TuyaOAuth2Token({
       ...tokenJSON,
       region,
@@ -130,7 +154,8 @@ class TuyaOAuth2Client extends OAuth2Client {
     });
     const result = await response.json();
 
-    const tokenJSON = await this.onHandleResult({ result });
+    const tokenJSON = await this.onHandleResult({ result }) as TuyaToken;
+
     this._token = new TuyaOAuth2Token({
       ...token.toJSON(),
       ...tokenJSON,
@@ -144,6 +169,16 @@ class TuyaOAuth2Client extends OAuth2Client {
   async onHandleResult({
     result,
     status,
+  }: {
+    result: {
+      success: unknown,
+      result: unknown,
+      msg: unknown,
+      code: unknown,
+    }
+    status?: number
+    statusText?: string
+    headers?: object
   }) {
     if (result.success) {
       return result.result;
@@ -161,7 +196,7 @@ class TuyaOAuth2Client extends OAuth2Client {
    */
 
   // Documentation: https://developer.tuya.com/en/docs/cloud/cfebf22ad3?id=Kawfjdgic5c0w
-  async getUserInfo() {
+  async getUserInfo(): Promise<TuyaUserInfo> {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -181,7 +216,7 @@ class TuyaOAuth2Client extends OAuth2Client {
 
   async getDevice({
     deviceId,
-  }) {
+  }: { deviceId: string }) {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -199,7 +234,7 @@ class TuyaOAuth2Client extends OAuth2Client {
     });
   }
 
-  async getScenes(spaceId) {
+  async getScenes(spaceId: string) {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -208,7 +243,7 @@ class TuyaOAuth2Client extends OAuth2Client {
     });
   }
 
-  async triggerScene(sceneId) {
+  async triggerScene(sceneId: string) {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -219,7 +254,7 @@ class TuyaOAuth2Client extends OAuth2Client {
 
   async getSpecification({
     deviceId,
-  }) {
+  }: { deviceId: string }) {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -230,7 +265,7 @@ class TuyaOAuth2Client extends OAuth2Client {
 
   async getWebRTCConfiguration({
     deviceId,
-  }) {
+  }: { deviceId: string }) {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -239,11 +274,7 @@ class TuyaOAuth2Client extends OAuth2Client {
     });
   }
 
-  /**
-   * @param {string} deviceId - The Tuya ID of the camera device
-   * @param {"RTSP" | "HLS"} type - The type of stream for which to generate a link
-   */
-  async getStreamingLink(deviceId, type ) {
+  async getStreamingLink(deviceId: string, type: "RTSP" | "HLS" ) {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -258,7 +289,7 @@ class TuyaOAuth2Client extends OAuth2Client {
   // Documentation: https://developer.tuya.com/en/docs/cloud/d65d46643b?id=Kb3ob6g63p4xh
   async getDeviceStatus({
     deviceId,
-  }) {
+  }: { deviceId: string }) {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -271,7 +302,7 @@ class TuyaOAuth2Client extends OAuth2Client {
   async sendCommands({
     deviceId,
     commands = [],
-  }) {
+  }: { deviceId: string, commands: TuyaCommand[] }) {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -291,18 +322,18 @@ class TuyaOAuth2Client extends OAuth2Client {
   /*
    * Webhooks
    */
-  registeredDevices = new Map();
+  registeredDevices = new Map<string, DeviceRegistration>();
   // Devices that are added as 'other' may be duplicates
-  registeredOtherDevices = new Map();
+  registeredOtherDevices = new Map<string, DeviceRegistration>();
 
   async registerDevice(
     {
       productId,
       deviceId,
-      onStatus = () => {},
-      onOnline = () => {},
-      onOffline = () => {},
-    },
+      onStatus = async () => {},
+      onOnline = async () => {},
+      onOffline = async () => {},
+    }: DeviceRegistration,
     other = false,
   ) {
     const register = other
@@ -318,7 +349,7 @@ class TuyaOAuth2Client extends OAuth2Client {
     this.onUpdateWebhook();
   }
 
-  async unregisterDevice({ productId, deviceId }, other = false) {
+  async unregisterDevice({ productId, deviceId }: { productId: string, deviceId: string }, other = false) {
     const register = other
       ? this.registeredOtherDevices
       : this.registeredDevices;
@@ -347,7 +378,7 @@ class TuyaOAuth2Client extends OAuth2Client {
           this.webhook = await this.homey.cloud.createWebhook(Homey.env.WEBHOOK_ID, Homey.env.WEBHOOK_SECRET, {
             $keys: combinedKeys,
           });
-          this.webhook.on('message', message => {
+          this.webhook!.on('message', message => {
             this.log('onWebhookMessage', JSON.stringify(message));
 
             Promise.resolve().then(async () => {
