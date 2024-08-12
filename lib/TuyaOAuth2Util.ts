@@ -1,12 +1,15 @@
 'use strict';
 
-const crypto = require('crypto');
+import crypto from 'crypto';
+import {TuyaStatusResponse} from "../types/TuyaApiTypes";
+import {SettingsEvent, TuyaStatus} from "../types/TuyaTypes";
+import TuyaOAuth2Device from "./TuyaOAuth2Device";
 
 /**
  * Utilities class.
  * @hideconstructor
  */
-class TuyaOAuth2Util {
+export default class TuyaOAuth2Util {
 
   /**
    * This method converts:
@@ -22,19 +25,19 @@ class TuyaOAuth2Util {
    * @param {Array} statuses
    * @returns {Object}
    */
-  static convertStatusArrayToStatusObject(statuses) {
+  static convertStatusArrayToStatusObject(statuses: TuyaStatusResponse): TuyaStatus {
     return statuses.reduce((obj, item) => {
       obj[item.code] = item.value;
 
       // Parse JSON
-      if (typeof obj[item.code] === 'string' && obj[item.code].startsWith('{')) {
+      if (typeof obj[item.code] === 'string' && (obj[item.code] as string).startsWith('{')) {
         try {
-          obj[item.code] = JSON.parse(obj[item.code]);
+          obj[item.code] = JSON.parse(obj[item.code] as string);
         } catch (err) { }
       }
 
       return obj;
-    }, {});
+    }, {} as TuyaStatus);
   }
 
   /*
@@ -50,8 +53,18 @@ class TuyaOAuth2Util {
     nonce = crypto.randomBytes(16).toString('hex'),
     bundleId = 'app.homey',
     t = Date.now(),
+  }: {
+    method: string
+    body: string,
+    path: string,
+    clientId: string,
+    clientSecret: string,
+    accessToken: string | null,
+    nonce: string,
+    bundleId: string,
+    t : number,
   }) {
-    const headers = {};
+    const headers: Record<string, string> = {};
 
     // Calculate signature
     const contentHash = crypto
@@ -82,7 +95,7 @@ class TuyaOAuth2Util {
   /*
    * Redact sensitive fields when logging Device information
    */
-  static redactFields(device, additionalFields = []) {
+  static redactFields(device: TuyaOAuth2Device, additionalFields: string[] = []) {
     const defaultFields = ['ip', 'lat', 'lon', 'owner_id', 'uid', 'uuid', 'local_key'];
     const combinedFields = [...new Set([...defaultFields, ...additionalFields])];
 
@@ -96,7 +109,7 @@ class TuyaOAuth2Util {
     return newObj;
   }
 
-  static hasJsonStructure(str) {
+  static hasJsonStructure(str: any) {
     if (typeof str !== 'string') return false;
     try {
       const result = JSON.parse(str);
@@ -115,7 +128,7 @@ class TuyaOAuth2Util {
    * @param value - The new value of the setting
    * @param settingLabels - A mapping from setting keys to their user-friendly label
    */
-  static async sendSetting(device, code, value, settingLabels) {
+  static async sendSetting(device: TuyaOAuth2Device, code: string, value: unknown, settingLabels: Record<string, string>) {
     await device
       .sendCommand({
         code: code,
@@ -145,9 +158,9 @@ class TuyaOAuth2Util {
    * @param device - The device for which the settings are updated
    * @param event - The settings event
    */
-  static async sendSettings(device, { oldSettings, newSettings, changedKeys }) {
-    const unsupportedSettings = [];
-    const unsupportedValues = [];
+  static async sendSettings(device: TuyaOAuth2Device, { oldSettings, newSettings, changedKeys }: SettingsEvent<Record<string, unknown>>) {
+    const unsupportedSettings: string[] = [];
+    const unsupportedValues: string[] = [];
 
     // Accumulate rejected settings so the user can be notified gracefully
     for (const changedKey of changedKeys) {
@@ -176,7 +189,7 @@ class TuyaOAuth2Util {
    * @param unsupportedValues - Settings for which the new value is unsupported
    * @param settingLabels - A mapping from setting keys to their user-friendly label
    */
-  static reportUnsupportedSettings(device, unsupportedSettings, unsupportedValues, settingLabels) {
+  static reportUnsupportedSettings(device: TuyaOAuth2Device, unsupportedSettings: string[], unsupportedValues: string[], settingLabels: Record<string, string>) {
     // Report back which capabilities and values are unsupported,
     // since we cannot programmatically remove settings.
     const messages = [];
@@ -204,7 +217,7 @@ class TuyaOAuth2Util {
    * @param event - The settings event
    * @param settingLabels - A mapping from setting keys to their user-friendly label
    */
-  static async onSettings(device, event, settingLabels) {
+  static async onSettings(device: TuyaOAuth2Device, event: SettingsEvent<Record<string, unknown>>, settingLabels: Record<string, string>) {
     const [unsupportedSettings, unsupportedValues] = await TuyaOAuth2Util.sendSettings(device, event);
     return TuyaOAuth2Util.reportUnsupportedSettings(device, unsupportedSettings, unsupportedValues, settingLabels);
   }

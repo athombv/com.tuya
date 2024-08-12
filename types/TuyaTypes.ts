@@ -14,3 +14,10 @@ export type DeviceRegistration = {
   onOnline: () => Promise<void>,
   onOffline: () => Promise<void>,
 }
+
+export type SettingsEvent<T> = {
+  oldSettings: T;
+  newSettings: T;
+  changedKeys: (keyof T)[]
+}
+

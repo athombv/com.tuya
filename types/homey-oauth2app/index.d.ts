@@ -134,5 +134,9 @@ declare module 'homey-oauth2app' {
       expires_in?: number;
     };
   }
+
+  class OAuth2Error {
+    constructor(message: string, statusCode: number);
+  }
 }
 
