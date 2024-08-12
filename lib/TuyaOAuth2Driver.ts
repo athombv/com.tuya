@@ -1,50 +1,46 @@
 'use strict';
 
-const { OAuth2Driver } = require('homey-oauth2app');
+import {OAuth2DeviceResult, OAuth2Driver} from 'homey-oauth2app';
+import TuyaOAuth2Client from "./TuyaOAuth2Client";
+import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../types/TuyaApiTypes";
+
 const TuyaOAuth2Util = require('./TuyaOAuth2Util');
 
-/**
- * @extends OAuth2Driver
- * @hideconstructor
- */
-class TuyaOAuth2Driver extends OAuth2Driver {
+export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
 
   TUYA_DEVICE_CATEGORIES: string[] = [];
 
-  async onPairListDevices({ oAuth2Client }) {
+  async onPairListDevices({ oAuth2Client }: { oAuth2Client: TuyaOAuth2Client }) {
     const devices = await oAuth2Client.getDevices();
     const filteredDevices = devices
       .filter(device => {
         this.log('Device:', JSON.stringify(TuyaOAuth2Util.redactFields(device)));
         return this.onTuyaPairListDeviceFilter(device);
       });
-    const listDevices = [];
+    const listDevices: OAuth2DeviceResult[] = [];
     for (const device of filteredDevices) {
       const deviceSpecs = await oAuth2Client.getSpecification({deviceId: device.id})
-          .catch(e => this.log('Device specification retrieval failed', e));
+          .catch(e => this.log('Device specification retrieval failed', e)) ?? undefined;
 
       const deviceProperties = this.onTuyaPairListDeviceProperties({...device}, deviceSpecs);
       listDevices.push({
+        ...deviceProperties,
         name: device.name,
         data: {
           deviceId: device.id,
           productId: device.product_id,
         },
-        store: {},
-        capabilities: [],
-        capabilitiesOptions: {},
-        ...deviceProperties,
       });
     }
     return listDevices;
   }
 
-  onTuyaPairListDeviceFilter(device) {
+  onTuyaPairListDeviceFilter(device: TuyaDeviceResponse) {
     return this.TUYA_DEVICE_CATEGORIES.includes(device.category);
   }
 
-  onTuyaPairListDeviceProperties(device) {
-    const props = {
+  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications?: TuyaDeviceSpecificationResponse): Omit<OAuth2DeviceResult, "name" | "data"> {
+    return {
       capabilities: [],
       store: {
         tuya_capabilities: [],
@@ -52,8 +48,6 @@ class TuyaOAuth2Driver extends OAuth2Driver {
       capabilitiesOptions: {},
       settings: {},
     };
-
-    return props;
   }
 
 }

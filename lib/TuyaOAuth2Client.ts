@@ -26,7 +26,7 @@ const TuyaOAuth2Error = require('./TuyaOAuth2Error');
 const TuyaOAuth2Constants = require('./TuyaOAuth2Constants');
 const TuyaOAuth2Util = require('./TuyaOAuth2Util');
 
-class TuyaOAuth2Client extends OAuth2Client {
+export default class TuyaOAuth2Client extends OAuth2Client {
 
   static TOKEN = TuyaOAuth2Token;
   static API_URL = '<dummy>';

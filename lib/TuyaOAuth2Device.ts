@@ -1,20 +1,22 @@
 'use strict';
 
-const { OAuth2Device } = require('homey-oauth2app');
+import TuyaOAuth2Client from "./TuyaOAuth2Client";
+
+import {OAuth2Device} from 'homey-oauth2app';
 const TuyaOAuth2Util = require('./TuyaOAuth2Util');
 const TuyaOAuth2Constants = require("./TuyaOAuth2Constants");
 
 import {TuyaStatus, TuyaStatusUpdate} from "../types/TuyaTypes";
 import {TuyaCommand} from "../types/TuyaApiTypes";
 
-/**
- * @extends OAuth2Device
- * @hideconstructor
- */
-export class TuyaOAuth2Device extends OAuth2Device {
+export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
 
-  constructor(...props: unknown[]) {
-    super(...props);
+  oAuth2Client!: TuyaOAuth2Client;
+  __status: TuyaStatus;
+  __syncInterval?: NodeJS.Timeout;
+
+  constructor(props: any) {
+    super(props);
 
     this.__status = {};
     this.__sync = this.__sync.bind(this);
@@ -24,11 +26,11 @@ export class TuyaOAuth2Device extends OAuth2Device {
   static SYNC_INTERVAL = null; // Set to number n to sync every n ms
 
   get data() {
-    return this.getData();
+    return super.getData();
   }
 
   get store() {
-    return this.getStore();
+    return super.getStore();
   }
 
   hasTuyaCapability(tuyaCapabilityId: string) {
@@ -131,7 +133,7 @@ export class TuyaOAuth2Device extends OAuth2Device {
     await this.onTuyaStatus(this.__status, changedStatusCodes);
   }
 
-  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[] = []) {
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
     this.log('onTuyaStatus', JSON.stringify(status));
 
     if (status.online === true) {
