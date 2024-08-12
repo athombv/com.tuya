@@ -1,12 +1,13 @@
 'use strict';
 
-const { OAuth2App } = require('homey-oauth2app');
-const TuyaOAuth2Client = require('./lib/TuyaOAuth2Client');
-const TuyaOAuth2Util = require('./lib/TuyaOAuth2Util');
+import {OAuth2App} from 'homey-oauth2app';
+import TuyaOAuth2Client from './lib/TuyaOAuth2Client';
+import TuyaOAuth2Util from './lib/TuyaOAuth2Util';
 
-import {TuyaOAuth2Device} from "./lib/TuyaOAuth2Device";
+import TuyaOAuth2Device from "./lib/TuyaOAuth2Device";
 import sourceMapSupport from 'source-map-support';
 import {TuyaScene} from "./types/TuyaApiTypes";
+import { ArgumentAutocompleteResults } from 'homey/lib/FlowCard';
 
 sourceMapSupport.install();
 
@@ -29,7 +30,7 @@ class TuyaOAuth2App extends OAuth2App {
 
     const generalControlAutocompleteListener = async (query: string, args: {
       device: TuyaOAuth2Device
-    }, filter: ({value}: { value: unknown }) => boolean) => {
+    }, filter: ({value}: { value: unknown }) => boolean): Promise<ArgumentAutocompleteResults> => {
       const status = await args.device.getStatus();
       return status
         .filter(filter)
@@ -37,6 +38,7 @@ class TuyaOAuth2App extends OAuth2App {
           return code.toLowerCase().includes(query.toLowerCase());
         })
         .map(({code}: { code: string }) => ({
+          name: code,
           id: code,
           title: code,
         }));
@@ -147,6 +149,10 @@ class TuyaOAuth2App extends OAuth2App {
       });
 
     this.log('Tuya started');
+  }
+
+  getFirstSavedOAuth2Client(): TuyaOAuth2Client {
+    return super.getFirstSavedOAuth2Client() as TuyaOAuth2Client;
   }
 }
 

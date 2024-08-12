@@ -3,7 +3,7 @@
 import TuyaOAuth2Client from "./TuyaOAuth2Client";
 
 import {OAuth2Device} from 'homey-oauth2app';
-const TuyaOAuth2Util = require('./TuyaOAuth2Util');
+import TuyaOAuth2Util from './TuyaOAuth2Util';
 const TuyaOAuth2Constants = require("./TuyaOAuth2Constants");
 
 import {TuyaStatus, TuyaStatusUpdate} from "../types/TuyaTypes";
@@ -15,8 +15,8 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
   __status: TuyaStatus;
   __syncInterval?: NodeJS.Timeout;
 
-  constructor(props: any) {
-    super(props);
+  constructor(...props: any) {
+    super(...props);
 
     this.__status = {};
     this.__sync = this.__sync.bind(this);

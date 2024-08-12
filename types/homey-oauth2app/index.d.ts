@@ -7,6 +7,8 @@ declare module 'homey-oauth2app' {
   class OAuth2App extends Homey.App {
     onOAuth2Init(): Promise<void>;
 
+    getFirstSavedOAuth2Client(): OAuth2Client;
+
     homeyLog: Log;
   }
 

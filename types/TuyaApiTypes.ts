@@ -37,6 +37,12 @@ export type TuyaScene = {
   type: 'scene' | 'automation' // tap-to-run or automation
 }
 
+export type TuyaScenesResponse = {
+  has_more: boolean
+  list: TuyaScene[]
+  total: number
+}
+
 export type TuyaHome = {
   geo_name: string,
   home_id: number,

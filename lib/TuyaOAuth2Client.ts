@@ -5,7 +5,7 @@ import {
   TuyaDeviceResponse,
   TuyaDeviceSpecificationResponse,
   TuyaHome,
-  TuyaScene,
+  TuyaScenesResponse,
   TuyaStatusResponse,
   TuyaToken,
   TuyaUserInfo,
@@ -247,8 +247,8 @@ export default class TuyaOAuth2Client extends OAuth2Client {
     });
   }
 
-  async getScenes(spaceId: string): Promise<TuyaScene[]> {
-    const token = await this.getToken();
+  async getScenes(spaceId: string | number): Promise<TuyaScenesResponse> {
+    const token = this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
     // https://developer.tuya.com/en/docs/cloud/d7785d8964?id=Kcp2l4i0bo315
