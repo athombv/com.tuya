@@ -11,7 +11,7 @@ const {PIR_CAPABILITIES} = require('./TuyaLightConstants')
  */
 class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
 
-  static TUYA_DEVICE_CATEGORIES = [
+  TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.LIGHT,
     TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.CEILING_LIGHT,
     TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.AMBIENCE_LIGHT,

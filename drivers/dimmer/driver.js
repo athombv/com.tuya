@@ -7,7 +7,7 @@ const { SIMPLE_DIMMER_CAPABILITIES } = require("./TuyaDimmerConstants")
 
 class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
 
-  static TUYA_DEVICE_CATEGORIES = [
+  TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.DIMMER,
   ];
 

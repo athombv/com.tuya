@@ -9,7 +9,7 @@ const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
  */
 class TuyaOAuth2DriverSensorSmoke extends TuyaOAuth2DriverSensor {
 
-  static TUYA_DEVICE_CATEGORIES = [
+  TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMOKE_ALARM,
   ];
 

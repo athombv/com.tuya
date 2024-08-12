@@ -6,7 +6,7 @@ const { HEATER_CAPABILITIES_MAPPING } = require('./TuyaHeaterConstants');
 
 class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
 
-  static TUYA_DEVICE_CATEGORIES = [
+  TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
   ];
 

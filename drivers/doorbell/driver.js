@@ -5,7 +5,7 @@ const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
 
 class TuyaOAuth2DriverDoorbell extends TuyaOAuth2Driver {
 
-  static TUYA_DEVICE_CATEGORIES = [
+  TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
   ];
 
