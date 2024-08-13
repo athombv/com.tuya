@@ -1,7 +1,7 @@
 'use strict';
 
 import crypto from 'crypto';
-import {TuyaStatusResponse} from "../types/TuyaApiTypes";
+import {TuyaDeviceResponse, TuyaStatusResponse} from "../types/TuyaApiTypes";
 import {SettingsEvent, TuyaStatus} from "../types/TuyaTypes";
 import TuyaOAuth2Device from "./TuyaOAuth2Device";
 
@@ -95,7 +95,7 @@ export default class TuyaOAuth2Util {
   /*
    * Redact sensitive fields when logging Device information
    */
-  static redactFields(device: TuyaOAuth2Device, additionalFields: string[] = []) {
+  static redactFields(device: TuyaDeviceResponse, additionalFields: string[] = []) {
     const defaultFields = ['ip', 'lat', 'lon', 'owner_id', 'uid', 'uuid', 'local_key'];
     const combinedFields = [...new Set([...defaultFields, ...additionalFields])];
 

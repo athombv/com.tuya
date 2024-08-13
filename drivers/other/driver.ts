@@ -1,14 +1,15 @@
 "use strict";
 
-const TuyaOAuth2Driver = require("../../lib/TuyaOAuth2Driver");
-const TuyaOAuth2Util = require("../../lib/TuyaOAuth2Util");
+import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
+import TuyaOAuth2Util from "../../lib/TuyaOAuth2Util";
+import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 
-module.exports = class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
+export default class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
   onTuyaPairListDeviceFilter() {
     return true; // Accept any device
   }
 
-  onTuyaPairListDeviceProperties(device, specifications) {
+  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
     const props = super.onTuyaPairListDeviceProperties(device);
 
     const combinedSpecification = {
@@ -25,3 +26,5 @@ module.exports = class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
     return props;
   }
 };
+
+module.exports = TuyaOAuth2DriverOther;
