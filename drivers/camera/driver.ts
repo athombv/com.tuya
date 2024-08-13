@@ -1,6 +1,8 @@
 "use strict";
 
-const TuyaOAuth2Driver = require("../../lib/TuyaOAuth2Driver");
+import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
+import TuyaOAuth2DeviceCamera from "./device";
+import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 const TuyaOAuth2Constants = require("../../lib/TuyaOAuth2Constants");
 const {
   CAMERA_SETTING_LABELS,
@@ -9,6 +11,9 @@ const {
   COMPLEX_CAMERA_CAPABILITIES,
   CAMERA_ALARM_CAPABILITIES,
 } = require("./TuyaCameraConstants");
+
+type DeviceArgs = { device: TuyaOAuth2DeviceCamera };
+type ValueArgs = { value: any };
 
 class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [
@@ -21,7 +26,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     for (const capability of SIMPLE_CAMERA_FLOWS.read_write) {
       this.homey.flow
         .getActionCard(`camera_${capability}`)
-        .registerRunListener(async (args, state) => {
+        .registerRunListener(async (args: DeviceArgs & ValueArgs) => {
           await args.device.triggerCapabilityListener(capability, args.value);
         });
     }
@@ -30,7 +35,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     for (const setting of SIMPLE_CAMERA_FLOWS.setting) {
       this.homey.flow
         .getActionCard(`camera_${setting}`)
-        .registerRunListener(async (args, state) => {
+        .registerRunListener(async (args: DeviceArgs & ValueArgs) => {
           await args.device
             .sendCommand({code: setting, value: args.value})
             .catch((err) => {
@@ -44,8 +49,8 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     }
   }
 
-  onTuyaPairListDeviceProperties(device, specification) {
-    const props = super.onTuyaPairListDeviceProperties(device);
+  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
+    const props = super.onTuyaPairListDeviceProperties(device, specifications);
 
     for (const status of device.status) {
       const capability = status.code;

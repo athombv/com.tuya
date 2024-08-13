@@ -1,19 +1,17 @@
 "use strict";
 
-const TuyaOAuth2Device = require("../../lib/TuyaOAuth2Device");
+import TuyaOAuth2Device from "../../lib/TuyaOAuth2Device";
 const {
   SIMPLE_CAMERA_CAPABILITIES,
   CAMERA_ALARM_EVENT_CAPABILITIES,
   CAMERA_SETTING_LABELS,
 } = require("./TuyaCameraConstants");
-const TuyaOAuth2Util = require("../../lib/TuyaOAuth2Util");
+import TuyaOAuth2Util from "../../lib/TuyaOAuth2Util";
+import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 
-/**
- * Device Class for Tuya Smart Cameras
- */
-class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
+export default class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
 
-  alarmTimeouts = {};
+  alarmTimeouts: Record<string, NodeJS.Timeout | undefined> = {};
 
   async onOAuth2Init() {
     await super.onOAuth2Init();
@@ -59,7 +57,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     }
   }
 
-  async onTuyaStatus(status, changed) {
+  async onTuyaStatus(status: TuyaStatus, changed: string[]) {
     await super.onTuyaStatus(status, changed);
 
     for (const statusKey in status) {
@@ -105,8 +103,8 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
         changed.includes("initiative_message")
       ) {
         // Event messages are base64 encoded JSON
-        const encoded = status[statusKey];
-        const decoded = new Buffer.from(encoded, "base64");
+        const encoded = status[statusKey] as string;
+        const decoded = Buffer.from(encoded, "base64");
         const data = JSON.parse(decoded.toString());
         const notificationType = data.cmd;
         const dataType = data.type;
@@ -124,7 +122,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     }
   }
 
-  async setAlarm(capability) {
+  async setAlarm(capability: string) {
     if (this.alarmTimeouts[capability] !== undefined) {
       // Extend the existing timeout if already running
       clearTimeout(this.alarmTimeouts[capability]);
@@ -139,7 +137,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     this.alarmTimeouts[capability] = setTimeout(() => this.resetAlarm(capability), alarmTimeout);
   }
 
-  async resetAlarm(capability) {
+  async resetAlarm(capability: string) {
     // Clear the timeout for the next event
     const currentTimeout = this.alarmTimeouts[capability];
     clearTimeout(currentTimeout);
@@ -151,7 +149,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
   }
 
   // Map from up/idle/down to commands so the ternary UI shows arrows
-  async ptzCapabilityListener(value, up, down) {
+  async ptzCapabilityListener(value: "up" | "idle" | "down", up: string, down: string) {
     if (value === "idle") {
       await this.sendCommand({code: "ptz_stop", value: true});
     } else {
@@ -159,7 +157,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     }
   }
 
-  async zoomCapabilityListener(value) {
+  async zoomCapabilityListener(value: "up" | "idle" | "down") {
     if (value === "idle") {
       await this.sendCommand({code: "zoom_stop", value: true});
     } else {
@@ -167,7 +165,7 @@ class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     }
   }
 
-  async onSettings(event) {
+  async onSettings(event: SettingsEvent<any>): Promise<string | void> {
     return await TuyaOAuth2Util.onSettings(this, event, CAMERA_SETTING_LABELS);
   }
 }
