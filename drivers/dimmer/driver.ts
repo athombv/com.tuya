@@ -1,11 +1,16 @@
 "use strict";
 
-const TuyaOAuth2Driver = require("../../lib/TuyaOAuth2Driver");
+import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
+import TuyaOAuth2DeviceDimmer from "./device";
+import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 const TuyaOAuth2Constants = require("../../lib/TuyaOAuth2Constants");
 const { TUYA_PERCENTAGE_SCALING } = require("../../lib/TuyaOAuth2Constants");
 const { SIMPLE_DIMMER_CAPABILITIES } = require("./TuyaDimmerConstants")
 
-class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
+type DeviceArgs = { device: TuyaOAuth2DeviceDimmer };
+type ValueArgs = { value: any };
+
+export default class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.DIMMER,
@@ -17,32 +22,32 @@ class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
     for (let switch_i = 1; switch_i <= 2; switch_i++) {
       this.homey.flow
         .getConditionCard(`dimmer_sub_switch_${switch_i}_is_on`)
-        .registerRunListener((args) => {
+        .registerRunListener((args: DeviceArgs) => {
           return args.device.getCapabilityValue(`onoff.${switch_i}`);
         });
 
       this.homey.flow
         .getActionCard(`dimmer_sub_switch_${switch_i}_off`)
-        .registerRunListener(async (args) => {
+        .registerRunListener(async (args: DeviceArgs) => {
           await args.device.singleOnOff(false, `switch_led_${switch_i}`);
         });
 
       this.homey.flow
         .getActionCard(`dimmer_sub_switch_${switch_i}_on`)
-        .registerRunListener(async (args) => {
+        .registerRunListener(async (args: DeviceArgs) => {
           await args.device.singleOnOff(true, `switch_led_${switch_i}`);
         });
 
       this.homey.flow
         .getActionCard(`dimmer_channel_${switch_i}_dim`)
-        .registerRunListener(async (args) => {
+        .registerRunListener(async (args: DeviceArgs & ValueArgs) => {
           await args.device.singleDim(args.value, `bright_value_${switch_i}`);
         });
     }
   }
 
-  onTuyaPairListDeviceProperties(device, specification) {
-    const props = super.onTuyaPairListDeviceProperties(device);
+  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specification: TuyaDeviceSpecificationResponse) {
+    const props = super.onTuyaPairListDeviceProperties(device, specification);
     props.store.tuya_switches = [];
     props.store.tuya_dimmers = [];
 
