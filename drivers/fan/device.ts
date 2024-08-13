@@ -2,17 +2,12 @@
 
 'use strict';
 
-const TuyaOAuth2Device = require('../../lib/TuyaOAuth2Device');
-const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
+import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
+import {TuyaStatus} from "../../types/TuyaTypes";
 
-/**
- * Device Class for Tuya Lights
- * @extends TuyaOAuth2Device
- * @hideconstructor
- */
-class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
+export default class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
 
-  constructor(...props) {
+  constructor(...props: any) {
     super(...props);
 
     this.onCapabilityOnOff = this.onCapabilityOnOff.bind(this);
@@ -32,8 +27,8 @@ class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
     }
   }
 
-  async onTuyaStatus(status) {
-    await super.onTuyaStatus(status);
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
+    await super.onTuyaStatus(status, changedStatusCodes);
 
     // onoff
     if (typeof status['switch'] === 'boolean') {
@@ -46,14 +41,14 @@ class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
     }
   }
 
-  async onCapabilityOnOff(value) {
+  async onCapabilityOnOff(value: boolean) {
     await this.sendCommand({
       code: 'switch',
-      value: !!value,
+      value: value,
     });
   }
 
-  async onCapabilityDim(value) {
+  async onCapabilityDim(value: number) {
     await this.sendCommand({
       code: 'fan_speed_percent',
       value: value,

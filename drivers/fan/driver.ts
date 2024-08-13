@@ -1,21 +1,18 @@
 'use strict';
 
-const TuyaOAuth2Driver = require('../../lib/TuyaOAuth2Driver');
+import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
+import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
 
-/**
- * @extends TuyaOAuth2Driver
- * @hideconstructor
- */
-class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
+export default class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.FAN,
     // TODO
   ];
 
-  onTuyaPairListDeviceProperties(device, specifications) {
-    const props = super.onTuyaPairListDeviceProperties(device);
+  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
+    const props = super.onTuyaPairListDeviceProperties(device, specifications);
 
     // onoff
     const hasSwitch = device.status.some(({ code }) => code === 'switch');
