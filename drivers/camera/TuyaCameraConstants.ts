@@ -1,6 +1,6 @@
 'use strict';
 
-class TuyaCamera {
+export default class TuyaCamera {
   // TODO make translatable
   // Map from setting id to human-readable label
   static CAMERA_SETTING_LABELS = {
@@ -17,7 +17,7 @@ class TuyaCamera {
     basic_osd: "Video Timestamp",
     basic_flip: "Flip Video",
     basic_indicator: "Status Indicator",
-  };
+  } as const;
 
   // Capabilities that are simple commands/statuses
   static SIMPLE_CAMERA_CAPABILITIES = {
@@ -38,7 +38,7 @@ class TuyaCamera {
       "basic_indicator",
       "motion_tracking",
     ],
-  };
+  } as const;
 
   // Tuya capabilities that cannot simply be added as Homey capabilities of the same name
   static COMPLEX_CAMERA_CAPABILITIES = [
@@ -49,7 +49,7 @@ class TuyaCamera {
     "initiative_message",
     "basic_private",
     "wireless_electricity",
-  ];
+  ] as const;
 
   // Flows that can be added with the prefix 'camera_'
   static SIMPLE_CAMERA_FLOWS = {
@@ -62,7 +62,7 @@ class TuyaCamera {
       "motion_tracking",
       "basic_nightvision",
     ],
-  };
+  } as const;
 
   // Map from a toggle capability to an alarm capability
   static CAMERA_ALARM_CAPABILITIES = {
@@ -70,7 +70,7 @@ class TuyaCamera {
     decibel_switch: "alarm_sound",
     cry_detection_switch: "alarm_crying_child",
     pet_detection: "alarm_pet",
-  };
+  } as const;
 
   // Map from an event to an alarm capability
   static CAMERA_ALARM_EVENT_CAPABILITIES = {
@@ -78,7 +78,7 @@ class TuyaCamera {
     ipc_bang: "alarm_sound",
     ipc_baby_cry: "alarm_crying_child",
     ipc_cat: "alarm_pet",
-  };
+  } as const;
 }
 
 module.exports = TuyaCamera;

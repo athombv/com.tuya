@@ -1,11 +1,12 @@
 'use strict';
 
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
-const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
+import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import TuyaOAuth2DeviceSocket from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-const { SOCKET_SETTING_LABELS} = require('./TuyaSocketConstants');
+import TuyaSocketConstants from './TuyaSocketConstants';
+const {SOCKET_SETTING_LABELS} = TuyaSocketConstants;
 
 type DeviceArgs = { device: TuyaOAuth2DeviceSocket };
 type SwitchArgs = { switch: { name: string, id: string } };

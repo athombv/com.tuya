@@ -4,7 +4,7 @@
  * See {@link https://developer.tuya.com/en/docs/iot/datatypedescription?id=K9i5ql2jo7j1k}
  * @hideconstructor
  */
-class TuyaOAuth2Constants {
+export default class TuyaOAuth2Constants {
 
   static API_URL = {
     EU: process.env.TUYA_API_URL_EU ?? 'https://openapi.tuyaeu.com',
@@ -16,7 +16,7 @@ class TuyaOAuth2Constants {
   static GRANT_TYPE = {
     SIMPLE: '1',
     OAUTH2: '2',
-  };
+  } as const;
 
   /** See {@link https://developer.tuya.com/en/docs/iot/standarddescription?id=K9i5ql6waswzq} */
   static DEVICE_CATEGORIES = {
@@ -132,7 +132,7 @@ class TuyaOAuth2Constants {
       PROJECTOR: 'tyy',
       // OUTDOOR_TRAVEL
     },
-  };
+  } as const;
 
   // https://developer.tuya.com/en/docs/iot/error-code?id=K989ruxx88swc
   static ERROR_CODES = {
@@ -219,10 +219,10 @@ class TuyaOAuth2Constants {
     ZIGBEE_DEVICE_UPDATING: 2063, // another Zigbee device is being updated, please wait
     DEVICE_VERSION_UPTODATE: 2064, // the device version is up-to-date
     DEVICE_NAME_EXIST: 2101, // this device name already exists
-  };
+  } as const;
 
   // From (0,100) in Homey to (0,1000) in Tuya
-  static TUYA_PERCENTAGE_SCALING = 10;
+  static TUYA_PERCENTAGE_SCALING = 10 as const;
 }
 
 module.exports = TuyaOAuth2Constants;

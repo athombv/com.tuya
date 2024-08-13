@@ -3,9 +3,11 @@
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
 import TuyaOAuth2DeviceLight from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
-const {TUYA_PERCENTAGE_SCALING} = require('../../lib/TuyaOAuth2Constants');
-const {PIR_CAPABILITIES} = require('./TuyaLightConstants')
+import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
+const {TUYA_PERCENTAGE_SCALING} = TuyaOAuth2Constants;
+import TuyaLightConstants, {LightSettingCommand} from './TuyaLightConstants';
+import {constIncludes} from "../../lib/TuyaOAuth2Util";
+const {PIR_CAPABILITIES} = TuyaLightConstants;
 
 type DeviceArgs = { device: TuyaOAuth2DeviceLight };
 type ValueArgs = { value: any };
@@ -39,7 +41,7 @@ export default class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
       const hasStandbyOn = device.store.tuya_capabilities.includes('standby_on');
       const standbyOn = args.value;
       const standbyBrightness = device.getSetting('standby_bright');
-      let commands;
+      let commands: LightSettingCommand[];
 
       if (!hasStandbyOn) {
         commands = [{
@@ -182,7 +184,7 @@ export default class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
       }
 
       // motion alarm settings
-      if (PIR_CAPABILITIES.setting.includes(tuyaCapability)) {
+      if (constIncludes(PIR_CAPABILITIES.setting, tuyaCapability)) {
         props.store.tuya_capabilities.push(tuyaCapability);
       }
 

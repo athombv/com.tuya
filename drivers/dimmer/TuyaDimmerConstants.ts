@@ -1,6 +1,6 @@
 'use strict'
 
-class TuyaDimmerConstants {
+export default class TuyaDimmerConstants {
   // TODO make translatable
   // Map from setting id to human-readable label
   static DIMMER_SETTING_LABELS = {
@@ -10,7 +10,7 @@ class TuyaDimmerConstants {
     brightness_max_2: "Maximum Brightness 2",
     led_type_1: "Lamp Type 1",
     led_type_2: "Lamp Type 2",
-  };
+  } as const;
 
   static SIMPLE_DIMMER_CAPABILITIES = {
     read_write: [
@@ -28,7 +28,7 @@ class TuyaDimmerConstants {
       "led_type_1",
       "led_type_2",
     ],
-  };
+  } as const;
 }
 
 module.exports = TuyaDimmerConstants;

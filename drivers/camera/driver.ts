@@ -3,14 +3,16 @@
 import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
 import TuyaOAuth2DeviceCamera from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-const TuyaOAuth2Constants = require("../../lib/TuyaOAuth2Constants");
+import TuyaOAuth2Constants from "../../lib/TuyaOAuth2Constants";
+import TuyaCameraConstants from "./TuyaCameraConstants";
+import {constIncludes} from "../../lib/TuyaOAuth2Util";
 const {
   CAMERA_SETTING_LABELS,
   SIMPLE_CAMERA_FLOWS,
   SIMPLE_CAMERA_CAPABILITIES,
   COMPLEX_CAMERA_CAPABILITIES,
   CAMERA_ALARM_CAPABILITIES,
-} = require("./TuyaCameraConstants");
+} = TuyaCameraConstants;
 
 type DeviceArgs = { device: TuyaOAuth2DeviceCamera };
 type ValueArgs = { value: any };
@@ -57,15 +59,15 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
 
       // Basic capabilities
       if (
-        SIMPLE_CAMERA_CAPABILITIES.read_write.includes(capability) ||
-        SIMPLE_CAMERA_CAPABILITIES.read_only.includes(capability)
+        constIncludes(SIMPLE_CAMERA_CAPABILITIES.read_write, capability) ||
+        constIncludes(SIMPLE_CAMERA_CAPABILITIES.read_only, capability)
       ) {
         props.store.tuya_capabilities.push(capability);
         props.capabilities.push(capability);
       }
 
       // More complicated capabilities
-      if (COMPLEX_CAMERA_CAPABILITIES.includes(capability)) {
+      if (constIncludes(COMPLEX_CAMERA_CAPABILITIES, capability)) {
         props.store.tuya_capabilities.push(capability);
       }
     }
@@ -101,7 +103,7 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
       // Add the alarm capabilities based on the toggles that are available
       for (const capability of props.store.tuya_capabilities) {
         if (capability in CAMERA_ALARM_CAPABILITIES) {
-          const alarmCapability = CAMERA_ALARM_CAPABILITIES[capability];
+          const alarmCapability = CAMERA_ALARM_CAPABILITIES[capability as keyof typeof CAMERA_ALARM_CAPABILITIES];
           props.capabilities.push(alarmCapability);
         }
       }

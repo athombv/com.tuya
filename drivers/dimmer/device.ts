@@ -3,8 +3,11 @@
 import TuyaOAuth2Device from "../../lib/TuyaOAuth2Device";
 import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 import {TuyaCommand} from "../../types/TuyaApiTypes";
-const { DIMMER_SETTING_LABELS } = require("./TuyaDimmerConstants");
-const { TUYA_PERCENTAGE_SCALING } = require("../../lib/TuyaOAuth2Constants");
+import TuyaDimmerConstants from "./TuyaDimmerConstants";
+import TuyaOAuth2Constants from "../../lib/TuyaOAuth2Constants";
+
+const { DIMMER_SETTING_LABELS } = TuyaDimmerConstants;
+const { TUYA_PERCENTAGE_SCALING } = TuyaOAuth2Constants;
 
 export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
   async onOAuth2Init() {
@@ -136,7 +139,7 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
     if (unsupportedSettings.length > 0) {
       let unsupportedSettingsMessage = this.homey.__("settings_unsupported") + " ";
       const mappedSettingNames = unsupportedSettings.map(
-        (settingKey) => DIMMER_SETTING_LABELS[settingKey],
+        (settingKey) => DIMMER_SETTING_LABELS[settingKey as keyof typeof DIMMER_SETTING_LABELS],
       );
       unsupportedSettingsMessage += mappedSettingNames.join(", ");
       messages.push(unsupportedSettingsMessage);
@@ -144,7 +147,7 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
     if (unsupportedValues.length > 0) {
       let unsupportedValuesMessage = this.homey.__("setting_values_unsupported") + " ";
       const mappedSettingNames = unsupportedValues.map(
-        (settingKey) => DIMMER_SETTING_LABELS[settingKey],
+        (settingKey) => DIMMER_SETTING_LABELS[settingKey as keyof typeof DIMMER_SETTING_LABELS],
       );
       unsupportedValuesMessage += mappedSettingNames.join(", ");
       messages.push(unsupportedValuesMessage);

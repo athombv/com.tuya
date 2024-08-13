@@ -158,7 +158,7 @@ export default class TuyaOAuth2Util {
    * @param device - The device for which the settings are updated
    * @param event - The settings event
    */
-  static async sendSettings(device: TuyaOAuth2Device, { oldSettings, newSettings, changedKeys }: SettingsEvent<Record<string, unknown>>) {
+  static async sendSettings(device: TuyaOAuth2Device, { newSettings, changedKeys }: SettingsEvent<Record<string, unknown>>) {
     const unsupportedSettings: string[] = [];
     const unsupportedValues: string[] = [];
 
@@ -221,6 +221,12 @@ export default class TuyaOAuth2Util {
     const [unsupportedSettings, unsupportedValues] = await TuyaOAuth2Util.sendSettings(device, event);
     return TuyaOAuth2Util.reportUnsupportedSettings(device, unsupportedSettings, unsupportedValues, settingLabels);
   }
+}
+
+// The standard TypeScript definition of Array.includes does not work for const arrays.
+// This typing gives a boolean for an unknown S, and true if S is known to be in T from its type.
+export function constIncludes<T, S>(array: ReadonlyArray<T>, search: S): (S extends T ? true : boolean) {
+  return (array as any[]).includes(search) as (S extends T ? true : boolean);
 }
 
 module.exports = TuyaOAuth2Util;

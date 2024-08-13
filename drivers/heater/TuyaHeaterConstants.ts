@@ -1,6 +1,6 @@
 'use strict'
 
-class TuyaHeaterConstants {
+export default class TuyaHeaterConstants {
   static HEATER_CAPABILITIES_MAPPING = {
     'switch': 'onoff',
     'temp_set': 'target_temperature',
@@ -8,7 +8,7 @@ class TuyaHeaterConstants {
     'lock': 'child_lock',
     'work_power': 'measure_power',
     "mode_eco": "eco_mode",
-  };
+  } as const;
 }
 
 module.exports = TuyaHeaterConstants;

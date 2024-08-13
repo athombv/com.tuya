@@ -3,11 +3,14 @@
 'use strict';
 
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-const {PIR_CAPABILITIES, LIGHT_SETTING_LABELS} = require('./TuyaLightConstants');
-const {TUYA_PERCENTAGE_SCALING} = require('../../lib/TuyaOAuth2Constants');
+import TuyaLightConstants, {LightSettingCommand, LightSettingKey} from './TuyaLightConstants';
+import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
 import TuyaLightMigrations from '../../lib/migrations/TuyaLightMigrations';
 import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 import {TuyaCommand} from "../../types/TuyaApiTypes";
+
+const {PIR_CAPABILITIES, LIGHT_SETTING_LABELS} = TuyaLightConstants;
+const {TUYA_PERCENTAGE_SCALING} = TuyaOAuth2Constants;
 
 type ParsedColourData = { h: number, s: number, v: number }
 
@@ -208,9 +211,9 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
     if (status['standby_on'] !== undefined || status['standby_bright'] !== undefined) {
       const hasStandbyOn = this.store.tuya_capabilities.includes('standby_on');
-      const standbyOn = status['standby_on'];
+      const standbyOn = status['standby_on'] as boolean;
       const standbyBrightness = status['standby_bright'] as number;
-      let settings = {};
+      let settings;
 
       if (!hasStandbyOn) {
         if (standbyBrightness > 0) {
@@ -347,7 +350,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
   }
 
   // TODO migrate to util sendSettingCommand
-  async sendSettingCommand({code, value}: { code: string, value: any }) {
+  async sendSettingCommand({code, value}: LightSettingCommand) {
     await this
       .sendCommand({
         code: code,
@@ -374,7 +377,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
   // TODO migrate to util onSettings
   // TODO define settings
-  async onSettings({ oldSettings, newSettings, changedKeys }: SettingsEvent<Record<string, unknown>>) {
+  async onSettings({ oldSettings, newSettings, changedKeys }: SettingsEvent<Record<LightSettingKey, any>>): Promise<string | void> {
     const unsupportedSettings: string[] = [];
     const unsupportedValues: string[] = [];
 
@@ -441,13 +444,13 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
     if (unsupportedSettings.length > 0) {
       const mappedSettingNames = unsupportedSettings.map(
-        (settingKey) => LIGHT_SETTING_LABELS[settingKey],
+        (settingKey) => LIGHT_SETTING_LABELS[settingKey as LightSettingKey],
       );
       messages.push(this.homey.__("settings_unsupported") + " " + mappedSettingNames.join(", "));
     }
     if (unsupportedValues.length > 0) {
       const mappedSettingNames = unsupportedValues.map(
-        (settingKey) => LIGHT_SETTING_LABELS[settingKey],
+        (settingKey) => LIGHT_SETTING_LABELS[settingKey as LightSettingKey],
       );
       messages.push(this.homey.__("setting_values_unsupported") + " " + mappedSettingNames.join(", "));
     }

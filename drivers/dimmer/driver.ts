@@ -3,9 +3,11 @@
 import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
 import TuyaOAuth2DeviceDimmer from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-const TuyaOAuth2Constants = require("../../lib/TuyaOAuth2Constants");
-const { TUYA_PERCENTAGE_SCALING } = require("../../lib/TuyaOAuth2Constants");
-const { SIMPLE_DIMMER_CAPABILITIES } = require("./TuyaDimmerConstants")
+import TuyaOAuth2Constants from "../../lib/TuyaOAuth2Constants";
+const { TUYA_PERCENTAGE_SCALING } = TuyaOAuth2Constants;
+import TuyaDimmerConstants from "./TuyaDimmerConstants";
+import {constIncludes} from "../../lib/TuyaOAuth2Util";
+const { SIMPLE_DIMMER_CAPABILITIES } = TuyaDimmerConstants;
 
 type DeviceArgs = { device: TuyaOAuth2DeviceDimmer };
 type ValueArgs = { value: any };
@@ -55,8 +57,8 @@ export default class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
       const tuyaCapability = status.code;
 
       if (
-        SIMPLE_DIMMER_CAPABILITIES.read_write.includes(tuyaCapability) ||
-        SIMPLE_DIMMER_CAPABILITIES.setting.includes(tuyaCapability)
+        constIncludes(SIMPLE_DIMMER_CAPABILITIES.read_write, tuyaCapability) ||
+        constIncludes(SIMPLE_DIMMER_CAPABILITIES.setting, tuyaCapability)
       ) {
         props.store.tuya_capabilities.push(tuyaCapability);
       }

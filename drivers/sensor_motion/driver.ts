@@ -2,7 +2,7 @@
 
 import TuyaOAuth2DriverSensor from '../../lib/TuyaOAuth2DriverSensor';
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
+import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
 
 export default class TuyaOAuth2DriverSensorMotion extends TuyaOAuth2DriverSensor {
 

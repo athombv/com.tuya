@@ -2,7 +2,7 @@
 
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
 import {TuyaDeviceResponse} from "../../types/TuyaApiTypes";
-const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
+import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
 
 // TODO refactor to be in line with other drivers
 export default class TuyaOAuth2DriverDoorbell extends TuyaOAuth2Driver {

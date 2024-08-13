@@ -1,6 +1,6 @@
 'use strict'
 
-class TuyaLightConstants {
+export default class TuyaLightConstants {
   static PIR_CAPABILITIES = {
     read_write: [],
     read_only: ['pir_state'],
@@ -11,7 +11,7 @@ class TuyaLightConstants {
       'cds', // Change luminance detection level
       'standby_time', // Change standby duration
     ],
-  }
+  } as const;
 
   static LIGHT_SETTING_LABELS = {
     switch_pir: "Motion Detection",
@@ -21,7 +21,10 @@ class TuyaLightConstants {
     standby_on: "Standby Light",
     standby_time: "Standby Time",
     standby_bright: "Standby Brightness",
-  }
+  } as const;
 }
+
+export type LightSettingKey = keyof typeof TuyaLightConstants.LIGHT_SETTING_LABELS;
+export type LightSettingCommand = { code: LightSettingKey, value: any };
 
 module.exports = TuyaLightConstants;

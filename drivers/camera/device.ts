@@ -1,12 +1,13 @@
 "use strict";
 
 import TuyaOAuth2Device from "../../lib/TuyaOAuth2Device";
+import TuyaCameraConstants from "./TuyaCameraConstants";
 const {
   SIMPLE_CAMERA_CAPABILITIES,
   CAMERA_ALARM_EVENT_CAPABILITIES,
   CAMERA_SETTING_LABELS,
-} = require("./TuyaCameraConstants");
-import TuyaOAuth2Util from "../../lib/TuyaOAuth2Util";
+} = TuyaCameraConstants;
+import TuyaOAuth2Util, {constIncludes} from "../../lib/TuyaOAuth2Util";
 import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 
 export default class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
@@ -18,7 +19,7 @@ export default class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
 
     for (const capability of this.getCapabilities()) {
       // Basic capabilities
-      if (SIMPLE_CAMERA_CAPABILITIES.read_write.includes(capability)) {
+      if (constIncludes(SIMPLE_CAMERA_CAPABILITIES.read_write, capability)) {
         this.registerCapabilityListener(capability, (value) => this.sendCommand({
             code: capability,
             value: value,
@@ -50,7 +51,7 @@ export default class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
 
     // Reset alarms in case a timeout was interrupted
     for (const tuyaCapability in CAMERA_ALARM_EVENT_CAPABILITIES) {
-      const capability = CAMERA_ALARM_EVENT_CAPABILITIES[tuyaCapability];
+      const capability = CAMERA_ALARM_EVENT_CAPABILITIES[tuyaCapability as keyof typeof CAMERA_ALARM_EVENT_CAPABILITIES];
       if (this.hasCapability(capability)) {
         await this.setCapabilityValue(capability, false);
       }
@@ -65,13 +66,13 @@ export default class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
 
       // Basic capabilities
       if (
-        SIMPLE_CAMERA_CAPABILITIES.read_write.includes(statusKey) ||
-        SIMPLE_CAMERA_CAPABILITIES.read_only.includes(statusKey)
+        constIncludes(SIMPLE_CAMERA_CAPABILITIES.read_write, statusKey) ||
+        constIncludes(SIMPLE_CAMERA_CAPABILITIES.read_only, statusKey)
       ) {
         await this.setCapabilityValue(statusKey, value).catch(this.error);
       }
 
-      if (SIMPLE_CAMERA_CAPABILITIES.setting.includes(statusKey)) {
+      if (constIncludes(SIMPLE_CAMERA_CAPABILITIES.setting, statusKey)) {
         await this.setSettings({
           [statusKey]: value,
         }).catch(this.error);
@@ -112,7 +113,7 @@ export default class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
 
         // Check if the event is for a known alarm
         if (notificationType in CAMERA_ALARM_EVENT_CAPABILITIES) {
-          const alarmCapability = CAMERA_ALARM_EVENT_CAPABILITIES[notificationType];
+          const alarmCapability = CAMERA_ALARM_EVENT_CAPABILITIES[notificationType as keyof typeof CAMERA_ALARM_EVENT_CAPABILITIES];
           if (!this.hasCapability(alarmCapability)) {
             await this.addCapability(alarmCapability).catch(this.error);
           }

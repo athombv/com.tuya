@@ -3,8 +3,9 @@
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
 import TuyaOAuth2DeviceHeater from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
-const { HEATER_CAPABILITIES_MAPPING } = require('./TuyaHeaterConstants');
+import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
+import TuyaHeaterConstants from './TuyaHeaterConstants';
+const { HEATER_CAPABILITIES_MAPPING } = TuyaHeaterConstants;
 
 type DeviceArgs = { device: TuyaOAuth2DeviceHeater };
 type ValueArgs = { value: any };
@@ -40,7 +41,7 @@ export default class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       if (tuyaCapability in HEATER_CAPABILITIES_MAPPING) {
         props.store.tuya_capabilities.push(tuyaCapability);
 
-        const homeyCapability = HEATER_CAPABILITIES_MAPPING[tuyaCapability];
+        const homeyCapability = HEATER_CAPABILITIES_MAPPING[tuyaCapability as keyof typeof HEATER_CAPABILITIES_MAPPING];
         props.capabilities.push(homeyCapability);
       }
     }

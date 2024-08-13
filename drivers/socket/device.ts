@@ -5,7 +5,8 @@ import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
-const { SOCKET_SETTING_LABELS} = require('./TuyaSocketConstants');
+import TuyaSocketConstants from './TuyaSocketConstants';
+const {SOCKET_SETTING_LABELS} = TuyaSocketConstants;
 
 /**
  * Device Class for Tuya Sockets
