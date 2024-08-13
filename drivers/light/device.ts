@@ -2,17 +2,16 @@
 
 'use strict';
 
-const TuyaOAuth2Device = require('../../lib/TuyaOAuth2Device');
+import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 const {PIR_CAPABILITIES, LIGHT_SETTING_LABELS} = require('./TuyaLightConstants');
 const {TUYA_PERCENTAGE_SCALING} = require('../../lib/TuyaOAuth2Constants');
-const TuyaLightMigrations = require('../../lib/migrations/TuyaLightMigrations')
+import TuyaLightMigrations from '../../lib/migrations/TuyaLightMigrations';
+import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
+import {TuyaCommand} from "../../types/TuyaApiTypes";
 
-/**
- * Device Class for Tuya Lights
- * @extends TuyaOAuth2Device
- * @hideconstructor
- */
-class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
+type ParsedColourData = { h: number, s: number, v: number }
+
+export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
   LIGHT_COLOUR_DATA_V1_HUE_MIN = this.store.tuya_colour?.h?.min;
   LIGHT_COLOUR_DATA_V1_HUE_MAX = this.store.tuya_colour?.h?.max;
@@ -76,12 +75,12 @@ class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     this.log('Finished oAuth2 initialization of', this.getName());
   }
 
-  async onTuyaStatus(status, changedStatusCodes) {
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
     while (this.initBarrier) {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
 
-    await super.onTuyaStatus(status);
+    await super.onTuyaStatus(status, changedStatusCodes);
 
     // onoff
     let anySwitchOn = false;
@@ -124,19 +123,22 @@ class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     }
 
     // light_hue, light_saturation
-    if (status['colour_data']) {
-      const light_hue = Math.min(1, Math.max(0, (status['colour_data']['h'] - this.LIGHT_COLOUR_DATA_V1_HUE_MIN) / (this.LIGHT_COLOUR_DATA_V1_HUE_MAX - this.LIGHT_COLOUR_DATA_V1_HUE_MIN)));
+    const colourData = status['colour_data'] as ParsedColourData | undefined;
+    const colourDataV2 = status['colour_data_v2'] as ParsedColourData | undefined;
+
+    if (colourData) {
+      const light_hue = Math.min(1, Math.max(0, (colourData['h'] - this.LIGHT_COLOUR_DATA_V1_HUE_MIN) / (this.LIGHT_COLOUR_DATA_V1_HUE_MAX - this.LIGHT_COLOUR_DATA_V1_HUE_MIN)));
       this.setCapabilityValue('light_hue', light_hue).catch(this.error);
 
-      const light_saturation = Math.min(1, Math.max(0, (status['colour_data']['s'] - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN) / (this.LIGHT_COLOUR_DATA_V1_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN)));
+      const light_saturation = Math.min(1, Math.max(0, (colourData['s'] - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN) / (this.LIGHT_COLOUR_DATA_V1_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN)));
       this.setCapabilityValue('light_saturation', light_saturation).catch(this.error);
     }
 
-    if (status['colour_data_v2']) {
-      const light_hue = Math.min(1, Math.max(0, (status['colour_data_v2']['h'] - this.LIGHT_COLOUR_DATA_V2_HUE_MIN) / (this.LIGHT_COLOUR_DATA_V2_HUE_MAX - this.LIGHT_COLOUR_DATA_V2_HUE_MIN)));
+    if (colourDataV2) {
+      const light_hue = Math.min(1, Math.max(0, (colourDataV2['h'] - this.LIGHT_COLOUR_DATA_V2_HUE_MIN) / (this.LIGHT_COLOUR_DATA_V2_HUE_MAX - this.LIGHT_COLOUR_DATA_V2_HUE_MIN)));
       this.setCapabilityValue('light_hue', light_hue).catch(this.error);
 
-      const light_saturation = Math.min(1, Math.max(0, (status['colour_data_v2']['s'] - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN) / (this.LIGHT_COLOUR_DATA_V2_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN)));
+      const light_saturation = Math.min(1, Math.max(0, (colourDataV2['s'] - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN) / (this.LIGHT_COLOUR_DATA_V2_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN)));
       this.setCapabilityValue('light_saturation', light_saturation).catch(this.error);
     }
 
@@ -148,13 +150,13 @@ class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
         }
 
         // dim
-        if (status['colour_data']) {
-          const dim = Math.min(1, Math.max(0, (status['colour_data']['v'] - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN) / (this.LIGHT_COLOUR_DATA_V1_VALUE_MAX - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN)));
+        if (colourData) {
+          const dim = Math.min(1, Math.max(0, (colourData['v'] - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN) / (this.LIGHT_COLOUR_DATA_V1_VALUE_MAX - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN)));
           this.setCapabilityValue('dim', dim).catch(this.error);
         }
 
-        if (status['colour_data_v2']) {
-          const dim = Math.min(1, Math.max(0, (status['colour_data_v2']['v'] - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN) / (this.LIGHT_COLOUR_DATA_V2_VALUE_MAX - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN)));
+        if (colourDataV2) {
+          const dim = Math.min(1, Math.max(0, (colourDataV2['v'] - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN) / (this.LIGHT_COLOUR_DATA_V2_VALUE_MAX - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN)));
           this.setCapabilityValue('dim', dim).catch(this.error);
         }
       }
@@ -207,7 +209,7 @@ class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     if (status['standby_on'] !== undefined || status['standby_bright'] !== undefined) {
       const hasStandbyOn = this.store.tuya_capabilities.includes('standby_on');
       const standbyOn = status['standby_on'];
-      const standbyBrightness = status['standby_bright'];
+      const standbyBrightness = status['standby_bright'] as number;
       let settings = {};
 
       if (!hasStandbyOn) {
@@ -232,24 +234,24 @@ class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     }
   }
 
-  async allOnOff(value) {
+  async allOnOff(value: boolean) {
     const tuyaSwitches = this.getStore().tuya_switches;
     const commands = []
 
     for (const tuyaSwitch of tuyaSwitches) {
       commands.push({
         code: tuyaSwitch,
-        value: !!value,
+        value: value,
       })
     }
 
     await this.sendCommands(commands);
   }
 
-  async switchOnOff(value, tuya_switch) {
+  async switchOnOff(value: boolean, tuya_switch: string) {
     await this.sendCommand({
       code: tuya_switch,
-      value: !!value,
+      value: value,
     });
   }
 
@@ -344,7 +346,8 @@ class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     }
   }
 
-  async sendSettingCommand({code, value}) {
+  // TODO migrate to util sendSettingCommand
+  async sendSettingCommand({code, value}: { code: string, value: any }) {
     await this
       .sendCommand({
         code: code,
@@ -369,12 +372,14 @@ class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
       });
   }
 
-  async onSettings({ oldSettings, newSettings, changedKeys }) {
-    const unsupportedSettings = [];
-    const unsupportedValues = [];
+  // TODO migrate to util onSettings
+  // TODO define settings
+  async onSettings({ oldSettings, newSettings, changedKeys }: SettingsEvent<Record<string, unknown>>) {
+    const unsupportedSettings: string[] = [];
+    const unsupportedValues: string[] = [];
 
     // Accumulate rejected settings so the user can be notified gracefully
-    const sendSetting = async (command) =>
+    const sendSetting = async (command: TuyaCommand) =>
       this.sendCommand(command).catch((err) => {
         if (err.tuyaCode === 2008) {
           unsupportedSettings.push(command.code);
@@ -401,7 +406,7 @@ class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
         const hasStandbyOn = this.store.tuya_capabilities.includes('standby_on');
         const standbyOn = newSettings['standby_on'];
-        const standbyBrightness = newSettings['standby_bright'];
+        const standbyBrightness = newSettings['standby_bright'] as number;
         let commands;
 
         if (!hasStandbyOn) {

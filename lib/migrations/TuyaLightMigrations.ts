@@ -1,10 +1,12 @@
-class TuyaLightMigrations {
+import TuyaOAuth2DeviceLight from "../../drivers/light/device";
 
-  static async performMigrations(device) {
+export default class TuyaLightMigrations {
+
+  static async performMigrations(device: TuyaOAuth2DeviceLight) {
     await TuyaLightMigrations.switchCapabilityMigration(device).catch(device.error);
   }
 
-  static async switchCapabilityMigration(device)     {
+  static async switchCapabilityMigration(device: TuyaOAuth2DeviceLight)     {
     // switch capabilities migration
     const tuyaSwitches = device.getStore().tuya_switches;
 
@@ -21,8 +23,8 @@ class TuyaLightMigrations {
 
       for (const status of deviceStatus) {
         const tuyaCapability = status.code;
-        hasSwitchLed |= tuyaCapability === 'switch_led'
-        hasSwitch |= tuyaCapability === 'switch'
+        hasSwitchLed = hasSwitchLed || tuyaCapability === 'switch_led'
+        hasSwitch = hasSwitch || tuyaCapability === 'switch'
 
         if (tuyaCapability === 'switch_led' || tuyaCapability === 'switch') {
           if (!tuyaCapabilities.includes(tuyaCapability)) {

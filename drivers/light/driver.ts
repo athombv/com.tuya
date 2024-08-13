@@ -1,15 +1,16 @@
 'use strict';
 
-const TuyaOAuth2Driver = require('../../lib/TuyaOAuth2Driver');
+import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
+import TuyaOAuth2DeviceLight from "./device";
+import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
 const {TUYA_PERCENTAGE_SCALING} = require('../../lib/TuyaOAuth2Constants');
 const {PIR_CAPABILITIES} = require('./TuyaLightConstants')
 
-/**
- * @extends TuyaOAuth2Driver
- * @hideconstructor
- */
-class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
+type DeviceArgs = { device: TuyaOAuth2DeviceLight };
+type ValueArgs = { value: any };
+
+export default class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.LIGHT,
@@ -26,14 +27,14 @@ class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
   async onInit() {
     await super.onInit();
 
-    this.homey.flow.getActionCard('light_switch_pir').registerRunListener(async (args, state) => {
+    this.homey.flow.getActionCard('light_switch_pir').registerRunListener(async (args: DeviceArgs & ValueArgs) => {
       await args.device.sendSettingCommand({
         code: 'switch_pir',
         value: args.value,
       })
     })
 
-    this.homey.flow.getActionCard('light_standby_on').registerRunListener(async (args, state) => {
+    this.homey.flow.getActionCard('light_standby_on').registerRunListener(async (args: DeviceArgs & ValueArgs) => {
       const device = args.device;
       const hasStandbyOn = device.store.tuya_capabilities.includes('standby_on');
       const standbyOn = args.value;
@@ -63,24 +64,24 @@ class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
     // Flows for onoff.switch_led and onoff.switch
     for (const tuyaSwitch of ["switch_led", "switch"]) {
       this.homey.flow.getActionCard(`light_${tuyaSwitch}_on`)
-        .registerRunListener((args) => {
+        .registerRunListener((args: DeviceArgs) => {
           return args.device.triggerCapabilityListener(`onoff.${tuyaSwitch}`, true);
         })
 
       this.homey.flow.getActionCard(`light_${tuyaSwitch}_off`)
-        .registerRunListener((args) => {
+        .registerRunListener((args: DeviceArgs) => {
           return args.device.triggerCapabilityListener(`onoff.${tuyaSwitch}`, false);
         })
 
       this.homey.flow.getConditionCard(`light_${tuyaSwitch}_is_on`)
-        .registerRunListener((args) => {
+        .registerRunListener((args: DeviceArgs) => {
           return args.device.getCapabilityValue(`onoff.${tuyaSwitch}`);
         });
     }
   }
 
-  onTuyaPairListDeviceProperties(device, specifications) {
-    const props = super.onTuyaPairListDeviceProperties(device);
+  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
+    const props = super.onTuyaPairListDeviceProperties(device, specifications);
     props.store.tuya_switches = [];
 
     // Add this before the sub-capabilities, so it becomes the quick toggle
