@@ -1,10 +1,15 @@
 'use strict';
 
-const TuyaOAuth2Driver = require('../../lib/TuyaOAuth2Driver');
+import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
+import TuyaOAuth2DeviceHeater from "./device";
+import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
 const { HEATER_CAPABILITIES_MAPPING } = require('./TuyaHeaterConstants');
 
-class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
+type DeviceArgs = { device: TuyaOAuth2DeviceHeater };
+type ValueArgs = { value: any };
+
+export default class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
@@ -15,19 +20,19 @@ class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
 
     this.homey.flow
       .getActionCard("heater_set_child_lock")
-      .registerRunListener(async (args) => {
+      .registerRunListener(async (args: DeviceArgs & ValueArgs) => {
         await args.device.triggerCapabilityListener("child_lock", args.value);
       });
 
     this.homey.flow
       .getActionCard("heater_set_eco_mode")
-      .registerRunListener(async (args) => {
+      .registerRunListener(async (args: DeviceArgs & ValueArgs) => {
         await args.device.triggerCapabilityListener("eco_mode", args.value);
       });
   }
 
-  onTuyaPairListDeviceProperties(device, specification) {
-    const props = super.onTuyaPairListDeviceProperties(device);
+  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specification: TuyaDeviceSpecificationResponse) {
+    const props = super.onTuyaPairListDeviceProperties(device, specification);
 
     for (const status of device.status) {
       const tuyaCapability = status.code;

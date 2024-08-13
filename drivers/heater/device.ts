@@ -1,11 +1,9 @@
 'use strict';
 
-const TuyaOAuth2Device = require('../../lib/TuyaOAuth2Device');
+import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
+import {TuyaStatus} from "../../types/TuyaTypes";
 
-/**
- * Device Class for Tuya Heaters
- */
-class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
+export default class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
 
   async onOAuth2Init() {
     await super.onOAuth2Init();
@@ -27,8 +25,8 @@ class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     }
   }
 
-  async onTuyaStatus(status) {
-    await super.onTuyaStatus(status);
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
+    await super.onTuyaStatus(status, changedStatusCodes);
 
     if (typeof status['switch'] === 'boolean') {
       this.setCapabilityValue('onoff', status['switch']).catch(this.error);
@@ -56,14 +54,14 @@ class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     }
   }
 
-  async onOffCapabilityListener(value) {
+  async onOffCapabilityListener(value: boolean) {
     await this.sendCommand({
       code: 'switch',
       value: value,
     });
   }
 
-  async targetTemperatureCapabilityListener(value) {
+  async targetTemperatureCapabilityListener(value: number) {
     const limitedTemperature = Math.max(0, Math.min(Math.floor(value), 50));
     await this.sendCommand({
       code: 'temp_set',
@@ -71,14 +69,14 @@ class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     });
   }
 
-  async childLockCapabilityListener(value) {
+  async childLockCapabilityListener(value: boolean) {
     await this.sendCommand({
       code: 'lock',
       value: value,
     });
   }
 
-  async ecoModeCapabilityListener(value) {
+  async ecoModeCapabilityListener(value: boolean) {
     await this.sendCommand({
       code: 'mode_eco',
       value: value,
