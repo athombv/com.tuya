@@ -2,12 +2,12 @@
 
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
+import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
 
 export default class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.FAN,
+    DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.FAN,
     // TODO
   ];
 

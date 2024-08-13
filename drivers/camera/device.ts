@@ -1,12 +1,11 @@
 "use strict";
 
 import TuyaOAuth2Device from "../../lib/TuyaOAuth2Device";
-import TuyaCameraConstants from "./TuyaCameraConstants";
-const {
-  SIMPLE_CAMERA_CAPABILITIES,
+import {
   CAMERA_ALARM_EVENT_CAPABILITIES,
   CAMERA_SETTING_LABELS,
-} = TuyaCameraConstants;
+  SIMPLE_CAMERA_CAPABILITIES
+} from "./TuyaCameraConstants";
 import TuyaOAuth2Util, {constIncludes} from "../../lib/TuyaOAuth2Util";
 import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 

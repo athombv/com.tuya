@@ -3,14 +3,11 @@
 'use strict';
 
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import TuyaLightConstants, {LightSettingCommand, LightSettingKey} from './TuyaLightConstants';
-import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
+import {LIGHT_SETTING_LABELS, LightSettingCommand, LightSettingKey, PIR_CAPABILITIES} from './TuyaLightConstants';
 import TuyaLightMigrations from '../../lib/migrations/TuyaLightMigrations';
 import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 import {TuyaCommand} from "../../types/TuyaApiTypes";
-
-const {PIR_CAPABILITIES, LIGHT_SETTING_LABELS} = TuyaLightConstants;
-const {TUYA_PERCENTAGE_SCALING} = TuyaOAuth2Constants;
+import {TUYA_PERCENTAGE_SCALING} from "../../lib/TuyaOAuth2Constants";
 
 type ParsedColourData = { h: number, s: number, v: number }
 

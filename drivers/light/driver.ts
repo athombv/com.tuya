@@ -3,11 +3,9 @@
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
 import TuyaOAuth2DeviceLight from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
-const {TUYA_PERCENTAGE_SCALING} = TuyaOAuth2Constants;
-import TuyaLightConstants, {LightSettingCommand} from './TuyaLightConstants';
 import {constIncludes} from "../../lib/TuyaOAuth2Util";
-const {PIR_CAPABILITIES} = TuyaLightConstants;
+import {DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING} from "../../lib/TuyaOAuth2Constants";
+import {LightSettingCommand, PIR_CAPABILITIES} from "./TuyaLightConstants";
 
 type DeviceArgs = { device: TuyaOAuth2DeviceLight };
 type ValueArgs = { value: any };
@@ -15,14 +13,14 @@ type ValueArgs = { value: any };
 export default class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.LIGHT,
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.CEILING_LIGHT,
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.AMBIENCE_LIGHT,
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.STRING_LIGHT,
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.STRIP_LIGHT,
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.MOTION_SENS_LIGHT,
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.CEILING_FAN_LIGHT,
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.SOLAR_LIGHT,
+    DEVICE_CATEGORIES.LIGHTING.LIGHT,
+    DEVICE_CATEGORIES.LIGHTING.CEILING_LIGHT,
+    DEVICE_CATEGORIES.LIGHTING.AMBIENCE_LIGHT,
+    DEVICE_CATEGORIES.LIGHTING.STRING_LIGHT,
+    DEVICE_CATEGORIES.LIGHTING.STRIP_LIGHT,
+    DEVICE_CATEGORIES.LIGHTING.MOTION_SENS_LIGHT,
+    DEVICE_CATEGORIES.LIGHTING.CEILING_FAN_LIGHT,
+    DEVICE_CATEGORIES.LIGHTING.SOLAR_LIGHT,
     // TODO
   ];
 

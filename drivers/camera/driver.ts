@@ -3,23 +3,22 @@
 import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
 import TuyaOAuth2DeviceCamera from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-import TuyaOAuth2Constants from "../../lib/TuyaOAuth2Constants";
-import TuyaCameraConstants from "./TuyaCameraConstants";
-import {constIncludes} from "../../lib/TuyaOAuth2Util";
-const {
-  CAMERA_SETTING_LABELS,
-  SIMPLE_CAMERA_FLOWS,
-  SIMPLE_CAMERA_CAPABILITIES,
-  COMPLEX_CAMERA_CAPABILITIES,
+import {
   CAMERA_ALARM_CAPABILITIES,
-} = TuyaCameraConstants;
+  CAMERA_SETTING_LABELS,
+  COMPLEX_CAMERA_CAPABILITIES,
+  SIMPLE_CAMERA_CAPABILITIES,
+  SIMPLE_CAMERA_FLOWS
+} from "./TuyaCameraConstants";
+import {constIncludes} from "../../lib/TuyaOAuth2Util";
+import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
 
 type DeviceArgs = { device: TuyaOAuth2DeviceCamera };
 type ValueArgs = { value: any };
 
 class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
+    DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
   ];
 
   async onInit() {

@@ -3,11 +3,8 @@
 import TuyaOAuth2Device from "../../lib/TuyaOAuth2Device";
 import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 import {TuyaCommand} from "../../types/TuyaApiTypes";
-import TuyaDimmerConstants from "./TuyaDimmerConstants";
-import TuyaOAuth2Constants from "../../lib/TuyaOAuth2Constants";
-
-const { DIMMER_SETTING_LABELS } = TuyaDimmerConstants;
-const { TUYA_PERCENTAGE_SCALING } = TuyaOAuth2Constants;
+import {DIMMER_SETTING_LABELS} from "./TuyaDimmerConstants";
+import {TUYA_PERCENTAGE_SCALING} from "../../lib/TuyaOAuth2Constants";
 
 export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
   async onOAuth2Init() {

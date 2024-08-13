@@ -2,13 +2,13 @@
 
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
 import {TuyaDeviceResponse} from "../../types/TuyaApiTypes";
-import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
+import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
 
 // TODO refactor to be in line with other drivers
 export default class TuyaOAuth2DriverDoorbell extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
+    DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
   ];
 
   onTuyaPairListDeviceFilter(device: TuyaDeviceResponse) {

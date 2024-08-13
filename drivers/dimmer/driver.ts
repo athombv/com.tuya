@@ -3,11 +3,9 @@
 import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
 import TuyaOAuth2DeviceDimmer from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-import TuyaOAuth2Constants from "../../lib/TuyaOAuth2Constants";
-const { TUYA_PERCENTAGE_SCALING } = TuyaOAuth2Constants;
-import TuyaDimmerConstants from "./TuyaDimmerConstants";
 import {constIncludes} from "../../lib/TuyaOAuth2Util";
-const { SIMPLE_DIMMER_CAPABILITIES } = TuyaDimmerConstants;
+import {SIMPLE_DIMMER_CAPABILITIES} from "./TuyaDimmerConstants";
+import {DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING} from "../../lib/TuyaOAuth2Constants";
 
 type DeviceArgs = { device: TuyaOAuth2DeviceDimmer };
 type ValueArgs = { value: any };
@@ -15,7 +13,7 @@ type ValueArgs = { value: any };
 export default class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.LIGHTING.DIMMER,
+    DEVICE_CATEGORIES.LIGHTING.DIMMER,
   ];
 
   async onInit() {

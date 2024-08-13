@@ -1,12 +1,11 @@
 'use strict';
 
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
-import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import TuyaOAuth2DeviceSocket from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-import TuyaSocketConstants from './TuyaSocketConstants';
-const {SOCKET_SETTING_LABELS} = TuyaSocketConstants;
+import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
+import {SOCKET_SETTING_LABELS} from "./TuyaSocketConstants";
 
 type DeviceArgs = { device: TuyaOAuth2DeviceSocket };
 type SwitchArgs = { switch: { name: string, id: string } };
@@ -15,9 +14,9 @@ type TuyaCapabilityState = { tuyaCapability: string };
 class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.ELECTRICAL_PRODUCTS.SOCKET,
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.ELECTRICAL_PRODUCTS.POWER_STRIP,
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.ELECTRICAL_PRODUCTS.SWITCH,
+    DEVICE_CATEGORIES.ELECTRICAL_PRODUCTS.SOCKET,
+    DEVICE_CATEGORIES.ELECTRICAL_PRODUCTS.POWER_STRIP,
+    DEVICE_CATEGORIES.ELECTRICAL_PRODUCTS.SWITCH,
     "tdq" // Undocumented switch category
   ];
 

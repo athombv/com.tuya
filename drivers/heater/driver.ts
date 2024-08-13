@@ -3,9 +3,8 @@
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
 import TuyaOAuth2DeviceHeater from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-import TuyaOAuth2Constants from '../../lib/TuyaOAuth2Constants';
-import TuyaHeaterConstants from './TuyaHeaterConstants';
-const { HEATER_CAPABILITIES_MAPPING } = TuyaHeaterConstants;
+import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
+import {HEATER_CAPABILITIES_MAPPING} from "./TuyaHeaterConstants";
 
 type DeviceArgs = { device: TuyaOAuth2DeviceHeater };
 type ValueArgs = { value: any };
@@ -13,7 +12,7 @@ type ValueArgs = { value: any };
 export default class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
-    TuyaOAuth2Constants.DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
+    DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
   ];
 
   async onInit() {
