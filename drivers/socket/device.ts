@@ -1,16 +1,19 @@
 'use strict';
 
-const TuyaOAuth2Device = require('../../lib/TuyaOAuth2Device');
-const TuyaOAuth2Util = require('../../lib/TuyaOAuth2Util');
+import {Device, FlowCardTriggerDevice} from "homey";
+import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
+
+import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
+import TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 const { SOCKET_SETTING_LABELS} = require('./TuyaSocketConstants');
 
 /**
  * Device Class for Tuya Sockets
  */
-class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
+export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
 
-  turnedOnFlowCard;
-  turnedOffFlowCard;
+  turnedOnFlowCard!: FlowCardTriggerDevice;
+  turnedOffFlowCard!: FlowCardTriggerDevice;
 
   async onInit() {
     await super.onInit();
@@ -34,14 +37,14 @@ class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     }
   }
 
-  async safeSetCapabilityValue(capabilityId, value) {
+  async safeSetCapabilityValue(capabilityId: string, value: any) {
     if (this.hasCapability(capabilityId)) {
       await this.setCapabilityValue(capabilityId, value);
     }
   }
 
-  async onTuyaStatus(status, changedStatusCodes) {
-    await super.onTuyaStatus(status);
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
+    await super.onTuyaStatus(status, changedStatusCodes);
 
     // onoff
     let anySwitchOn = false;
@@ -57,7 +60,7 @@ class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
         // Trigger the appropriate flow only when the status actually changed
         if (changedStatusCodes.includes(tuyaCapability)) {
           const triggerCard = switchStatus ? this.turnedOnFlowCard : this.turnedOffFlowCard;
-          triggerCard.trigger(this, {}, {
+          triggerCard.trigger(this as Device, {}, {
             tuyaCapability: tuyaCapability
           }).catch(this.error);
         }
@@ -98,28 +101,29 @@ class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     }
   }
 
-  async allOnOff(value) {
+  async allOnOff(value: boolean) {
     const tuyaSwitches = this.getStore().tuya_switches;
     const commands = []
 
     for (const tuyaSwitch of tuyaSwitches) {
       commands.push({
         code: tuyaSwitch,
-        value: !!value,
+        value: value,
       })
     }
 
     await this.sendCommands(commands);
   }
 
-  async switchOnOff(value, tuya_switch) {
+  async switchOnOff(value: boolean, tuya_switch: string) {
     await this.sendCommand({
       code: tuya_switch,
-      value: !!value,
+      value: value,
     });
   }
 
-  async onSettings(event) {
+  // TODO define settings
+  async onSettings(event: SettingsEvent<any>): Promise<string | void> {
     return await TuyaOAuth2Util.onSettings(this, event, SOCKET_SETTING_LABELS);
   }
 }

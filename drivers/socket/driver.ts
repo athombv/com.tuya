@@ -1,9 +1,15 @@
 'use strict';
 
-const TuyaOAuth2Driver = require('../../lib/TuyaOAuth2Driver');
+import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
 const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
-const TuyaOAuth2Util = require('../../lib/TuyaOAuth2Util');
+import TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
+import TuyaOAuth2DeviceSocket from "./device";
+import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 const { SOCKET_SETTING_LABELS} = require('./TuyaSocketConstants');
+
+type DeviceArgs = { device: TuyaOAuth2DeviceSocket };
+type SwitchArgs = { switch: { name: string, id: string } };
+type TuyaCapabilityState = { tuyaCapability: string };
 
 class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
 
@@ -17,10 +23,10 @@ class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
   async onInit() {
     await super.onInit();
 
-    const switchAutocompleteListener = (query, args) => {
+    const switchAutocompleteListener = (query: string, args: DeviceArgs) => {
       const device = args.device;
       const tuyaSwitches = device.getStore().tuya_switches;
-      return tuyaSwitches.map(value => {
+      return tuyaSwitches.map((value: string) => {
         const switch_number = value.substring(7)
         const name = this.homey.__("switch", {number: switch_number});
         return {
@@ -32,8 +38,8 @@ class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
 
     // Register Socket switch flows
     this.homey.flow.getActionCard('socket_sub_switch_on')
-      .registerArgumentAutocompleteListener('switch', (query, args) => switchAutocompleteListener(query, args))
-      .registerRunListener(async (args) => {
+      .registerArgumentAutocompleteListener('switch', (query: string, args: DeviceArgs) => switchAutocompleteListener(query, args))
+      .registerRunListener(async (args: DeviceArgs & SwitchArgs) => {
         await args.device.switchOnOff(true, args.switch.id).catch((err) => {
           this.error(err);
           throw new Error(this.homey.__("error_setting_switch"));
@@ -41,8 +47,8 @@ class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
       });
 
     this.homey.flow.getActionCard('socket_sub_switch_off')
-      .registerArgumentAutocompleteListener('switch', (query, args) => switchAutocompleteListener(query, args))
-      .registerRunListener(async (args) => {
+      .registerArgumentAutocompleteListener('switch', (query: string, args: DeviceArgs) => switchAutocompleteListener(query, args))
+      .registerRunListener(async (args: DeviceArgs & SwitchArgs) => {
       await args.device.switchOnOff(false, args.switch.id).catch((err) => {
         this.error(err);
         throw new Error(this.homey.__("error_setting_switch"));
@@ -50,16 +56,16 @@ class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
     });
 
     this.homey.flow.getDeviceTriggerCard('socket_sub_switch_turned_on')
-      .registerArgumentAutocompleteListener('switch', (query, args) => switchAutocompleteListener(query, args))
-      .registerRunListener((args, state) => args.switch.id === state.tuyaCapability);
+      .registerArgumentAutocompleteListener('switch', (query: string, args: DeviceArgs) => switchAutocompleteListener(query, args))
+      .registerRunListener((args: DeviceArgs & SwitchArgs, state: TuyaCapabilityState) => args.switch.id === state.tuyaCapability);
 
     this.homey.flow.getDeviceTriggerCard('socket_sub_switch_turned_off')
-      .registerArgumentAutocompleteListener('switch', (query, args) => switchAutocompleteListener(query, args))
-      .registerRunListener((args, state) => args.switch.id === state.tuyaCapability);
+      .registerArgumentAutocompleteListener('switch', (query: string, args: DeviceArgs) => switchAutocompleteListener(query, args))
+      .registerRunListener((args: DeviceArgs & SwitchArgs, state: TuyaCapabilityState) => args.switch.id === state.tuyaCapability);
 
     this.homey.flow.getConditionCard('socket_sub_switch_is_on')
-      .registerArgumentAutocompleteListener('switch', (query, args) => switchAutocompleteListener(query, args))
-      .registerRunListener((args) => {
+      .registerArgumentAutocompleteListener('switch', (query: string, args: DeviceArgs) => switchAutocompleteListener(query, args))
+      .registerRunListener((args: DeviceArgs & SwitchArgs) => {
         const homeyCapability = `onoff.switch_${args.switch.id.substring(7)}`;
         return args.device.getCapabilityValue(homeyCapability);
       });
@@ -67,11 +73,11 @@ class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
     // Register setting flows
     this.homey.flow
       .getActionCard('socket_child_lock')
-      .registerRunListener((args) => TuyaOAuth2Util.sendSetting(args.device, "child_lock", args.value, SOCKET_SETTING_LABELS));
+      .registerRunListener((args: DeviceArgs & { value: boolean }) => TuyaOAuth2Util.sendSetting(args.device, "child_lock", args.value, SOCKET_SETTING_LABELS));
   }
 
-  onTuyaPairListDeviceProperties(device) {
-    const props = super.onTuyaPairListDeviceProperties(device);
+  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
+    const props = super.onTuyaPairListDeviceProperties(device, specifications);
     props.capabilitiesOptions = {};
     props.store.tuya_switches = [];
 
@@ -137,7 +143,7 @@ class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
       "cur_current": "measure_current",
       "cur_power": "measure_power",
       "cur_voltage": "measure_voltage",
-    };
+    } as const;
 
     for (const status of device.status) {
       const tuyaCapability = status.code;
@@ -145,7 +151,7 @@ class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
       if (tuyaCapability in powerCapabilities) {
         props.store.tuya_capabilities.push(tuyaCapability);
 
-        const homeyCapability = powerCapabilities[status.code]
+        const homeyCapability = powerCapabilities[status.code as keyof typeof powerCapabilities]
         props.capabilities.push(homeyCapability);
       }
     }

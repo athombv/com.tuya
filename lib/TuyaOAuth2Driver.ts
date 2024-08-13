@@ -6,6 +6,21 @@ import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../types/Tuya
 
 const TuyaOAuth2Util = require('./TuyaOAuth2Util');
 
+export type ListDeviceProperties = {
+  store: {
+    [key: string]: any
+  },
+  settings: {
+    [key: string]: any
+  },
+  capabilities: string[],
+  capabilitiesOptions: {
+    [key: string]: {
+      [key: string]: any
+    }
+  },
+}
+
 export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
 
   TUYA_DEVICE_CATEGORIES: string[] = [];
@@ -39,7 +54,7 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
     return this.TUYA_DEVICE_CATEGORIES.includes(device.category);
   }
 
-  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications?: TuyaDeviceSpecificationResponse): Omit<OAuth2DeviceResult, "name" | "data"> {
+  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications?: TuyaDeviceSpecificationResponse): ListDeviceProperties {
     return {
       capabilities: [],
       store: {
