@@ -1,20 +1,17 @@
 'use strict';
 
-const TuyaOAuth2DriverSensor = require('../../lib/TuyaOAuth2DriverSensor');
+import TuyaOAuth2DriverSensor from '../../lib/TuyaOAuth2DriverSensor';
+import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
 
-/**
- * @extends TuyaOAuth2DriverSensor
- * @hideconstructor
- */
-class TuyaOAuth2DriverSensorContact extends TuyaOAuth2DriverSensor {
+export default class TuyaOAuth2DriverSensorContact extends TuyaOAuth2DriverSensor {
 
   TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.CONTACT_SENSOR,
   ];
 
-  onTuyaPairListDeviceProperties(device) {
-    const props = super.onTuyaPairListDeviceProperties(device);
+  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
+    const props = super.onTuyaPairListDeviceProperties(device, specifications);
 
     // alarm_contact
     const hasDoorContactState = device.status.some(({ code }) => code === 'doorcontact_state');
