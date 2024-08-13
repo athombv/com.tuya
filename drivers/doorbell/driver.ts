@@ -1,15 +1,17 @@
 'use strict';
 
-const TuyaOAuth2Driver = require('../../lib/TuyaOAuth2Driver');
+import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
+import {TuyaDeviceResponse} from "../../types/TuyaApiTypes";
 const TuyaOAuth2Constants = require('../../lib/TuyaOAuth2Constants');
 
-class TuyaOAuth2DriverDoorbell extends TuyaOAuth2Driver {
+// TODO refactor to be in line with other drivers
+export default class TuyaOAuth2DriverDoorbell extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
     TuyaOAuth2Constants.DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
   ];
 
-  onTuyaPairListDeviceFilter(device) {
+  onTuyaPairListDeviceFilter(device: TuyaDeviceResponse) {
     if (!super.onTuyaPairListDeviceFilter(device)) return false;
 
     // Require a doorbell capability
