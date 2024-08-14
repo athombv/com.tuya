@@ -25,7 +25,7 @@ import * as TuyaOAuth2Constants from './TuyaOAuth2Constants';
 import * as TuyaOAuth2Util from './TuyaOAuth2Util';
 import {RegionCode} from "./TuyaOAuth2Constants";
 
-export default class TuyaOAuth2Client extends OAuth2Client {
+export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
 
   static TOKEN = TuyaOAuth2Token;
   static API_URL = '<dummy>';
@@ -33,19 +33,8 @@ export default class TuyaOAuth2Client extends OAuth2Client {
   static AUTHORIZATION_URL = 'https://openapi.tuyaus.com/login';
   static REDIRECT_URL = 'https://tuya.athom.com/callback';
 
-  _token: TuyaOAuth2Token | undefined;
-  _clientId!: string;
-  _clientSecret!: string;
-
   __updateWebhookTimeout?: NodeJS.Timeout;
   webhook?: CloudWebhook;
-
-  /*
-   * OAuth2Client Overloads
-   */
-  getToken(): TuyaOAuth2Token {
-    return super.getToken() as unknown as TuyaOAuth2Token;
-  };
 
   // We save this information to eventually enable OAUTH2_MULTI_SESSION.
   // We can then list all authenticated users by name, e-mail and country flag.

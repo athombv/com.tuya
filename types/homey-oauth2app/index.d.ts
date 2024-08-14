@@ -12,11 +12,15 @@ declare module 'homey-oauth2app' {
     homeyLog: Log;
   }
 
-  class OAuth2Client extends SimpleClass {
+  class OAuth2Client<TToken extends OAuth2Token> extends SimpleClass {
     static API_URL: string;
     static TOKEN_URL: string;
     static AUTHORIZATION_URL: string;
     static SCOPES: string[];
+
+    _token?: TToken;
+    _clientId!: string;
+    _clientSecret!: string;
 
     homey: Homey;
 
@@ -50,7 +54,7 @@ declare module 'homey-oauth2app' {
 
     onShouldRefreshToken(args: {status: number}): Promise<boolean>;
 
-    getToken(): OAuth2Token;
+    getToken(): TToken;
 
     async refreshToken(...args): Promise<void>;
 
