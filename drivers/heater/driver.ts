@@ -1,31 +1,25 @@
 import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
-import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
-import {HEATER_CAPABILITIES_MAPPING} from "./TuyaHeaterConstants";
+import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
+import { HEATER_CAPABILITIES_MAPPING } from './TuyaHeaterConstants';
 
 type DeviceArgs = { device: TuyaOAuth2Device };
 type ValueArgs = { value: any };
 
 module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
-  TUYA_DEVICE_CATEGORIES = [
-    DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
-  ] as const;
+  TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER] as const;
 
   async onInit() {
     await super.onInit();
 
-    this.homey.flow
-      .getActionCard("heater_set_child_lock")
-      .registerRunListener(async (args: DeviceArgs & ValueArgs) => {
-        await args.device.triggerCapabilityListener("child_lock", args.value);
-      });
+    this.homey.flow.getActionCard('heater_set_child_lock').registerRunListener(async (args: DeviceArgs & ValueArgs) => {
+      await args.device.triggerCapabilityListener('child_lock', args.value);
+    });
 
-    this.homey.flow
-      .getActionCard("heater_set_eco_mode")
-      .registerRunListener(async (args: DeviceArgs & ValueArgs) => {
-        await args.device.triggerCapabilityListener("eco_mode", args.value);
-      });
+    this.homey.flow.getActionCard('heater_set_eco_mode').registerRunListener(async (args: DeviceArgs & ValueArgs) => {
+      await args.device.triggerCapabilityListener('eco_mode', args.value);
+    });
   }
 
   onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specification: TuyaDeviceSpecificationResponse) {
@@ -59,5 +53,4 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
 
     return props;
   }
-
-}
+};

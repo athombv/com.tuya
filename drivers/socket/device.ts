@@ -1,15 +1,14 @@
-import {Device, FlowCardTriggerDevice} from "homey";
-import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
+import { Device, FlowCardTriggerDevice } from 'homey';
+import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
-import {SOCKET_SETTING_LABELS} from "./TuyaSocketConstants";
+import { SOCKET_SETTING_LABELS } from './TuyaSocketConstants';
 
 /**
  * Device Class for Tuya Sockets
  */
 export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
-
   turnedOnFlowCard!: FlowCardTriggerDevice;
   turnedOffFlowCard!: FlowCardTriggerDevice;
 
@@ -30,7 +29,9 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
 
     for (let switch_i = 1; switch_i <= 6; switch_i++) {
       if (this.hasCapability(`onoff.switch_${switch_i}`)) {
-        this.registerCapabilityListener(`onoff.switch_${switch_i}`, (value) => this.switchOnOff(value, `switch_${switch_i}`));
+        this.registerCapabilityListener(`onoff.switch_${switch_i}`, (value) =>
+          this.switchOnOff(value, `switch_${switch_i}`),
+        );
       }
     }
   }
@@ -58,9 +59,15 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
         // Trigger the appropriate flow only when the status actually changed
         if (changedStatusCodes.includes(tuyaCapability)) {
           const triggerCard = switchStatus ? this.turnedOnFlowCard : this.turnedOffFlowCard;
-          triggerCard.trigger(this as Device, {}, {
-            tuyaCapability: tuyaCapability
-          }).catch(this.error);
+          triggerCard
+            .trigger(
+              this as Device,
+              {},
+              {
+                tuyaCapability: tuyaCapability,
+              },
+            )
+            .catch(this.error);
         }
 
         this.safeSetCapabilityValue(switchCapability, switchStatus).catch(this.error);
@@ -74,7 +81,7 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     this.safeSetCapabilityValue('onoff', anySwitchOn).catch(this.error);
 
     if (typeof status['cur_power'] === 'number') {
-      const powerScaling = 10 ** parseFloat(this.getSetting('power_scaling') ?? "0");
+      const powerScaling = 10 ** parseFloat(this.getSetting('power_scaling') ?? '0');
       const cur_power = status['cur_power'] / powerScaling;
       this.setCapabilityValue('measure_power', cur_power).catch(this.error);
     }
@@ -89,25 +96,25 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
       this.setCapabilityValue('measure_current', cur_current).catch(this.error);
     }
 
-    for (const setting of ["child_lock", "relay_status"]) {
+    for (const setting of ['child_lock', 'relay_status']) {
       const settingValue = status[setting];
       if (settingValue !== undefined) {
         await this.setSettings({
           [setting]: settingValue,
-        })
+        });
       }
     }
   }
 
   async allOnOff(value: boolean) {
     const tuyaSwitches = this.getStore().tuya_switches;
-    const commands = []
+    const commands = [];
 
     for (const tuyaSwitch of tuyaSwitches) {
       commands.push({
         code: tuyaSwitch,
         value: value,
-      })
+      });
     }
 
     await this.sendCommands(commands);

@@ -1,16 +1,15 @@
 /* eslint-disable camelcase */
 
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import {LIGHT_SETTING_LABELS, LightSettingCommand, LightSettingKey, PIR_CAPABILITIES} from './TuyaLightConstants';
+import { LIGHT_SETTING_LABELS, LightSettingCommand, LightSettingKey, PIR_CAPABILITIES } from './TuyaLightConstants';
 import * as TuyaLightMigrations from '../../lib/migrations/TuyaLightMigrations';
-import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
-import {TuyaCommand} from "../../types/TuyaApiTypes";
-import {TUYA_PERCENTAGE_SCALING} from "../../lib/TuyaOAuth2Constants";
+import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
+import { TuyaCommand } from '../../types/TuyaApiTypes';
+import { TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
 
-type ParsedColourData = { h: number, s: number, v: number }
+type ParsedColourData = { h: number; s: number; v: number };
 
 export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
-
   LIGHT_COLOUR_DATA_V1_HUE_MIN = this.store.tuya_colour?.h?.min;
   LIGHT_COLOUR_DATA_V1_HUE_MAX = this.store.tuya_colour?.h?.max;
   LIGHT_COLOUR_DATA_V1_SATURATION_MIN = this.store.tuya_colour?.s?.min;
@@ -53,7 +52,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
     for (const tuyaSwitch of tuyaSwitches) {
       if (this.hasCapability(`onoff.${tuyaSwitch}`)) {
-        this.registerCapabilityListener(`onoff.${tuyaSwitch}`, (value) => this.switchOnOff(value, tuyaSwitch))
+        this.registerCapabilityListener(`onoff.${tuyaSwitch}`, (value) => this.switchOnOff(value, tuyaSwitch));
       }
     }
 
@@ -66,7 +65,11 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     if (this.hasCapability('light_mode')) lightCapabilities.push('light_mode');
 
     if (lightCapabilities.length > 0) {
-      this.registerMultipleCapabilityListener(lightCapabilities, capabilityValues => this.onCapabilitiesLight(capabilityValues), 150);
+      this.registerMultipleCapabilityListener(
+        lightCapabilities,
+        (capabilityValues) => this.onCapabilitiesLight(capabilityValues),
+        150,
+      );
     }
 
     this.initBarrier = false;
@@ -75,7 +78,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
     while (this.initBarrier) {
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
     await super.onTuyaStatus(status, changedStatusCodes);
@@ -93,7 +96,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
         anySwitchOn = anySwitchOn || switchStatus;
 
         if (changedStatusCodes.includes(tuyaSwitch)) {
-          const triggerCardId = `light_${tuyaSwitch}_turned_${switchStatus ? 'on' : 'off'}`
+          const triggerCardId = `light_${tuyaSwitch}_turned_${switchStatus ? 'on' : 'off'}`;
           const triggerCard = this.homey.flow.getDeviceTriggerCard(triggerCardId);
 
           triggerCard.trigger(this).catch(this.error);
@@ -111,12 +114,28 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
     // light_temperature
     if (typeof status['temp_value'] === 'number') {
-      const light_temperature = Math.min(1, Math.max(0, 1 - (status['temp_value'] - this.LIGHT_TEMP_VALUE_V1_MIN) / (this.LIGHT_TEMP_VALUE_V1_MAX - this.LIGHT_TEMP_VALUE_V1_MIN)));
+      const light_temperature = Math.min(
+        1,
+        Math.max(
+          0,
+          1 -
+            (status['temp_value'] - this.LIGHT_TEMP_VALUE_V1_MIN) /
+              (this.LIGHT_TEMP_VALUE_V1_MAX - this.LIGHT_TEMP_VALUE_V1_MIN),
+        ),
+      );
       this.setCapabilityValue('light_temperature', light_temperature).catch(this.error);
     }
 
     if (typeof status['temp_value_v2'] === 'number') {
-      const light_temperature = Math.min(1, Math.max(0, 1 - (status['temp_value_v2'] - this.LIGHT_TEMP_VALUE_V2_MIN) / (this.LIGHT_TEMP_VALUE_V2_MAX - this.LIGHT_TEMP_VALUE_V2_MIN)));
+      const light_temperature = Math.min(
+        1,
+        Math.max(
+          0,
+          1 -
+            (status['temp_value_v2'] - this.LIGHT_TEMP_VALUE_V2_MIN) /
+              (this.LIGHT_TEMP_VALUE_V2_MAX - this.LIGHT_TEMP_VALUE_V2_MIN),
+        ),
+      );
       this.setCapabilityValue('light_temperature', light_temperature).catch(this.error);
     }
 
@@ -125,18 +144,46 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     const colourDataV2 = status['colour_data_v2'] as ParsedColourData | undefined;
 
     if (colourData) {
-      const light_hue = Math.min(1, Math.max(0, (colourData['h'] - this.LIGHT_COLOUR_DATA_V1_HUE_MIN) / (this.LIGHT_COLOUR_DATA_V1_HUE_MAX - this.LIGHT_COLOUR_DATA_V1_HUE_MIN)));
+      const light_hue = Math.min(
+        1,
+        Math.max(
+          0,
+          (colourData['h'] - this.LIGHT_COLOUR_DATA_V1_HUE_MIN) /
+            (this.LIGHT_COLOUR_DATA_V1_HUE_MAX - this.LIGHT_COLOUR_DATA_V1_HUE_MIN),
+        ),
+      );
       this.setCapabilityValue('light_hue', light_hue).catch(this.error);
 
-      const light_saturation = Math.min(1, Math.max(0, (colourData['s'] - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN) / (this.LIGHT_COLOUR_DATA_V1_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN)));
+      const light_saturation = Math.min(
+        1,
+        Math.max(
+          0,
+          (colourData['s'] - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN) /
+            (this.LIGHT_COLOUR_DATA_V1_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN),
+        ),
+      );
       this.setCapabilityValue('light_saturation', light_saturation).catch(this.error);
     }
 
     if (colourDataV2) {
-      const light_hue = Math.min(1, Math.max(0, (colourDataV2['h'] - this.LIGHT_COLOUR_DATA_V2_HUE_MIN) / (this.LIGHT_COLOUR_DATA_V2_HUE_MAX - this.LIGHT_COLOUR_DATA_V2_HUE_MIN)));
+      const light_hue = Math.min(
+        1,
+        Math.max(
+          0,
+          (colourDataV2['h'] - this.LIGHT_COLOUR_DATA_V2_HUE_MIN) /
+            (this.LIGHT_COLOUR_DATA_V2_HUE_MAX - this.LIGHT_COLOUR_DATA_V2_HUE_MIN),
+        ),
+      );
       this.setCapabilityValue('light_hue', light_hue).catch(this.error);
 
-      const light_saturation = Math.min(1, Math.max(0, (colourDataV2['s'] - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN) / (this.LIGHT_COLOUR_DATA_V2_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN)));
+      const light_saturation = Math.min(
+        1,
+        Math.max(
+          0,
+          (colourDataV2['s'] - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN) /
+            (this.LIGHT_COLOUR_DATA_V2_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN),
+        ),
+      );
       this.setCapabilityValue('light_saturation', light_saturation).catch(this.error);
     }
 
@@ -149,12 +196,26 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
         // dim
         if (colourData) {
-          const dim = Math.min(1, Math.max(0, (colourData['v'] - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN) / (this.LIGHT_COLOUR_DATA_V1_VALUE_MAX - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN)));
+          const dim = Math.min(
+            1,
+            Math.max(
+              0,
+              (colourData['v'] - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN) /
+                (this.LIGHT_COLOUR_DATA_V1_VALUE_MAX - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN),
+            ),
+          );
           this.setCapabilityValue('dim', dim).catch(this.error);
         }
 
         if (colourDataV2) {
-          const dim = Math.min(1, Math.max(0, (colourDataV2['v'] - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN) / (this.LIGHT_COLOUR_DATA_V2_VALUE_MAX - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN)));
+          const dim = Math.min(
+            1,
+            Math.max(
+              0,
+              (colourDataV2['v'] - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN) /
+                (this.LIGHT_COLOUR_DATA_V2_VALUE_MAX - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN),
+            ),
+          );
           this.setCapabilityValue('dim', dim).catch(this.error);
         }
       }
@@ -166,24 +227,52 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
         // dim
         if (typeof status['bright_value'] === 'number') {
-          const dim = Math.min(1, Math.max(0, (status['bright_value'] - this.LIGHT_BRIGHT_VALUE_V1_MIN) / (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN)));
+          const dim = Math.min(
+            1,
+            Math.max(
+              0,
+              (status['bright_value'] - this.LIGHT_BRIGHT_VALUE_V1_MIN) /
+                (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN),
+            ),
+          );
           this.setCapabilityValue('dim', dim).catch(this.error);
         }
 
         if (typeof status['bright_value_v2'] === 'number') {
-          const dim = Math.min(1, Math.max(0, (status['bright_value_v2'] - this.LIGHT_BRIGHT_VALUE_V2_MIN) / (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN)));
+          const dim = Math.min(
+            1,
+            Math.max(
+              0,
+              (status['bright_value_v2'] - this.LIGHT_BRIGHT_VALUE_V2_MIN) /
+                (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN),
+            ),
+          );
           this.setCapabilityValue('dim', dim).catch(this.error);
         }
       }
     } else {
       // dim
       if (typeof status['bright_value'] === 'number') {
-        const dim = Math.min(1, Math.max(0, (status['bright_value'] - this.LIGHT_BRIGHT_VALUE_V1_MIN) / (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN)));
+        const dim = Math.min(
+          1,
+          Math.max(
+            0,
+            (status['bright_value'] - this.LIGHT_BRIGHT_VALUE_V1_MIN) /
+              (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN),
+          ),
+        );
         this.setCapabilityValue('dim', dim).catch(this.error);
       }
 
       if (typeof status['bright_value_v2'] === 'number') {
-        const dim = Math.min(1, Math.max(0, (status['bright_value_v2'] - this.LIGHT_BRIGHT_VALUE_V2_MIN) / (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN)));
+        const dim = Math.min(
+          1,
+          Math.max(
+            0,
+            (status['bright_value_v2'] - this.LIGHT_BRIGHT_VALUE_V2_MIN) /
+              (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN),
+          ),
+        );
         this.setCapabilityValue('dim', dim).catch(this.error);
       }
     }
@@ -194,14 +283,14 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
       if (newValue !== undefined) {
         await this.setSettings({
           [pirCapability]: newValue,
-        }).catch(this.error)
+        }).catch(this.error);
       }
     }
 
     if (status['pir_state'] !== undefined && this.hasCapability('alarm_motion')) {
       const pirTurnedOn = status['switch_pir'] || !this.store.tuya_capabilities.includes('switch_pir');
       const newPirState = status['pir_state'] === 'pir' && pirTurnedOn;
-      this.setCapabilityValue('alarm_motion', newPirState).catch(this.error)
+      this.setCapabilityValue('alarm_motion', newPirState).catch(this.error);
     }
 
     if (status['standby_on'] !== undefined || status['standby_bright'] !== undefined) {
@@ -213,34 +302,34 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
       if (!hasStandbyOn) {
         if (standbyBrightness > 0) {
           settings = {
-            'standby_on': true,
-            'standby_bright': standbyBrightness / TUYA_PERCENTAGE_SCALING,
-          }
+            standby_on: true,
+            standby_bright: standbyBrightness / TUYA_PERCENTAGE_SCALING,
+          };
         } else {
           // Keep the brightness setting for when turning standby back on
           settings = {
-            'standby_on': false,
-          }
+            standby_on: false,
+          };
         }
       } else {
         settings = {
-          'standby_on': standbyOn,
-          'standby_bright': standbyBrightness / TUYA_PERCENTAGE_SCALING,
-        }
+          standby_on: standbyOn,
+          standby_bright: standbyBrightness / TUYA_PERCENTAGE_SCALING,
+        };
       }
-      await this.setSettings(settings).catch(this.error)
+      await this.setSettings(settings).catch(this.error);
     }
   }
 
   async allOnOff(value: boolean) {
     const tuyaSwitches = this.getStore().tuya_switches;
-    const commands = []
+    const commands = [];
 
     for (const tuyaSwitch of tuyaSwitches) {
       commands.push({
         code: tuyaSwitch,
         value: value,
-      })
+      });
     }
 
     await this.sendCommands(commands);
@@ -276,10 +365,39 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
         commands.push({
           code: 'colour_data',
           value: {
-            h: Math.min(this.LIGHT_COLOUR_DATA_V1_HUE_MAX, Math.max(this.LIGHT_COLOUR_DATA_V1_HUE_MIN, Math.round(this.LIGHT_COLOUR_DATA_V1_HUE_MIN + light_hue * (this.LIGHT_COLOUR_DATA_V1_HUE_MAX - this.LIGHT_COLOUR_DATA_V1_HUE_MIN)))),
-            s: Math.min(this.LIGHT_COLOUR_DATA_V1_SATURATION_MAX, Math.max(this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN, Math.round(this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN + light_saturation * (this.LIGHT_COLOUR_DATA_V1_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN)))),
+            h: Math.min(
+              this.LIGHT_COLOUR_DATA_V1_HUE_MAX,
+              Math.max(
+                this.LIGHT_COLOUR_DATA_V1_HUE_MIN,
+                Math.round(
+                  this.LIGHT_COLOUR_DATA_V1_HUE_MIN +
+                    light_hue * (this.LIGHT_COLOUR_DATA_V1_HUE_MAX - this.LIGHT_COLOUR_DATA_V1_HUE_MIN),
+                ),
+              ),
+            ),
+            s: Math.min(
+              this.LIGHT_COLOUR_DATA_V1_SATURATION_MAX,
+              Math.max(
+                this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN,
+                Math.round(
+                  this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN +
+                    light_saturation *
+                      (this.LIGHT_COLOUR_DATA_V1_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN),
+                ),
+              ),
+            ),
             // Prevent a value of 0, which causes unwanted behavior
-            v: Math.min(this.LIGHT_COLOUR_DATA_V1_VALUE_MAX, Math.max(1, this.LIGHT_COLOUR_DATA_V1_VALUE_MIN, Math.round(this.LIGHT_COLOUR_DATA_V1_VALUE_MIN + dim * (this.LIGHT_COLOUR_DATA_V1_VALUE_MAX - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN)))),
+            v: Math.min(
+              this.LIGHT_COLOUR_DATA_V1_VALUE_MAX,
+              Math.max(
+                1,
+                this.LIGHT_COLOUR_DATA_V1_VALUE_MIN,
+                Math.round(
+                  this.LIGHT_COLOUR_DATA_V1_VALUE_MIN +
+                    dim * (this.LIGHT_COLOUR_DATA_V1_VALUE_MAX - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN),
+                ),
+              ),
+            ),
           },
         });
       }
@@ -288,10 +406,39 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
         commands.push({
           code: 'colour_data_v2',
           value: {
-            h: Math.min(this.LIGHT_COLOUR_DATA_V2_HUE_MAX, Math.max(this.LIGHT_COLOUR_DATA_V2_HUE_MIN, Math.round(this.LIGHT_COLOUR_DATA_V2_HUE_MIN + light_hue * (this.LIGHT_COLOUR_DATA_V2_HUE_MAX - this.LIGHT_COLOUR_DATA_V2_HUE_MIN)))),
-            s: Math.min(this.LIGHT_COLOUR_DATA_V2_SATURATION_MAX, Math.max(this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN, Math.round(this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN + light_saturation * (this.LIGHT_COLOUR_DATA_V2_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN)))),
+            h: Math.min(
+              this.LIGHT_COLOUR_DATA_V2_HUE_MAX,
+              Math.max(
+                this.LIGHT_COLOUR_DATA_V2_HUE_MIN,
+                Math.round(
+                  this.LIGHT_COLOUR_DATA_V2_HUE_MIN +
+                    light_hue * (this.LIGHT_COLOUR_DATA_V2_HUE_MAX - this.LIGHT_COLOUR_DATA_V2_HUE_MIN),
+                ),
+              ),
+            ),
+            s: Math.min(
+              this.LIGHT_COLOUR_DATA_V2_SATURATION_MAX,
+              Math.max(
+                this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN,
+                Math.round(
+                  this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN +
+                    light_saturation *
+                      (this.LIGHT_COLOUR_DATA_V2_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN),
+                ),
+              ),
+            ),
             // Prevent a value of 0, which causes unwanted behavior
-            v: Math.min(this.LIGHT_COLOUR_DATA_V2_VALUE_MAX, Math.max(1, this.LIGHT_COLOUR_DATA_V2_VALUE_MIN, Math.round( this.LIGHT_COLOUR_DATA_V2_VALUE_MIN + dim * (this.LIGHT_COLOUR_DATA_V2_VALUE_MAX - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN)))),
+            v: Math.min(
+              this.LIGHT_COLOUR_DATA_V2_VALUE_MAX,
+              Math.max(
+                1,
+                this.LIGHT_COLOUR_DATA_V2_VALUE_MIN,
+                Math.round(
+                  this.LIGHT_COLOUR_DATA_V2_VALUE_MIN +
+                    dim * (this.LIGHT_COLOUR_DATA_V2_VALUE_MAX - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN),
+                ),
+              ),
+            ),
           },
         });
       }
@@ -299,42 +446,96 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
       if (this.hasTuyaCapability('bright_value')) {
         commands.push({
           code: 'bright_value',
-          value: Math.min(this.LIGHT_BRIGHT_VALUE_V1_MAX, Math.max(this.LIGHT_BRIGHT_VALUE_V1_MIN, Math.round(this.LIGHT_BRIGHT_VALUE_V1_MIN + dim * (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN)))),
+          value: Math.min(
+            this.LIGHT_BRIGHT_VALUE_V1_MAX,
+            Math.max(
+              this.LIGHT_BRIGHT_VALUE_V1_MIN,
+              Math.round(
+                this.LIGHT_BRIGHT_VALUE_V1_MIN +
+                  dim * (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN),
+              ),
+            ),
+          ),
         });
       }
 
       if (this.hasTuyaCapability('bright_value_v2')) {
         commands.push({
           code: 'bright_value_v2',
-          value: Math.min(this.LIGHT_BRIGHT_VALUE_V2_MAX, Math.max(this.LIGHT_BRIGHT_VALUE_V2_MIN, Math.round(this.LIGHT_BRIGHT_VALUE_V2_MIN + dim * (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN)))),
+          value: Math.min(
+            this.LIGHT_BRIGHT_VALUE_V2_MAX,
+            Math.max(
+              this.LIGHT_BRIGHT_VALUE_V2_MIN,
+              Math.round(
+                this.LIGHT_BRIGHT_VALUE_V2_MIN +
+                  dim * (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN),
+              ),
+            ),
+          ),
         });
       }
 
       if (this.hasTuyaCapability('temp_value')) {
         commands.push({
           code: 'temp_value',
-          value: Math.min(this.LIGHT_TEMP_VALUE_V1_MAX, Math.max(this.LIGHT_TEMP_VALUE_V1_MIN, Math.round(this.LIGHT_TEMP_VALUE_V1_MIN + (1 - light_temperature) * (this.LIGHT_TEMP_VALUE_V1_MAX - this.LIGHT_TEMP_VALUE_V1_MIN)))),
+          value: Math.min(
+            this.LIGHT_TEMP_VALUE_V1_MAX,
+            Math.max(
+              this.LIGHT_TEMP_VALUE_V1_MIN,
+              Math.round(
+                this.LIGHT_TEMP_VALUE_V1_MIN +
+                  (1 - light_temperature) * (this.LIGHT_TEMP_VALUE_V1_MAX - this.LIGHT_TEMP_VALUE_V1_MIN),
+              ),
+            ),
+          ),
         });
       }
 
       if (this.hasTuyaCapability('temp_value_v2')) {
         commands.push({
           code: 'temp_value_v2',
-          value: Math.min(this.LIGHT_TEMP_VALUE_V2_MAX, Math.max(this.LIGHT_TEMP_VALUE_V2_MIN, Math.round(this.LIGHT_TEMP_VALUE_V2_MIN + (1 - light_temperature) * (this.LIGHT_TEMP_VALUE_V2_MAX - this.LIGHT_TEMP_VALUE_V2_MIN)))),
+          value: Math.min(
+            this.LIGHT_TEMP_VALUE_V2_MAX,
+            Math.max(
+              this.LIGHT_TEMP_VALUE_V2_MIN,
+              Math.round(
+                this.LIGHT_TEMP_VALUE_V2_MIN +
+                  (1 - light_temperature) * (this.LIGHT_TEMP_VALUE_V2_MAX - this.LIGHT_TEMP_VALUE_V2_MIN),
+              ),
+            ),
+          ),
         });
       }
     } else if (this.hasCapability('dim')) {
       if (this.hasTuyaCapability('bright_value')) {
         commands.push({
           code: 'bright_value',
-          value: Math.min(this.LIGHT_BRIGHT_VALUE_V1_MAX, Math.max(this.LIGHT_BRIGHT_VALUE_V1_MIN, Math.round(this.LIGHT_BRIGHT_VALUE_V1_MIN + dim * (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN)))),
+          value: Math.min(
+            this.LIGHT_BRIGHT_VALUE_V1_MAX,
+            Math.max(
+              this.LIGHT_BRIGHT_VALUE_V1_MIN,
+              Math.round(
+                this.LIGHT_BRIGHT_VALUE_V1_MIN +
+                  dim * (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN),
+              ),
+            ),
+          ),
         });
       }
 
       if (this.hasTuyaCapability('bright_value_v2')) {
         commands.push({
           code: 'bright_value_v2',
-          value: Math.min(this.LIGHT_BRIGHT_VALUE_V2_MAX, Math.max(this.LIGHT_BRIGHT_VALUE_V2_MIN, Math.round(this.LIGHT_BRIGHT_VALUE_V2_MIN + dim * (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN)))),
+          value: Math.min(
+            this.LIGHT_BRIGHT_VALUE_V2_MAX,
+            Math.max(
+              this.LIGHT_BRIGHT_VALUE_V2_MIN,
+              Math.round(
+                this.LIGHT_BRIGHT_VALUE_V2_MIN +
+                  dim * (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN),
+              ),
+            ),
+          ),
         });
       }
     }
@@ -345,34 +546,36 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
   }
 
   // TODO migrate to util sendSettingCommand
-  async sendSettingCommand({code, value}: LightSettingCommand) {
-    await this
-      .sendCommand({
-        code: code,
-        value: value,
-      })
-      .catch((err) => {
-        if (err.tuyaCode === 2008) {
-          throw new Error(
-            this.homey.__("setting_unsupported", {
-              label: LIGHT_SETTING_LABELS[code],
-            }),
-          );
-        } else if (err.tuyaCode === 501) {
-          throw new Error(
-            this.homey.__("setting_value_unsupported", {
-              label: LIGHT_SETTING_LABELS[code],
-            }),
-          );
-        } else {
-          throw err;
-        }
-      });
+  async sendSettingCommand({ code, value }: LightSettingCommand) {
+    await this.sendCommand({
+      code: code,
+      value: value,
+    }).catch((err) => {
+      if (err.tuyaCode === 2008) {
+        throw new Error(
+          this.homey.__('setting_unsupported', {
+            label: LIGHT_SETTING_LABELS[code],
+          }),
+        );
+      } else if (err.tuyaCode === 501) {
+        throw new Error(
+          this.homey.__('setting_value_unsupported', {
+            label: LIGHT_SETTING_LABELS[code],
+          }),
+        );
+      } else {
+        throw err;
+      }
+    });
   }
 
   // TODO migrate to util onSettings
   // TODO define settings
-  async onSettings({ oldSettings, newSettings, changedKeys }: SettingsEvent<Record<LightSettingKey, any>>): Promise<string | void> {
+  async onSettings({
+    oldSettings,
+    newSettings,
+    changedKeys,
+  }: SettingsEvent<Record<LightSettingKey, any>>): Promise<string | void> {
     const unsupportedSettings: string[] = [];
     const unsupportedValues: string[] = [];
 
@@ -408,18 +611,23 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
         let commands;
 
         if (!hasStandbyOn) {
-          commands = [{
-            code: 'standby_bright',
-            value: standbyOn ? standbyBrightness * TUYA_PERCENTAGE_SCALING : 0,
-          }]
+          commands = [
+            {
+              code: 'standby_bright',
+              value: standbyOn ? standbyBrightness * TUYA_PERCENTAGE_SCALING : 0,
+            },
+          ];
         } else {
-          commands = [{
-            code: 'standby_bright',
-            value: standbyBrightness * TUYA_PERCENTAGE_SCALING,
-          }, {
-            code: 'standby_on',
-            value: standbyOn,
-          }]
+          commands = [
+            {
+              code: 'standby_bright',
+              value: standbyBrightness * TUYA_PERCENTAGE_SCALING,
+            },
+            {
+              code: 'standby_on',
+              value: standbyOn,
+            },
+          ];
         }
 
         for (const command of commands) {
@@ -441,16 +649,16 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
       const mappedSettingNames = unsupportedSettings.map(
         (settingKey) => LIGHT_SETTING_LABELS[settingKey as LightSettingKey],
       );
-      messages.push(this.homey.__("settings_unsupported") + " " + mappedSettingNames.join(", "));
+      messages.push(this.homey.__('settings_unsupported') + ' ' + mappedSettingNames.join(', '));
     }
     if (unsupportedValues.length > 0) {
       const mappedSettingNames = unsupportedValues.map(
         (settingKey) => LIGHT_SETTING_LABELS[settingKey as LightSettingKey],
       );
-      messages.push(this.homey.__("setting_values_unsupported") + " " + mappedSettingNames.join(", "));
+      messages.push(this.homey.__('setting_values_unsupported') + ' ' + mappedSettingNames.join(', '));
     }
     if (messages.length > 0) {
-      return messages.join("\n");
+      return messages.join('\n');
     }
   }
 }

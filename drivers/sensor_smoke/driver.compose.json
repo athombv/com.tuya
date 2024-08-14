@@ -5,7 +5,5 @@
     "en": "Smoke Detector",
     "nl": "Rookmelder"
   },
-  "capabilities": [
-    "alarm_smoke"
-  ]
+  "capabilities": ["alarm_smoke"]
 }

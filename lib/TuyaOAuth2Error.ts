@@ -1,7 +1,6 @@
-import {OAuth2Error} from 'homey-oauth2app';
+import { OAuth2Error } from 'homey-oauth2app';
 
 export default class TuyaOAuth2Error extends OAuth2Error {
-
   tuyaCode?: number;
 
   constructor(message: string, statusCode?: number, tuyaCode?: number) {
@@ -9,7 +8,6 @@ export default class TuyaOAuth2Error extends OAuth2Error {
 
     this.tuyaCode = tuyaCode;
   }
-
 }
 
 module.exports = TuyaOAuth2Error;

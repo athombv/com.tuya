@@ -5,7 +5,5 @@
     "en": "Door Sensor",
     "nl": "Deur Sensor"
   },
-  "capabilities": [
-    "alarm_contact"
-  ]
+  "capabilities": ["alarm_contact"]
 }

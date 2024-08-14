@@ -1,6 +1,6 @@
-import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
-import * as TuyaOAuth2Util from "../../lib/TuyaOAuth2Util";
-import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
+import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
+import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
+import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
 
 module.exports = class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
   onTuyaPairListDeviceFilter() {
@@ -15,11 +15,7 @@ module.exports = class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
       specifications: specifications,
     };
 
-    props.settings["deviceSpecification"] = JSON.stringify(
-      combinedSpecification,
-      undefined,
-      2,
-    );
+    props.settings['deviceSpecification'] = JSON.stringify(combinedSpecification, undefined, 2);
 
     return props;
   }

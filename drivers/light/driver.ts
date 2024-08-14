@@ -1,15 +1,14 @@
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
-import type TuyaOAuth2DeviceLight from "./device";
-import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-import {constIncludes} from "../../lib/TuyaOAuth2Util";
-import {DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING} from "../../lib/TuyaOAuth2Constants";
-import {LightSettingCommand, PIR_CAPABILITIES} from "./TuyaLightConstants";
+import type TuyaOAuth2DeviceLight from './device';
+import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import { constIncludes } from '../../lib/TuyaOAuth2Util';
+import { DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
+import { LightSettingCommand, PIR_CAPABILITIES } from './TuyaLightConstants';
 
 type DeviceArgs = { device: TuyaOAuth2DeviceLight };
 type ValueArgs = { value: any };
 
 module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
-
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.LIGHTING.LIGHT,
     DEVICE_CATEGORIES.LIGHTING.CEILING_LIGHT,
@@ -29,8 +28,8 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
       await args.device.sendSettingCommand({
         code: 'switch_pir',
         value: args.value,
-      })
-    })
+      });
+    });
 
     this.homey.flow.getActionCard('light_standby_on').registerRunListener(async (args: DeviceArgs & ValueArgs) => {
       const device = args.device;
@@ -40,41 +39,43 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
       let commands: LightSettingCommand[];
 
       if (!hasStandbyOn) {
-        commands = [{
-          code: 'standby_bright',
-          value: standbyOn ? standbyBrightness * TUYA_PERCENTAGE_SCALING : 0,
-        }]
+        commands = [
+          {
+            code: 'standby_bright',
+            value: standbyOn ? standbyBrightness * TUYA_PERCENTAGE_SCALING : 0,
+          },
+        ];
       } else {
-        commands = [{
-          code: 'standby_bright',
-          value: standbyBrightness * TUYA_PERCENTAGE_SCALING,
-        }, {
-          code: 'standby_on',
-          value: standbyOn,
-        }]
+        commands = [
+          {
+            code: 'standby_bright',
+            value: standbyBrightness * TUYA_PERCENTAGE_SCALING,
+          },
+          {
+            code: 'standby_on',
+            value: standbyOn,
+          },
+        ];
       }
 
       for (const command of commands) {
-        await args.device.sendSettingCommand(command)
+        await args.device.sendSettingCommand(command);
       }
-    })
+    });
 
     // Flows for onoff.switch_led and onoff.switch
-    for (const tuyaSwitch of ["switch_led", "switch"]) {
-      this.homey.flow.getActionCard(`light_${tuyaSwitch}_on`)
-        .registerRunListener((args: DeviceArgs) => {
-          return args.device.triggerCapabilityListener(`onoff.${tuyaSwitch}`, true);
-        })
+    for (const tuyaSwitch of ['switch_led', 'switch']) {
+      this.homey.flow.getActionCard(`light_${tuyaSwitch}_on`).registerRunListener((args: DeviceArgs) => {
+        return args.device.triggerCapabilityListener(`onoff.${tuyaSwitch}`, true);
+      });
 
-      this.homey.flow.getActionCard(`light_${tuyaSwitch}_off`)
-        .registerRunListener((args: DeviceArgs) => {
-          return args.device.triggerCapabilityListener(`onoff.${tuyaSwitch}`, false);
-        })
+      this.homey.flow.getActionCard(`light_${tuyaSwitch}_off`).registerRunListener((args: DeviceArgs) => {
+        return args.device.triggerCapabilityListener(`onoff.${tuyaSwitch}`, false);
+      });
 
-      this.homey.flow.getConditionCard(`light_${tuyaSwitch}_is_on`)
-        .registerRunListener((args: DeviceArgs) => {
-          return args.device.getCapabilityValue(`onoff.${tuyaSwitch}`);
-        });
+      this.homey.flow.getConditionCard(`light_${tuyaSwitch}_is_on`).registerRunListener((args: DeviceArgs) => {
+        return args.device.getCapabilityValue(`onoff.${tuyaSwitch}`);
+      });
     }
   }
 
@@ -83,7 +84,7 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
     props.store.tuya_switches = [];
 
     // Add this before the sub-capabilities, so it becomes the quick toggle
-    props.capabilities.push('onoff')
+    props.capabilities.push('onoff');
 
     // onoff
     for (const status of device.status) {
@@ -97,7 +98,7 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
 
         props.capabilitiesOptions[homeyCapability] = {
           title: {
-            en: `Light`
+            en: `Light`,
           },
           insightsTitleTrue: {
             en: `Turned on (Light)`,
@@ -116,7 +117,7 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
 
         props.capabilitiesOptions[homeyCapability] = {
           title: {
-            en: `Other`
+            en: `Other`,
           },
           insightsTitleTrue: {
             en: `Turned on (Other)`,
@@ -132,14 +133,14 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
 
     if (switchCount === 0) {
       // Remove the 'onoff' capability
-      props.capabilities.pop()
+      props.capabilities.pop();
     } else if (switchCount === 1) {
       // Remove the sub-capability in favor of the regular 'onoff' capability
       props.capabilities.pop();
     } else {
       props.capabilitiesOptions['onoff'] = {
         title: {
-          en: 'Switch All'
+          en: 'Switch All',
         },
         preventInsights: true,
       };
@@ -176,7 +177,7 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
       // motion alarm
       if (tuyaCapability === 'pir_state') {
         props.store.tuya_capabilities.push(tuyaCapability);
-        props.capabilities.push('alarm_motion')
+        props.capabilities.push('alarm_motion');
       }
 
       // motion alarm settings
@@ -185,7 +186,8 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
       }
 
       // standby settings
-      if (tuyaCapability === 'standby_on' || tuyaCapability === 'standby_bright') { // Turn standby light on/off // Change standby brightness
+      if (tuyaCapability === 'standby_on' || tuyaCapability === 'standby_bright') {
+        // Turn standby light on/off // Change standby brightness
         props.store.tuya_capabilities.push(tuyaCapability);
       }
     }
@@ -201,29 +203,29 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
     // Category Specifications
     // The main light category has both (0,255) and (0,1000) for backwards compatibility
     // Other categories use only (0,1000)
-    if (device.category === "dj") {
-      props.store.tuya_brightness = { min: 25, max: 255, scale: 0, step: 1}
-      props.store.tuya_temperature = { min: 0, max: 255, scale: 0, step: 1}
+    if (device.category === 'dj') {
+      props.store.tuya_brightness = { min: 25, max: 255, scale: 0, step: 1 };
+      props.store.tuya_temperature = { min: 0, max: 255, scale: 0, step: 1 };
       props.store.tuya_colour = {
-        h:{min: 0, max: 360, scale: 0, step: 1},
-        s:{min: 0, max: 255, scale: 0, step: 1},
-        v:{min: 0, max: 255, scale: 0, step: 1},
-      }
-      props.store.tuya_brightness_v2 = { min: 10, max: 1000, scale: 0, step: 1}
-      props.store.tuya_temperature_v2 = {min: 0, max: 1000, scale: 0, step: 1}
+        h: { min: 0, max: 360, scale: 0, step: 1 },
+        s: { min: 0, max: 255, scale: 0, step: 1 },
+        v: { min: 0, max: 255, scale: 0, step: 1 },
+      };
+      props.store.tuya_brightness_v2 = { min: 10, max: 1000, scale: 0, step: 1 };
+      props.store.tuya_temperature_v2 = { min: 0, max: 1000, scale: 0, step: 1 };
       props.store.tuya_colour_v2 = {
-        h:{min: 0, max: 360, scale: 0, step: 1},
-        s:{min: 0, max: 1000, scale: 0, step: 1},
-        v:{min: 0, max: 1000, scale: 0, step: 1},
-      }
+        h: { min: 0, max: 360, scale: 0, step: 1 },
+        s: { min: 0, max: 1000, scale: 0, step: 1 },
+        v: { min: 0, max: 1000, scale: 0, step: 1 },
+      };
     } else {
-      props.store.tuya_brightness = {min: 10, max: 1000, scale: 0, step: 1}
-      props.store.tuya_temperature = {min: 0, max: 1000, scale: 0, step: 1}
+      props.store.tuya_brightness = { min: 10, max: 1000, scale: 0, step: 1 };
+      props.store.tuya_temperature = { min: 0, max: 1000, scale: 0, step: 1 };
       props.store.tuya_colour = {
-        h:{min: 0, max: 360, scale: 0, step: 1},
-        s:{min: 0, max: 1000, scale: 0, step: 1},
-        v:{min: 0, max: 1000, scale: 0, step: 1},
-      }
+        h: { min: 0, max: 360, scale: 0, step: 1 },
+        s: { min: 0, max: 1000, scale: 0, step: 1 },
+        v: { min: 0, max: 1000, scale: 0, step: 1 },
+      };
     }
 
     if (!specifications || !specifications.functions) {
@@ -252,5 +254,4 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
 
     return props;
   }
-
-}
+};

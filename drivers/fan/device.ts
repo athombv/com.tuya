@@ -1,10 +1,9 @@
 /* eslint-disable camelcase */
 
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import {TuyaStatus} from "../../types/TuyaTypes";
+import { TuyaStatus } from '../../types/TuyaTypes';
 
 module.exports = class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
-
   constructor(...props: any) {
     super(...props);
 
@@ -52,5 +51,4 @@ module.exports = class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
       value: value,
     });
   }
-
-}
+};

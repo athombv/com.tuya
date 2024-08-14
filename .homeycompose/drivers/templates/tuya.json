@@ -1,12 +1,7 @@
 {
   "capabilities": [],
-  "connectivity": [
-    "cloud"
-  ],
-  "platforms": [
-    "local",
-    "cloud"
-  ],
+  "connectivity": ["cloud"],
+  "platforms": ["local", "cloud"],
   "images": {
     "small": "{{driverAssetsPath}}/images/small.png",
     "large": "{{driverAssetsPath}}/images/large.png",

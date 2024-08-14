@@ -1,8 +1,7 @@
 import TuyaOAuth2Driver from './TuyaOAuth2Driver';
-import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../types/TuyaApiTypes";
+import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../types/TuyaApiTypes';
 
 export default class TuyaOAuth2DriverSensor extends TuyaOAuth2Driver {
-
   onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
     const props = super.onTuyaPairListDeviceProperties(device);
 
@@ -15,7 +14,6 @@ export default class TuyaOAuth2DriverSensor extends TuyaOAuth2Driver {
 
     return props;
   }
-
 }
 
 module.exports = TuyaOAuth2DriverSensor;

@@ -177,7 +177,8 @@
         "en": "A pet was detected"
       },
       "$filter": "capabilities=alarm_pet"
-    },    {
+    },
+    {
       "id": "camera_alarm_pet_false",
       "title": {
         "en": "Pet is no longer detected"

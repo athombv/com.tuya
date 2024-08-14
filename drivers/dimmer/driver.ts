@@ -1,18 +1,15 @@
-import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
-import TuyaOAuth2DeviceDimmer from "./device";
-import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-import {constIncludes} from "../../lib/TuyaOAuth2Util";
-import {SIMPLE_DIMMER_CAPABILITIES} from "./TuyaDimmerConstants";
-import {DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING} from "../../lib/TuyaOAuth2Constants";
+import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
+import TuyaOAuth2DeviceDimmer from './device';
+import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import { constIncludes } from '../../lib/TuyaOAuth2Util';
+import { SIMPLE_DIMMER_CAPABILITIES } from './TuyaDimmerConstants';
+import { DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
 
 type DeviceArgs = { device: TuyaOAuth2DeviceDimmer };
 type ValueArgs = { value: any };
 
 module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
-
-  TUYA_DEVICE_CATEGORIES = [
-    DEVICE_CATEGORIES.LIGHTING.DIMMER,
-  ] as const;
+  TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.LIGHTING.DIMMER] as const;
 
   async onInit() {
     await super.onInit();
@@ -59,24 +56,18 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
         props.store.tuya_capabilities.push(tuyaCapability);
       }
 
-      if (
-        tuyaCapability === "switch_led_1" ||
-        tuyaCapability === "switch_led_2"
-      ) {
+      if (tuyaCapability === 'switch_led_1' || tuyaCapability === 'switch_led_2') {
         props.store.tuya_switches.push(tuyaCapability);
       }
 
-      if (
-        tuyaCapability === "bright_value_1" ||
-        tuyaCapability === "bright_value_2"
-      ) {
+      if (tuyaCapability === 'bright_value_1' || tuyaCapability === 'bright_value_2') {
         props.store.tuya_dimmers.push(tuyaCapability);
       }
     }
 
     // On/Off
     if (props.store.tuya_switches.length > 0) {
-      props.capabilities.push("onoff");
+      props.capabilities.push('onoff');
     }
 
     if (props.store.tuya_switches.length === 2) {
@@ -96,9 +87,9 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
         };
       }
 
-      props.capabilitiesOptions["onoff"] = {
+      props.capabilitiesOptions['onoff'] = {
         title: {
-          en: "Switch All",
+          en: 'Switch All',
         },
         preventInsights: true,
       };
@@ -106,7 +97,7 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
 
     // Dim
     if (props.store.tuya_dimmers.length === 1) {
-      props.capabilities.push("dim");
+      props.capabilities.push('dim');
     }
 
     if (props.store.tuya_dimmers.length === 2) {
@@ -130,17 +121,17 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
       const tuyaCapability = statusSpecification.code;
       const values = JSON.parse(statusSpecification.values);
 
-      if (tuyaCapability === "bright_value_1") {
-        props.settings["brightness_min_1"] = values.min / TUYA_PERCENTAGE_SCALING;
-        props.settings["brightness_max_1"] = values.max / TUYA_PERCENTAGE_SCALING;
+      if (tuyaCapability === 'bright_value_1') {
+        props.settings['brightness_min_1'] = values.min / TUYA_PERCENTAGE_SCALING;
+        props.settings['brightness_max_1'] = values.max / TUYA_PERCENTAGE_SCALING;
       }
 
-      if (tuyaCapability === "bright_value_2") {
-        props.settings["brightness_min_2"] = values.min / TUYA_PERCENTAGE_SCALING;
-        props.settings["brightness_max_2"] = values.max / TUYA_PERCENTAGE_SCALING;
+      if (tuyaCapability === 'bright_value_2') {
+        props.settings['brightness_min_2'] = values.min / TUYA_PERCENTAGE_SCALING;
+        props.settings['brightness_max_2'] = values.max / TUYA_PERCENTAGE_SCALING;
       }
     }
 
     return props;
   }
-}
+};

@@ -1,8 +1,7 @@
 import TuyaOAuth2DeviceSensor from '../../lib/TuyaOAuth2DeviceSensor';
-import {TuyaStatus} from "../../types/TuyaTypes";
+import { TuyaStatus } from '../../types/TuyaTypes';
 
 module.exports = class TuyaOAuth2DeviceSensorContact extends TuyaOAuth2DeviceSensor {
-
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
     await super.onTuyaStatus(status, changedStatusCodes);
 
@@ -11,5 +10,4 @@ module.exports = class TuyaOAuth2DeviceSensorContact extends TuyaOAuth2DeviceSen
       this.setCapabilityValue('alarm_contact', status['doorcontact_state']).catch(this.error);
     }
   }
-
-}
+};

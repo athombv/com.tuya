@@ -1,13 +1,12 @@
-import TuyaOAuth2Client from "./TuyaOAuth2Client";
+import TuyaOAuth2Client from './TuyaOAuth2Client';
 
-import {OAuth2Device} from 'homey-oauth2app';
+import { OAuth2Device } from 'homey-oauth2app';
 import * as TuyaOAuth2Util from './TuyaOAuth2Util';
 
-import {TuyaStatus, TuyaStatusUpdate} from "../types/TuyaTypes";
-import {TuyaCommand} from "../types/TuyaApiTypes";
+import { TuyaStatus, TuyaStatusUpdate } from '../types/TuyaTypes';
+import { TuyaCommand } from '../types/TuyaApiTypes';
 
 export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
-
   oAuth2Client!: TuyaOAuth2Client;
   __status: TuyaStatus;
   __syncInterval?: NodeJS.Timeout;
@@ -40,29 +39,29 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
   async onOAuth2Init() {
     await super.onOAuth2Init();
 
-    const isOtherDevice = this.driver.id === "other";
+    const isOtherDevice = this.driver.id === 'other';
 
-    this.oAuth2Client.registerDevice({
-      ...this.data,
-      onStatus: async (statuses: TuyaStatusUpdate<unknown>[]) => {
+    this.oAuth2Client.registerDevice(
+      {
+        ...this.data,
+        onStatus: async (statuses: TuyaStatusUpdate<unknown>[]) => {
+          const changedStatusCodes = statuses.map((status: TuyaStatusUpdate<unknown>) => status.code);
 
-        const changedStatusCodes = statuses.map((status: TuyaStatusUpdate<unknown>) => status.code);
-
-        console.log('changedStatusCodes', changedStatusCodes);
-        const status = TuyaOAuth2Util.convertStatusArrayToStatusObject(statuses);
-        await this.__onTuyaStatus(status, changedStatusCodes);
+          console.log('changedStatusCodes', changedStatusCodes);
+          const status = TuyaOAuth2Util.convertStatusArrayToStatusObject(statuses);
+          await this.__onTuyaStatus(status, changedStatusCodes);
+        },
+        onOnline: async () => {
+          await this.__onTuyaStatus({
+            online: true,
+          });
+        },
+        onOffline: async () => {
+          await this.__onTuyaStatus({
+            online: false,
+          });
+        },
       },
-      onOnline: async () => {
-        await this.__onTuyaStatus({
-          online: true,
-        });
-      },
-      onOffline: async () => {
-        await this.__onTuyaStatus({
-          online: false,
-        });
-      },
-    },
       isOtherDevice,
     );
 
@@ -82,12 +81,9 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     }
 
     if (this.oAuth2Client) {
-      const isOtherDevice = this.driver.id === "other";
+      const isOtherDevice = this.driver.id === 'other';
 
-      this.oAuth2Client.unregisterDevice(
-        {...this.data},
-        isOtherDevice,
-      );
+      this.oAuth2Client.unregisterDevice({ ...this.data }, isOtherDevice);
     }
   }
 
@@ -105,26 +101,33 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
 
       let triggerCardId;
       if (typeof changedStatusValue === 'boolean') {
-        triggerCardId = "receive_status_boolean";
+        triggerCardId = 'receive_status_boolean';
       } else if (typeof changedStatusValue === 'number') {
-        triggerCardId = "receive_status_number";
+        triggerCardId = 'receive_status_number';
       } else if (typeof changedStatusValue === 'string') {
         const hasJsonStructure = TuyaOAuth2Util.hasJsonStructure(changedStatusValue);
         if (hasJsonStructure) {
-          triggerCardId = "receive_status_json";
+          triggerCardId = 'receive_status_json';
         } else {
-          triggerCardId = "receive_status_string";
+          triggerCardId = 'receive_status_string';
         }
       } else if (typeof changedStatusValue === 'object') {
         changedStatusValue = JSON.stringify(changedStatusValue);
-        triggerCardId = "receive_status_json";
+        triggerCardId = 'receive_status_json';
       }
 
-      await this.homey.flow.getDeviceTriggerCard(triggerCardId).trigger(this, {
-        value: changedStatusValue,
-      }, {
-        code: changedStatusCode,
-      }).catch(this.error)
+      await this.homey.flow
+        .getDeviceTriggerCard(triggerCardId)
+        .trigger(
+          this,
+          {
+            value: changedStatusValue,
+          },
+          {
+            code: changedStatusCode,
+          },
+        )
+        .catch(this.error);
     }
 
     await this.onTuyaStatus(this.__status, changedStatusCodes);
@@ -145,20 +148,22 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
   }
 
   async __sync() {
-    Promise.resolve().then(async () => {
-      this.log('Syncing...');
-      const { deviceId } = this.data;
-      const device = await this.oAuth2Client.getDevice({ deviceId });
+    Promise.resolve()
+      .then(async () => {
+        this.log('Syncing...');
+        const { deviceId } = this.data;
+        const device = await this.oAuth2Client.getDevice({ deviceId });
 
-      const status = TuyaOAuth2Util.convertStatusArrayToStatusObject(device.status);
-      await this.__onTuyaStatus({
-        ...status,
-        online: device.online,
+        const status = TuyaOAuth2Util.convertStatusArrayToStatusObject(device.status);
+        await this.__onTuyaStatus({
+          ...status,
+          online: device.online,
+        });
+      })
+      .catch((err) => {
+        this.error(`Error Syncing: ${err.message}`);
+        this.setUnavailable(err).catch(this.error);
       });
-    }).catch(err => {
-      this.error(`Error Syncing: ${err.message}`);
-      this.setUnavailable(err).catch(this.error);
-    });
   }
 
   async sendCommands(commands: TuyaCommand[] = []) {
@@ -169,10 +174,12 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
   }
 
   async sendCommand({ code, value }: TuyaCommand) {
-    await this.sendCommands([{
-      code,
-      value,
-    }]);
+    await this.sendCommands([
+      {
+        code,
+        value,
+      },
+    ]);
   }
 
   async getStatus() {
@@ -184,10 +191,10 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
 
   async getWebRTC() {
     const { deviceId } = this.data;
-    return this.oAuth2Client.getWebRTCConfiguration({deviceId})
+    return this.oAuth2Client.getWebRTCConfiguration({ deviceId });
   }
 
-  async getStreamingLink(type: "RTSP" | "HLS") {
+  async getStreamingLink(type: 'RTSP' | 'HLS') {
     const { deviceId } = this.data;
     return this.oAuth2Client.getStreamingLink(deviceId, type);
   }

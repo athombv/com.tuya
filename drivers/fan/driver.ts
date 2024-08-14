@@ -1,9 +1,8 @@
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
-import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
-import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
+import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 
 module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
-
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.FAN,
     // TODO
@@ -25,7 +24,7 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
       props.capabilitiesOptions['dim'] = {
         min: 1,
         max: 6,
-        step: 1
+        step: 1,
       };
     }
 
@@ -44,11 +43,10 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
           min: values.min ?? 1,
           max: values.max ?? 100,
           step: values.step ?? 1,
-        }
+        };
       }
     }
 
     return props;
   }
-
-}
+};
