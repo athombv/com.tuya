@@ -9,6 +9,7 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
   __status: TuyaStatus;
   __syncInterval?: NodeJS.Timeout;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(...props: any) {
     super(...props);
 
@@ -19,10 +20,12 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
 
   static SYNC_INTERVAL = null; // Set to number n to sync every n ms
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get data(): any {
     return super.getData();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get store(): any {
     return super.getStore();
   }
@@ -131,7 +134,8 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     await this.onTuyaStatus(this.__status, changedStatusCodes);
   }
 
-  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async onTuyaStatus(status: TuyaStatus, _changedStatusCodes: string[]): Promise<void> {
     this.log('onTuyaStatus', JSON.stringify(status));
 
     if (status.online === true) {

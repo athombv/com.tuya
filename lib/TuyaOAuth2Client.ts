@@ -376,7 +376,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
             this.webhook = await this.homey.cloud.createWebhook(Homey.env.WEBHOOK_ID, Homey.env.WEBHOOK_SECRET, {
               $keys: combinedKeys,
             });
-            this.webhook!.on('message', message => {
+            this.webhook?.on('message', message => {
               this.log('onWebhookMessage', JSON.stringify(message));
 
               Promise.resolve()

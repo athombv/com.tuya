@@ -6,7 +6,7 @@ import TuyaOAuth2DeviceDimmer from './device';
 import { SIMPLE_DIMMER_CAPABILITIES } from './TuyaDimmerConstants';
 
 type DeviceArgs = { device: TuyaOAuth2DeviceDimmer };
-type ValueArgs = { value: any };
+type ValueArgs = { value: unknown };
 
 module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.LIGHTING.DIMMER] as const;
@@ -36,7 +36,7 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
       this.homey.flow
         .getActionCard(`dimmer_channel_${switch_i}_dim`)
         .registerRunListener(async (args: DeviceArgs & ValueArgs) => {
-          await args.device.singleDim(args.value, `bright_value_${switch_i}`);
+          await args.device.singleDim(args.value as number, `bright_value_${switch_i}`);
         });
     }
   }

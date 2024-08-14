@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'homey-oauth2app' {
   import Homey, { SimpleClass } from 'homey';
   import { Log } from 'homey-log';

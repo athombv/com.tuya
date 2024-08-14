@@ -4,7 +4,7 @@
   "main": "app.ts",
   "scripts": {
     "compile": "tsc",
-    "lint": "eslint --ext .ts .",
+    "lint": "eslint --ext .ts . --max-warnings=0",
     "fix": "eslint --fix --ext .ts .",
     "validate": "homey app validate --level=verified",
     "prettier": "prettier . --write",

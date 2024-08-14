@@ -12,7 +12,7 @@ import {
 } from './TuyaCameraConstants';
 
 type DeviceArgs = { device: TuyaOAuth2Device };
-type ValueArgs = { value: any };
+type ValueArgs = { value: unknown };
 
 module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA] as const;

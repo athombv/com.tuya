@@ -84,7 +84,7 @@ export function getSignedHeaders({
 /*
  * Redact sensitive fields when logging Device information
  */
-export function redactFields(device: TuyaDeviceResponse, additionalFields: string[] = []): any {
+export function redactFields(device: TuyaDeviceResponse, additionalFields: string[] = []): TuyaDeviceResponse {
   const defaultFields = ['ip', 'lat', 'lon', 'owner_id', 'uid', 'uuid', 'local_key'];
   const combinedFields = [...new Set([...defaultFields, ...additionalFields])];
 
@@ -99,7 +99,7 @@ export function redactFields(device: TuyaDeviceResponse, additionalFields: strin
   return newObj;
 }
 
-export function hasJsonStructure(str: any): boolean {
+export function hasJsonStructure(str: unknown): boolean {
   if (typeof str !== 'string') return false;
   try {
     const result = JSON.parse(str);
@@ -229,5 +229,5 @@ export async function onSettings(
 // The standard TypeScript definition of Array.includes does not work for const arrays.
 // This typing gives a boolean for an unknown S, and true if S is known to be in T from its type.
 export function constIncludes<T, S>(array: ReadonlyArray<T>, search: S): S extends T ? true : boolean {
-  return (array as any[]).includes(search) as S extends T ? true : boolean;
+  return (array as unknown[]).includes(search) as S extends T ? true : boolean;
 }

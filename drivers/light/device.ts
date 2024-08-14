@@ -570,9 +570,9 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
   // TODO migrate to util onSettings
   // TODO define settings
   async onSettings({
-    oldSettings,
     newSettings,
     changedKeys,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   }: SettingsEvent<Record<LightSettingKey, any>>): Promise<string | void> {
     const unsupportedSettings: string[] = [];
     const unsupportedValues: string[] = [];

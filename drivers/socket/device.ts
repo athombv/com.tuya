@@ -36,7 +36,7 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     }
   }
 
-  async safeSetCapabilityValue(capabilityId: string, value: any): Promise<void> {
+  async safeSetCapabilityValue(capabilityId: string, value: unknown): Promise<void> {
     if (this.hasCapability(capabilityId)) {
       await this.setCapabilityValue(capabilityId, value);
     }
@@ -128,6 +128,7 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
   }
 
   // TODO define settings
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async onSettings(event: SettingsEvent<any>): Promise<string | void> {
     return await TuyaOAuth2Util.onSettings(this, event, SOCKET_SETTING_LABELS);
   }

@@ -21,4 +21,4 @@ export const LIGHT_SETTING_LABELS = {
 } as const;
 
 export type LightSettingKey = keyof typeof LIGHT_SETTING_LABELS;
-export type LightSettingCommand = { code: LightSettingKey; value: any };
+export type LightSettingCommand = { code: LightSettingKey; value: boolean | number };

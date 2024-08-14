@@ -6,15 +6,15 @@ import * as TuyaOAuth2Util from './TuyaOAuth2Util';
 
 export type ListDeviceProperties = {
   store: {
-    [key: string]: any;
+    [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   };
   settings: {
-    [key: string]: any;
+    [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   };
   capabilities: string[];
   capabilitiesOptions: {
     [key: string]: {
-      [key: string]: any;
+      [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
     };
   };
 };
@@ -53,8 +53,8 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
   }
 
   onTuyaPairListDeviceProperties(
-    device: TuyaDeviceResponse,
-    specifications?: TuyaDeviceSpecificationResponse,
+    device: TuyaDeviceResponse, // eslint-disable-line @typescript-eslint/no-unused-vars
+    specifications?: TuyaDeviceSpecificationResponse, // eslint-disable-line @typescript-eslint/no-unused-vars
   ): ListDeviceProperties {
     return {
       capabilities: [],

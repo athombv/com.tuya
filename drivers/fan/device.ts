@@ -2,6 +2,7 @@ import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import { TuyaStatus } from '../../types/TuyaTypes';
 
 module.exports = class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(...props: any) {
     super(...props);
 

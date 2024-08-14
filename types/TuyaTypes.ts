@@ -4,7 +4,7 @@ export type TuyaStatusUpdate<T> = {
   code: string;
   value: T;
   t: number;
-  [datapoint: string]: any; // Seems to be datapoint index as string to value as string
+  [datapoint: string]: unknown; // Seems to be datapoint index as string to value as string
 };
 
 export type DeviceRegistration = {
