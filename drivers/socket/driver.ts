@@ -1,10 +1,10 @@
+import { FlowCard } from 'homey';
+import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
-import type TuyaOAuth2DeviceSocket from './device';
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
-import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
+import type TuyaOAuth2DeviceSocket from './device';
 import { SOCKET_SETTING_LABELS } from './TuyaSocketConstants';
-import { FlowCard } from 'homey';
 
 type DeviceArgs = { device: TuyaOAuth2DeviceSocket };
 type SwitchArgs = { switch: { name: string; id: string } };

@@ -1,12 +1,12 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
+import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
+import { constIncludes } from '../../lib/TuyaOAuth2Util';
+import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import {
   CAMERA_ALARM_EVENT_CAPABILITIES,
   CAMERA_SETTING_LABELS,
   SIMPLE_CAMERA_CAPABILITIES,
 } from './TuyaCameraConstants';
-import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
-import { constIncludes } from '../../lib/TuyaOAuth2Util';
-import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 
 module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
   alarmTimeouts: Record<string, NodeJS.Timeout | undefined> = {};

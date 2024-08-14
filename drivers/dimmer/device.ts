@@ -1,8 +1,8 @@
-import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
-import { TuyaCommand } from '../../types/TuyaApiTypes';
-import { DIMMER_SETTING_LABELS } from './TuyaDimmerConstants';
 import { TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
+import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
+import { TuyaCommand } from '../../types/TuyaApiTypes';
+import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
+import { DIMMER_SETTING_LABELS } from './TuyaDimmerConstants';
 
 export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
   async onOAuth2Init(): Promise<void> {

@@ -1,3 +1,8 @@
+import Homey, { CloudWebhook } from 'homey';
+import { fetch, OAuth2Client } from 'homey-oauth2app';
+import { Response } from 'node-fetch';
+
+import { URL } from 'url';
 import {
   TuyaCommand,
   TuyaDeviceResponse,
@@ -9,21 +14,14 @@ import {
   TuyaUserInfo,
   TuyaWebRTC,
 } from '../types/TuyaApiTypes';
-import { fetch, OAuth2Client } from 'homey-oauth2app';
-
-import TuyaOAuth2Token from './TuyaOAuth2Token';
-import { Response } from 'node-fetch';
-import { CloudWebhook } from 'homey';
 import { DeviceRegistration } from '../types/TuyaTypes';
-
-import { URL } from 'url';
-
-import Homey from 'homey';
+import * as TuyaOAuth2Constants from './TuyaOAuth2Constants';
+import { RegionCode } from './TuyaOAuth2Constants';
 
 import TuyaOAuth2Error from './TuyaOAuth2Error';
-import * as TuyaOAuth2Constants from './TuyaOAuth2Constants';
+
+import TuyaOAuth2Token from './TuyaOAuth2Token';
 import * as TuyaOAuth2Util from './TuyaOAuth2Util';
-import { RegionCode } from './TuyaOAuth2Constants';
 
 type BuildRequest = { opts: { method: unknown; body: unknown; headers: object }; url: string };
 type OAuth2SessionInformation = { id: string; title: string };

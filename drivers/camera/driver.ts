@@ -1,5 +1,7 @@
-import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
+import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
+import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
+import { constIncludes } from '../../lib/TuyaOAuth2Util';
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
 import {
   CAMERA_ALARM_CAPABILITIES,
@@ -8,8 +10,6 @@ import {
   SIMPLE_CAMERA_CAPABILITIES,
   SIMPLE_CAMERA_FLOWS,
 } from './TuyaCameraConstants';
-import { constIncludes } from '../../lib/TuyaOAuth2Util';
-import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 
 type DeviceArgs = { device: TuyaOAuth2Device };
 type ValueArgs = { value: any };

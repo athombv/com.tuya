@@ -1,8 +1,8 @@
-import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
-import type TuyaOAuth2DeviceLight from './device';
-import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
-import { constIncludes } from '../../lib/TuyaOAuth2Util';
 import { DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
+import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
+import { constIncludes } from '../../lib/TuyaOAuth2Util';
+import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import type TuyaOAuth2DeviceLight from './device';
 import { LightSettingCommand, PIR_CAPABILITIES } from './TuyaLightConstants';
 
 type DeviceArgs = { device: TuyaOAuth2DeviceLight };

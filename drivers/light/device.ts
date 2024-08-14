@@ -1,9 +1,9 @@
-import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import { LIGHT_SETTING_LABELS, LightSettingCommand, LightSettingKey, PIR_CAPABILITIES } from './TuyaLightConstants';
 import * as TuyaLightMigrations from '../../lib/migrations/TuyaLightMigrations';
-import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
-import { TuyaCommand } from '../../types/TuyaApiTypes';
 import { TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
+import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
+import { TuyaCommand } from '../../types/TuyaApiTypes';
+import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
+import { LIGHT_SETTING_LABELS, LightSettingCommand, LightSettingKey, PIR_CAPABILITIES } from './TuyaLightConstants';
 
 type ParsedColourData = { h: number; s: number; v: number };
 

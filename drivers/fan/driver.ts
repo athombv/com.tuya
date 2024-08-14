@@ -1,6 +1,6 @@
+import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
-import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 
 module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [

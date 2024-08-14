@@ -1,6 +1,6 @@
+import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
 import { TuyaDeviceResponse } from '../../types/TuyaApiTypes';
-import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 
 // TODO refactor to be in line with other drivers
 module.exports = class TuyaOAuth2DriverDoorbell extends TuyaOAuth2Driver {

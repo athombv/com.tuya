@@ -1,5 +1,5 @@
-import TuyaOAuth2Driver, { ListDeviceProperties } from './TuyaOAuth2Driver';
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../types/TuyaApiTypes';
+import TuyaOAuth2Driver, { ListDeviceProperties } from './TuyaOAuth2Driver';
 
 export default class TuyaOAuth2DriverSensor extends TuyaOAuth2Driver {
   onTuyaPairListDeviceProperties(

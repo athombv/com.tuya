@@ -1,9 +1,9 @@
-import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
-import TuyaOAuth2DeviceDimmer from './device';
-import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
-import { constIncludes } from '../../lib/TuyaOAuth2Util';
-import { SIMPLE_DIMMER_CAPABILITIES } from './TuyaDimmerConstants';
 import { DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
+import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
+import { constIncludes } from '../../lib/TuyaOAuth2Util';
+import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import TuyaOAuth2DeviceDimmer from './device';
+import { SIMPLE_DIMMER_CAPABILITIES } from './TuyaDimmerConstants';
 
 type DeviceArgs = { device: TuyaOAuth2DeviceDimmer };
 type ValueArgs = { value: any };

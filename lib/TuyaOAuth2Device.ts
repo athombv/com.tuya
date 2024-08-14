@@ -1,10 +1,9 @@
-import TuyaOAuth2Client from './TuyaOAuth2Client';
-
 import { OAuth2Device } from 'homey-oauth2app';
-import * as TuyaOAuth2Util from './TuyaOAuth2Util';
+import { TuyaCommand, TuyaStatusResponse, TuyaWebRTC } from '../types/TuyaApiTypes';
 
 import { TuyaStatus, TuyaStatusUpdate } from '../types/TuyaTypes';
-import { TuyaCommand, TuyaStatusResponse, TuyaWebRTC } from '../types/TuyaApiTypes';
+import TuyaOAuth2Client from './TuyaOAuth2Client';
+import * as TuyaOAuth2Util from './TuyaOAuth2Util';
 
 export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
   __status: TuyaStatus;
