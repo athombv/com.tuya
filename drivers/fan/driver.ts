@@ -9,7 +9,7 @@ export default class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.FAN,
     // TODO
-  ];
+  ] as const;
 
   onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
     const props = super.onTuyaPairListDeviceProperties(device, specifications);

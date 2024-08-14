@@ -8,7 +8,7 @@ class TuyaOAuth2DriverSensorSmoke extends TuyaOAuth2DriverSensor {
 
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMOKE_ALARM,
-  ];
+  ] as const;
 
   onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
     const props = super.onTuyaPairListDeviceProperties(device, specifications);

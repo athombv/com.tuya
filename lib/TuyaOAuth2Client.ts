@@ -104,7 +104,7 @@ export default class TuyaOAuth2Client extends OAuth2Client {
 
   async onShouldRefreshToken(response: Response) {
     const json = await response.json() as { code: number };
-    // @ts-ignore legacy code
+    // @ts-expect-error legacy code
     response.json = () => json;
 
     return json.code === TuyaOAuth2Constants.ERROR_CODES.ACCESS_TOKEN_EXPIRED;

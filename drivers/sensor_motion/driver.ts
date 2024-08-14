@@ -8,7 +8,7 @@ export default class TuyaOAuth2DriverSensorMotion extends TuyaOAuth2DriverSensor
 
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.MOTION_SENSOR,
-  ];
+  ] as const;
 
   onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
     const props = super.onTuyaPairListDeviceProperties(device, specifications);

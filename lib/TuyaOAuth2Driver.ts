@@ -23,7 +23,7 @@ export type ListDeviceProperties = {
 
 export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
 
-  TUYA_DEVICE_CATEGORIES: string[] = [];
+  TUYA_DEVICE_CATEGORIES: ReadonlyArray<string> = [];
 
   async onPairListDevices({ oAuth2Client }: { oAuth2Client: TuyaOAuth2Client }) {
     const devices = await oAuth2Client.getDevices();

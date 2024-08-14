@@ -14,7 +14,7 @@ export default class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.LIGHTING.DIMMER,
-  ];
+  ] as const;
 
   async onInit() {
     await super.onInit();

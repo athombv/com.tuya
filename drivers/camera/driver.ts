@@ -19,7 +19,7 @@ type ValueArgs = { value: any };
 class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
-  ];
+  ] as const;
 
   async onInit() {
     await super.onInit();

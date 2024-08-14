@@ -9,7 +9,7 @@ export default class TuyaOAuth2DriverDoorbell extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
-  ];
+  ] as const;
 
   onTuyaPairListDeviceFilter(device: TuyaDeviceResponse) {
     if (!super.onTuyaPairListDeviceFilter(device)) return false;

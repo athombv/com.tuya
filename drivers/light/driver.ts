@@ -22,7 +22,7 @@ export default class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
     DEVICE_CATEGORIES.LIGHTING.CEILING_FAN_LIGHT,
     DEVICE_CATEGORIES.LIGHTING.SOLAR_LIGHT,
     // TODO
-  ];
+  ] as const;
 
   async onInit() {
     await super.onInit();
