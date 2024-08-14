@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
 
-'use strict';
-
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import {TuyaStatus} from "../../types/TuyaTypes";
 

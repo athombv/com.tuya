@@ -1,5 +1,3 @@
-'use strict'
-
 export const HEATER_CAPABILITIES_MAPPING = {
   'switch': 'onoff',
   'temp_set': 'target_temperature',

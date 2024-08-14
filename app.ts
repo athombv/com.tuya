@@ -1,5 +1,3 @@
-'use strict';
-
 import {OAuth2App} from 'homey-oauth2app';
 import TuyaOAuth2Client from './lib/TuyaOAuth2Client';
 import * as TuyaOAuth2Util from './lib/TuyaOAuth2Util';

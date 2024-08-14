@@ -1,5 +1,3 @@
-'use strict';
-
 import TuyaOAuth2DriverSensor from '../../lib/TuyaOAuth2DriverSensor';
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";

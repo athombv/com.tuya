@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
 
-'use strict';
-
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import {LIGHT_SETTING_LABELS, LightSettingCommand, LightSettingKey, PIR_CAPABILITIES} from './TuyaLightConstants';
 import * as TuyaLightMigrations from '../../lib/migrations/TuyaLightMigrations';

@@ -1,5 +1,3 @@
-"use strict";
-
 import TuyaOAuth2Device from "../../lib/TuyaOAuth2Device";
 import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 import {TuyaCommand} from "../../types/TuyaApiTypes";

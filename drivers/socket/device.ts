@@ -1,5 +1,3 @@
-'use strict';
-
 import {Device, FlowCardTriggerDevice} from "homey";
 import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 

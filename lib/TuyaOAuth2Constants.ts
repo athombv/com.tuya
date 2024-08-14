@@ -1,5 +1,3 @@
-'use strict';
-
 export const API_URL = {
   EU: process.env.TUYA_API_URL_EU ?? 'https://openapi.tuyaeu.com',
   US: process.env.TUYA_API_URL_US ?? 'https://openapi.tuyaus.com',

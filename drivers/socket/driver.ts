@@ -1,5 +1,3 @@
-'use strict';
-
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import TuyaOAuth2DeviceSocket from "./device";

@@ -1,5 +1,3 @@
-'use strict'
-
 export const PIR_CAPABILITIES = {
   read_write: [],
   read_only: ['pir_state'],

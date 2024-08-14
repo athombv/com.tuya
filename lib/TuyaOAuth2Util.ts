@@ -1,5 +1,3 @@
-'use strict';
-
 import crypto from 'crypto';
 import {TuyaDeviceResponse, TuyaStatusResponse} from "../types/TuyaApiTypes";
 import {SettingsEvent, TuyaStatus} from "../types/TuyaTypes";

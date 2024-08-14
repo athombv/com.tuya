@@ -1,5 +1,3 @@
-'use strict';
-
 // TODO make translatable
 // Map from setting id to human-readable label
 export const CAMERA_SETTING_LABELS = {

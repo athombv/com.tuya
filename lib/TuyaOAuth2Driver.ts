@@ -1,5 +1,3 @@
-'use strict';
-
 import {OAuth2DeviceResult, OAuth2Driver} from 'homey-oauth2app';
 import TuyaOAuth2Client from "./TuyaOAuth2Client";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../types/TuyaApiTypes";

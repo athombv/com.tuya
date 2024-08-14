@@ -1,5 +1,3 @@
-'use strict';
-
 import TuyaOAuth2DeviceSensor from '../../lib/TuyaOAuth2DeviceSensor';
 import {TuyaStatus} from "../../types/TuyaTypes";
 

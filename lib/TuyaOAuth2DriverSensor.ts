@@ -1,5 +1,3 @@
-'use strict';
-
 import TuyaOAuth2Driver from './TuyaOAuth2Driver';
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../types/TuyaApiTypes";
 

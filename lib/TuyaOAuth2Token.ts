@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
 
-'use strict';
-
 import {OAuth2Token} from 'homey-oauth2app';
 import {RegionCode} from "./TuyaOAuth2Constants";
 
