@@ -1,6 +1,6 @@
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
-import TuyaOAuth2DeviceSocket from "./device";
+import type TuyaOAuth2DeviceSocket from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
 import {SOCKET_SETTING_LABELS} from "./TuyaSocketConstants";

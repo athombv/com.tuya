@@ -1,5 +1,5 @@
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
-import TuyaOAuth2DeviceLight from "./device";
+import type TuyaOAuth2DeviceLight from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 import {constIncludes} from "../../lib/TuyaOAuth2Util";
 import {DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING} from "../../lib/TuyaOAuth2Constants";

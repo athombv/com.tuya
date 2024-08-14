@@ -1,5 +1,5 @@
 import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
-import TuyaOAuth2DeviceCamera from "./device";
+import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 import {
   CAMERA_ALARM_CAPABILITIES,
@@ -11,7 +11,7 @@ import {
 import {constIncludes} from "../../lib/TuyaOAuth2Util";
 import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
 
-type DeviceArgs = { device: TuyaOAuth2DeviceCamera };
+type DeviceArgs = { device: TuyaOAuth2Device };
 type ValueArgs = { value: any };
 
 module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {

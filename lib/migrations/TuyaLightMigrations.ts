@@ -1,4 +1,4 @@
-import TuyaOAuth2DeviceLight from "../../drivers/light/device";
+import type TuyaOAuth2DeviceLight from "../../drivers/light/device";
 
 export async function performMigrations(device: TuyaOAuth2DeviceLight) {
   await switchCapabilityMigration(device).catch(device.error);

@@ -1,10 +1,10 @@
+import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
-import TuyaOAuth2DeviceHeater from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
 import {HEATER_CAPABILITIES_MAPPING} from "./TuyaHeaterConstants";
 
-type DeviceArgs = { device: TuyaOAuth2DeviceHeater };
+type DeviceArgs = { device: TuyaOAuth2Device };
 type ValueArgs = { value: any };
 
 export default class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
