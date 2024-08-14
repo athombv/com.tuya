@@ -1,7 +1,7 @@
 'use strict';
 
 import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
-import TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
+import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import TuyaOAuth2DeviceSocket from "./device";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";

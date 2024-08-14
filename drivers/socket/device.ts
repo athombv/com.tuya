@@ -4,7 +4,7 @@ import {Device, FlowCardTriggerDevice} from "homey";
 import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
+import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import {SOCKET_SETTING_LABELS} from "./TuyaSocketConstants";
 
 /**

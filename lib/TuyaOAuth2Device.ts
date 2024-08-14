@@ -3,8 +3,7 @@
 import TuyaOAuth2Client from "./TuyaOAuth2Client";
 
 import {OAuth2Device} from 'homey-oauth2app';
-import TuyaOAuth2Util from './TuyaOAuth2Util';
-const TuyaOAuth2Constants = require("./TuyaOAuth2Constants");
+import * as TuyaOAuth2Util from './TuyaOAuth2Util';
 
 import {TuyaStatus, TuyaStatusUpdate} from "../types/TuyaTypes";
 import {TuyaCommand} from "../types/TuyaApiTypes";

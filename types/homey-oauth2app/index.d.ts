@@ -138,7 +138,7 @@ declare module 'homey-oauth2app' {
   }
 
   class OAuth2Error {
-    constructor(message: string, statusCode: number);
+    constructor(message: string, statusCode?: number);
   }
 }
 

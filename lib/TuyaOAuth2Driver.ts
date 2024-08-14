@@ -4,7 +4,7 @@ import {OAuth2DeviceResult, OAuth2Driver} from 'homey-oauth2app';
 import TuyaOAuth2Client from "./TuyaOAuth2Client";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../types/TuyaApiTypes";
 
-const TuyaOAuth2Util = require('./TuyaOAuth2Util');
+import * as TuyaOAuth2Util from './TuyaOAuth2Util';
 
 export type ListDeviceProperties = {
   store: {

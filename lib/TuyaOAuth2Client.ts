@@ -18,13 +18,14 @@ import {Response} from "node-fetch";
 import {CloudWebhook} from "homey";
 import {DeviceRegistration} from "../types/TuyaTypes";
 
-const { URL } = require('url');
+import {URL} from 'url';
 
-const Homey = require('homey');
+import Homey from 'homey';
 
-const TuyaOAuth2Error = require('./TuyaOAuth2Error');
-const TuyaOAuth2Constants = require('./TuyaOAuth2Constants');
-const TuyaOAuth2Util = require('./TuyaOAuth2Util');
+import TuyaOAuth2Error from './TuyaOAuth2Error';
+import * as TuyaOAuth2Constants from './TuyaOAuth2Constants';
+import * as TuyaOAuth2Util from './TuyaOAuth2Util';
+import {RegionCode} from "./TuyaOAuth2Constants";
 
 export default class TuyaOAuth2Client extends OAuth2Client {
 
@@ -35,8 +36,8 @@ export default class TuyaOAuth2Client extends OAuth2Client {
   static REDIRECT_URL = 'https://tuya.athom.com/callback';
 
   _token: TuyaOAuth2Token | undefined;
-  _clientId: unknown;
-  _clientSecret: unknown;
+  _clientId!: string;
+  _clientSecret!: string;
 
   __updateWebhookTimeout?: NodeJS.Timeout;
   webhook?: CloudWebhook;
@@ -78,14 +79,14 @@ export default class TuyaOAuth2Client extends OAuth2Client {
       opts,
     } = await super.onBuildRequest({ ...props });
 
-    const token = await this.getToken();
+    const token = this.getToken();
 
     const urlInstance = new URL(url);
     const signedHeaders = TuyaOAuth2Util.getSignedHeaders({
       accessToken: token.access_token,
-      method: opts.method,
+      method: opts.method as string,
       path: `${urlInstance.pathname}${urlInstance.search}`,
-      body: opts.body,
+      body: opts.body as string,
       clientId: this._clientId,
       clientSecret: this._clientSecret,
     });
@@ -117,7 +118,7 @@ export default class TuyaOAuth2Client extends OAuth2Client {
       code: authorizationCode,
     } = JSON.parse(Buffer.from(code, 'base64').toString('utf-8'));
 
-    const requestUrl = TuyaOAuth2Constants.API_URL[region];
+    const requestUrl = TuyaOAuth2Constants.API_URL[region as RegionCode];
     const requestMethod = 'GET';
     const requestPath = `/v1.0/token?code=${authorizationCode}&grant_type=${TuyaOAuth2Constants.GRANT_TYPE.OAUTH2}`; // Tuya Cloud needs query parameters in alphabetical order...
     const requestHeaders = TuyaOAuth2Util.getSignedHeaders({
@@ -181,10 +182,10 @@ export default class TuyaOAuth2Client extends OAuth2Client {
     status,
   }: {
     result: {
-      success: unknown,
+      success: boolean,
       result: unknown,
-      msg: unknown,
-      code: unknown,
+      msg: string,
+      code: number,
     }
     status?: number
     statusText?: string
@@ -206,7 +207,7 @@ export default class TuyaOAuth2Client extends OAuth2Client {
    */
 
   async getUserInfo(): Promise<TuyaUserInfo> {
-    const token = await this.getToken();
+    const token = this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
     // https://developer.tuya.com/en/docs/cloud/cfebf22ad3?id=Kawfjdgic5c0w
@@ -216,7 +217,7 @@ export default class TuyaOAuth2Client extends OAuth2Client {
   }
 
   async getDevices(): Promise<TuyaDeviceResponse[]> {
-    const token = await this.getToken();
+    const token = this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
     // https://developer.tuya.com/en/docs/cloud/device-management?id=K9g6rfntdz78a

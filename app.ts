@@ -2,7 +2,7 @@
 
 import {OAuth2App} from 'homey-oauth2app';
 import TuyaOAuth2Client from './lib/TuyaOAuth2Client';
-import TuyaOAuth2Util from './lib/TuyaOAuth2Util';
+import * as TuyaOAuth2Util from './lib/TuyaOAuth2Util';
 
 import TuyaOAuth2Device from "./lib/TuyaOAuth2Device";
 import sourceMapSupport from 'source-map-support';

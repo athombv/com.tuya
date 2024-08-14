@@ -7,6 +7,8 @@ export const API_URL = {
   CN: process.env.TUYA_API_URL_CN ?? 'https://openapi.tuyacn.com',
 };
 
+export type RegionCode = keyof typeof API_URL;
+
 export const GRANT_TYPE = {
   SIMPLE: '1',
   OAUTH2: '2',

@@ -6,7 +6,8 @@ import {
   CAMERA_SETTING_LABELS,
   SIMPLE_CAMERA_CAPABILITIES
 } from "./TuyaCameraConstants";
-import TuyaOAuth2Util, {constIncludes} from "../../lib/TuyaOAuth2Util";
+import * as TuyaOAuth2Util from "../../lib/TuyaOAuth2Util";
+import {constIncludes} from "../../lib/TuyaOAuth2Util";
 import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 
 export default class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {

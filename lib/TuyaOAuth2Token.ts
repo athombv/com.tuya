@@ -3,10 +3,11 @@
 'use strict';
 
 import {OAuth2Token} from 'homey-oauth2app';
+import {RegionCode} from "./TuyaOAuth2Constants";
 
 export default class TuyaOAuth2Token extends OAuth2Token {
 
-  region: string;
+  region: RegionCode;
   uid: string;
   expire_time: number;
 
@@ -16,7 +17,7 @@ export default class TuyaOAuth2Token extends OAuth2Token {
     expire_time,
     ...props
   }: {
-    region: string;
+    region: RegionCode;
     uid: string;
     expire_time: number;
     access_token: string;

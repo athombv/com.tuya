@@ -2,11 +2,11 @@
 
 import {OAuth2Error} from 'homey-oauth2app';
 
-class TuyaOAuth2Error extends OAuth2Error {
+export default class TuyaOAuth2Error extends OAuth2Error {
 
-  tuyaCode: number;
+  tuyaCode?: number;
 
-  constructor(message: string, statusCode: number, tuyaCode: number) {
+  constructor(message: string, statusCode?: number, tuyaCode?: number) {
     super(message, statusCode);
 
     this.tuyaCode = tuyaCode;

@@ -1,7 +1,7 @@
 "use strict";
 
 import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
-import TuyaOAuth2Util from "../../lib/TuyaOAuth2Util";
+import * as TuyaOAuth2Util from "../../lib/TuyaOAuth2Util";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 
 export default class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
