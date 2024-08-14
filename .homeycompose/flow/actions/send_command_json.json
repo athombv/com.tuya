@@ -13,7 +13,7 @@
       "name": "device",
       "type": "device",
       "filter": {
-        "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+        "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_contact|sensor_motion|sensor_smoke|sensor_temperature_humidity|siren|socket"
       },
       "title": {
         "en": "Device"
