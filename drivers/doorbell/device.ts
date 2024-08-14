@@ -1,9 +1,8 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import {TuyaStatus} from "../../types/TuyaTypes";
+import { TuyaStatus } from '../../types/TuyaTypes';
 
 module.exports = class TuyaOAuth2DeviceDoorbell extends TuyaOAuth2Device {
-
-  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
     await super.onTuyaStatus(status, changedStatusCodes);
 
     if (changedStatusCodes.includes('alarm_message')) {
@@ -19,10 +18,10 @@ module.exports = class TuyaOAuth2DeviceDoorbell extends TuyaOAuth2Device {
             .trigger(this)
             .catch((err: Error) => this.error(`Error Triggering Doorbell Rang: ${err.message}`));
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         this.error(`Error Parsing Message: ${err.message}`);
       }
     }
   }
-
-}
+};

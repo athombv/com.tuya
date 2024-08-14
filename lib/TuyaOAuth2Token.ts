@@ -1,10 +1,7 @@
-/* eslint-disable camelcase */
-
-import {OAuth2Token} from 'homey-oauth2app';
-import {RegionCode} from "./TuyaOAuth2Constants";
+import { OAuth2Token } from 'homey-oauth2app';
+import { RegionCode } from './TuyaOAuth2Constants';
 
 export default class TuyaOAuth2Token extends OAuth2Token {
-
   region: RegionCode;
   uid: string;
   expire_time: number;
@@ -40,7 +37,15 @@ export default class TuyaOAuth2Token extends OAuth2Token {
     this.expire_time = expire_time;
   }
 
-  toJSON() {
+  toJSON(): {
+    access_token: string;
+    refresh_token: string;
+    uid: string;
+    expire_time: number;
+    token_type?: string;
+    region: RegionCode;
+    expires_in?: number;
+  } {
     return {
       ...super.toJSON(),
       region: this.region,
@@ -48,7 +53,6 @@ export default class TuyaOAuth2Token extends OAuth2Token {
       expire_time: this.expire_time,
     };
   }
-
 }
 
 module.exports = TuyaOAuth2Token;

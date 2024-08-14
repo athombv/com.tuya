@@ -1,10 +1,8 @@
-/* eslint-disable camelcase */
-
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import {TuyaStatus} from "../../types/TuyaTypes";
+import { TuyaStatus } from '../../types/TuyaTypes';
 
 module.exports = class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(...props: any) {
     super(...props);
 
@@ -12,7 +10,7 @@ module.exports = class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
     this.onCapabilityDim = this.onCapabilityDim.bind(this);
   }
 
-  async onOAuth2Init() {
+  async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
     // onoff
@@ -25,7 +23,7 @@ module.exports = class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
     }
   }
 
-  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
     await super.onTuyaStatus(status, changedStatusCodes);
 
     // onoff
@@ -39,18 +37,17 @@ module.exports = class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
     }
   }
 
-  async onCapabilityOnOff(value: boolean) {
+  async onCapabilityOnOff(value: boolean): Promise<void> {
     await this.sendCommand({
       code: 'switch',
       value: value,
     });
   }
 
-  async onCapabilityDim(value: number) {
+  async onCapabilityDim(value: number): Promise<void> {
     await this.sendCommand({
       code: 'fan_speed_percent',
       value: value,
     });
   }
-
-}
+};

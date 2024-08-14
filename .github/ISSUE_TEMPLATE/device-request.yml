@@ -1,6 +1,6 @@
 name: 💡 Device request
 description: Request support for a Tuya device
-title: "[Device request]: "
+title: '[Device request]: '
 labels:
   - device request
 

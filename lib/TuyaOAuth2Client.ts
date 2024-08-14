@@ -1,3 +1,8 @@
+import Homey, { CloudWebhook } from 'homey';
+import { fetch, OAuth2Client } from 'homey-oauth2app';
+import { Response } from 'node-fetch';
+
+import { URL } from 'url';
 import {
   TuyaCommand,
   TuyaDeviceResponse,
@@ -7,26 +12,21 @@ import {
   TuyaStatusResponse,
   TuyaToken,
   TuyaUserInfo,
-  TuyaWebRTC
-} from "../types/TuyaApiTypes";
-import {fetch, OAuth2Client} from 'homey-oauth2app';
-
-import TuyaOAuth2Token from './TuyaOAuth2Token';
-import {Response} from "node-fetch";
-import {CloudWebhook} from "homey";
-import {DeviceRegistration} from "../types/TuyaTypes";
-
-import {URL} from 'url';
-
-import Homey from 'homey';
+  TuyaWebRTC,
+} from '../types/TuyaApiTypes';
+import { DeviceRegistration } from '../types/TuyaTypes';
+import * as TuyaOAuth2Constants from './TuyaOAuth2Constants';
+import { RegionCode } from './TuyaOAuth2Constants';
 
 import TuyaOAuth2Error from './TuyaOAuth2Error';
-import * as TuyaOAuth2Constants from './TuyaOAuth2Constants';
+
+import TuyaOAuth2Token from './TuyaOAuth2Token';
 import * as TuyaOAuth2Util from './TuyaOAuth2Util';
-import {RegionCode} from "./TuyaOAuth2Constants";
+
+type BuildRequest = { opts: { method: unknown; body: unknown; headers: object }; url: string };
+type OAuth2SessionInformation = { id: string; title: string };
 
 export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
-
   static TOKEN = TuyaOAuth2Token;
   static API_URL = '<dummy>';
   static TOKEN_URL = '<dummy>';
@@ -39,7 +39,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
   // We save this information to eventually enable OAUTH2_MULTI_SESSION.
   // We can then list all authenticated users by name, e-mail and country flag.
   // This is useful for multiple account across Tuya brands & regions.
-  async onGetOAuth2SessionInformation() {
+  async onGetOAuth2SessionInformation(): Promise<OAuth2SessionInformation> {
     const userInfo = await this.getUserInfo();
 
     return {
@@ -54,17 +54,14 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
 
   // Sign the request
   async onBuildRequest(props: {
-    method: string
-    path: string
-    json: object
-    body: object
-    query: object
-    headers: object
-  }) {
-    const {
-      url,
-      opts,
-    } = await super.onBuildRequest({ ...props });
+    method: string;
+    path: string;
+    json: object;
+    body: object;
+    query: object;
+    headers: object;
+  }): Promise<BuildRequest> {
+    const { url, opts } = await super.onBuildRequest({ ...props });
 
     const token = this.getToken();
 
@@ -89,9 +86,10 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     };
   }
 
-  async onShouldRefreshToken(response: Response) {
-    const json = await response.json() as { code: number };
+  async onShouldRefreshToken(response: Response): Promise<boolean> {
+    const json = (await response.json()) as { code: number };
     // @ts-expect-error legacy code
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     response.json = () => json;
 
     return json.code === TuyaOAuth2Constants.ERROR_CODES.ACCESS_TOKEN_EXPIRED;
@@ -99,11 +97,8 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
 
   // The authorization code is Base64-encoded by tuya.athom.com to embed the 'region' as well.
   // We need this to determine the API URL.
-  async onGetTokenByCode({ code }: { code: string }) {
-    const {
-      region,
-      code: authorizationCode,
-    } = JSON.parse(Buffer.from(code, 'base64').toString('utf-8'));
+  async onGetTokenByCode({ code }: { code: string }): Promise<TuyaOAuth2Token> {
+    const { region, code: authorizationCode } = JSON.parse(Buffer.from(code, 'base64').toString('utf-8'));
 
     const requestUrl = TuyaOAuth2Constants.API_URL[region as RegionCode];
     const requestMethod = 'GET';
@@ -121,7 +116,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     });
     const result = await response.json();
 
-    const tokenJSON = await this.onHandleResult({ result }) as TuyaToken;
+    const tokenJSON = (await this.onHandleResult({ result })) as TuyaToken;
     this._token = new TuyaOAuth2Token({
       ...tokenJSON,
       region,
@@ -130,7 +125,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     return this._token;
   }
 
-  async onRefreshToken() {
+  async onRefreshToken(): Promise<TuyaOAuth2Token> {
     const token = this.getToken();
     if (!token) {
       throw new TuyaOAuth2Error('Missing OAuth2 Token');
@@ -152,7 +147,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     });
     const result = await response.json();
 
-    const tokenJSON = await this.onHandleResult({ result }) as TuyaToken;
+    const tokenJSON = (await this.onHandleResult({ result })) as TuyaToken;
 
     this._token = new TuyaOAuth2Token({
       ...token.toJSON(),
@@ -169,15 +164,15 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     status,
   }: {
     result: {
-      success: boolean,
-      result: unknown,
-      msg: string,
-      code: number,
-    }
-    status?: number
-    statusText?: string
-    headers?: object
-  }) {
+      success: boolean;
+      result: unknown;
+      msg: string;
+      code: number;
+    };
+    status?: number;
+    statusText?: string;
+    headers?: object;
+  }): Promise<unknown> {
     if (result.success) {
       return result.result;
     }
@@ -213,9 +208,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     });
   }
 
-  getDevice({
-    deviceId,
-  }: { deviceId: string }): Promise<TuyaDeviceResponse> {
+  getDevice({ deviceId }: { deviceId: string }): Promise<TuyaDeviceResponse> {
     const token = this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -255,9 +248,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     });
   }
 
-  async getSpecification({
-    deviceId,
-  }: { deviceId: string }): Promise<TuyaDeviceSpecificationResponse> {
+  async getSpecification({ deviceId }: { deviceId: string }): Promise<TuyaDeviceSpecificationResponse> {
     const token = this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -267,9 +258,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     });
   }
 
-  async getWebRTCConfiguration({
-    deviceId,
-  }: { deviceId: string }): Promise<TuyaWebRTC> {
+  async getWebRTCConfiguration({ deviceId }: { deviceId: string }): Promise<TuyaWebRTC> {
     const token = this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -279,8 +268,11 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     });
   }
 
-  async getStreamingLink(deviceId: string, type: "RTSP" | "HLS"): Promise<{
-    "url": string
+  async getStreamingLink(
+    deviceId: string,
+    type: 'RTSP' | 'HLS',
+  ): Promise<{
+    url: string;
   }> {
     const token = this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
@@ -291,12 +283,10 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
       json: {
         type: type,
       },
-    })
+    });
   }
 
-  async getDeviceStatus({
-    deviceId,
-  }: { deviceId: string }): Promise<TuyaStatusResponse> {
+  async getDeviceStatus({ deviceId }: { deviceId: string }): Promise<TuyaStatusResponse> {
     const token = this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -306,10 +296,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     });
   }
 
-  async sendCommands({
-    deviceId,
-    commands = [],
-  }: { deviceId: string, commands: TuyaCommand[] }): Promise<boolean> {
+  async sendCommands({ deviceId, commands = [] }: { deviceId: string; commands: TuyaCommand[] }): Promise<boolean> {
     const token = await this.getToken();
     const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
 
@@ -338,15 +325,19 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     {
       productId,
       deviceId,
-      onStatus = async () => {},
-      onOnline = async () => {},
-      onOffline = async () => {},
+      onStatus = async (): Promise<void> => {
+        /* empty */
+      },
+      onOnline = async (): Promise<void> => {
+        /* empty */
+      },
+      onOffline = async (): Promise<void> => {
+        /* empty */
+      },
     }: DeviceRegistration,
     other = false,
-  ) {
-    const register = other
-      ? this.registeredOtherDevices
-      : this.registeredDevices;
+  ): void {
+    const register = other ? this.registeredOtherDevices : this.registeredDevices;
     register.set(`${productId}:${deviceId}`, {
       productId,
       deviceId,
@@ -357,89 +348,92 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     this.onUpdateWebhook();
   }
 
-  unregisterDevice({ productId, deviceId }: { productId: string, deviceId: string }, other = false) {
-    const register = other
-      ? this.registeredOtherDevices
-      : this.registeredDevices;
+  unregisterDevice({ productId, deviceId }: { productId: string; deviceId: string }, other = false): void {
+    const register = other ? this.registeredOtherDevices : this.registeredDevices;
     register.delete(`${productId}:${deviceId}`);
     this.onUpdateWebhook();
   }
 
-  onUpdateWebhook() {
+  onUpdateWebhook(): void {
     if (this.__updateWebhookTimeout) {
       clearTimeout(this.__updateWebhookTimeout);
     }
 
     this.__updateWebhookTimeout = setTimeout(() => {
-      Promise.resolve().then(async () => {
-        const keys = Array.from(this.registeredDevices.keys());
-        const otherKeys = Array.from(this.registeredOtherDevices.keys());
-        // Remove duplicate registrations
-        const combinedKeys = Array.from(new Set([...keys, ...otherKeys]));
+      Promise.resolve()
+        .then(async () => {
+          const keys = Array.from(this.registeredDevices.keys());
+          const otherKeys = Array.from(this.registeredOtherDevices.keys());
+          // Remove duplicate registrations
+          const combinedKeys = Array.from(new Set([...keys, ...otherKeys]));
 
-        if (combinedKeys.length === 0 && this.webhook) {
-          await this.webhook.unregister();
-          this.log('Unregistered Webhook');
-        }
+          if (combinedKeys.length === 0 && this.webhook) {
+            await this.webhook.unregister();
+            this.log('Unregistered Webhook');
+          }
 
-        if (combinedKeys.length > 0) {
-          this.webhook = await this.homey.cloud.createWebhook(Homey.env.WEBHOOK_ID, Homey.env.WEBHOOK_SECRET, {
-            $keys: combinedKeys,
-          });
-          this.webhook!.on('message', message => {
-            this.log('onWebhookMessage', JSON.stringify(message));
+          if (combinedKeys.length > 0) {
+            this.webhook = await this.homey.cloud.createWebhook(Homey.env.WEBHOOK_ID, Homey.env.WEBHOOK_SECRET, {
+              $keys: combinedKeys,
+            });
+            this.webhook?.on('message', message => {
+              this.log('onWebhookMessage', JSON.stringify(message));
 
-            Promise.resolve().then(async () => {
-              const key = message.headers['x-tuya-key'];
+              Promise.resolve()
+                .then(async () => {
+                  const key = message.headers['x-tuya-key'];
 
-              const registeredDevice = this.registeredDevices.get(key);
-              const registeredOtherDevice = this.registeredOtherDevices.get(key);
-              if (!registeredDevice && !registeredOtherDevice) return;
+                  const registeredDevice = this.registeredDevices.get(key);
+                  const registeredOtherDevice = this.registeredOtherDevices.get(key);
+                  if (!registeredDevice && !registeredOtherDevice) return;
 
-              Promise.resolve().then(async () => {
-                switch (message.body.event) {
-                  case 'status': {
-                    if (!Array.isArray(message.body.data.deviceStatus)) return;
+                  Promise.resolve()
+                    .then(async () => {
+                      switch (message.body.event) {
+                        case 'status': {
+                          if (!Array.isArray(message.body.data.deviceStatus)) return;
 
-                    if (registeredDevice) {
-                      await registeredDevice.onStatus(message.body.data.deviceStatus);
-                    }
-                    if (registeredOtherDevice) {
-                      await registeredOtherDevice.onStatus(message.body.data.deviceStatus);
-                    }
-                    break;
-                  }
-                  case 'online': {
-                    if (registeredDevice) {
-                      await registeredDevice.onOnline();
-                    }
-                    if (registeredOtherDevice) {
-                      await registeredOtherDevice.onOnline();
-                    }
-                    break;
-                  }
-                  case 'offline': {
-                    if (registeredDevice) {
-                      await registeredDevice.onOffline();
-                    }
-                    if (registeredOtherDevice) {
-                      await registeredOtherDevice.onOffline();
-                    }
-                    break;
-                  }
-                  default: {
-                    this.error(`Unknown Webhook Event: ${message.event}`);
-                  }
-                }
-              }).catch(err => this.error(err));
-            }).catch(err => this.error(`Error Handling Webhook Message: ${err.message}`));
-          });
-          this.log('Registered Webhook');
-        }
-      }).catch(err => this.error(`Error Updating Webhook: ${err.message}`));
+                          if (registeredDevice) {
+                            await registeredDevice.onStatus(message.body.data.deviceStatus);
+                          }
+                          if (registeredOtherDevice) {
+                            await registeredOtherDevice.onStatus(message.body.data.deviceStatus);
+                          }
+                          break;
+                        }
+                        case 'online': {
+                          if (registeredDevice) {
+                            await registeredDevice.onOnline();
+                          }
+                          if (registeredOtherDevice) {
+                            await registeredOtherDevice.onOnline();
+                          }
+                          break;
+                        }
+                        case 'offline': {
+                          if (registeredDevice) {
+                            await registeredDevice.onOffline();
+                          }
+                          if (registeredOtherDevice) {
+                            await registeredOtherDevice.onOffline();
+                          }
+                          break;
+                        }
+                        default: {
+                          this.error(`Unknown Webhook Event: ${message.event}`);
+                        }
+                      }
+                    })
+                    .catch(err => this.error(err));
+                })
+                .catch(err => this.error(`Error Handling Webhook Message: ${err.message}`));
+            });
+            this.log('Registered Webhook');
+          }
+        })
+        .catch(err => this.error(`Error Updating Webhook: ${err.message}`));
     }, 1000);
   }
-
 }
 
 module.exports = TuyaOAuth2Client;

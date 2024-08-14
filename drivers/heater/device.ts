@@ -1,29 +1,28 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import {TuyaStatus} from "../../types/TuyaTypes";
+import { TuyaStatus } from '../../types/TuyaTypes';
 
 module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
-
-  async onOAuth2Init() {
+  async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
     if (this.hasCapability('onoff')) {
-      this.registerCapabilityListener('onoff', (value) => this.onOffCapabilityListener(value));
+      this.registerCapabilityListener('onoff', value => this.onOffCapabilityListener(value));
     }
 
     if (this.hasCapability('target_temperature')) {
-      this.registerCapabilityListener('target_temperature', (value) => this.targetTemperatureCapabilityListener(value));
+      this.registerCapabilityListener('target_temperature', value => this.targetTemperatureCapabilityListener(value));
     }
 
     if (this.hasCapability('child_lock')) {
-      this.registerCapabilityListener('child_lock', (value) => this.childLockCapabilityListener(value));
+      this.registerCapabilityListener('child_lock', value => this.childLockCapabilityListener(value));
     }
 
     if (this.hasCapability('eco_mode')) {
-      this.registerCapabilityListener('eco_mode', (value) => this.ecoModeCapabilityListener(value));
+      this.registerCapabilityListener('eco_mode', value => this.ecoModeCapabilityListener(value));
     }
   }
 
-  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
     await super.onTuyaStatus(status, changedStatusCodes);
 
     if (typeof status['switch'] === 'boolean') {
@@ -52,14 +51,14 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     }
   }
 
-  async onOffCapabilityListener(value: boolean) {
+  async onOffCapabilityListener(value: boolean): Promise<void> {
     await this.sendCommand({
       code: 'switch',
       value: value,
     });
   }
 
-  async targetTemperatureCapabilityListener(value: number) {
+  async targetTemperatureCapabilityListener(value: number): Promise<void> {
     const limitedTemperature = Math.max(0, Math.min(Math.floor(value), 50));
     await this.sendCommand({
       code: 'temp_set',
@@ -67,17 +66,17 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     });
   }
 
-  async childLockCapabilityListener(value: boolean) {
+  async childLockCapabilityListener(value: boolean): Promise<void> {
     await this.sendCommand({
       code: 'lock',
       value: value,
     });
   }
 
-  async ecoModeCapabilityListener(value: boolean) {
+  async ecoModeCapabilityListener(value: boolean): Promise<void> {
     await this.sendCommand({
       code: 'mode_eco',
       value: value,
     });
   }
-}
+};

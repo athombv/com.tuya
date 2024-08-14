@@ -4,8 +4,5 @@
   "name": {
     "en": "Fan"
   },
-  "capabilities": [
-    "onoff",
-    "dim"
-  ]
+  "capabilities": ["onoff", "dim"]
 }

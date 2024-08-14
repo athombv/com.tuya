@@ -11,14 +11,14 @@ export const PIR_CAPABILITIES = {
 } as const;
 
 export const LIGHT_SETTING_LABELS = {
-  switch_pir: "Motion Detection",
-  pir_sensitivity: "Motion Sensitivity",
-  pir_delay: "Motion Delay",
-  cds: "Luminance Detection",
-  standby_on: "Standby Light",
-  standby_time: "Standby Time",
-  standby_bright: "Standby Brightness",
+  switch_pir: 'Motion Detection',
+  pir_sensitivity: 'Motion Sensitivity',
+  pir_delay: 'Motion Delay',
+  cds: 'Luminance Detection',
+  standby_on: 'Standby Light',
+  standby_time: 'Standby Time',
+  standby_bright: 'Standby Brightness',
 } as const;
 
 export type LightSettingKey = keyof typeof LIGHT_SETTING_LABELS;
-export type LightSettingCommand = { code: LightSettingKey, value: any };
+export type LightSettingCommand = { code: LightSettingKey; value: boolean | number };

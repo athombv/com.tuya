@@ -1,15 +1,15 @@
-import type TuyaOAuth2DeviceLight from "../../drivers/light/device";
+import type TuyaOAuth2DeviceLight from '../../drivers/light/device';
 
-export async function performMigrations(device: TuyaOAuth2DeviceLight) {
+export async function performMigrations(device: TuyaOAuth2DeviceLight): Promise<void> {
   await switchCapabilityMigration(device).catch(device.error);
 }
 
-async function switchCapabilityMigration(device: TuyaOAuth2DeviceLight)     {
+async function switchCapabilityMigration(device: TuyaOAuth2DeviceLight): Promise<void> {
   // switch capabilities migration
   const tuyaSwitches = device.getStore().tuya_switches;
 
   if (tuyaSwitches === undefined) {
-    device.log('Migrating switch capabilities...')
+    device.log('Migrating switch capabilities...');
     const deviceStatus = await device.getStatus();
 
     let hasSwitchLed = false;
@@ -21,8 +21,8 @@ async function switchCapabilityMigration(device: TuyaOAuth2DeviceLight)     {
 
     for (const status of deviceStatus) {
       const tuyaCapability = status.code;
-      hasSwitchLed = hasSwitchLed || tuyaCapability === 'switch_led'
-      hasSwitch = hasSwitch || tuyaCapability === 'switch'
+      hasSwitchLed = hasSwitchLed || tuyaCapability === 'switch_led';
+      hasSwitch = hasSwitch || tuyaCapability === 'switch';
 
       if (tuyaCapability === 'switch_led' || tuyaCapability === 'switch') {
         if (!tuyaCapabilities.includes(tuyaCapability)) {
@@ -32,19 +32,19 @@ async function switchCapabilityMigration(device: TuyaOAuth2DeviceLight)     {
       }
     }
 
-    await device.setStoreValue("tuya_capabilities", tuyaCapabilities);
-    await device.setStoreValue("tuya_switches", tuyaSwitches);
+    await device.setStoreValue('tuya_capabilities', tuyaCapabilities);
+    await device.setStoreValue('tuya_switches', tuyaSwitches);
 
     if (hasSwitch) {
       // Capability migration needs to happen
       if (hasSwitchLed) {
         // Add sub-capabilities
-        await device.addCapability("onoff.switch_led");
-        await device.addCapability("onoff.switch");
+        await device.addCapability('onoff.switch_led');
+        await device.addCapability('onoff.switch');
 
-        await device.setCapabilityOptions("onoff.switch_led", {
+        await device.setCapabilityOptions('onoff.switch_led', {
           title: {
-            en: `Light`
+            en: `Light`,
           },
           insightsTitleTrue: {
             en: `Turned on (Light)`,
@@ -55,7 +55,7 @@ async function switchCapabilityMigration(device: TuyaOAuth2DeviceLight)     {
         });
         await device.setCapabilityOptions('onoff.switch', {
           title: {
-            en: `Other`
+            en: `Other`,
           },
           insightsTitleTrue: {
             en: `Turned on (Other)`,
@@ -66,9 +66,9 @@ async function switchCapabilityMigration(device: TuyaOAuth2DeviceLight)     {
         });
       } else {
         // Add missing onoff
-        await device.addCapability("onoff");
+        await device.addCapability('onoff');
       }
     }
-    device.log('Switch capabilities migration complete')
+    device.log('Switch capabilities migration complete');
   }
 }
