@@ -3,7 +3,7 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import {TuyaStatus} from "../../types/TuyaTypes";
 
-export default class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
+module.exports = class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
 
   constructor(...props: any) {
     super(...props);
@@ -54,5 +54,3 @@ export default class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
   }
 
 }
-
-module.exports = TuyaOAuth2DeviceFan;

@@ -2,7 +2,7 @@ import TuyaOAuth2Driver from "../../lib/TuyaOAuth2Driver";
 import * as TuyaOAuth2Util from "../../lib/TuyaOAuth2Util";
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 
-export default class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
+module.exports = class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
   onTuyaPairListDeviceFilter() {
     return true; // Accept any device
   }
@@ -24,5 +24,3 @@ export default class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
     return props;
   }
 };
-
-module.exports = TuyaOAuth2DriverOther;

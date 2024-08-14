@@ -8,7 +8,7 @@ import {DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING} from "../../lib/TuyaOAuth2Co
 type DeviceArgs = { device: TuyaOAuth2DeviceDimmer };
 type ValueArgs = { value: any };
 
-export default class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
+module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.LIGHTING.DIMMER,
@@ -144,5 +144,3 @@ export default class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
     return props;
   }
 }
-
-module.exports = TuyaOAuth2DriverDimmer;

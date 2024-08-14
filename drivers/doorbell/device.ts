@@ -1,7 +1,7 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import {TuyaStatus} from "../../types/TuyaTypes";
 
-export default class TuyaOAuth2DeviceDoorbell extends TuyaOAuth2Device {
+module.exports = class TuyaOAuth2DeviceDoorbell extends TuyaOAuth2Device {
 
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
     await super.onTuyaStatus(status, changedStatusCodes);
@@ -26,5 +26,3 @@ export default class TuyaOAuth2DeviceDoorbell extends TuyaOAuth2Device {
   }
 
 }
-
-module.exports = TuyaOAuth2DeviceDoorbell;

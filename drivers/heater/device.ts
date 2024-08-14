@@ -1,7 +1,7 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import {TuyaStatus} from "../../types/TuyaTypes";
 
-export default class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
+module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
 
   async onOAuth2Init() {
     await super.onOAuth2Init();
@@ -81,5 +81,3 @@ export default class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     });
   }
 }
-
-module.exports = TuyaOAuth2DeviceHeater;

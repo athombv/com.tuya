@@ -8,7 +8,7 @@ import {LightSettingCommand, PIR_CAPABILITIES} from "./TuyaLightConstants";
 type DeviceArgs = { device: TuyaOAuth2DeviceLight };
 type ValueArgs = { value: any };
 
-export default class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
+module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.LIGHTING.LIGHT,
@@ -254,5 +254,3 @@ export default class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
   }
 
 }
-
-module.exports = TuyaOAuth2DriverLight;

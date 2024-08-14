@@ -14,7 +14,7 @@ import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
 type DeviceArgs = { device: TuyaOAuth2DeviceCamera };
 type ValueArgs = { value: any };
 
-class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
+module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
   ] as const;
@@ -118,5 +118,3 @@ class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     return props;
   }
 }
-
-module.exports = TuyaOAuth2DriverCamera;

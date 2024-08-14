@@ -62,5 +62,3 @@ export default class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
   }
 
 }
-
-module.exports = TuyaOAuth2DriverHeater;

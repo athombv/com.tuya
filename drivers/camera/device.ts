@@ -8,7 +8,7 @@ import * as TuyaOAuth2Util from "../../lib/TuyaOAuth2Util";
 import {constIncludes} from "../../lib/TuyaOAuth2Util";
 import {SettingsEvent, TuyaStatus} from "../../types/TuyaTypes";
 
-export default class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
+module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
 
   alarmTimeouts: Record<string, NodeJS.Timeout | undefined> = {};
 
@@ -168,5 +168,3 @@ export default class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     return await TuyaOAuth2Util.onSettings(this, event, CAMERA_SETTING_LABELS);
   }
 }
-
-module.exports = TuyaOAuth2DeviceCamera;

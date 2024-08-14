@@ -3,7 +3,7 @@ import {TuyaDeviceResponse} from "../../types/TuyaApiTypes";
 import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
 
 // TODO refactor to be in line with other drivers
-export default class TuyaOAuth2DriverDoorbell extends TuyaOAuth2Driver {
+module.exports = class TuyaOAuth2DriverDoorbell extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA,
@@ -24,5 +24,3 @@ export default class TuyaOAuth2DriverDoorbell extends TuyaOAuth2Driver {
   // }
 
 }
-
-module.exports = TuyaOAuth2DriverDoorbell;

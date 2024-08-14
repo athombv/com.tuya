@@ -2,7 +2,7 @@ import TuyaOAuth2DriverSensor from '../../lib/TuyaOAuth2DriverSensor';
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
 
-export default class TuyaOAuth2DriverSensorContact extends TuyaOAuth2DriverSensor {
+module.exports = class TuyaOAuth2DriverSensorContact extends TuyaOAuth2DriverSensor {
 
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.CONTACT_SENSOR,
@@ -22,5 +22,3 @@ export default class TuyaOAuth2DriverSensorContact extends TuyaOAuth2DriverSenso
   }
 
 }
-
-module.exports = TuyaOAuth2DriverSensorContact;

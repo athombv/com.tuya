@@ -9,7 +9,7 @@ type DeviceArgs = { device: TuyaOAuth2DeviceSocket };
 type SwitchArgs = { switch: { name: string, id: string } };
 type TuyaCapabilityState = { tuyaCapability: string };
 
-class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
+module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
 
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.ELECTRICAL_PRODUCTS.SOCKET,
@@ -160,5 +160,3 @@ class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
   }
 
 }
-
-module.exports = TuyaOAuth2DriverSocket;

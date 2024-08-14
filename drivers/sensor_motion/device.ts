@@ -1,7 +1,7 @@
 import TuyaOAuth2DeviceSensor from '../../lib/TuyaOAuth2DeviceSensor';
 import {TuyaStatus} from "../../types/TuyaTypes";
 
-export default class TuyaOAuth2DeviceSensorMotion extends TuyaOAuth2DeviceSensor {
+module.exports = class TuyaOAuth2DeviceSensorMotion extends TuyaOAuth2DeviceSensor {
 
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
     await super.onTuyaStatus(status, changedStatusCodes);
@@ -13,5 +13,3 @@ export default class TuyaOAuth2DeviceSensorMotion extends TuyaOAuth2DeviceSensor
   }
 
 }
-
-module.exports = TuyaOAuth2DeviceSensorMotion;

@@ -2,7 +2,7 @@ import TuyaOAuth2DriverSensor from '../../lib/TuyaOAuth2DriverSensor';
 import {TuyaDeviceResponse, TuyaDeviceSpecificationResponse} from "../../types/TuyaApiTypes";
 import {DEVICE_CATEGORIES} from "../../lib/TuyaOAuth2Constants";
 
-class TuyaOAuth2DriverSensorSmoke extends TuyaOAuth2DriverSensor {
+module.exports = class TuyaOAuth2DriverSensorSmoke extends TuyaOAuth2DriverSensor {
 
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMOKE_ALARM,
@@ -22,5 +22,3 @@ class TuyaOAuth2DriverSensorSmoke extends TuyaOAuth2DriverSensor {
   }
 
 }
-
-module.exports = TuyaOAuth2DriverSensorSmoke;
