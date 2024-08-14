@@ -1,8 +1,11 @@
-import TuyaOAuth2Driver from './TuyaOAuth2Driver';
+import TuyaOAuth2Driver, { ListDeviceProperties } from './TuyaOAuth2Driver';
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../types/TuyaApiTypes';
 
 export default class TuyaOAuth2DriverSensor extends TuyaOAuth2Driver {
-  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
+  onTuyaPairListDeviceProperties(
+    device: TuyaDeviceResponse,
+    specifications: TuyaDeviceSpecificationResponse,
+  ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device);
 
     // alarm_battery

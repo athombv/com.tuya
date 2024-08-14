@@ -2,7 +2,7 @@ import TuyaOAuth2Device from './TuyaOAuth2Device';
 import { TuyaStatus } from '../types/TuyaTypes';
 
 export default class TuyaOAuth2DeviceSensor extends TuyaOAuth2Device {
-  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
     await super.onTuyaStatus(status, changedStatusCodes);
 
     // alarm_battery

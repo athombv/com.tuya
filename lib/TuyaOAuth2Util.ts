@@ -25,7 +25,9 @@ export function convertStatusArrayToStatusObject(statuses: TuyaStatusResponse): 
     if (typeof obj[item.code] === 'string' && (obj[item.code] as string).startsWith('{')) {
       try {
         obj[item.code] = JSON.parse(obj[item.code] as string);
-      } catch (err) {}
+      } catch (err) {
+        /* empty */
+      }
     }
 
     return obj;
@@ -55,7 +57,7 @@ export function getSignedHeaders({
   nonce?: string;
   bundleId?: string;
   t?: number;
-}) {
+}): Record<string, string> {
   const headers: Record<string, string> = {};
 
   // Calculate signature
@@ -82,12 +84,13 @@ export function getSignedHeaders({
 /*
  * Redact sensitive fields when logging Device information
  */
-export function redactFields(device: TuyaDeviceResponse, additionalFields: string[] = []) {
+export function redactFields(device: TuyaDeviceResponse, additionalFields: string[] = []): any {
   const defaultFields = ['ip', 'lat', 'lon', 'owner_id', 'uid', 'uuid', 'local_key'];
   const combinedFields = [...new Set([...defaultFields, ...additionalFields])];
 
   const newObj = JSON.parse(JSON.stringify(device));
   combinedFields.forEach((field) => {
+    // eslint-disable-next-line no-prototype-builtins
     if (newObj.hasOwnProperty(field)) {
       newObj[field] = '<redacted>';
     }
@@ -96,7 +99,7 @@ export function redactFields(device: TuyaDeviceResponse, additionalFields: strin
   return newObj;
 }
 
-export function hasJsonStructure(str: any) {
+export function hasJsonStructure(str: any): boolean {
   if (typeof str !== 'string') return false;
   try {
     const result = JSON.parse(str);
@@ -119,7 +122,7 @@ export async function sendSetting(
   code: string,
   value: unknown,
   settingLabels: Record<string, string>,
-) {
+): Promise<void> {
   await device
     .sendCommand({
       code: code,
@@ -152,7 +155,7 @@ export async function sendSetting(
 export async function sendSettings(
   device: TuyaOAuth2Device,
   { newSettings, changedKeys }: SettingsEvent<Record<string, unknown>>,
-) {
+): Promise<[string[], string[]]> {
   const unsupportedSettings: string[] = [];
   const unsupportedValues: string[] = [];
 
@@ -190,7 +193,7 @@ export function reportUnsupportedSettings(
   unsupportedSettings: string[],
   unsupportedValues: string[],
   settingLabels: Record<string, string>,
-) {
+): string | void {
   // Report back which capabilities and values are unsupported,
   // since we cannot programmatically remove settings.
   const messages = [];
@@ -218,7 +221,7 @@ export async function onSettings(
   device: TuyaOAuth2Device,
   event: SettingsEvent<Record<string, unknown>>,
   settingLabels: Record<string, string>,
-) {
+): Promise<string | void> {
   const [unsupportedSettings, unsupportedValues] = await sendSettings(device, event);
   return reportUnsupportedSettings(device, unsupportedSettings, unsupportedValues, settingLabels);
 }

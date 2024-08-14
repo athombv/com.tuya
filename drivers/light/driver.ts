@@ -1,4 +1,4 @@
-import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
+import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import type TuyaOAuth2DeviceLight from './device';
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
 import { constIncludes } from '../../lib/TuyaOAuth2Util';
@@ -21,7 +21,7 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
     // TODO
   ] as const;
 
-  async onInit() {
+  async onInit(): Promise<void> {
     await super.onInit();
 
     this.homey.flow.getActionCard('light_switch_pir').registerRunListener(async (args: DeviceArgs & ValueArgs) => {
@@ -79,7 +79,10 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
     }
   }
 
-  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
+  onTuyaPairListDeviceProperties(
+    device: TuyaDeviceResponse,
+    specifications: TuyaDeviceSpecificationResponse,
+  ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device, specifications);
     props.store.tuya_switches = [];
 

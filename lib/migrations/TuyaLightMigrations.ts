@@ -1,10 +1,10 @@
 import type TuyaOAuth2DeviceLight from '../../drivers/light/device';
 
-export async function performMigrations(device: TuyaOAuth2DeviceLight) {
+export async function performMigrations(device: TuyaOAuth2DeviceLight): Promise<void> {
   await switchCapabilityMigration(device).catch(device.error);
 }
 
-async function switchCapabilityMigration(device: TuyaOAuth2DeviceLight) {
+async function switchCapabilityMigration(device: TuyaOAuth2DeviceLight): Promise<void> {
   // switch capabilities migration
   const tuyaSwitches = device.getStore().tuya_switches;
 

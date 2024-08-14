@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'homey-oauth2app' {
   import Homey, { SimpleClass } from 'homey';
   import { Log } from 'homey-log';
-  const fetch = require('node-fetch');
+  export { fetch } from 'node-fetch';
 
-  class OAuth2App extends Homey.App {
+  export class OAuth2App extends Homey.App {
     onOAuth2Init(): Promise<void>;
 
     getFirstSavedOAuth2Client(): OAuth2Client;
@@ -12,7 +11,7 @@ declare module 'homey-oauth2app' {
     homeyLog: Log;
   }
 
-  class OAuth2Client<TToken extends OAuth2Token> extends SimpleClass {
+  export class OAuth2Client<TToken extends OAuth2Token> extends SimpleClass {
     static API_URL: string;
     static TOKEN_URL: string;
     static AUTHORIZATION_URL: string;
@@ -57,7 +56,7 @@ declare module 'homey-oauth2app' {
     }>;
   }
 
-  class OAuth2Device<T extends OAuth2Client> extends Homey.Device {
+  export class OAuth2Device<T extends OAuth2Client> extends Homey.Device {
     oAuth2Client: T;
 
     onOAuth2Init(): Promise<void>;
@@ -71,7 +70,7 @@ declare module 'homey-oauth2app' {
     homey: Homey;
   }
 
-  class OAuth2Driver<T extends OAuth2Client> extends Homey.Driver {
+  export class OAuth2Driver<T extends OAuth2Client> extends Homey.Driver {
     onOAuth2Init(): Promise<void>;
 
     onPairListDevices(payload: { oAuth2Client: T }): Promise<OAuth2DeviceResult[]>;
@@ -79,7 +78,7 @@ declare module 'homey-oauth2app' {
     homey: Homey;
   }
 
-  interface OAuth2DeviceResult {
+  export interface OAuth2DeviceResult {
     name: string;
     data: {
       [key: string]: any;
@@ -99,7 +98,7 @@ declare module 'homey-oauth2app' {
     };
   }
 
-  class OAuth2Token {
+  export class OAuth2Token {
     access_token: string;
     refresh_token: string;
     token_type?: string;
@@ -117,7 +116,7 @@ declare module 'homey-oauth2app' {
     };
   }
 
-  class OAuth2Error {
+  export class OAuth2Error {
     constructor(message: string, statusCode?: number);
   }
 }

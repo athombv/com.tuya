@@ -11,7 +11,7 @@ import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
   alarmTimeouts: Record<string, NodeJS.Timeout | undefined> = {};
 
-  async onOAuth2Init() {
+  async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
     for (const capability of this.getCapabilities()) {
@@ -58,7 +58,7 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     }
   }
 
-  async onTuyaStatus(status: TuyaStatus, changed: string[]) {
+  async onTuyaStatus(status: TuyaStatus, changed: string[]): Promise<void> {
     await super.onTuyaStatus(status, changed);
 
     for (const statusKey in status) {
@@ -123,7 +123,7 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     }
   }
 
-  async setAlarm(capability: string) {
+  async setAlarm(capability: string): Promise<void> {
     if (this.alarmTimeouts[capability] !== undefined) {
       // Extend the existing timeout if already running
       clearTimeout(this.alarmTimeouts[capability]);
@@ -138,7 +138,7 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     this.alarmTimeouts[capability] = setTimeout(() => this.resetAlarm(capability), alarmTimeout);
   }
 
-  async resetAlarm(capability: string) {
+  async resetAlarm(capability: string): Promise<void> {
     // Clear the timeout for the next event
     const currentTimeout = this.alarmTimeouts[capability];
     clearTimeout(currentTimeout);
@@ -150,7 +150,7 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
   }
 
   // Map from up/idle/down to commands so the ternary UI shows arrows
-  async ptzCapabilityListener(value: 'up' | 'idle' | 'down', up: string, down: string) {
+  async ptzCapabilityListener(value: 'up' | 'idle' | 'down', up: string, down: string): Promise<void> {
     if (value === 'idle') {
       await this.sendCommand({ code: 'ptz_stop', value: true });
     } else {
@@ -158,7 +158,7 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     }
   }
 
-  async zoomCapabilityListener(value: 'up' | 'idle' | 'down') {
+  async zoomCapabilityListener(value: 'up' | 'idle' | 'down'): Promise<void> {
     if (value === 'idle') {
       await this.sendCommand({ code: 'zoom_stop', value: true });
     } else {

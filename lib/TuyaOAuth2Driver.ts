@@ -22,7 +22,7 @@ export type ListDeviceProperties = {
 export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
   TUYA_DEVICE_CATEGORIES: ReadonlyArray<string> = [];
 
-  async onPairListDevices({ oAuth2Client }: { oAuth2Client: TuyaOAuth2Client }) {
+  async onPairListDevices({ oAuth2Client }: { oAuth2Client: TuyaOAuth2Client }): Promise<OAuth2DeviceResult[]> {
     const devices = await oAuth2Client.getDevices();
     const filteredDevices = devices.filter((device) => {
       this.log('Device:', JSON.stringify(TuyaOAuth2Util.redactFields(device)));
@@ -48,7 +48,7 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
     return listDevices;
   }
 
-  onTuyaPairListDeviceFilter(device: TuyaDeviceResponse) {
+  onTuyaPairListDeviceFilter(device: TuyaDeviceResponse): boolean {
     return this.TUYA_DEVICE_CATEGORIES.includes(device.category);
   }
 

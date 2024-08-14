@@ -11,17 +11,25 @@ sourceMapSupport.install();
 
 type DeviceArgs = { device: TuyaOAuth2Device };
 type StatusCodeArgs = { code: { id: string } };
-type StatusCodeState = { code: any };
+type StatusCodeState = { code: string };
 
 module.exports = class TuyaOAuth2App extends OAuth2App {
   static OAUTH2_CLIENT = TuyaOAuth2Client;
   static OAUTH2_DEBUG = process.env.DEBUG === '1';
   static OAUTH2_MULTI_SESSION = false; // TODO: Enable this feature & make nice pairing UI
 
-  async onOAuth2Init() {
+  async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
-    const sendCommandRunListener = async ({
+    const sendCommandRunListener: ({
+      device,
+      code,
+      value,
+    }: {
+      device: TuyaOAuth2Device;
+      code: string | { id: string };
+      value: unknown;
+    }) => Promise<void> = async ({
       device,
       code,
       value,

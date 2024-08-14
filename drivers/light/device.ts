@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import { LIGHT_SETTING_LABELS, LightSettingCommand, LightSettingKey, PIR_CAPABILITIES } from './TuyaLightConstants';
 import * as TuyaLightMigrations from '../../lib/migrations/TuyaLightMigrations';
@@ -38,7 +36,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
   // Ensure migrations are finished before the device is used
   initBarrier = true;
 
-  async onOAuth2Init() {
+  async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
     await TuyaLightMigrations.performMigrations(this);
@@ -76,7 +74,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     this.log('Finished oAuth2 initialization of', this.getName());
   }
 
-  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
     while (this.initBarrier) {
       await new Promise((resolve) => setTimeout(resolve, 100));
     }
@@ -321,7 +319,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     }
   }
 
-  async allOnOff(value: boolean) {
+  async allOnOff(value: boolean): Promise<void> {
     const tuyaSwitches = this.getStore().tuya_switches;
     const commands = [];
 
@@ -335,7 +333,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     await this.sendCommands(commands);
   }
 
-  async switchOnOff(value: boolean, tuya_switch: string) {
+  async switchOnOff(value: boolean, tuya_switch: string): Promise<void> {
     await this.sendCommand({
       code: tuya_switch,
       value: value,
@@ -348,7 +346,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     light_hue = this.getCapabilityValue('light_hue'),
     light_saturation = this.getCapabilityValue('light_saturation'),
     light_temperature = this.getCapabilityValue('light_temperature'),
-  }) {
+  }): Promise<void> {
     const commands = [];
 
     // Light mode is not available when a light only has temperature or color
@@ -546,7 +544,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
   }
 
   // TODO migrate to util sendSettingCommand
-  async sendSettingCommand({ code, value }: LightSettingCommand) {
+  async sendSettingCommand({ code, value }: LightSettingCommand): Promise<void> {
     await this.sendCommand({
       code: code,
       value: value,
@@ -580,7 +578,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     const unsupportedValues: string[] = [];
 
     // Accumulate rejected settings so the user can be notified gracefully
-    const sendSetting = async (command: TuyaCommand) =>
+    const sendSetting = async (command: TuyaCommand): Promise<void> =>
       this.sendCommand(command).catch((err) => {
         if (err.tuyaCode === 2008) {
           unsupportedSettings.push(command.code);

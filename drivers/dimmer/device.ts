@@ -5,7 +5,7 @@ import { DIMMER_SETTING_LABELS } from './TuyaDimmerConstants';
 import { TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
 
 export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
-  async onOAuth2Init() {
+  async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
     if (this.hasCapability('onoff')) {
@@ -31,13 +31,13 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
     }
   }
 
-  async safeSetCapabilityValue(capabilityId: string, value: unknown) {
+  async safeSetCapabilityValue(capabilityId: string, value: unknown): Promise<void> {
     if (this.hasCapability(capabilityId)) {
       await this.setCapabilityValue(capabilityId, value);
     }
   }
 
-  async onTuyaStatus(status: TuyaStatus, changed: string[]) {
+  async onTuyaStatus(status: TuyaStatus, changed: string[]): Promise<void> {
     await super.onTuyaStatus(status, changed);
 
     let anySwitchOn = false;
@@ -110,7 +110,11 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
 
   // TODO migrate to util onSettings
   // TODO define settings
-  async onSettings({ oldSettings, newSettings, changedKeys }: SettingsEvent<Record<string, any>>) {
+  async onSettings({
+    oldSettings,
+    newSettings,
+    changedKeys,
+  }: SettingsEvent<Record<string, any>>): Promise<string | void> {
     const unsupportedSettings: string[] = [];
     const unsupportedValues: string[] = [];
 
@@ -155,7 +159,7 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
     }
   }
 
-  async commandAll(codes: string[], value: unknown) {
+  async commandAll(codes: string[], value: unknown): Promise<void> {
     const commands: TuyaCommand[] = [];
 
     for (const code of codes) {
@@ -168,25 +172,25 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
     await this.sendCommands(commands);
   }
 
-  async allOnOff(value: boolean) {
+  async allOnOff(value: boolean): Promise<void> {
     const tuyaSwitches = this.getStore().tuya_switches;
     await this.commandAll(tuyaSwitches, value);
   }
 
-  async singleOnOff(value: boolean, tuyaCapability: string) {
+  async singleOnOff(value: boolean, tuyaCapability: string): Promise<void> {
     await this.sendCommand({
       code: tuyaCapability,
       value: value,
     });
   }
 
-  async allDim(value: number) {
+  async allDim(value: number): Promise<void> {
     for (const tuyaDimmer of this.store.tuya_dimmers) {
       await this.singleDim(value, tuyaDimmer);
     }
   }
 
-  async singleDim(value: number, tuyaCapability: string) {
+  async singleDim(value: number, tuyaCapability: string): Promise<void> {
     const subSwitch = tuyaCapability.at(tuyaCapability.length - 1);
     const scaleMin = this.getSetting(`brightness_min_${subSwitch}`) * TUYA_PERCENTAGE_SCALING;
     const scaleMax = this.getSetting(`brightness_max_${subSwitch}`) * TUYA_PERCENTAGE_SCALING;

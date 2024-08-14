@@ -1,9 +1,10 @@
-import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
+import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import type TuyaOAuth2DeviceSocket from './device';
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import { SOCKET_SETTING_LABELS } from './TuyaSocketConstants';
+import { FlowCard } from 'homey';
 
 type DeviceArgs = { device: TuyaOAuth2DeviceSocket };
 type SwitchArgs = { switch: { name: string; id: string } };
@@ -17,10 +18,10 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
     'tdq', // Undocumented switch category
   ] as const;
 
-  async onInit() {
+  async onInit(): Promise<void> {
     await super.onInit();
 
-    const switchAutocompleteListener = (query: string, args: DeviceArgs) => {
+    const switchAutocompleteListener = (query: string, args: DeviceArgs): FlowCard.ArgumentAutocompleteResults => {
       const device = args.device;
       const tuyaSwitches = device.getStore().tuya_switches;
       return tuyaSwitches.map((value: string) => {
@@ -94,7 +95,10 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
       );
   }
 
-  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
+  onTuyaPairListDeviceProperties(
+    device: TuyaDeviceResponse,
+    specifications: TuyaDeviceSpecificationResponse,
+  ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device, specifications);
     props.capabilitiesOptions = {};
     props.store.tuya_switches = [];

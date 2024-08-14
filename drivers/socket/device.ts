@@ -12,14 +12,14 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
   turnedOnFlowCard!: FlowCardTriggerDevice;
   turnedOffFlowCard!: FlowCardTriggerDevice;
 
-  async onInit() {
+  async onInit(): Promise<void> {
     await super.onInit();
 
     this.turnedOnFlowCard = this.homey.flow.getDeviceTriggerCard('socket_sub_switch_turned_on');
     this.turnedOffFlowCard = this.homey.flow.getDeviceTriggerCard('socket_sub_switch_turned_off');
   }
 
-  async onOAuth2Init() {
+  async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
     // onoff
@@ -36,13 +36,13 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     }
   }
 
-  async safeSetCapabilityValue(capabilityId: string, value: any) {
+  async safeSetCapabilityValue(capabilityId: string, value: any): Promise<void> {
     if (this.hasCapability(capabilityId)) {
       await this.setCapabilityValue(capabilityId, value);
     }
   }
 
-  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
     await super.onTuyaStatus(status, changedStatusCodes);
 
     // onoff
@@ -106,7 +106,7 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     }
   }
 
-  async allOnOff(value: boolean) {
+  async allOnOff(value: boolean): Promise<void> {
     const tuyaSwitches = this.getStore().tuya_switches;
     const commands = [];
 
@@ -120,7 +120,7 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     await this.sendCommands(commands);
   }
 
-  async switchOnOff(value: boolean, tuya_switch: string) {
+  async switchOnOff(value: boolean, tuya_switch: string): Promise<void> {
     await this.sendCommand({
       code: tuya_switch,
       value: value,

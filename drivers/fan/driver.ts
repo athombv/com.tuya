@@ -1,4 +1,4 @@
-import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
+import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 
@@ -8,7 +8,10 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
     // TODO
   ] as const;
 
-  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
+  onTuyaPairListDeviceProperties(
+    device: TuyaDeviceResponse,
+    specifications: TuyaDeviceSpecificationResponse,
+  ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device, specifications);
 
     // onoff

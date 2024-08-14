@@ -25,6 +25,9 @@ import * as TuyaOAuth2Constants from './TuyaOAuth2Constants';
 import * as TuyaOAuth2Util from './TuyaOAuth2Util';
 import { RegionCode } from './TuyaOAuth2Constants';
 
+type BuildRequest = { opts: { method: unknown; body: unknown; headers: object }; url: string };
+type OAuth2SessionInformation = { id: string; title: string };
+
 export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
   static TOKEN = TuyaOAuth2Token;
   static API_URL = '<dummy>';
@@ -38,7 +41,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
   // We save this information to eventually enable OAUTH2_MULTI_SESSION.
   // We can then list all authenticated users by name, e-mail and country flag.
   // This is useful for multiple account across Tuya brands & regions.
-  async onGetOAuth2SessionInformation() {
+  async onGetOAuth2SessionInformation(): Promise<OAuth2SessionInformation> {
     const userInfo = await this.getUserInfo();
 
     return {
@@ -59,7 +62,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     body: object;
     query: object;
     headers: object;
-  }) {
+  }): Promise<BuildRequest> {
     const { url, opts } = await super.onBuildRequest({ ...props });
 
     const token = this.getToken();
@@ -85,9 +88,10 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     };
   }
 
-  async onShouldRefreshToken(response: Response) {
+  async onShouldRefreshToken(response: Response): Promise<boolean> {
     const json = (await response.json()) as { code: number };
     // @ts-expect-error legacy code
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     response.json = () => json;
 
     return json.code === TuyaOAuth2Constants.ERROR_CODES.ACCESS_TOKEN_EXPIRED;
@@ -95,7 +99,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
 
   // The authorization code is Base64-encoded by tuya.athom.com to embed the 'region' as well.
   // We need this to determine the API URL.
-  async onGetTokenByCode({ code }: { code: string }) {
+  async onGetTokenByCode({ code }: { code: string }): Promise<TuyaOAuth2Token> {
     const { region, code: authorizationCode } = JSON.parse(Buffer.from(code, 'base64').toString('utf-8'));
 
     const requestUrl = TuyaOAuth2Constants.API_URL[region as RegionCode];
@@ -123,7 +127,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     return this._token;
   }
 
-  async onRefreshToken() {
+  async onRefreshToken(): Promise<TuyaOAuth2Token> {
     const token = this.getToken();
     if (!token) {
       throw new TuyaOAuth2Error('Missing OAuth2 Token');
@@ -170,7 +174,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     status?: number;
     statusText?: string;
     headers?: object;
-  }) {
+  }): Promise<unknown> {
     if (result.success) {
       return result.result;
     }
@@ -323,12 +327,18 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     {
       productId,
       deviceId,
-      onStatus = async () => {},
-      onOnline = async () => {},
-      onOffline = async () => {},
+      onStatus = async (): Promise<void> => {
+        /* empty */
+      },
+      onOnline = async (): Promise<void> => {
+        /* empty */
+      },
+      onOffline = async (): Promise<void> => {
+        /* empty */
+      },
     }: DeviceRegistration,
     other = false,
-  ) {
+  ): void {
     const register = other ? this.registeredOtherDevices : this.registeredDevices;
     register.set(`${productId}:${deviceId}`, {
       productId,
@@ -340,13 +350,13 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     this.onUpdateWebhook();
   }
 
-  unregisterDevice({ productId, deviceId }: { productId: string; deviceId: string }, other = false) {
+  unregisterDevice({ productId, deviceId }: { productId: string; deviceId: string }, other = false): void {
     const register = other ? this.registeredOtherDevices : this.registeredDevices;
     register.delete(`${productId}:${deviceId}`);
     this.onUpdateWebhook();
   }
 
-  onUpdateWebhook() {
+  onUpdateWebhook(): void {
     if (this.__updateWebhookTimeout) {
       clearTimeout(this.__updateWebhookTimeout);
     }

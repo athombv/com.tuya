@@ -1,4 +1,4 @@
-import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
+import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import TuyaOAuth2DeviceDimmer from './device';
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
 import { constIncludes } from '../../lib/TuyaOAuth2Util';
@@ -11,7 +11,7 @@ type ValueArgs = { value: any };
 module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.LIGHTING.DIMMER] as const;
 
-  async onInit() {
+  async onInit(): Promise<void> {
     await super.onInit();
 
     for (let switch_i = 1; switch_i <= 2; switch_i++) {
@@ -41,7 +41,10 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
     }
   }
 
-  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specification: TuyaDeviceSpecificationResponse) {
+  onTuyaPairListDeviceProperties(
+    device: TuyaDeviceResponse,
+    specification: TuyaDeviceSpecificationResponse,
+  ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device, specification);
     props.store.tuya_switches = [];
     props.store.tuya_dimmers = [];

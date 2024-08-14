@@ -4,10 +4,9 @@ import { OAuth2Device } from 'homey-oauth2app';
 import * as TuyaOAuth2Util from './TuyaOAuth2Util';
 
 import { TuyaStatus, TuyaStatusUpdate } from '../types/TuyaTypes';
-import { TuyaCommand } from '../types/TuyaApiTypes';
+import { TuyaCommand, TuyaStatusResponse, TuyaWebRTC } from '../types/TuyaApiTypes';
 
 export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
-  oAuth2Client!: TuyaOAuth2Client;
   __status: TuyaStatus;
   __syncInterval?: NodeJS.Timeout;
 
@@ -21,22 +20,22 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
 
   static SYNC_INTERVAL = null; // Set to number n to sync every n ms
 
-  get data() {
+  get data(): any {
     return super.getData();
   }
 
-  get store() {
+  get store(): any {
     return super.getStore();
   }
 
-  hasTuyaCapability(tuyaCapabilityId: string) {
+  hasTuyaCapability(tuyaCapabilityId: string): boolean {
     return this.store?.tuya_capabilities?.includes(tuyaCapabilityId) ?? false;
   }
 
   /*
    * OAuth2
    */
-  async onOAuth2Init() {
+  async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
     const isOtherDevice = this.driver.id === 'other';
@@ -73,7 +72,7 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     this.log(`Inited: ${this.getName()}`);
   }
 
-  async onOAuth2Uninit() {
+  async onOAuth2Uninit(): Promise<void> {
     await super.onOAuth2Uninit();
 
     if (this.__syncInterval) {
@@ -90,7 +89,7 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
   /*
    * Tuya
    */
-  async __onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[] = []) {
+  async __onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[] = []): Promise<void> {
     this.__status = {
       ...this.__status,
       ...status,
@@ -133,7 +132,7 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     await this.onTuyaStatus(this.__status, changedStatusCodes);
   }
 
-  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]) {
+  async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
     this.log('onTuyaStatus', JSON.stringify(status));
 
     if (status.online === true) {
@@ -147,7 +146,7 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     // Overload Me
   }
 
-  async __sync() {
+  async __sync(): Promise<void> {
     Promise.resolve()
       .then(async () => {
         this.log('Syncing...');
@@ -166,14 +165,14 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
       });
   }
 
-  async sendCommands(commands: TuyaCommand[] = []) {
+  async sendCommands(commands: TuyaCommand[] = []): Promise<void> {
     await this.oAuth2Client.sendCommands({
       commands,
       deviceId: this.data.deviceId,
     });
   }
 
-  async sendCommand({ code, value }: TuyaCommand) {
+  async sendCommand({ code, value }: TuyaCommand): Promise<void> {
     await this.sendCommands([
       {
         code,
@@ -182,19 +181,19 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     ]);
   }
 
-  async getStatus() {
+  async getStatus(): Promise<TuyaStatusResponse> {
     const { deviceId } = this.data;
     return this.oAuth2Client.getDeviceStatus({
       deviceId,
     });
   }
 
-  async getWebRTC() {
+  async getWebRTC(): Promise<TuyaWebRTC> {
     const { deviceId } = this.data;
     return this.oAuth2Client.getWebRTCConfiguration({ deviceId });
   }
 
-  async getStreamingLink(type: 'RTSP' | 'HLS') {
+  async getStreamingLink(type: 'RTSP' | 'HLS'): Promise<{ url: string }> {
     const { deviceId } = this.data;
     return this.oAuth2Client.getStreamingLink(deviceId, type);
   }

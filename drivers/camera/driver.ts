@@ -1,4 +1,4 @@
-import TuyaOAuth2Driver from '../../lib/TuyaOAuth2Driver';
+import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
 import {
@@ -17,7 +17,7 @@ type ValueArgs = { value: any };
 module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA] as const;
 
-  async onInit() {
+  async onInit(): Promise<void> {
     await super.onInit();
 
     for (const capability of SIMPLE_CAMERA_FLOWS.read_write) {
@@ -42,7 +42,10 @@ module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     }
   }
 
-  onTuyaPairListDeviceProperties(device: TuyaDeviceResponse, specifications: TuyaDeviceSpecificationResponse) {
+  onTuyaPairListDeviceProperties(
+    device: TuyaDeviceResponse,
+    specifications: TuyaDeviceSpecificationResponse,
+  ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device, specifications);
 
     for (const status of device.status) {
