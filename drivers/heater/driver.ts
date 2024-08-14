@@ -7,8 +7,7 @@ import {HEATER_CAPABILITIES_MAPPING} from "./TuyaHeaterConstants";
 type DeviceArgs = { device: TuyaOAuth2Device };
 type ValueArgs = { value: any };
 
-export default class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
-
+module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
   ] as const;
