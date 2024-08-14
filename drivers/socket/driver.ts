@@ -41,7 +41,7 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
         switchAutocompleteListener(query, args),
       )
       .registerRunListener(async (args: DeviceArgs & SwitchArgs) => {
-        await args.device.switchOnOff(true, args.switch.id).catch((err) => {
+        await args.device.switchOnOff(true, args.switch.id).catch(err => {
           this.error(err);
           throw new Error(this.homey.__('error_setting_switch'));
         });
@@ -53,7 +53,7 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
         switchAutocompleteListener(query, args),
       )
       .registerRunListener(async (args: DeviceArgs & SwitchArgs) => {
-        await args.device.switchOnOff(false, args.switch.id).catch((err) => {
+        await args.device.switchOnOff(false, args.switch.id).catch(err => {
           this.error(err);
           throw new Error(this.homey.__('error_setting_switch'));
         });

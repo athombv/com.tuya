@@ -89,7 +89,7 @@ export function redactFields(device: TuyaDeviceResponse, additionalFields: strin
   const combinedFields = [...new Set([...defaultFields, ...additionalFields])];
 
   const newObj = JSON.parse(JSON.stringify(device));
-  combinedFields.forEach((field) => {
+  combinedFields.forEach(field => {
     // eslint-disable-next-line no-prototype-builtins
     if (newObj.hasOwnProperty(field)) {
       newObj[field] = '<redacted>';
@@ -128,7 +128,7 @@ export async function sendSetting(
       code: code,
       value: value,
     })
-    .catch((err) => {
+    .catch(err => {
       if (err.tuyaCode === 2008) {
         throw new Error(
           device.homey.__('setting_unsupported', {
@@ -167,7 +167,7 @@ export async function sendSettings(
         code: changedKey,
         value: newValue,
       })
-      .catch((err) => {
+      .catch(err => {
         if (err.tuyaCode === 2008) {
           unsupportedSettings.push(changedKey);
         } else if (err.tuyaCode === 501) {
@@ -199,11 +199,11 @@ export function reportUnsupportedSettings(
   const messages = [];
 
   if (unsupportedSettings.length > 0) {
-    const mappedSettingNames = unsupportedSettings.map((settingKey) => settingLabels[settingKey]);
+    const mappedSettingNames = unsupportedSettings.map(settingKey => settingLabels[settingKey]);
     messages.push(device.homey.__('settings_unsupported') + ' ' + mappedSettingNames.join(', '));
   }
   if (unsupportedValues.length > 0) {
-    const mappedSettingNames = unsupportedValues.map((settingKey) => settingLabels[settingKey]);
+    const mappedSettingNames = unsupportedValues.map(settingKey => settingLabels[settingKey]);
     messages.push(device.homey.__('setting_values_unsupported') + ' ' + mappedSettingNames.join(', '));
   }
   if (messages.length > 0) {

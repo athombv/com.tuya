@@ -308,7 +308,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
       json: {
         commands,
       },
-    }).catch((err) => {
+    }).catch(err => {
       if (err.tuyaCode === TuyaOAuth2Constants.ERROR_CODES.DEVICE_OFFLINE) {
         throw new Error(this.homey.__('device_offline'));
       }
@@ -378,7 +378,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
             this.webhook = await this.homey.cloud.createWebhook(Homey.env.WEBHOOK_ID, Homey.env.WEBHOOK_SECRET, {
               $keys: combinedKeys,
             });
-            this.webhook!.on('message', (message) => {
+            this.webhook!.on('message', message => {
               this.log('onWebhookMessage', JSON.stringify(message));
 
               Promise.resolve()
@@ -426,14 +426,14 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
                         }
                       }
                     })
-                    .catch((err) => this.error(err));
+                    .catch(err => this.error(err));
                 })
-                .catch((err) => this.error(`Error Handling Webhook Message: ${err.message}`));
+                .catch(err => this.error(`Error Handling Webhook Message: ${err.message}`));
             });
             this.log('Registered Webhook');
           }
         })
-        .catch((err) => this.error(`Error Updating Webhook: ${err.message}`));
+        .catch(err => this.error(`Error Updating Webhook: ${err.message}`));
     }, 1000);
   }
 }

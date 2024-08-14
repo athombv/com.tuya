@@ -6,19 +6,19 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     await super.onOAuth2Init();
 
     if (this.hasCapability('onoff')) {
-      this.registerCapabilityListener('onoff', (value) => this.onOffCapabilityListener(value));
+      this.registerCapabilityListener('onoff', value => this.onOffCapabilityListener(value));
     }
 
     if (this.hasCapability('target_temperature')) {
-      this.registerCapabilityListener('target_temperature', (value) => this.targetTemperatureCapabilityListener(value));
+      this.registerCapabilityListener('target_temperature', value => this.targetTemperatureCapabilityListener(value));
     }
 
     if (this.hasCapability('child_lock')) {
-      this.registerCapabilityListener('child_lock', (value) => this.childLockCapabilityListener(value));
+      this.registerCapabilityListener('child_lock', value => this.childLockCapabilityListener(value));
     }
 
     if (this.hasCapability('eco_mode')) {
-      this.registerCapabilityListener('eco_mode', (value) => this.ecoModeCapabilityListener(value));
+      this.registerCapabilityListener('eco_mode', value => this.ecoModeCapabilityListener(value));
     }
   }
 

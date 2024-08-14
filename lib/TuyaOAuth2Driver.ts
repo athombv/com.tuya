@@ -24,7 +24,7 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
 
   async onPairListDevices({ oAuth2Client }: { oAuth2Client: TuyaOAuth2Client }): Promise<OAuth2DeviceResult[]> {
     const devices = await oAuth2Client.getDevices();
-    const filteredDevices = devices.filter((device) => {
+    const filteredDevices = devices.filter(device => {
       this.log('Device:', JSON.stringify(TuyaOAuth2Util.redactFields(device)));
       return this.onTuyaPairListDeviceFilter(device);
     });
@@ -33,7 +33,7 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
       const deviceSpecs =
         (await oAuth2Client
           .getSpecification({ deviceId: device.id })
-          .catch((e) => this.log('Device specification retrieval failed', e))) ?? undefined;
+          .catch(e => this.log('Device specification retrieval failed', e))) ?? undefined;
 
       const deviceProperties = this.onTuyaPairListDeviceProperties({ ...device }, deviceSpecs);
       listDevices.push({

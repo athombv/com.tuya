@@ -159,7 +159,7 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
           online: device.online,
         });
       })
-      .catch((err) => {
+      .catch(err => {
         this.error(`Error Syncing: ${err.message}`);
         this.setUnavailable(err).catch(this.error);
       });

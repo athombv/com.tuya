@@ -43,14 +43,14 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
     // onoff
     if (this.hasCapability('onoff')) {
-      this.registerCapabilityListener('onoff', (value) => this.allOnOff(value));
+      this.registerCapabilityListener('onoff', value => this.allOnOff(value));
     }
 
     const tuyaSwitches = this.getStore().tuya_switches;
 
     for (const tuyaSwitch of tuyaSwitches) {
       if (this.hasCapability(`onoff.${tuyaSwitch}`)) {
-        this.registerCapabilityListener(`onoff.${tuyaSwitch}`, (value) => this.switchOnOff(value, tuyaSwitch));
+        this.registerCapabilityListener(`onoff.${tuyaSwitch}`, value => this.switchOnOff(value, tuyaSwitch));
       }
     }
 
@@ -65,7 +65,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     if (lightCapabilities.length > 0) {
       this.registerMultipleCapabilityListener(
         lightCapabilities,
-        (capabilityValues) => this.onCapabilitiesLight(capabilityValues),
+        capabilityValues => this.onCapabilitiesLight(capabilityValues),
         150,
       );
     }
@@ -76,7 +76,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
     while (this.initBarrier) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
 
     await super.onTuyaStatus(status, changedStatusCodes);
@@ -548,7 +548,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     await this.sendCommand({
       code: code,
       value: value,
-    }).catch((err) => {
+    }).catch(err => {
       if (err.tuyaCode === 2008) {
         throw new Error(
           this.homey.__('setting_unsupported', {
@@ -579,7 +579,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
     // Accumulate rejected settings so the user can be notified gracefully
     const sendSetting = async (command: TuyaCommand): Promise<void> =>
-      this.sendCommand(command).catch((err) => {
+      this.sendCommand(command).catch(err => {
         if (err.tuyaCode === 2008) {
           unsupportedSettings.push(command.code);
         } else if (err.tuyaCode === 501) {
@@ -645,13 +645,13 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
     if (unsupportedSettings.length > 0) {
       const mappedSettingNames = unsupportedSettings.map(
-        (settingKey) => LIGHT_SETTING_LABELS[settingKey as LightSettingKey],
+        settingKey => LIGHT_SETTING_LABELS[settingKey as LightSettingKey],
       );
       messages.push(this.homey.__('settings_unsupported') + ' ' + mappedSettingNames.join(', '));
     }
     if (unsupportedValues.length > 0) {
       const mappedSettingNames = unsupportedValues.map(
-        (settingKey) => LIGHT_SETTING_LABELS[settingKey as LightSettingKey],
+        settingKey => LIGHT_SETTING_LABELS[settingKey as LightSettingKey],
       );
       messages.push(this.homey.__('setting_values_unsupported') + ' ' + mappedSettingNames.join(', '));
     }

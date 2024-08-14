@@ -31,7 +31,7 @@ module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     // Apply the same way as in onSettings, but for an individual value
     for (const setting of SIMPLE_CAMERA_FLOWS.setting) {
       this.homey.flow.getActionCard(`camera_${setting}`).registerRunListener(async (args: DeviceArgs & ValueArgs) => {
-        await args.device.sendCommand({ code: setting, value: args.value }).catch((err) => {
+        await args.device.sendCommand({ code: setting, value: args.value }).catch(err => {
           if (err.tuyaCode === 2008) {
             throw new Error(this.homey.__('setting_unsupported', { label: CAMERA_SETTING_LABELS[setting] }));
           } else {

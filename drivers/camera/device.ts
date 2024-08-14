@@ -17,7 +17,7 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     for (const capability of this.getCapabilities()) {
       // Basic capabilities
       if (constIncludes(SIMPLE_CAMERA_CAPABILITIES.read_write, capability)) {
-        this.registerCapabilityListener(capability, (value) =>
+        this.registerCapabilityListener(capability, value =>
           this.sendCommand({
             code: capability,
             value: value,
@@ -27,19 +27,19 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
 
       // PTZ control
       if (capability === 'ptz_control_vertical') {
-        this.registerCapabilityListener(capability, (value) => this.ptzCapabilityListener(value, '0', '4'));
+        this.registerCapabilityListener(capability, value => this.ptzCapabilityListener(value, '0', '4'));
       }
       if (capability === 'ptz_control_horizontal') {
-        this.registerCapabilityListener(capability, (value) => this.ptzCapabilityListener(value, '6', '2'));
+        this.registerCapabilityListener(capability, value => this.ptzCapabilityListener(value, '6', '2'));
       }
 
       if (capability === 'ptz_control_zoom') {
-        this.registerCapabilityListener(capability, (value) => this.zoomCapabilityListener(value));
+        this.registerCapabilityListener(capability, value => this.zoomCapabilityListener(value));
       }
 
       // Other capabilities
       if (capability === 'onoff') {
-        this.registerCapabilityListener(capability, (value) =>
+        this.registerCapabilityListener(capability, value =>
           this.sendCommand({
             code: 'basic_private',
             value: !value,

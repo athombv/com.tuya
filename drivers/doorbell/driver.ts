@@ -10,7 +10,7 @@ module.exports = class TuyaOAuth2DriverDoorbell extends TuyaOAuth2Driver {
     if (!super.onTuyaPairListDeviceFilter(device)) return false;
 
     // Require a doorbell capability
-    return !!device.status.find((status) => status.code === 'doorbell_active');
+    return !!device.status.find(status => status.code === 'doorbell_active');
   }
 
   // onTuyaPairListDeviceProperties(device) {

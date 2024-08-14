@@ -21,7 +21,7 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
   async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
-    const sendCommandRunListener: ({
+    const sendCommandRunListener = async ({
       device,
       code,
       value,
@@ -29,15 +29,7 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
       device: TuyaOAuth2Device;
       code: string | { id: string };
       value: unknown;
-    }) => Promise<void> = async ({
-      device,
-      code,
-      value,
-    }: {
-      device: TuyaOAuth2Device;
-      code: string | { id: string };
-      value: unknown;
-    }) => {
+    }): Promise<void> => {
       if (typeof code === 'object') code = code.id;
       await device.sendCommand({ code, value });
     };
@@ -171,7 +163,7 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
           scenes = scenes.concat(homeScenes.list);
         }
 
-        return scenes.map((scene) => ({
+        return scenes.map(scene => ({
           name: scene.name,
           id: scene.id,
         }));

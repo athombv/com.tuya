@@ -24,12 +24,12 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
 
     // onoff
     if (this.hasCapability('onoff')) {
-      this.registerCapabilityListener('onoff', (value) => this.allOnOff(value));
+      this.registerCapabilityListener('onoff', value => this.allOnOff(value));
     }
 
     for (let switch_i = 1; switch_i <= 6; switch_i++) {
       if (this.hasCapability(`onoff.switch_${switch_i}`)) {
-        this.registerCapabilityListener(`onoff.switch_${switch_i}`, (value) =>
+        this.registerCapabilityListener(`onoff.switch_${switch_i}`, value =>
           this.switchOnOff(value, `switch_${switch_i}`),
         );
       }

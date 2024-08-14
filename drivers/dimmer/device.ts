@@ -9,24 +9,22 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
     await super.onOAuth2Init();
 
     if (this.hasCapability('onoff')) {
-      this.registerCapabilityListener('onoff', (value) => this.allOnOff(value));
+      this.registerCapabilityListener('onoff', value => this.allOnOff(value));
     }
 
     if (this.hasCapability('dim')) {
-      this.registerCapabilityListener('dim', (value) => this.allDim(value));
+      this.registerCapabilityListener('dim', value => this.allDim(value));
     }
 
     for (let switch_i = 1; switch_i <= 2; switch_i++) {
       if (this.hasCapability(`onoff.${switch_i}`)) {
-        this.registerCapabilityListener(`onoff.${switch_i}`, (value) =>
+        this.registerCapabilityListener(`onoff.${switch_i}`, value =>
           this.singleOnOff(value, `switch_led_${switch_i}`),
         );
       }
 
       if (this.hasCapability(`dim.${switch_i}`)) {
-        this.registerCapabilityListener(`dim.${switch_i}`, (value) =>
-          this.singleDim(value, `bright_value_${switch_i}`),
-        );
+        this.registerCapabilityListener(`dim.${switch_i}`, value => this.singleDim(value, `bright_value_${switch_i}`));
       }
     }
   }
@@ -123,7 +121,7 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
       await this.sendCommand({
         code: changedKey,
         value: typeof newValue === 'number' ? newValue * TUYA_PERCENTAGE_SCALING : newValue,
-      }).catch((err) => {
+      }).catch(err => {
         if (err.tuyaCode === 2008) {
           unsupportedSettings.push(changedKey);
         } else if (err.tuyaCode === 501) {
@@ -141,7 +139,7 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
     if (unsupportedSettings.length > 0) {
       let unsupportedSettingsMessage = this.homey.__('settings_unsupported') + ' ';
       const mappedSettingNames = unsupportedSettings.map(
-        (settingKey) => DIMMER_SETTING_LABELS[settingKey as keyof typeof DIMMER_SETTING_LABELS],
+        settingKey => DIMMER_SETTING_LABELS[settingKey as keyof typeof DIMMER_SETTING_LABELS],
       );
       unsupportedSettingsMessage += mappedSettingNames.join(', ');
       messages.push(unsupportedSettingsMessage);
@@ -149,7 +147,7 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
     if (unsupportedValues.length > 0) {
       let unsupportedValuesMessage = this.homey.__('setting_values_unsupported') + ' ';
       const mappedSettingNames = unsupportedValues.map(
-        (settingKey) => DIMMER_SETTING_LABELS[settingKey as keyof typeof DIMMER_SETTING_LABELS],
+        settingKey => DIMMER_SETTING_LABELS[settingKey as keyof typeof DIMMER_SETTING_LABELS],
       );
       unsupportedValuesMessage += mappedSettingNames.join(', ');
       messages.push(unsupportedValuesMessage);
