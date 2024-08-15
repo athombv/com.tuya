@@ -221,6 +221,14 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     const { deviceId } = this.data;
     return this.oAuth2Client.getStreamingLink(deviceId, type);
   }
+
+  log(...args: unknown[]): void {
+    super.log(`[tc:${this.getStoreValue('tuya_category')}]`, ...args);
+  }
+
+  error(...args: unknown[]): void {
+    super.error(`[tc:${this.getStoreValue('tuya_category')}]`, ...args);
+  }
 }
 
 module.exports = TuyaOAuth2Device;
