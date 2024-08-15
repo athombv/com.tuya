@@ -15,7 +15,7 @@ export type DeviceRegistration = {
   onOffline: () => Promise<void>;
 };
 
-export type SettingsEvent<T> = {
+export type SettingsEvent<T extends { [key: string]: unknown }> = {
   oldSettings: T;
   newSettings: T;
   changedKeys: (keyof T)[];

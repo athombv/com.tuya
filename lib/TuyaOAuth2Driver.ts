@@ -60,6 +60,7 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
       capabilities: [],
       store: {
         tuya_capabilities: [],
+        tuya_category: device.category,
       },
       capabilitiesOptions: {},
       settings: {},

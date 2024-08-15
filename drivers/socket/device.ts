@@ -3,7 +3,7 @@ import { Device, FlowCardTriggerDevice } from 'homey';
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
-import { SOCKET_SETTING_LABELS } from './TuyaSocketConstants';
+import { SOCKET_SETTING_LABELS, HomeySocketSettings, TuyaSocketSettings } from './TuyaSocketConstants';
 
 /**
  * Device Class for Tuya Sockets
@@ -12,15 +12,11 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
   turnedOnFlowCard!: FlowCardTriggerDevice;
   turnedOffFlowCard!: FlowCardTriggerDevice;
 
-  async onInit(): Promise<void> {
-    await super.onInit();
+  async onOAuth2Init(): Promise<void> {
+    await super.onOAuth2Init();
 
     this.turnedOnFlowCard = this.homey.flow.getDeviceTriggerCard('socket_sub_switch_turned_on');
     this.turnedOffFlowCard = this.homey.flow.getDeviceTriggerCard('socket_sub_switch_turned_off');
-  }
-
-  async onOAuth2Init(): Promise<void> {
-    await super.onOAuth2Init();
 
     // onoff
     if (this.hasCapability('onoff')) {
@@ -96,13 +92,34 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
       this.setCapabilityValue('measure_current', cur_current).catch(this.error);
     }
 
-    for (const setting of ['child_lock', 'relay_status']) {
-      const settingValue = status[setting];
-      if (settingValue !== undefined) {
-        await this.setSettings({
-          [setting]: settingValue,
-        });
+    if (status['child_lock'] !== undefined) {
+      await this.setSettings({
+        child_lock: status['child_lock'],
+      });
+    }
+
+    if (status['relay_status'] !== undefined) {
+      const relayStatus = status['relay_status'] as TuyaSocketSettings['relay_status'];
+      let mappedRelayStatus: HomeySocketSettings['relay_status'];
+
+      // Remap the relay_status
+      switch (relayStatus) {
+        case '0':
+          mappedRelayStatus = 'power_on';
+          break;
+        case '1':
+          mappedRelayStatus = 'power_off';
+          break;
+        case '2':
+          mappedRelayStatus = 'last';
+          break;
+        default:
+          mappedRelayStatus = relayStatus;
       }
+
+      await this.setSettings({
+        relay_status: mappedRelayStatus,
+      });
     }
   }
 
@@ -127,10 +144,30 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     });
   }
 
-  // TODO define settings
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async onSettings(event: SettingsEvent<any>): Promise<string | void> {
-    return await TuyaOAuth2Util.onSettings(this, event, SOCKET_SETTING_LABELS);
+  async onSettings(event: SettingsEvent<HomeySocketSettings>): Promise<string | void> {
+    // Deep copy, since event is read-only
+    const mappedEvent: SettingsEvent<TuyaSocketSettings> = { ...event };
+
+    if (this.getStoreValue('tuya_category') === 'tdq') {
+      const mappedNewSettings = { ...mappedEvent.newSettings };
+
+      // Remap the relay_status
+      switch (mappedNewSettings['relay_status']) {
+        case 'power_on':
+          mappedNewSettings['relay_status'] = '0';
+          break;
+        case 'power_off':
+          mappedNewSettings['relay_status'] = '1';
+          break;
+        default:
+          mappedNewSettings['relay_status'] = '2';
+          break;
+      }
+
+      mappedEvent.newSettings = mappedNewSettings;
+    }
+
+    return await TuyaOAuth2Util.onSettings(this, mappedEvent, SOCKET_SETTING_LABELS);
   }
 }
 
