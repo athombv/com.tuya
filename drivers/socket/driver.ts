@@ -102,7 +102,6 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
     const props = super.onTuyaPairListDeviceProperties(device, specifications);
     props.capabilitiesOptions = {};
     props.store.tuya_switches = [];
-    props.store.tuya_category = device.category;
 
     // Add this before the sub-capabilities, so it becomes the quick toggle
     props.capabilities.push('onoff');
