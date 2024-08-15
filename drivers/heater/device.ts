@@ -30,11 +30,17 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     }
 
     if (typeof status['temp_current'] === 'number') {
-      this.setCapabilityValue('measure_temperature', status['temp_current']).catch(this.error);
+      const scaleExp = Number.parseInt(this.getSetting('temp_current_scaling') ?? '0', 10);
+      const scale = 10 ** scaleExp;
+      const temp_current = status['temp_current'] / scale;
+      this.setCapabilityValue('measure_temperature', temp_current).catch(this.error);
     }
 
     if (typeof status['temp_set'] === 'number') {
-      this.setCapabilityValue('target_temperature', status['temp_set']).catch(this.error);
+      const scaleExp = Number.parseInt(this.getSetting('temp_set_scaling') ?? '0', 10);
+      const scale = 10 ** scaleExp;
+      const temp_set = status['temp_set'] / scale;
+      this.setCapabilityValue('target_temperature', temp_set).catch(this.error);
     }
 
     if (typeof status['lock'] === 'boolean') {
@@ -42,7 +48,9 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     }
 
     if (typeof status['work_power'] === 'number') {
-      const cur_power = status['work_power'] / 10.0;
+      const scaleExp = Number.parseInt(this.getSetting('work_power_scaling') ?? '0', 10);
+      const scale = 10 ** scaleExp;
+      const cur_power = status['work_power'] / scale;
       this.setCapabilityValue('measure_power', cur_power).catch(this.error);
     }
 
@@ -59,10 +67,12 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
   }
 
   async targetTemperatureCapabilityListener(value: number): Promise<void> {
-    const limitedTemperature = Math.max(0, Math.min(Math.floor(value), 50));
+    const scaleExp = Number.parseInt(this.getSetting('temp_set_scaling') ?? '0', 10);
+    const scale = 10 ** scaleExp;
+    const temp_set = value * scale;
     await this.sendCommand({
       code: 'temp_set',
-      value: limitedTemperature,
+      value: temp_set,
     });
   }
 
