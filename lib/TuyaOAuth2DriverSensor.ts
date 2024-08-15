@@ -4,9 +4,9 @@ import TuyaOAuth2Driver, { ListDeviceProperties } from './TuyaOAuth2Driver';
 export default class TuyaOAuth2DriverSensor extends TuyaOAuth2Driver {
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
-    specifications: TuyaDeviceSpecificationResponse, // eslint-disable-line @typescript-eslint/no-unused-vars
+    specifications?: TuyaDeviceSpecificationResponse, // eslint-disable-line @typescript-eslint/no-unused-vars
   ): ListDeviceProperties {
-    const props = super.onTuyaPairListDeviceProperties(device);
+    const props = super.onTuyaPairListDeviceProperties(device, specifications);
 
     // alarm_battery
     const hasBatteryState = device.status.some(({ code }) => code === 'battery_state');

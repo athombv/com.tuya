@@ -8,7 +8,7 @@ module.exports = class TuyaOAuth2DriverSensorMotion extends TuyaOAuth2DriverSens
 
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
-    specifications: TuyaDeviceSpecificationResponse,
+    specifications?: TuyaDeviceSpecificationResponse,
   ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device, specifications);
 

@@ -9,13 +9,13 @@ module.exports = class TuyaOAuth2DriverOther extends TuyaOAuth2Driver {
 
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
-    specifications: TuyaDeviceSpecificationResponse,
+    specifications?: TuyaDeviceSpecificationResponse,
   ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device);
 
     const combinedSpecification = {
       device: TuyaOAuth2Util.redactFields(device),
-      specifications: specifications,
+      specifications: specifications ?? '<not available>',
     };
 
     props.settings['deviceSpecification'] = JSON.stringify(combinedSpecification, undefined, 2);

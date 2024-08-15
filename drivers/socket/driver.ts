@@ -97,7 +97,7 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
 
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
-    specifications: TuyaDeviceSpecificationResponse,
+    specifications?: TuyaDeviceSpecificationResponse,
   ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device, specifications);
     props.capabilitiesOptions = {};
