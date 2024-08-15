@@ -152,15 +152,15 @@ export async function sendSetting(
  * @param device - The device for which the settings are updated
  * @param event - The settings event
  */
-export async function sendSettings(
+export async function sendSettings<T extends { [key: string]: unknown }>(
   device: TuyaOAuth2Device,
-  { newSettings, changedKeys }: SettingsEvent<Record<string, unknown>>,
-): Promise<[string[], string[]]> {
-  const unsupportedSettings: string[] = [];
-  const unsupportedValues: string[] = [];
+  { newSettings, changedKeys }: SettingsEvent<T>,
+): Promise<[(keyof T)[], (keyof T)[]]> {
+  const unsupportedSettings: (keyof T)[] = [];
+  const unsupportedValues: (keyof T)[] = [];
 
   // Accumulate rejected settings so the user can be notified gracefully
-  for (const changedKey of changedKeys) {
+  for (const changedKey of changedKeys as string[]) {
     const newValue = newSettings[changedKey];
     await device
       .sendCommand({
@@ -188,11 +188,11 @@ export async function sendSettings(
  * @param unsupportedValues - Settings for which the new value is unsupported
  * @param settingLabels - A mapping from setting keys to their user-friendly label
  */
-export function reportUnsupportedSettings(
+export function reportUnsupportedSettings<T extends Record<string, string>>(
   device: TuyaOAuth2Device,
-  unsupportedSettings: string[],
-  unsupportedValues: string[],
-  settingLabels: Record<string, string>,
+  unsupportedSettings: (keyof T)[],
+  unsupportedValues: (keyof T)[],
+  settingLabels: T,
 ): string | void {
   // Report back which capabilities and values are unsupported,
   // since we cannot programmatically remove settings.
@@ -217,13 +217,18 @@ export function reportUnsupportedSettings(
  * @param event - The settings event
  * @param settingLabels - A mapping from setting keys to their user-friendly label
  */
-export async function onSettings(
+export async function onSettings<T extends { [key: string]: unknown }>(
   device: TuyaOAuth2Device,
-  event: SettingsEvent<Record<string, unknown>>,
-  settingLabels: Record<string, string>,
+  event: SettingsEvent<T>,
+  settingLabels: Record<keyof T, string>,
 ): Promise<string | void> {
   const [unsupportedSettings, unsupportedValues] = await sendSettings(device, event);
-  return reportUnsupportedSettings(device, unsupportedSettings, unsupportedValues, settingLabels);
+  return reportUnsupportedSettings(
+    device,
+    unsupportedSettings as string[],
+    unsupportedValues as string[],
+    settingLabels,
+  );
 }
 
 // The standard TypeScript definition of Array.includes does not work for const arrays.
