@@ -46,8 +46,6 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       return props;
     }
 
-    this.log('Specification: ', specification);
-
     for (const functionSpecification of specification.functions) {
       if (functionSpecification.code === 'temp_set') {
         const tempSetSpecs = JSON.parse(functionSpecification.values);
