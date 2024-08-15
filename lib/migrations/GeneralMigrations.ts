@@ -1,12 +1,12 @@
-import TuyaOAuth2DeviceSocket from '../../drivers/socket/device';
+import TuyaOAuth2Device from '../TuyaOAuth2Device';
 
-export async function performMigrations(device: TuyaOAuth2DeviceSocket): Promise<void> {
+export async function performMigrations(device: TuyaOAuth2Device): Promise<void> {
   await tuyaCategoryMigration(device).catch(device.error);
 }
 
-async function tuyaCategoryMigration(device: TuyaOAuth2DeviceSocket): Promise<void> {
+async function tuyaCategoryMigration(device: TuyaOAuth2Device): Promise<void> {
   // tuya category migration
-  const tuyaCategory = device.getStoreValue('tuya_category');
+  const tuyaCategory = device.getStore().tuya_category;
 
   if (tuyaCategory === undefined) {
     device.log('Migrating Tuya category...');

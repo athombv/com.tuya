@@ -4,10 +4,28 @@ import { TuyaCommand, TuyaStatusResponse, TuyaWebRTC } from '../types/TuyaApiTyp
 import { TuyaStatus, TuyaStatusUpdate } from '../types/TuyaTypes';
 import TuyaOAuth2Client from './TuyaOAuth2Client';
 import * as TuyaOAuth2Util from './TuyaOAuth2Util';
+import * as GeneralMigrations from './migrations/GeneralMigrations';
 
 export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
   __status: TuyaStatus;
   __syncInterval?: NodeJS.Timeout;
+
+  /**
+   * Ensure migrations are finished before the device is used.
+   * This barrier should only be lowered after all initialization is done.
+   */
+  initBarrier = true;
+
+  async onInit(): Promise<void> {
+    await super.onInit();
+    await this.performMigrations();
+    this.initBarrier = false;
+    this.log('Finished initialization of', this.getName());
+  }
+
+  async performMigrations(): Promise<void> {
+    await GeneralMigrations.performMigrations(this);
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(...props: any) {
@@ -70,8 +88,6 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
       this.__syncInterval = this.homey.setInterval(this.__sync, TuyaOAuth2Device.SYNC_INTERVAL);
     }
     await this.__sync();
-
-    this.log(`Inited: ${this.getName()}`);
   }
 
   async onOAuth2Uninit(): Promise<void> {
@@ -136,6 +152,11 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async onTuyaStatus(status: TuyaStatus, _changedStatusCodes: string[]): Promise<void> {
+    // Wait at least 100ms for initialization before trying to pass the barrier again
+    while (this.initBarrier) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
     this.log('onTuyaStatus', JSON.stringify(status));
 
     if (status.online === true) {
