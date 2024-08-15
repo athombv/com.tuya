@@ -141,5 +141,8 @@
         "units": { "en": "%" }
       }
     ]
+  },
+  {
+    "$extends": "deviceSpecification"
   }
 ]

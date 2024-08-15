@@ -2,7 +2,11 @@ import { FlowCard } from 'homey';
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
-import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import {
+  type TuyaDeviceDataPointResponse,
+  TuyaDeviceResponse,
+  TuyaDeviceSpecificationResponse,
+} from '../../types/TuyaApiTypes';
 import type TuyaOAuth2DeviceSocket from './device';
 import { SOCKET_SETTING_LABELS } from './TuyaSocketConstants';
 
@@ -98,8 +102,9 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
     specifications?: TuyaDeviceSpecificationResponse,
+    dataPoints?: TuyaDeviceDataPointResponse,
   ): ListDeviceProperties {
-    const props = super.onTuyaPairListDeviceProperties(device, specifications);
+    const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
     props.capabilitiesOptions = {};
     props.store.tuya_switches = [];
 

@@ -1,7 +1,11 @@
 import { DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import { constIncludes } from '../../lib/TuyaOAuth2Util';
-import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import {
+  type TuyaDeviceDataPointResponse,
+  TuyaDeviceResponse,
+  TuyaDeviceSpecificationResponse,
+} from '../../types/TuyaApiTypes';
 import TuyaOAuth2DeviceDimmer from './device';
 import { SIMPLE_DIMMER_CAPABILITIES } from './TuyaDimmerConstants';
 
@@ -43,9 +47,10 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
 
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
-    specification: TuyaDeviceSpecificationResponse,
+    specifications?: TuyaDeviceSpecificationResponse,
+    dataPoints?: TuyaDeviceDataPointResponse,
   ): ListDeviceProperties {
-    const props = super.onTuyaPairListDeviceProperties(device, specification);
+    const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
     props.store.tuya_switches = [];
     props.store.tuya_dimmers = [];
 
@@ -116,11 +121,11 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
       }
     }
 
-    if (!specification || !specification.status) {
+    if (!specifications || !specifications.status) {
       return props;
     }
 
-    for (const statusSpecification of specification.status) {
+    for (const statusSpecification of specifications.status) {
       const tuyaCapability = statusSpecification.code;
       const values = JSON.parse(statusSpecification.values);
 

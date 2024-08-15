@@ -1,7 +1,11 @@
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
-import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import {
+  type TuyaDeviceDataPointResponse,
+  TuyaDeviceResponse,
+  TuyaDeviceSpecificationResponse,
+} from '../../types/TuyaApiTypes';
 import { HEATER_CAPABILITIES_MAPPING } from './TuyaHeaterConstants';
 
 type DeviceArgs = { device: TuyaOAuth2Device };
@@ -24,9 +28,10 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
 
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
-    specification: TuyaDeviceSpecificationResponse,
+    specifications?: TuyaDeviceSpecificationResponse,
+    dataPoints?: TuyaDeviceDataPointResponse,
   ): ListDeviceProperties {
-    const props = super.onTuyaPairListDeviceProperties(device, specification);
+    const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
 
     for (const status of device.status) {
       const tuyaCapability = status.code;
@@ -39,11 +44,11 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       }
     }
 
-    if (!specification || !specification.functions) {
+    if (!specifications || !specifications.functions) {
       return props;
     }
 
-    for (const functionSpecification of specification.functions) {
+    for (const functionSpecification of specifications.functions) {
       if (functionSpecification.code === 'temp_set') {
         const tempSetSpecs = JSON.parse(functionSpecification.values);
         props.capabilitiesOptions['target_temperature'] = {
