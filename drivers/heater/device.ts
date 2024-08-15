@@ -39,11 +39,7 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     }
 
     if (typeof status['temp_current'] === 'number') {
-      if (this.getCapabilityOptions('target_temperature')?.max < 100) {
-        this.setCapabilityValue('measure_temperature', status['temp_current']).catch(this.error);
-      } else {
-        this.setCapabilityValue('measure_temperature', status['temp_current'] / 10.0).catch(this.error);
-      }
+      this.setCapabilityValue('measure_temperature', status['temp_current']).catch(this.error);
     }
 
     if (typeof status['temp_set'] === 'number') {
@@ -98,12 +94,12 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
   }
 
   async childLockCapabilityListener(value: boolean): Promise<void> {
-    if (this.hasCapability('lock')) {
+    if (this.hasTuyaCapability('lock')) {
       await this.sendCommand({
         code: 'lock',
         value: value,
       });
-    } else if (this.hasCapability('child_lock')) {
+    } else if (this.hasTuyaCapability('child_lock')) {
       await this.sendCommand({
         code: 'child_lock',
         value: value,
@@ -112,12 +108,12 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
   }
 
   async ecoModeCapabilityListener(value: boolean): Promise<void> {
-    if (this.hasCapability('eco')) {
+    if (this.hasTuyaCapability('eco')) {
       await this.sendCommand({
         code: 'eco',
         value: value,
       });
-    } else if (this.hasCapability('mode_eco')) {
+    } else if (this.hasTuyaCapability('mode_eco')) {
       await this.sendCommand({
         code: 'mode_eco',
         value: value,
