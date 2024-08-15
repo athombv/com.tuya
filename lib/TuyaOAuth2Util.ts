@@ -22,7 +22,7 @@ export function convertStatusArrayToStatusObject(statuses: TuyaStatusResponse): 
     obj[item.code] = item.value;
 
     // Parse JSON
-    if (typeof obj[item.code] === 'string' && (obj[item.code] as string).startsWith('{')) {
+    if (typeof obj[item.code] === 'string' && hasJsonStructure(obj[item.code] as string)) {
       try {
         obj[item.code] = JSON.parse(obj[item.code] as string);
       } catch (err) {
