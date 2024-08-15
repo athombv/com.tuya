@@ -436,4 +436,5 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
   }
 }
 
+TuyaOAuth2Client.setMaxListeners(Infinity);
 module.exports = TuyaOAuth2Client;
