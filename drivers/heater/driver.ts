@@ -8,7 +8,10 @@ type DeviceArgs = { device: TuyaOAuth2Device };
 type ValueArgs = { value: unknown };
 
 module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
-  TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER] as const;
+  TUYA_DEVICE_CATEGORIES = [
+    DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
+    DEVICE_CATEGORIES.LARGE_HOME_APPLIANCES.HEATER,
+  ] as const;
 
   async onInit(): Promise<void> {
     await super.onInit();

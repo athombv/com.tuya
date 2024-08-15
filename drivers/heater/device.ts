@@ -30,7 +30,11 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     }
 
     if (typeof status['temp_current'] === 'number') {
-      this.setCapabilityValue('measure_temperature', status['temp_current']).catch(this.error);
+      if (this.getCapabilityOptions('target_temperature')?.max < 100) {
+        this.setCapabilityValue('measure_temperature', status['temp_current']).catch(this.error);
+      } else {
+        this.setCapabilityValue('measure_temperature', status['temp_current'] / 10.0).catch(this.error);
+      }
     }
 
     if (typeof status['temp_set'] === 'number') {
@@ -41,6 +45,10 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
       this.setCapabilityValue('child_lock', status['lock']).catch(this.error);
     }
 
+    if (typeof status['child_lock'] === 'boolean') {
+      this.setCapabilityValue('child_lock', status['child_lock']).catch(this.error);
+    }
+
     if (typeof status['work_power'] === 'number') {
       const cur_power = status['work_power'] / 10.0;
       this.setCapabilityValue('measure_power', cur_power).catch(this.error);
@@ -48,6 +56,10 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
 
     if (typeof status['mode_eco'] === 'boolean') {
       this.setCapabilityValue('eco_mode', status['mode_eco']).catch(this.error);
+    }
+
+    if (typeof status['eco'] === 'boolean') {
+      this.setCapabilityValue('eco_mode', status['eco']).catch(this.error);
     }
   }
 
@@ -67,16 +79,30 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
   }
 
   async childLockCapabilityListener(value: boolean): Promise<void> {
-    await this.sendCommand({
-      code: 'lock',
-      value: value,
-    });
+    if (this.hasCapability('lock')) {
+      await this.sendCommand({
+        code: 'lock',
+        value: value,
+      });
+    } else if (this.hasCapability('child_lock')) {
+      await this.sendCommand({
+        code: 'child_lock',
+        value: value,
+      });
+    }
   }
 
   async ecoModeCapabilityListener(value: boolean): Promise<void> {
-    await this.sendCommand({
-      code: 'mode_eco',
-      value: value,
-    });
+    if (this.hasCapability('eco')) {
+      await this.sendCommand({
+        code: 'eco',
+        value: value,
+      });
+    } else if (this.hasCapability('mode_eco')) {
+      await this.sendCommand({
+        code: 'mode_eco',
+        value: value,
+      });
+    }
   }
 };
