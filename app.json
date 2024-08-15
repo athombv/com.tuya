@@ -1390,6 +1390,52 @@
         ]
       },
       {
+        "id": "heater_large_set_child_lock",
+        "title": {
+          "en": "Set child lock"
+        },
+        "titleFormatted": {
+          "en": "Set child lock [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=heater-large&capabilities=child_lock"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "heater_large_set_eco_mode",
+        "title": {
+          "en": "Set eco-mode"
+        },
+        "titleFormatted": {
+          "en": "Set eco-mode [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=heater-large&capabilities=eco_mode"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
         "id": "light_switch_pir",
         "title": {
           "en": "Set motion detection"
@@ -2237,6 +2283,56 @@
         "nl": "Verwarming"
       },
       "id": "heater"
+    },
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/heater-large/assets/images/small.png",
+        "large": "/drivers/heater-large/assets/images/large.png",
+        "xlarge": "/drivers/heater-large/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "heater",
+      "name": {
+        "en": "Heater Large",
+        "nl": "Verwarming Groot"
+      },
+      "id": "heater-large"
     },
     {
       "capabilities": [
