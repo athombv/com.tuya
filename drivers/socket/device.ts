@@ -102,21 +102,19 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
       const relayStatus = status['relay_status'] as TuyaSocketSettings['relay_status'];
       let mappedRelayStatus: HomeySocketSettings['relay_status'];
 
-      if (this.getStoreValue('tuya_category') === 'tdq') {
-        // Remap the relay_status
-        switch (relayStatus) {
-          case '0':
-            mappedRelayStatus = 'power_on';
-            break;
-          case '1':
-            mappedRelayStatus = 'power_off';
-            break;
-          default:
-            mappedRelayStatus = 'last';
-            break;
-        }
-      } else {
-        mappedRelayStatus = relayStatus as HomeySocketSettings['relay_status'];
+      // Remap the relay_status
+      switch (relayStatus) {
+        case '0':
+          mappedRelayStatus = 'power_on';
+          break;
+        case '1':
+          mappedRelayStatus = 'power_off';
+          break;
+        case '2':
+          mappedRelayStatus = 'last';
+          break;
+        default:
+          mappedRelayStatus = relayStatus;
       }
 
       await this.setSettings({
