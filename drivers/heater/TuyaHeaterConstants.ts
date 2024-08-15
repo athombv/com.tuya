@@ -7,4 +7,6 @@ export const HEATER_CAPABILITIES_MAPPING = {
   work_power: 'measure_power' /* small appliances */,
   mode_eco: 'eco_mode' /* small appliances */,
   eco: 'eco_mode' /* large appliances */,
+  //mode: 'mode' /* small and large appliances */, // commented out for now as it doesn't return the correct values from the Tuya specification
+  fault: 'fault' /* large appliances */,
 } as const;

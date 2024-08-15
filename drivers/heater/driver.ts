@@ -46,6 +46,8 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       return props;
     }
 
+    this.log('Specification: ', specification);
+
     for (const functionSpecification of specification.functions) {
       if (functionSpecification.code === 'temp_set') {
         const tempSetSpecs = JSON.parse(functionSpecification.values);
@@ -53,6 +55,23 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
           step: tempSetSpecs.step,
           min: tempSetSpecs.min,
           max: tempSetSpecs.max,
+        };
+      }
+
+      /*if (functionSpecification.code === 'mode') {
+        const modeSpecs = JSON.parse(functionSpecification.values);
+        props.capabilitiesOptions['mode'] = {
+          values: modeSpecs.range,
+        };
+      }*/
+    }
+
+    for (const statusSpecification of specification.status) {
+      if (statusSpecification.code === 'fault') {
+        const faultSpecs = JSON.parse(statusSpecification.values);
+        this.log('Fault specs: ' + JSON.stringify(faultSpecs));
+        props.capabilitiesOptions['fault'] = {
+          values: ['OK', ...faultSpecs.label] /** first state is OK state */,
         };
       }
     }

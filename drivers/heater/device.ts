@@ -20,6 +20,15 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     if (this.hasCapability('eco_mode')) {
       this.registerCapabilityListener('eco_mode', value => this.ecoModeCapabilityListener(value));
     }
+
+    /*if (this.hasCapability('mode')) {
+      this.registerCapabilityListener('mode', value =>
+        this.sendCommand({
+          code: 'mode',
+          value: value,
+        }),
+      );
+    }*/
   }
 
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
@@ -61,6 +70,16 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     if (typeof status['eco'] === 'boolean') {
       this.setCapabilityValue('eco_mode', status['eco']).catch(this.error);
     }
+
+    if (typeof status['fault'] === 'number') {
+      this.setCapabilityValue('fault', this.getCapabilityOptions('fault').values[status['fault'] - 1]).catch(
+        this.error,
+      );
+    }
+
+    /*if (typeof status['mode'] === 'string') {
+      this.setCapabilityValue('mode', status['mode']).catch(this.error);
+    }*/
   }
 
   async onOffCapabilityListener(value: boolean): Promise<void> {
