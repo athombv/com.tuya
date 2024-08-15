@@ -4,6 +4,7 @@ import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import { SOCKET_SETTING_LABELS, HomeySocketSettings, TuyaSocketSettings } from './TuyaSocketConstants';
+import { performMigrations } from '../../lib/migrations/TuyaSocketMigrations';
 
 /**
  * Device Class for Tuya Sockets
@@ -11,6 +12,9 @@ import { SOCKET_SETTING_LABELS, HomeySocketSettings, TuyaSocketSettings } from '
 export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
   turnedOnFlowCard!: FlowCardTriggerDevice;
   turnedOffFlowCard!: FlowCardTriggerDevice;
+
+  // Ensure migrations are finished before the device is used
+  initBarrier = true;
 
   async onInit(): Promise<void> {
     await super.onInit();
@@ -21,6 +25,8 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
 
   async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
+
+    await performMigrations(this);
 
     // onoff
     if (this.hasCapability('onoff')) {
@@ -34,6 +40,9 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
         );
       }
     }
+
+    this.initBarrier = false;
+    this.log('Finished oAuth2 initialization of', this.getName());
   }
 
   async safeSetCapabilityValue(capabilityId: string, value: unknown): Promise<void> {
@@ -43,6 +52,10 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
   }
 
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
+    while (this.initBarrier) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
     await super.onTuyaStatus(status, changedStatusCodes);
 
     // onoff
