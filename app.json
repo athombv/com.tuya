@@ -2883,6 +2883,7 @@
         "en": "Status"
       },
       "getable": true,
+      "setable": false,
       "uiComponent": "sensor"
     },
     "ptz_control_horizontal": {
