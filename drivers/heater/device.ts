@@ -63,10 +63,6 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
         this.error,
       );
     }
-
-    /*if (typeof status['mode'] === 'string') {
-      this.setCapabilityValue('mode', status['mode']).catch(this.error);
-    }*/
   }
 
   async onOffCapabilityListener(value: boolean): Promise<void> {
