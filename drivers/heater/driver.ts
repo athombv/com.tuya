@@ -64,7 +64,7 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       }
 
       if (['temp_set', 'temp_current', 'work_power'].includes(tuyaCapability)) {
-        if ([0, 1, 2].includes(values.scale)) {
+        if ([0, 1, 2, 3].includes(values.scale)) {
           props.settings[`${tuyaCapability}_scaling`] = `${values.scale}`;
         } else {
           this.error(`Unsupported ${tuyaCapability} scale:`, values.scale);
