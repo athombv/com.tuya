@@ -236,3 +236,7 @@ export async function onSettings<T extends { [key: string]: unknown }>(
 export function constIncludes<T, S>(array: ReadonlyArray<T>, search: S): S extends T ? true : boolean {
   return (array as unknown[]).includes(search) as S extends T ? true : boolean;
 }
+
+export function getFromMap(map: Record<string, string>, search: string): string | null {
+  return map[search] ?? null;
+}

@@ -1,6 +1,6 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
-import { constIncludes } from '../../lib/TuyaOAuth2Util';
+import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import {
   CAMERA_ALARM_EVENT_CAPABILITIES,
@@ -50,9 +50,8 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
 
     // Reset alarms in case a timeout was interrupted
     for (const tuyaCapability in CAMERA_ALARM_EVENT_CAPABILITIES) {
-      const capability =
-        CAMERA_ALARM_EVENT_CAPABILITIES[tuyaCapability as keyof typeof CAMERA_ALARM_EVENT_CAPABILITIES];
-      if (this.hasCapability(capability)) {
+      const capability = getFromMap(CAMERA_ALARM_EVENT_CAPABILITIES, tuyaCapability);
+      if (capability && this.hasCapability(capability)) {
         await this.setCapabilityValue(capability, false);
       }
     }
@@ -112,8 +111,11 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
 
         // Check if the event is for a known alarm
         if (notificationType in CAMERA_ALARM_EVENT_CAPABILITIES) {
-          const alarmCapability =
-            CAMERA_ALARM_EVENT_CAPABILITIES[notificationType as keyof typeof CAMERA_ALARM_EVENT_CAPABILITIES];
+          const alarmCapability = getFromMap(CAMERA_ALARM_EVENT_CAPABILITIES, notificationType);
+          if (!alarmCapability) {
+            continue;
+          }
+
           if (!this.hasCapability(alarmCapability)) {
             await this.addCapability(alarmCapability).catch(this.error);
           }

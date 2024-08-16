@@ -1,5 +1,6 @@
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
+import { getFromMap } from '../../lib/TuyaOAuth2Util';
 import {
   type TuyaDeviceDataPointResponse,
   TuyaDeviceResponse,
@@ -36,10 +37,9 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
     for (const status of device.status) {
       const tuyaCapability = status.code;
 
-      if (tuyaCapability in HEATER_CAPABILITIES_MAPPING) {
+      const homeyCapability = getFromMap(HEATER_CAPABILITIES_MAPPING, tuyaCapability);
+      if (homeyCapability) {
         props.store.tuya_capabilities.push(tuyaCapability);
-
-        const homeyCapability = HEATER_CAPABILITIES_MAPPING[tuyaCapability as keyof typeof HEATER_CAPABILITIES_MAPPING];
         props.capabilities.push(homeyCapability);
       }
     }
