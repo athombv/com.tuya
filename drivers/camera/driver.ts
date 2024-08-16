@@ -1,5 +1,4 @@
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
-import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import { constIncludes } from '../../lib/TuyaOAuth2Util';
 import {
@@ -7,6 +6,7 @@ import {
   TuyaDeviceResponse,
   TuyaDeviceSpecificationResponse,
 } from '../../types/TuyaApiTypes';
+import type { StandardFlowArgs } from '../../types/TuyaTypes';
 import {
   CAMERA_ALARM_CAPABILITIES,
   CAMERA_SETTING_LABELS,
@@ -15,9 +15,6 @@ import {
   SIMPLE_CAMERA_FLOWS,
 } from './TuyaCameraConstants';
 
-type DeviceArgs = { device: TuyaOAuth2Device };
-type ValueArgs = { value: unknown };
-
 module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA] as const;
 
@@ -25,11 +22,9 @@ module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     await super.onInit();
 
     for (const capability of SIMPLE_CAMERA_FLOWS.read_write) {
-      this.homey.flow
-        .getActionCard(`camera_${capability}`)
-        .registerRunListener(async (args: DeviceArgs & ValueArgs) => {
-          await args.device.triggerCapabilityListener(capability, args.value);
-        });
+      this.homey.flow.getActionCard(`camera_${capability}`).registerRunListener(async (args: StandardFlowArgs) => {
+        await args.device.triggerCapabilityListener(capability, args.value);
+      });
     }
 
     // Apply the same way as in onSettings, but for an individual value
