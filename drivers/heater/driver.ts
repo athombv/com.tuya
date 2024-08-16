@@ -2,7 +2,7 @@ import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
-import { HEATER_CAPABILITIES_MAPPING } from './TuyaHeaterConstants';
+import { DEFAULT_TUYA_HEATER_FAULTS, HEATER_CAPABILITIES_MAPPING } from './TuyaHeaterConstants';
 
 type DeviceArgs = { device: TuyaOAuth2Device };
 type ValueArgs = { value: unknown };
@@ -65,6 +65,14 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
           values: [...faultSpecs.label],
         };
       }
+    }
+
+    //fallback in case no fault specs are available
+    if (!props.capabilitiesOptions['fault']) {
+      this.log('No fault specs available, using default values');
+      props.capabilitiesOptions['fault'] = {
+        values: DEFAULT_TUYA_HEATER_FAULTS,
+      };
     }
 
     return props;
