@@ -189,16 +189,7 @@
     ]
   },
   {
-    "id": "alarm_timeout",
-    "type": "number",
-    "label": {
-      "en": "Alarm Timeout"
-    },
-    "value": 10,
-    "min": 1,
-    "units": {
-      "en": "seconds"
-    }
+    "$extends": "alarmTimeout"
   },
   {
     "$extends": "deviceSpecification"
