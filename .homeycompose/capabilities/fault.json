@@ -4,5 +4,6 @@
     "en": "Status"
   },
   "getable": true,
+  "setable": false,
   "uiComponent": "sensor"
 }
