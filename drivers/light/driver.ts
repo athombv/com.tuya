@@ -150,6 +150,7 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
         title: {
           en: 'Switch All',
         },
+        setOnDim: false,
         preventInsights: true,
       };
     }

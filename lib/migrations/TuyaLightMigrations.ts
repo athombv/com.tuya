@@ -2,6 +2,7 @@ import type TuyaOAuth2DeviceLight from '../../drivers/light/device';
 
 export async function performMigrations(device: TuyaOAuth2DeviceLight): Promise<void> {
   await switchCapabilityMigration(device).catch(device.error);
+  await otherSwitchOnDimMigration(device).catch(device.error);
 }
 
 async function switchCapabilityMigration(device: TuyaOAuth2DeviceLight): Promise<void> {
@@ -67,8 +68,33 @@ async function switchCapabilityMigration(device: TuyaOAuth2DeviceLight): Promise
       } else {
         // Add missing onoff
         await device.addCapability('onoff');
+
+        await device.setCapabilityOptions('onoff', {
+          title: {
+            en: 'Switch All',
+          },
+          setOnDim: false,
+          preventInsights: true,
+        });
       }
     }
     device.log('Switch capabilities migration complete');
+  }
+}
+
+async function otherSwitchOnDimMigration(device: TuyaOAuth2DeviceLight): Promise<void> {
+  // Add setOnDim: false to onoff for devices that have an additional switch
+  const capabilityOptions = device.getCapabilityOptions('onoff');
+  const tuyaSwitches = device.getStore().tuya_switches;
+
+  if (tuyaSwitches.length > 1 && capabilityOptions?.setOnDim !== false) {
+    device.log('Migrating switch all setOnDim...');
+
+    await device.setCapabilityOptions('onoff', {
+      ...capabilityOptions,
+      setOnDim: false,
+    });
+
+    device.log('Switch all setOnDim migration complete');
   }
 }
