@@ -84,7 +84,15 @@ async function switchCapabilityMigration(device: TuyaOAuth2DeviceLight): Promise
 
 async function otherSwitchOnDimMigration(device: TuyaOAuth2DeviceLight): Promise<void> {
   // Add setOnDim: false to onoff for devices that have an additional switch
-  const capabilityOptions = device.getCapabilityOptions('onoff');
+
+  // The Homey API throws an error if no capability options have been set before
+  let capabilityOptions;
+  try {
+    capabilityOptions = device.getCapabilityOptions('onoff');
+  } catch (err) {
+    capabilityOptions = {};
+  }
+
   const tuyaSwitches = device.getStore().tuya_switches;
 
   if (tuyaSwitches.length > 1 && capabilityOptions?.setOnDim !== false) {
