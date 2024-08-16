@@ -2885,16 +2885,6 @@
       "getable": true,
       "uiComponent": "sensor"
     },
-    "mode": {
-      "type": "enum",
-      "title": {
-        "en": "Mode"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "picker",
-      "values": []
-    },
     "ptz_control_horizontal": {
       "type": "enum",
       "title": {
