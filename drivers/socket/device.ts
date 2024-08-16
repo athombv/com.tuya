@@ -77,18 +77,20 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     this.safeSetCapabilityValue('onoff', anySwitchOn).catch(this.error);
 
     if (typeof status['cur_power'] === 'number') {
-      const powerScaling = 10 ** parseFloat(this.getSetting('power_scaling') ?? '0');
+      const powerScaling = 10.0 ** parseInt(this.getSetting('power_scaling') ?? '0');
       const cur_power = status['cur_power'] / powerScaling;
       this.setCapabilityValue('measure_power', cur_power).catch(this.error);
     }
 
     if (typeof status['cur_voltage'] === 'number') {
-      const cur_voltage = status['cur_voltage'] / 10.0;
+      const scaling = 10.0 ** parseInt(this.getSetting('cur_voltage_scaling') ?? '0');
+      const cur_voltage = status['cur_voltage'] / scaling;
       this.setCapabilityValue('measure_voltage', cur_voltage).catch(this.error);
     }
 
     if (typeof status['cur_current'] === 'number') {
-      const cur_current = status['cur_current'] / 1000.0;
+      const scaling = 10.0 ** parseInt(this.getSetting('cur_current_scaling') ?? '0');
+      const cur_current = status['cur_current'] / scaling / 1000.0; // Additionally convert mA
       this.setCapabilityValue('measure_current', cur_current).catch(this.error);
     }
 
