@@ -20,15 +20,6 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     if (this.hasCapability('eco_mode')) {
       this.registerCapabilityListener('eco_mode', value => this.ecoModeCapabilityListener(value));
     }
-
-    /*if (this.hasCapability('mode')) {
-      this.registerCapabilityListener('mode', value =>
-        this.sendCommand({
-          code: 'mode',
-          value: value,
-        }),
-      );
-    }*/
   }
 
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
