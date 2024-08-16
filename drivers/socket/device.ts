@@ -147,11 +147,23 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
   }
 
   async onSettings(event: SettingsEvent<HomeySocketSettings>): Promise<string | void> {
-    // Deep copy, since event is read-only
-    const mappedEvent: SettingsEvent<TuyaSocketSettings> = { ...event };
+    // Only some settings need to be sent to the device
+    function filterTuyaChangedKeys(changedKeys: (keyof HomeySocketSettings)[]): (keyof TuyaSocketSettings)[] {
+      return changedKeys.filter(key => ['child_lock', 'relay_status'].includes(key)) as (keyof TuyaSocketSettings)[];
+    }
+
+    const tuyaSettingsEvent: SettingsEvent<TuyaSocketSettings> = {
+      oldSettings: {
+        ...event.oldSettings,
+      },
+      newSettings: {
+        ...event.newSettings,
+      },
+      changedKeys: filterTuyaChangedKeys(event.changedKeys),
+    };
 
     if (this.getStoreValue('tuya_category') === 'tdq') {
-      const mappedNewSettings = { ...mappedEvent.newSettings };
+      const mappedNewSettings = { ...tuyaSettingsEvent.newSettings };
 
       // Remap the relay_status
       switch (mappedNewSettings['relay_status']) {
@@ -166,10 +178,10 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
           break;
       }
 
-      mappedEvent.newSettings = mappedNewSettings;
+      tuyaSettingsEvent.newSettings = mappedNewSettings;
     }
 
-    return await TuyaOAuth2Util.onSettings(this, mappedEvent, SOCKET_SETTING_LABELS);
+    return await TuyaOAuth2Util.onSettings<TuyaSocketSettings>(this, tuyaSettingsEvent, SOCKET_SETTING_LABELS);
   }
 }
 
