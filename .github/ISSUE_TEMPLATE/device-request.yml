@@ -22,14 +22,8 @@ body:
         - Open its settings and copy the specifications from the "Device Specification" setting
         - Paste the value below (replacing the value between ```json and ```)
 
-        Without this information, we will need to close your request!
-      value: |
-        <details>
+        The value will look like `{ "device": ..., "specifications": ..., 'data_points': ...}`
 
-        ```json
-          { "device": ..., "specifications": ...}
-        ```
-
-        </details>
+        When this information is missing or incorrect, we will need to close your request!
     validations:
       required: true
