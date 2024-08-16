@@ -1,12 +1,16 @@
 export const HEATER_CAPABILITIES_MAPPING = {
-  switch: 'onoff' /* small and large appliances */,
-  temp_set: 'target_temperature' /* small and large appliances */,
-  temp_current: 'measure_temperature' /* small and large appliances */,
-  lock: 'child_lock' /* small appliances */,
-  child_lock: 'child_lock' /* large appliances */,
-  work_power: 'measure_power' /* small appliances */,
-  mode_eco: 'eco_mode' /* small appliances */,
-  eco: 'eco_mode' /* large appliances */,
-  //mode: 'mode' /* small and large appliances */, // commented out for now as it doesn't return the correct values from the Tuya specification
-  fault: 'fault' /* large appliances */,
+  /* Large and small appliances */
+  switch: 'onoff',
+  temp_set: 'target_temperature',
+  temp_current: 'measure_temperature',
+
+  /* small appliances */
+  lock: 'child_lock',
+  work_power: 'measure_power',
+  mode_eco: 'eco_mode',
+
+  /* large appliances */
+  child_lock: 'child_lock',
+  eco: 'eco_mode',
+  fault: 'fault',
 } as const;
