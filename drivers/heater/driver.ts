@@ -61,7 +61,7 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
         const faultSpecs = JSON.parse(statusSpecification.values);
         this.log('Fault specs: ' + JSON.stringify(faultSpecs));
         props.capabilitiesOptions['fault'] = {
-          values: ['OK', ...faultSpecs.label] /** first state is OK state */,
+          values: [...faultSpecs.label],
         };
       }
     }

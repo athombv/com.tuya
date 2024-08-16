@@ -59,9 +59,20 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
     }
 
     if (typeof status['fault'] === 'number') {
-      this.setCapabilityValue('fault', this.getCapabilityOptions('fault').values[status['fault'] - 1]).catch(
-        this.error,
-      );
+      const fault = status['fault'];
+      const faults = [];
+
+      const faultOptions = this.getCapabilityOptions('fault').values;
+
+      for (let i = 0; i < faultOptions.length; i++) {
+        if (fault & (1 << i)) {
+          faults.push(faultOptions[i]);
+        }
+      }
+
+      const faultString = faults.join(', ');
+
+      this.setCapabilityValue('fault', faults.length === 0 ? 'OK' : faultString).catch(this.error);
     }
   }
 
