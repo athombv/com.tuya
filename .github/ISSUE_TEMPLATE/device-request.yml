@@ -18,7 +18,7 @@ body:
         We will need some information about your device. To retrieve, please:
 
         - Install the latest version of the Tuya Homey App
-        - Add your device
+        - Add your device if you didn't already
         - Open its settings and copy the specifications from the "Device Specification" setting
         - Paste the value below
 
