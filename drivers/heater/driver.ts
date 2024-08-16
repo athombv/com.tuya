@@ -56,16 +56,16 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
         };
       }
 
-    for (const statusSpecification of specification.status) {
-      if (statusSpecification.code === 'fault') {
-        const faultSpecs = JSON.parse(statusSpecification.values);
-        this.log('Fault specs: ' + JSON.stringify(faultSpecs));
-        props.capabilitiesOptions['fault'] = {
-          values: [...faultSpecs.label],
-        };
+      for (const statusSpecification of specification.status) {
+        if (statusSpecification.code === 'fault') {
+          const faultSpecs = JSON.parse(statusSpecification.values);
+          this.log('Fault specs: ' + JSON.stringify(faultSpecs));
+          props.capabilitiesOptions['fault'] = {
+            values: [...faultSpecs.label],
+          };
+        }
       }
     }
-
     return props;
   }
 };
