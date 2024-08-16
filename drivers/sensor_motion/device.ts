@@ -6,8 +6,11 @@ module.exports = class TuyaOAuth2DeviceSensorMotion extends TuyaOAuth2DeviceSens
     await super.onTuyaStatus(status, changedStatusCodes);
 
     // alarm_motion
-    if (typeof status['pir'] === 'string') {
-      this.setCapabilityValue('alarm_motion', status['pir'] === 'pir').catch(this.error);
+    if (
+      typeof status['pir'] === 'string' &&
+      (!this.getSetting('use_alarm_timeout') || changedStatusCodes.includes('pir'))
+    ) {
+      this.setAlarmCapabilityValue('alarm_motion', status['pir'] === 'pir').catch(this.error);
     }
   }
 };

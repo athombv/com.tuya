@@ -6,8 +6,11 @@ module.exports = class TuyaOAuth2DeviceSensorContact extends TuyaOAuth2DeviceSen
     await super.onTuyaStatus(status, changedStatusCodes);
 
     // alarm_contact
-    if (typeof status['doorcontact_state'] === 'boolean') {
-      this.setCapabilityValue('alarm_contact', status['doorcontact_state']).catch(this.error);
+    if (
+      typeof status['doorcontact_state'] === 'boolean' &&
+      (!this.getSetting('use_alarm_timeout') || changedStatusCodes.includes('doorcontact_state'))
+    ) {
+      this.setAlarmCapabilityValue('alarm_contact', status['doorcontact_state']).catch(this.error);
     }
   }
 };
