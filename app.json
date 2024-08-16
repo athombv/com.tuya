@@ -2,7 +2,7 @@
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.tuya",
   "version": "1.2.3",
-  "compatibility": ">=10.0.0",
+  "compatibility": ">=12.0.0",
   "brandColor": "#FF4800",
   "sdk": 3,
   "platforms": [
@@ -1495,6 +1495,55 @@
         ]
       },
       {
+        "id": "siren_alarm_volume",
+        "title": {
+          "en": "Set alarm volume"
+        },
+        "titleFormatted": {
+          "en": "Set alarm volume to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=siren"
+          },
+          {
+            "name": "value",
+            "type": "dropdown",
+            "title": {
+              "en": "Alarm volume"
+            },
+            "values": [
+              {
+                "id": "low",
+                "label": {
+                  "en": "Low"
+                }
+              },
+              {
+                "id": "middle",
+                "label": {
+                  "en": "Middle"
+                }
+              },
+              {
+                "id": "high",
+                "label": {
+                  "en": "High"
+                }
+              },
+              {
+                "id": "mute",
+                "label": {
+                  "en": "Muted"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "socket_sub_switch_off",
         "highlight": true,
         "title": {
@@ -2885,6 +2934,108 @@
       },
       "id": "sensor_smoke",
       "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
+    },
+    {
+      "capabilities": [
+        "onoff"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/siren/assets/images/small.png",
+        "large": "/drivers/siren/assets/images/large.png",
+        "xlarge": "/drivers/siren/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "siren",
+      "name": {
+        "en": "Siren",
+        "nl": "Sirene"
+      },
+      "id": "siren",
+      "settings": [
+        {
+          "id": "alarm_volume",
+          "type": "dropdown",
+          "label": {
+            "en": "Alarm volume level"
+          },
+          "hint": {
+            "en": "The volume level of the siren."
+          },
+          "value": "middle",
+          "values": [
+            {
+              "id": "low",
+              "label": {
+                "en": "Low"
+              }
+            },
+            {
+              "id": "middle",
+              "label": {
+                "en": "Middle"
+              }
+            },
+            {
+              "id": "high",
+              "label": {
+                "en": "High"
+              }
+            },
+            {
+              "id": "mute",
+              "label": {
+                "en": "Muted"
+              }
+            }
+          ]
+        },
         {
           "id": "deviceSpecification",
           "type": "label",
