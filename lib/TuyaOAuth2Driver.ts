@@ -1,5 +1,9 @@
 import { OAuth2DeviceResult, OAuth2Driver } from 'homey-oauth2app';
-import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../types/TuyaApiTypes';
+import {
+  type TuyaDeviceDataPointResponse,
+  TuyaDeviceResponse,
+  TuyaDeviceSpecificationResponse,
+} from '../types/TuyaApiTypes';
 import TuyaOAuth2Client from './TuyaOAuth2Client';
 
 import * as TuyaOAuth2Util from './TuyaOAuth2Util';
@@ -32,10 +36,14 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
     for (const device of filteredDevices) {
       const deviceSpecs =
         (await oAuth2Client
-          .getSpecification({ deviceId: device.id })
+          .getSpecification(device.id)
           .catch(e => this.log('Device specification retrieval failed', e))) ?? undefined;
+      const dataPoints =
+        (await oAuth2Client.queryDataPoints(device.id).catch(e => this.log('Device properties retrieval failed', e))) ??
+        undefined;
 
-      const deviceProperties = this.onTuyaPairListDeviceProperties({ ...device }, deviceSpecs);
+      const deviceProperties = this.onTuyaPairListDeviceProperties({ ...device }, deviceSpecs, dataPoints);
+
       listDevices.push({
         ...deviceProperties,
         name: device.name,
@@ -55,7 +63,14 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse, // eslint-disable-line @typescript-eslint/no-unused-vars
     specifications?: TuyaDeviceSpecificationResponse, // eslint-disable-line @typescript-eslint/no-unused-vars
+    dataPoints?: TuyaDeviceDataPointResponse,
   ): ListDeviceProperties {
+    const combinedSpecification = {
+      device: TuyaOAuth2Util.redactFields(device),
+      specifications: specifications ?? '<not available>',
+      data_points: dataPoints?.properties ?? '<not available>',
+    };
+
     return {
       capabilities: [],
       store: {
@@ -63,7 +78,9 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
         tuya_category: device.category,
       },
       capabilitiesOptions: {},
-      settings: {},
+      settings: {
+        deviceSpecification: JSON.stringify(combinedSpecification, undefined, 2),
+      },
     };
   }
 }

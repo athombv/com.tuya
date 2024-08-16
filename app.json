@@ -1919,6 +1919,17 @@
           "units": {
             "en": "seconds"
           }
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
         }
       ]
     },
@@ -2083,6 +2094,17 @@
               ]
             }
           ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
         }
       ]
     },
@@ -2134,7 +2156,20 @@
         "en": "Doorbell",
         "nl": "Deurbel"
       },
-      "id": "doorbell"
+      "id": "doorbell",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
     },
     {
       "capabilities": [
@@ -2186,7 +2221,20 @@
       "name": {
         "en": "Fan"
       },
-      "id": "fan"
+      "id": "fan",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
     },
     {
       "capabilities": [],
@@ -2236,7 +2284,20 @@
         "en": "Heater",
         "nl": "Verwarming"
       },
-      "id": "heater"
+      "id": "heater",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
     },
     {
       "capabilities": [
@@ -2442,6 +2503,17 @@
               }
             }
           ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
         }
       ]
     },
@@ -2504,7 +2576,7 @@
           "hint": {
             "en": "The Tuya specification of this device"
           },
-          "value": ""
+          "value": "<not available>"
         }
       ]
     },
@@ -2558,7 +2630,20 @@
         "en": "Door Sensor",
         "nl": "Deur Sensor"
       },
-      "id": "sensor_contact"
+      "id": "sensor_contact",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
     },
     {
       "capabilities": [
@@ -2610,7 +2695,20 @@
         "en": "Motion Sensor",
         "nl": "Bewegingssensor"
       },
-      "id": "sensor_motion"
+      "id": "sensor_motion",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
     },
     {
       "capabilities": [
@@ -2662,7 +2760,20 @@
         "en": "Smoke Detector",
         "nl": "Rookmelder"
       },
-      "id": "sensor_smoke"
+      "id": "sensor_smoke",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
     },
     {
       "capabilities": [
@@ -2791,6 +2902,17 @@
               }
             }
           ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
         }
       ]
     }

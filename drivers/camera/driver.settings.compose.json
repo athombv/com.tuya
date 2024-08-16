@@ -199,5 +199,8 @@
     "units": {
       "en": "seconds"
     }
+  },
+  {
+    "$extends": "deviceSpecification"
   }
 ]
