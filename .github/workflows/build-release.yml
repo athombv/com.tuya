@@ -1,4 +1,4 @@
-name: Homey App - Update Version
+name: Build release
 on:
   workflow_dispatch:
     inputs:
@@ -18,19 +18,19 @@ on:
 
 jobs:
   main:
-    name: Update Homey App Version
+    name: Build Homey release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Update Homey App Version
+      - name: Update app version
         uses: athombv/github-action-homey-app-version@master
         id: update_app_version
         with:
           version: ${{ inputs.version }}
           changelog: ${{ inputs.changelog }}
 
-      - name: Commit & Push
+      - name: Commit and push generated version
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -40,3 +40,13 @@ jobs:
           git tag "v${{ steps.update_app_version.outputs.version }}"
 
           git push origin HEAD --tags
+
+      - name: Publish app
+        uses: athombv/github-action-homey-app-publish@master
+        id: publish
+        with:
+          personal_access_token: ${{ secrets.HOMEY_PAT }}
+
+      - name: Add manage URL to job summary
+        run: |
+          echo "App release to be managed at ${{ steps.publish.outputs.url }}" >> $GITHUB_STEP_SUMMARY
