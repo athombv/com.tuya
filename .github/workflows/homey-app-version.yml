@@ -1,4 +1,4 @@
-name: Update Homey App Version
+name: Homey App - Update Version
 on:
   workflow_dispatch:
     inputs:
