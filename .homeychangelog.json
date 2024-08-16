@@ -52,5 +52,8 @@
   },
   "1.2.2": {
     "en": "Improve relay_status handling, add device specification to all device types"
+  },
+  "1.2.3": {
+    "en": "Improve relay_status handling, add device specification to all device types"
   }
 }
