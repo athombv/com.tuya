@@ -252,7 +252,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
 
   async sendCommands({ deviceId, commands = [] }: { deviceId: string; commands: TuyaCommand[] }): Promise<boolean> {
     // https://developer.tuya.com/en/docs/cloud/device-control?id=K95zu01ksols7
-    return this._post(`/v1.0/devices/${deviceId}/commands`, commands).catch(err => {
+    return this._post(`/v1.0/devices/${deviceId}/commands`, { commands: commands }).catch(err => {
       if (err.tuyaCode === TuyaOAuth2Constants.ERROR_CODES.DEVICE_OFFLINE) {
         throw new Error(this.homey.__('device_offline'));
       }
