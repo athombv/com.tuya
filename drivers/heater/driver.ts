@@ -48,14 +48,27 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       return props;
     }
 
-    for (const functionSpecification of specifications.functions) {
-      if (functionSpecification.code === 'temp_set') {
-        const tempSetSpecs = JSON.parse(functionSpecification.values);
+    for (const spec of specifications.status) {
+      const tuyaCapability = spec.code;
+      const values = JSON.parse(spec.values);
+
+      if (tuyaCapability === 'temp_set') {
+        const scaleExp = values.scale ?? 0;
+        const scale = 10 ** scaleExp;
+
         props.capabilitiesOptions['target_temperature'] = {
-          step: tempSetSpecs.step,
-          min: tempSetSpecs.min,
-          max: tempSetSpecs.max,
+          step: values.step / scale,
+          min: values.min / scale,
+          max: values.max / scale,
         };
+      }
+
+      if (['temp_set', 'temp_current', 'work_power'].includes(tuyaCapability)) {
+        if ([0, 1, 2, 3].includes(values.scale)) {
+          props.settings[`${tuyaCapability}_scaling`] = `${values.scale}`;
+        } else {
+          this.error(`Unsupported ${tuyaCapability} scale:`, values.scale);
+        }
       }
     }
 

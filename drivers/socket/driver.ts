@@ -185,6 +185,31 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
 
     // TODO: USB sockets (?)
 
+    if (!specifications) {
+      return props;
+    }
+
+    for (const specification of specifications.status) {
+      const tuyaCapability = specification.code;
+      const values = JSON.parse(specification.values);
+
+      if (tuyaCapability === 'cur_power') {
+        if ([0, 1, 2, 3].includes(values.scale)) {
+          props.settings['power_scaling'] = `${values.scale}`;
+        } else {
+          this.error('Unsupported power scale:', values.scale);
+        }
+      }
+
+      if (['cur_current', 'cur_voltage'].includes(tuyaCapability)) {
+        if ([0, 1, 2, 3].includes(values.scale)) {
+          props.settings[`${tuyaCapability}_scaling`] = `${values.scale}`;
+        } else {
+          this.error(`Unsupported ${tuyaCapability} scale:`, values.scale);
+        }
+      }
+    }
+
     return props;
   }
 };
