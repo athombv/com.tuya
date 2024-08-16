@@ -56,14 +56,6 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
         };
       }
 
-      /*if (functionSpecification.code === 'mode') {
-        const modeSpecs = JSON.parse(functionSpecification.values);
-        props.capabilitiesOptions['mode'] = {
-          values: modeSpecs.range,
-        };
-      }*/
-    }
-
     for (const statusSpecification of specification.status) {
       if (statusSpecification.code === 'fault') {
         const faultSpecs = JSON.parse(statusSpecification.values);
