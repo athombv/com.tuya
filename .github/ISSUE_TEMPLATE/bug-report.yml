@@ -39,6 +39,6 @@ body:
         - Open its settings and copy the specifications from the "Device Specification" setting
         - Paste the value below
 
-        The value will look like `{ "device": ..., "specifications": ..., 'data_points': ...}`
+        It works best to use https://my.homey.app using a laptop/desktop. The value will look like `{ "device": ..., "specifications": ..., 'data_points': ...}`
 
         When this information is missing or incorrect, we will need to close your bug report!
