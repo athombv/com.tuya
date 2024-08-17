@@ -18,18 +18,12 @@ body:
         We will need some information about your device. To retrieve, please:
 
         - Install the latest version of the Tuya Homey App
-        - Add your device as "Other" device
+        - Add your device if you didn't already
         - Open its settings and copy the specifications from the "Device Specification" setting
-        - Paste the value below (replacing the value between ```json and ```)
+        - Paste the value below
 
-        Without this information, we will need to close your request!
-      value: |
-        <details>
+        It works best to use https://my.homey.app using a laptop/desktop. The value will look like `{ "device": ..., "specifications": ..., 'data_points': ...}`
 
-        ```json
-          { "device": ..., "specifications": ...}
-        ```
-
-        </details>
+        When this information is missing or incorrect, we will need to close your request!
     validations:
       required: true

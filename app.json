@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.tuya",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "compatibility": ">=10.0.0",
   "brandColor": "#FF4800",
   "sdk": 3,
@@ -1919,6 +1919,17 @@
           "units": {
             "en": "seconds"
           }
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
         }
       ]
     },
@@ -2083,6 +2094,17 @@
               ]
             }
           ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
         }
       ]
     },
@@ -2134,7 +2156,20 @@
         "en": "Doorbell",
         "nl": "Deurbel"
       },
-      "id": "doorbell"
+      "id": "doorbell",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
     },
     {
       "capabilities": [
@@ -2186,7 +2221,20 @@
       "name": {
         "en": "Fan"
       },
-      "id": "fan"
+      "id": "fan",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
     },
     {
       "capabilities": [],
@@ -2236,7 +2284,131 @@
         "en": "Heater",
         "nl": "Verwarming"
       },
-      "id": "heater"
+      "id": "heater",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        },
+        {
+          "id": "temp_set_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Target Temperature Scale"
+          },
+          "hint": {
+            "en": "By how much the temperature targeted by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "temp_current_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Measured Temperature Scale"
+          },
+          "hint": {
+            "en": "By how much the temperature measured by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "work_power_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Measured Power Scale"
+          },
+          "hint": {
+            "en": "By how much the power measured by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "capabilities": [
@@ -2442,6 +2614,17 @@
               }
             }
           ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
         }
       ]
     },
@@ -2504,7 +2687,7 @@
           "hint": {
             "en": "The Tuya specification of this device"
           },
-          "value": ""
+          "value": "<not available>"
         }
       ]
     },
@@ -2558,7 +2741,20 @@
         "en": "Door Sensor",
         "nl": "Deur Sensor"
       },
-      "id": "sensor_contact"
+      "id": "sensor_contact",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
     },
     {
       "capabilities": [
@@ -2610,7 +2806,20 @@
         "en": "Motion Sensor",
         "nl": "Bewegingssensor"
       },
-      "id": "sensor_motion"
+      "id": "sensor_motion",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
     },
     {
       "capabilities": [
@@ -2662,7 +2871,20 @@
         "en": "Smoke Detector",
         "nl": "Rookmelder"
       },
-      "id": "sensor_smoke"
+      "id": "sensor_smoke",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
     },
     {
       "capabilities": [
@@ -2789,8 +3011,105 @@
               "label": {
                 "en": "1/10"
               }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
             }
           ]
+        },
+        {
+          "id": "cur_current_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Current Measurement Scale"
+          },
+          "hint": {
+            "en": "By how much the current reported by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "cur_voltage_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Voltage Measurement Scale"
+          },
+          "hint": {
+            "en": "By how much the voltage reported by the device is scaled."
+          },
+          "value": "1",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
         }
       ]
     }

@@ -35,14 +35,10 @@ body:
         If your bug report is related to a specific device we will need some information about it. To retrieve, please:
 
         - Install the latest version of the Tuya Homey App
-        - Add your device as "Other" device
+        - Add your device if you didn't already
         - Open its settings and copy the specifications from the "Device Specification" setting
-        - Paste the value below (replacing the value between ```json and ```)
-      value: |
-        <details>
+        - Paste the value below
 
-        ```json
-          { "device": ..., "specifications": ...}
-        ```
+        It works best to use https://my.homey.app using a laptop/desktop. The value will look like `{ "device": ..., "specifications": ..., 'data_points': ...}`
 
-        </details>
+        When this information is missing or incorrect, we will need to close your bug report!

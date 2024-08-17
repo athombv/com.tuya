@@ -5,6 +5,7 @@ import { Response } from 'node-fetch';
 import { URL } from 'url';
 import {
   TuyaCommand,
+  type TuyaDeviceDataPointResponse,
   TuyaDeviceResponse,
   TuyaDeviceSpecificationResponse,
   TuyaHome,
@@ -189,83 +190,47 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
    */
 
   async getUserInfo(): Promise<TuyaUserInfo> {
-    const token = this.getToken();
-    const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
-
     // https://developer.tuya.com/en/docs/cloud/cfebf22ad3?id=Kawfjdgic5c0w
-    return this.get({
-      path: `${apiUrl}/v1.0/users/${token.uid}/infos`,
-    });
+    return this._get(`/v1.0/users/${this.getToken().uid}/infos`);
   }
 
   async getDevices(): Promise<TuyaDeviceResponse[]> {
-    const token = this.getToken();
-    const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
-
     // https://developer.tuya.com/en/docs/cloud/device-management?id=K9g6rfntdz78a
-    return this.get({
-      path: `${apiUrl}/v1.0/users/${token.uid}/devices`,
-    });
+    return this._get(`/v1.0/users/${this.getToken().uid}/devices`);
   }
 
   getDevice({ deviceId }: { deviceId: string }): Promise<TuyaDeviceResponse> {
-    const token = this.getToken();
-    const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
-
     // https://developer.tuya.com/en/docs/cloud/device-management?id=K9g6rfntdz78a
-    return this.get({
-      path: `${apiUrl}/v1.0/devices/${deviceId}`,
-    });
+    return this._get(`/v1.0/devices/${deviceId}`);
   }
 
   async getHomes(): Promise<TuyaHome[]> {
-    const token = this.getToken();
-    const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
-
     // https://developer.tuya.com/en/docs/cloud/f5dd40ed14?id=Kawfjh9hpov1n
-    return this.get({
-      path: `${apiUrl}/v1.0/users/${token.uid}/homes`,
-    });
+    return this._get(`/v1.0/users/${this.getToken().uid}/homes`);
   }
 
   async getScenes(spaceId: string | number): Promise<TuyaScenesResponse> {
-    const token = this.getToken();
-    const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
-
     // https://developer.tuya.com/en/docs/cloud/d7785d8964?id=Kcp2l4i0bo315
-    return this.get({
-      path: `${apiUrl}/v2.0/cloud/scene/rule?space_id=${spaceId}`,
-    });
+    return this._get(`/v2.0/cloud/scene/rule?space_id=${spaceId}`);
   }
 
   async triggerScene(sceneId: string): Promise<boolean> {
-    const token = await this.getToken();
-    const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
-
     // https://developer.tuya.com/en/docs/cloud/89b2c8538b?id=Kcp2l54tos47r
-    return this.post({
-      path: `${apiUrl}/v2.0/cloud/scene/rule/${sceneId}/actions/trigger`,
-    });
+    return this._post(`/v2.0/cloud/scene/rule/${sceneId}/actions/trigger`);
   }
 
-  async getSpecification({ deviceId }: { deviceId: string }): Promise<TuyaDeviceSpecificationResponse> {
-    const token = this.getToken();
-    const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
-
+  async getSpecification(deviceId: string): Promise<TuyaDeviceSpecificationResponse> {
     // https://developer.tuya.com/en/docs/cloud/device-control?id=K95zu01ksols7
-    return this.get({
-      path: `${apiUrl}/v1.0/devices/${deviceId}/specifications`,
-    });
+    return this._get(`/v1.0/devices/${deviceId}/specifications`);
+  }
+
+  async queryDataPoints(deviceId: string): Promise<TuyaDeviceDataPointResponse> {
+    return this._get(`/v2.0/cloud/thing/${deviceId}/shadow/properties`);
   }
 
   async getWebRTCConfiguration({ deviceId }: { deviceId: string }): Promise<TuyaWebRTC> {
-    const token = this.getToken();
-    const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
-
     // https://developer.tuya.com/en/docs/cloud/96c3154b0d?id=Kam7q5rz91dml
-    return this.get({
-      path: `${apiUrl}/v1.0/devices/${deviceId}/webrtc-configs`,
-    });
+    return this._get(`/v1.0/devices/${deviceId}/webrtc-configs`);
   }
 
   async getStreamingLink(
@@ -274,44 +239,42 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
   ): Promise<{
     url: string;
   }> {
-    const token = this.getToken();
-    const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
-
     // https://developer.tuya.com/en/docs/cloud/2ccd66883c?id=Kam7q5a9ug8b1
-    return this.post({
-      path: `${apiUrl}/v1.0/devices/${deviceId}/stream/actions/allocate`,
-      json: {
-        type: type,
-      },
+    return this._post(`/v1.0/devices/${deviceId}/stream/actions/allocate`, {
+      type: type,
     });
   }
 
   async getDeviceStatus({ deviceId }: { deviceId: string }): Promise<TuyaStatusResponse> {
-    const token = this.getToken();
-    const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
-
     // https://developer.tuya.com/en/docs/cloud/device-control?id=K95zu01ksols7
-    return this.get({
-      path: `${apiUrl}/v1.0/devices/${deviceId}/status`,
-    });
+    return this._get(`/v1.0/devices/${deviceId}/status`);
   }
 
   async sendCommands({ deviceId, commands = [] }: { deviceId: string; commands: TuyaCommand[] }): Promise<boolean> {
-    const token = await this.getToken();
-    const apiUrl = TuyaOAuth2Constants.API_URL[token.region];
-
     // https://developer.tuya.com/en/docs/cloud/device-control?id=K95zu01ksols7
-    return this.post({
-      path: `${apiUrl}/v1.0/devices/${deviceId}/commands`,
-      json: {
-        commands,
-      },
-    }).catch(err => {
+    return this._post(`/v1.0/devices/${deviceId}/commands`, { commands: commands }).catch(err => {
       if (err.tuyaCode === TuyaOAuth2Constants.ERROR_CODES.DEVICE_OFFLINE) {
         throw new Error(this.homey.__('device_offline'));
       }
       throw err;
     }) as Promise<boolean>;
+  }
+
+  private async _get<T>(path: string): Promise<T> {
+    const apiUrl = TuyaOAuth2Constants.API_URL[this.getToken().region];
+
+    return this.get({
+      path: `${apiUrl}${path}`,
+    });
+  }
+
+  private async _post<T>(path: string, payload?: unknown): Promise<T> {
+    const apiUrl = TuyaOAuth2Constants.API_URL[this.getToken().region];
+
+    return this.post({
+      path: `${apiUrl}${path}`,
+      json: payload,
+    });
   }
 
   /*
@@ -436,4 +399,5 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
   }
 }
 
+TuyaOAuth2Client.setMaxListeners(Infinity);
 module.exports = TuyaOAuth2Client;

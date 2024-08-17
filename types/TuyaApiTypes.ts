@@ -93,6 +93,19 @@ export type TuyaDeviceSpecificationResponse = {
   status: TuyaSpecificationDatum[];
 };
 
+export type TuyaDeviceDataPointResponse = {
+  properties: Array<TuyaDeviceDataPoint>;
+};
+
+export type TuyaDeviceDataPoint = {
+  code: string;
+  custom_name: string;
+  dp_id: number;
+  time: number;
+  type: string;
+  value: unknown;
+};
+
 type TuyaWebRTCIce = {
   ttl?: number;
   urls: string;

@@ -1,7 +1,11 @@
 import { DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import { constIncludes } from '../../lib/TuyaOAuth2Util';
-import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import {
+  type TuyaDeviceDataPointResponse,
+  TuyaDeviceResponse,
+  TuyaDeviceSpecificationResponse,
+} from '../../types/TuyaApiTypes';
 import type TuyaOAuth2DeviceLight from './device';
 import { LightSettingCommand, PIR_CAPABILITIES } from './TuyaLightConstants';
 
@@ -81,9 +85,10 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
 
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
-    specifications: TuyaDeviceSpecificationResponse,
+    specifications?: TuyaDeviceSpecificationResponse,
+    dataPoints?: TuyaDeviceDataPointResponse,
   ): ListDeviceProperties {
-    const props = super.onTuyaPairListDeviceProperties(device, specifications);
+    const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
     props.store.tuya_switches = [];
 
     // Add this before the sub-capabilities, so it becomes the quick toggle
@@ -145,6 +150,7 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
         title: {
           en: 'Switch All',
         },
+        setOnDim: false,
         preventInsights: true,
       };
     }

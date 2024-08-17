@@ -2,7 +2,11 @@ import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import { constIncludes } from '../../lib/TuyaOAuth2Util';
-import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import {
+  type TuyaDeviceDataPointResponse,
+  TuyaDeviceResponse,
+  TuyaDeviceSpecificationResponse,
+} from '../../types/TuyaApiTypes';
 import {
   CAMERA_ALARM_CAPABILITIES,
   CAMERA_SETTING_LABELS,
@@ -44,9 +48,10 @@ module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
 
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
-    specifications: TuyaDeviceSpecificationResponse,
+    specifications?: TuyaDeviceSpecificationResponse,
+    dataPoints?: TuyaDeviceDataPointResponse,
   ): ListDeviceProperties {
-    const props = super.onTuyaPairListDeviceProperties(device, specifications);
+    const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
 
     for (const status of device.status) {
       const capability = status.code;

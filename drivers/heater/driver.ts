@@ -1,7 +1,11 @@
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
-import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import {
+  type TuyaDeviceDataPointResponse,
+  TuyaDeviceResponse,
+  TuyaDeviceSpecificationResponse,
+} from '../../types/TuyaApiTypes';
 import { DEFAULT_TUYA_HEATER_FAULTS, HEATER_CAPABILITIES_MAPPING } from './TuyaHeaterConstants';
 
 type DeviceArgs = { device: TuyaOAuth2Device };
@@ -27,9 +31,10 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
 
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
-    specification: TuyaDeviceSpecificationResponse,
+    specifications?: TuyaDeviceSpecificationResponse,
+    dataPoints?: TuyaDeviceDataPointResponse,
   ): ListDeviceProperties {
-    const props = super.onTuyaPairListDeviceProperties(device, specification);
+    const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
 
     for (const status of device.status) {
       const tuyaCapability = status.code;
@@ -42,26 +47,36 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       }
     }
 
-    if (!specification || !specification.functions) {
+    if (!specifications || !specifications.functions) {
       return props;
     }
 
-    for (const functionSpecification of specification.functions) {
-      if (functionSpecification.code === 'temp_set') {
-        const tempSetSpecs = JSON.parse(functionSpecification.values);
+    for (const spec of specifications.status) {
+      const tuyaCapability = spec.code;
+      const values = JSON.parse(spec.values);
+
+      if (tuyaCapability === 'temp_set') {
+        const scaleExp = values.scale ?? 0;
+        const scale = 10 ** scaleExp;
+
         props.capabilitiesOptions['target_temperature'] = {
-          step: tempSetSpecs.step,
-          min: tempSetSpecs.min,
-          max: tempSetSpecs.max,
+          step: values.step / scale,
+          min: values.min / scale,
+          max: values.max / scale,
         };
       }
-    }
 
-    for (const statusSpecification of specification.status) {
-      if (statusSpecification.code === 'fault') {
-        const faultSpecs = JSON.parse(statusSpecification.values);
-        this.log('Fault specs: ' + JSON.stringify(faultSpecs));
-        props.store.tuya_heater_fault_capabilities = [...faultSpecs.label];
+      if (['temp_set', 'temp_current', 'work_power'].includes(tuyaCapability)) {
+        if ([0, 1, 2, 3].includes(values.scale)) {
+          props.settings[`${tuyaCapability}_scaling`] = `${values.scale}`;
+        } else {
+          this.error(`Unsupported ${tuyaCapability} scale:`, values.scale);
+        }
+      }
+
+      if (tuyaCapability === 'fault') {
+        this.log('Fault specs: ', values);
+        props.store.tuya_heater_fault_capabilities = [...values.label];
       }
     }
 

@@ -33,13 +33,13 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
   LIGHT_BRIGHT_VALUE_V2_MIN = this.store.tuya_brightness_v2?.min;
   LIGHT_BRIGHT_VALUE_V2_MAX = this.store.tuya_brightness_v2?.max;
 
-  // Ensure migrations are finished before the device is used
-  initBarrier = true;
+  async performMigrations(): Promise<void> {
+    await super.performMigrations();
+    await TuyaLightMigrations.performMigrations(this);
+  }
 
   async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
-
-    await TuyaLightMigrations.performMigrations(this);
 
     // onoff
     if (this.hasCapability('onoff')) {
@@ -69,16 +69,9 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
         150,
       );
     }
-
-    this.initBarrier = false;
-    this.log('Finished oAuth2 initialization of', this.getName());
   }
 
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
-    while (this.initBarrier) {
-      await new Promise(resolve => setTimeout(resolve, 100));
-    }
-
     await super.onTuyaStatus(status, changedStatusCodes);
 
     // onoff

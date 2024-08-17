@@ -15,6 +15,14 @@ export const HEATER_CAPABILITIES_MAPPING = {
   fault: 'fault',
 } as const;
 
+export type HomeySocketSettings = {
+  temp_set_scaling: '0' | '1' | '2' | '3';
+  temp_current_scaling: '0' | '1' | '2' | '3';
+  work_power_scaling: '0' | '1' | '2' | '3';
+};
+
+export type TuyaSocketSettings = Record<string, never>;
+
 export const DEFAULT_TUYA_HEATER_FAULTS = [
   'sys_high_fault',
   'sys_low_fault',

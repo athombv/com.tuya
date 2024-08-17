@@ -3,7 +3,7 @@ import { Device, FlowCardTriggerDevice } from 'homey';
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
-import { SOCKET_SETTING_LABELS } from './TuyaSocketConstants';
+import { SOCKET_SETTING_LABELS, HomeySocketSettings, TuyaSocketSettings } from './TuyaSocketConstants';
 
 /**
  * Device Class for Tuya Sockets
@@ -12,15 +12,11 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
   turnedOnFlowCard!: FlowCardTriggerDevice;
   turnedOffFlowCard!: FlowCardTriggerDevice;
 
-  async onInit(): Promise<void> {
-    await super.onInit();
+  async onOAuth2Init(): Promise<void> {
+    await super.onOAuth2Init();
 
     this.turnedOnFlowCard = this.homey.flow.getDeviceTriggerCard('socket_sub_switch_turned_on');
     this.turnedOffFlowCard = this.homey.flow.getDeviceTriggerCard('socket_sub_switch_turned_off');
-  }
-
-  async onOAuth2Init(): Promise<void> {
-    await super.onOAuth2Init();
 
     // onoff
     if (this.hasCapability('onoff')) {
@@ -81,28 +77,49 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     this.safeSetCapabilityValue('onoff', anySwitchOn).catch(this.error);
 
     if (typeof status['cur_power'] === 'number') {
-      const powerScaling = 10 ** parseFloat(this.getSetting('power_scaling') ?? '0');
-      const cur_power = status['cur_power'] / powerScaling;
-      this.setCapabilityValue('measure_power', cur_power).catch(this.error);
+      const scaling = 10.0 ** parseInt(this.getSetting('power_scaling') ?? '0');
+      this.setCapabilityValue('measure_power', status['cur_power'] / scaling).catch(this.error);
     }
 
     if (typeof status['cur_voltage'] === 'number') {
-      const cur_voltage = status['cur_voltage'] / 10.0;
-      this.setCapabilityValue('measure_voltage', cur_voltage).catch(this.error);
+      const scaling = 10.0 ** parseInt(this.getSetting('cur_voltage_scaling') ?? '0');
+      this.setCapabilityValue('measure_voltage', status['cur_voltage'] / scaling).catch(this.error);
     }
 
     if (typeof status['cur_current'] === 'number') {
-      const cur_current = status['cur_current'] / 1000.0;
-      this.setCapabilityValue('measure_current', cur_current).catch(this.error);
+      // Additionally convert mA
+      const scaling = 1000.0 * 10.0 ** parseInt(this.getSetting('cur_current_scaling') ?? '0');
+      this.setCapabilityValue('measure_current', status['cur_current'] / scaling).catch(this.error);
     }
 
-    for (const setting of ['child_lock', 'relay_status']) {
-      const settingValue = status[setting];
-      if (settingValue !== undefined) {
-        await this.setSettings({
-          [setting]: settingValue,
-        });
+    if (status['child_lock'] !== undefined) {
+      await this.setSettings({
+        child_lock: status['child_lock'],
+      });
+    }
+
+    if (status['relay_status'] !== undefined) {
+      const relayStatus = status['relay_status'] as TuyaSocketSettings['relay_status'];
+      let mappedRelayStatus: HomeySocketSettings['relay_status'];
+
+      // Remap the relay_status
+      switch (relayStatus) {
+        case '0':
+          mappedRelayStatus = 'power_on';
+          break;
+        case '1':
+          mappedRelayStatus = 'power_off';
+          break;
+        case '2':
+          mappedRelayStatus = 'last';
+          break;
+        default:
+          mappedRelayStatus = relayStatus;
       }
+
+      await this.setSettings({
+        relay_status: mappedRelayStatus,
+      });
     }
   }
 
@@ -127,10 +144,42 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     });
   }
 
-  // TODO define settings
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async onSettings(event: SettingsEvent<any>): Promise<string | void> {
-    return await TuyaOAuth2Util.onSettings(this, event, SOCKET_SETTING_LABELS);
+  async onSettings(event: SettingsEvent<HomeySocketSettings>): Promise<string | void> {
+    // Only some settings need to be sent to the device
+    function filterTuyaChangedKeys(changedKeys: (keyof HomeySocketSettings)[]): (keyof TuyaSocketSettings)[] {
+      return changedKeys.filter(key => ['child_lock', 'relay_status'].includes(key)) as (keyof TuyaSocketSettings)[];
+    }
+
+    const tuyaSettingsEvent: SettingsEvent<TuyaSocketSettings> = {
+      oldSettings: {
+        ...event.oldSettings,
+      },
+      newSettings: {
+        ...event.newSettings,
+      },
+      changedKeys: filterTuyaChangedKeys(event.changedKeys),
+    };
+
+    if (this.getStoreValue('tuya_category') === 'tdq') {
+      const mappedNewSettings = { ...tuyaSettingsEvent.newSettings };
+
+      // Remap the relay_status
+      switch (mappedNewSettings['relay_status']) {
+        case 'power_on':
+          mappedNewSettings['relay_status'] = '0';
+          break;
+        case 'power_off':
+          mappedNewSettings['relay_status'] = '1';
+          break;
+        default:
+          mappedNewSettings['relay_status'] = '2';
+          break;
+      }
+
+      tuyaSettingsEvent.newSettings = mappedNewSettings;
+    }
+
+    return await TuyaOAuth2Util.onSettings<TuyaSocketSettings>(this, tuyaSettingsEvent, SOCKET_SETTING_LABELS);
   }
 }
 

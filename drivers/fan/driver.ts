@@ -1,6 +1,10 @@
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
-import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
+import {
+  type TuyaDeviceDataPointResponse,
+  TuyaDeviceResponse,
+  TuyaDeviceSpecificationResponse,
+} from '../../types/TuyaApiTypes';
 
 module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [
@@ -10,9 +14,10 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
 
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
-    specifications: TuyaDeviceSpecificationResponse,
+    specifications?: TuyaDeviceSpecificationResponse,
+    dataPoints?: TuyaDeviceDataPointResponse,
   ): ListDeviceProperties {
-    const props = super.onTuyaPairListDeviceProperties(device, specifications);
+    const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
 
     // onoff
     const hasSwitch = device.status.some(({ code }) => code === 'switch');

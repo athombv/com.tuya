@@ -1,10 +1,13 @@
 {
   "id": "com.tuya",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "compatibility": ">=10.0.0",
   "brandColor": "#FF4800",
   "sdk": 3,
-  "platforms": ["local", "cloud"],
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "name": {
     "en": "Tuya"
   },
@@ -287,7 +290,9 @@
   "description": {
     "en": "Connect any Tuya device with Homey"
   },
-  "category": ["appliances"],
+  "category": [
+    "appliances"
+  ],
   "permissions": [],
   "images": {
     "small": "/assets/images/small.png",
