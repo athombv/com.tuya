@@ -58,11 +58,10 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
       this.setCapabilityValue('eco_mode', status['eco']).catch(this.error);
     }
 
-    if (typeof status['fault'] === 'number') {
+    const faultOptions = this.store.tuya_heater_fault_capabilities;
+    if (typeof status['fault'] === 'number' && faultOptions) {
       const fault = status['fault'];
       const faults = [];
-
-      const faultOptions = this.getCapabilityOptions('fault').values;
 
       for (let i = 0; i < faultOptions.length; i++) {
         if (fault & (1 << i)) {

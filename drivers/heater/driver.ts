@@ -61,18 +61,14 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       if (statusSpecification.code === 'fault') {
         const faultSpecs = JSON.parse(statusSpecification.values);
         this.log('Fault specs: ' + JSON.stringify(faultSpecs));
-        props.capabilitiesOptions['fault'] = {
-          values: [...faultSpecs.label],
-        };
+        props.store.tuya_heater_fault_capabilities = [...faultSpecs.label];
       }
     }
 
     //fallback in case no fault specs are available
     if (!props.capabilitiesOptions['fault']) {
       this.log('No fault specs available, using default values');
-      props.capabilitiesOptions['fault'] = {
-        values: DEFAULT_TUYA_HEATER_FAULTS,
-      };
+      props.store.tuya_heater_fault_capabilities = DEFAULT_TUYA_HEATER_FAULTS;
     }
 
     return props;
