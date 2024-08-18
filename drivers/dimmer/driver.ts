@@ -13,7 +13,10 @@ type DeviceArgs = { device: TuyaOAuth2DeviceDimmer };
 type ValueArgs = { value: unknown };
 
 module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
-  TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.LIGHTING.DIMMER] as const;
+  TUYA_DEVICE_CATEGORIES = [
+    DEVICE_CATEGORIES.LIGHTING.DIMMER,
+    DEVICE_CATEGORIES.ELECTRICAL_PRODUCTS.DIMMER_SWITCH,
+  ] as const;
 
   async onInit(): Promise<void> {
     await super.onInit();
