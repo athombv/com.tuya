@@ -17,12 +17,13 @@ body:
       description: |
         We will need some information about your device. To retrieve, please:
 
-        - Install the latest version of the Tuya Homey App
+        - Make sure you have the latest version of the Tuya Homey App installed
+        - Open https://my.homey.app using a laptop/desktop
         - Add your device if you didn't already
         - Open its settings and copy the specifications from the "Device Specification" setting
         - Paste the value below
 
-        It works best to use https://my.homey.app using a laptop/desktop. The value will look like `{ "device": ..., "specifications": ..., 'data_points': ...}`
+        The device specification will look like `{ "device": ..., "specifications": ..., 'data_points': ...}`. If it shows `<not available>` you can either re-add your device, or add it as other/unknown to retrieve the correct value.
 
         When this information is missing or incorrect, we will need to close your request!
     validations:
