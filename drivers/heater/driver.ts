@@ -6,13 +6,16 @@ import {
   TuyaDeviceResponse,
   TuyaDeviceSpecificationResponse,
 } from '../../types/TuyaApiTypes';
-import { HEATER_CAPABILITIES_MAPPING } from './TuyaHeaterConstants';
+import { DEFAULT_TUYA_HEATER_FAULTS, HEATER_CAPABILITIES_MAPPING } from './TuyaHeaterConstants';
 
 type DeviceArgs = { device: TuyaOAuth2Device };
 type ValueArgs = { value: unknown };
 
 module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
-  TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER] as const;
+  TUYA_DEVICE_CATEGORIES = [
+    DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.HEATER,
+    DEVICE_CATEGORIES.LARGE_HOME_APPLIANCES.HEATER,
+  ] as const;
 
   async onInit(): Promise<void> {
     await super.onInit();
@@ -70,6 +73,17 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
           this.error(`Unsupported ${tuyaCapability} scale:`, values.scale);
         }
       }
+
+      if (tuyaCapability === 'fault') {
+        this.log('Fault specs: ', values);
+        props.store.tuya_heater_fault_capabilities = [...values.label];
+      }
+    }
+
+    //fallback in case no fault specs are available
+    if (!props.store.tuya_heater_fault_capabilities) {
+      this.log('No fault specs available, using default values');
+      props.store.tuya_heater_fault_capabilities = DEFAULT_TUYA_HEATER_FAULTS;
     }
 
     return props;

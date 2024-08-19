@@ -43,6 +43,10 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
       this.setCapabilityValue('child_lock', status['lock']).catch(this.error);
     }
 
+    if (typeof status['child_lock'] === 'boolean') {
+      this.setCapabilityValue('child_lock', status['child_lock']).catch(this.error);
+    }
+
     if (typeof status['work_power'] === 'number') {
       const scaling = 10.0 ** Number.parseInt(this.getSetting('work_power_scaling') ?? '0', 10);
       this.setCapabilityValue('measure_power', status['work_power'] / scaling).catch(this.error);
@@ -50,6 +54,26 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
 
     if (typeof status['mode_eco'] === 'boolean') {
       this.setCapabilityValue('eco_mode', status['mode_eco']).catch(this.error);
+    }
+
+    if (typeof status['eco'] === 'boolean') {
+      this.setCapabilityValue('eco_mode', status['eco']).catch(this.error);
+    }
+
+    const faultOptions = this.store.tuya_heater_fault_capabilities;
+    if (typeof status['fault'] === 'number' && faultOptions) {
+      const fault = status['fault'];
+      const faults = [];
+
+      for (let i = 0; i < faultOptions.length; i++) {
+        if (fault & (1 << i)) {
+          faults.push(faultOptions[i]);
+        }
+      }
+
+      const faultString = faults.join(', ');
+
+      this.setCapabilityValue('fault', faults.length === 0 ? 'OK' : faultString).catch(this.error);
     }
   }
 
@@ -69,16 +93,30 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
   }
 
   async childLockCapabilityListener(value: boolean): Promise<void> {
-    await this.sendCommand({
-      code: 'lock',
-      value: value,
-    });
+    if (this.hasTuyaCapability('lock')) {
+      await this.sendCommand({
+        code: 'lock',
+        value: value,
+      });
+    } else if (this.hasTuyaCapability('child_lock')) {
+      await this.sendCommand({
+        code: 'child_lock',
+        value: value,
+      });
+    }
   }
 
   async ecoModeCapabilityListener(value: boolean): Promise<void> {
-    await this.sendCommand({
-      code: 'mode_eco',
-      value: value,
-    });
+    if (this.hasTuyaCapability('eco')) {
+      await this.sendCommand({
+        code: 'eco',
+        value: value,
+      });
+    } else if (this.hasTuyaCapability('mode_eco')) {
+      await this.sendCommand({
+        code: 'mode_eco',
+        value: value,
+      });
+    }
   }
 };
