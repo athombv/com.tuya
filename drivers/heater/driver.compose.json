@@ -2,7 +2,7 @@
   "$extends": "tuya",
   "class": "heater",
   "name": {
-    "en": "Heater",
-    "nl": "Verwarming"
+    "en": "Heater/Airco",
+    "nl": "Verwarming/Airco"
   }
 }
