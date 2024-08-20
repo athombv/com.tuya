@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "homey-oauth2app": "^3.5.7",
+    "nanoid": "3.3.7",
     "node-fetch": "^3.3.2",
     "source-map-support": "0.5.21"
   }

@@ -1,5 +1,6 @@
 import Homey, { CloudWebhook } from 'homey';
 import { fetch, OAuth2Client } from 'homey-oauth2app';
+import { nanoid } from 'nanoid';
 import { Response } from 'node-fetch';
 
 import { URL } from 'url';
@@ -261,19 +262,25 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
   }
 
   private async _get<T>(path: string): Promise<T> {
-    const apiUrl = TuyaOAuth2Constants.API_URL[this.getToken().region];
+    path = `${TuyaOAuth2Constants.API_URL[this.getToken().region]}${path}`;
 
-    return this.get({
-      path: `${apiUrl}${path}`,
+    const requestId = nanoid();
+    this.log('GET', requestId, path);
+    return await this.get<T>({ path }).then(result => {
+      this.log('GET Response', requestId, JSON.stringify(result));
+      return result;
     });
   }
 
   private async _post<T>(path: string, payload?: unknown): Promise<T> {
-    const apiUrl = TuyaOAuth2Constants.API_URL[this.getToken().region];
+    path = `${TuyaOAuth2Constants.API_URL[this.getToken().region]}${path}`;
 
-    return this.post({
-      path: `${apiUrl}${path}`,
-      json: payload,
+    const requestId = nanoid();
+    this.log('POST', requestId, path, JSON.stringify(payload));
+    return await this.post<T>({ path, json: payload }).then(result => {
+      this.log('POST Response', requestId, JSON.stringify(result));
+
+      return result;
     });
   }
 
