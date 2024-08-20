@@ -6,6 +6,7 @@
       "link": "Learn more"
     }
   },
+  "connection_failed": "Connection failed",
   "device_offline": "The device seems to be offline. Is it powered on, and connected to the internet?",
   "switch": "Switch __number__",
   "settings_unsupported": "Some of the changed settings are not supported by the device:",
