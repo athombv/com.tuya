@@ -5,8 +5,8 @@ import * as TuyaOAuth2Util from './lib/TuyaOAuth2Util';
 
 import TuyaOAuth2Device from './lib/TuyaOAuth2Device';
 import sourceMapSupport from 'source-map-support';
-import { TuyaScene } from './types/TuyaApiTypes';
-import { ArgumentAutocompleteResults } from 'homey/lib/FlowCard';
+import { type TuyaScene } from './types/TuyaApiTypes';
+import { type ArgumentAutocompleteResults } from 'homey/lib/FlowCard';
 
 sourceMapSupport.install();
 
@@ -157,24 +157,34 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
           const client = this.getFirstSavedOAuth2Client();
 
           // Gets all homes for this user
-          const homes = await client.getHomes().catch((err: Error) => {
+          const homes = await client.getHomes().catch(err => {
             this.error(err);
             throw new Error(this.homey.__('error_retrieving_scenes'));
           });
 
           // Get all scenes for this user's homes
-          let scenes: Array<HomeyTuyaScene> = [];
+          const scenes: Array<HomeyTuyaScene> = [];
           for (const home of homes) {
-            const homeScenes = await client.getScenes(home.home_id).catch((err: Error) => {
-              this.error(err);
-              throw new Error(this.homey.__('error_retrieving_scenes'));
-            });
-            scenes = scenes.concat(
-              homeScenes.list.map(scene => ({
-                name: scene.name,
-                id: scene.id,
-              })),
-            );
+            await client
+              .getScenes(home.home_id)
+              .then(homeScenes =>
+                scenes.push(
+                  ...homeScenes.list.map(scene => ({
+                    name: scene.name,
+                    id: scene.id,
+                  })),
+                ),
+              )
+              .catch(err => {
+                if (err.tuyaCode === 40001900) {
+                  // Access to particular home denied, skip it
+                  this.log('Scene home denied access', home.home_id);
+                  return;
+                }
+
+                this.error(err);
+                throw new Error(this.homey.__('error_retrieving_scenes'));
+              });
           }
 
           this.sceneCache.set(CACHE_KEY, scenes);
