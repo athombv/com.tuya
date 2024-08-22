@@ -42,6 +42,12 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
         (await oAuth2Client.queryDataPoints(device.id).catch(e => this.log('Device properties retrieval failed', e))) ??
         undefined;
 
+      // GitHub #178: Some device do not have the status property at all.
+      // Make sure to populate it with an empty array instead.
+      if (!Array.isArray(device.status)) {
+        device.status = [];
+      }
+
       const deviceProperties = this.onTuyaPairListDeviceProperties({ ...device }, deviceSpecs, dataPoints);
 
       listDevices.push({
