@@ -226,7 +226,18 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
   }
 
   async queryDataPoints(deviceId: string): Promise<TuyaDeviceDataPointResponse> {
+    // https://developer.tuya.com/en/docs/cloud/116cc8bf6f?id=Kcp2kwfrpe719
     return this._get(`/v2.0/cloud/thing/${deviceId}/shadow/properties`);
+  }
+
+  async setDataPoint(deviceId: string, dataPointId: string, value: unknown): Promise<void> {
+    // https://developer.tuya.com/en/docs/cloud/c057ad5cfd?id=Kcp2kxdzftp91
+    const payload = {
+      properties: JSON.stringify({
+        [dataPointId]: value,
+      }),
+    };
+    return this._post(`/v2.0/cloud/thing/${deviceId}/shadow/properties/issue`, payload);
   }
 
   async getWebRTCConfiguration({ deviceId }: { deviceId: string }): Promise<TuyaWebRTC> {

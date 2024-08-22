@@ -1,5 +1,5 @@
 import { OAuth2Device } from 'homey-oauth2app';
-import { TuyaCommand, TuyaStatusResponse, TuyaWebRTC } from '../types/TuyaApiTypes';
+import { TuyaCommand, TuyaDeviceDataPointResponse, TuyaStatusResponse, TuyaWebRTC } from '../types/TuyaApiTypes';
 
 import { TuyaStatus, TuyaStatusUpdate } from '../types/TuyaTypes';
 import TuyaOAuth2Client from './TuyaOAuth2Client';
@@ -210,6 +210,16 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     return this.oAuth2Client.getDeviceStatus({
       deviceId,
     });
+  }
+
+  async queryDataPoints(): Promise<TuyaDeviceDataPointResponse> {
+    const { deviceId } = this.data;
+    return this.oAuth2Client.queryDataPoints(deviceId);
+  }
+
+  setDataPoint(dataPointId: string, value: unknown): Promise<void> {
+    const { deviceId } = this.data;
+    return this.oAuth2Client.setDataPoint(deviceId, dataPointId, value);
   }
 
   async getWebRTC(): Promise<TuyaWebRTC> {
