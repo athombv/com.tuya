@@ -5,7 +5,7 @@ import * as TuyaOAuth2Util from './lib/TuyaOAuth2Util';
 
 import TuyaOAuth2Device from './lib/TuyaOAuth2Device';
 import sourceMapSupport from 'source-map-support';
-import { type TuyaScene } from './types/TuyaApiTypes';
+import type { TuyaDeviceDataPoint, TuyaScene, TuyaStatusResponse } from './types/TuyaApiTypes';
 import { type ArgumentAutocompleteResults } from 'homey/lib/FlowCard';
 
 sourceMapSupport.install();
@@ -17,6 +17,13 @@ type DeviceArgs = { device: TuyaOAuth2Device };
 type StatusCodeArgs = { code: { id: string } };
 type StatusCodeState = { code: string };
 type HomeyTuyaScene = Pick<TuyaScene, 'id' | 'name'>;
+
+type SendArg = {
+  name: string;
+  id: string;
+  title: string;
+  dataPoint: boolean;
+};
 
 module.exports = class TuyaOAuth2App extends OAuth2App {
   static OAUTH2_CLIENT = TuyaOAuth2Client;
@@ -34,14 +41,59 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
       value,
     }: {
       device: TuyaOAuth2Device;
-      code: string | { id: string };
+      code: SendArg;
       value: unknown;
     }): Promise<void> => {
-      if (typeof code === 'object') code = code.id;
-      await device.sendCommand({ code, value });
+      if (code.dataPoint) {
+        await device.setDataPoint(code.id, value);
+      } else {
+        await device.sendCommand({ code: code.id, value });
+      }
     };
 
-    const generalControlAutocompleteListener = async (
+    const sendingAutocompleteListener = async (
+      query: string,
+      args: DeviceArgs,
+      filter: ({ value }: { value: unknown }) => boolean,
+    ): Promise<ArgumentAutocompleteResults> => {
+      function convert(
+        values: TuyaStatusResponse | Array<TuyaDeviceDataPoint>,
+        dataPoints: boolean,
+      ): ArgumentAutocompleteResults {
+        return values
+          .filter(filter)
+          .filter(({ code }: { code: string }) => {
+            return code.toLowerCase().includes(query.toLowerCase());
+          })
+          .map(value => ({
+            name: value.code,
+            id: value.code,
+            title: value.code,
+            dataPoint: dataPoints,
+          }));
+      }
+
+      const status = await args.device.getStatus();
+      const statusOptions = convert(status, false);
+
+      const dataPoints = await args.device.queryDataPoints();
+      const dataPointOptions = convert(dataPoints.properties, true);
+
+      // Remove duplicates, preferring status options
+      const combinedMap: Record<string, ArgumentAutocompleteResults[number]> = {};
+
+      for (const dataPointOption of dataPointOptions) {
+        combinedMap[dataPointOption.name] = dataPointOption;
+      }
+
+      for (const statusOption of statusOptions) {
+        combinedMap[statusOption.name] = statusOption;
+      }
+
+      return Object.values(combinedMap);
+    };
+
+    const receivingAutocompleteListener = async (
       query: string,
       args: DeviceArgs,
       filter: ({ value }: { value: unknown }) => boolean,
@@ -65,7 +117,7 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
       .getActionCard('send_command_string')
       .registerRunListener(sendCommandRunListener)
       .registerArgumentAutocompleteListener('code', async (query: string, args: DeviceArgs) =>
-        generalControlAutocompleteListener(
+        sendingAutocompleteListener(
           query,
           args,
           ({ value }) => typeof value === 'string' && !TuyaOAuth2Util.hasJsonStructure(value),
@@ -76,14 +128,14 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
       .getActionCard('send_command_number')
       .registerRunListener(sendCommandRunListener)
       .registerArgumentAutocompleteListener('code', async (query: string, args: DeviceArgs) =>
-        generalControlAutocompleteListener(query, args, ({ value }) => typeof value === 'number'),
+        sendingAutocompleteListener(query, args, ({ value }) => typeof value === 'number'),
       );
 
     this.homey.flow
       .getActionCard('send_command_boolean')
       .registerRunListener(sendCommandRunListener)
       .registerArgumentAutocompleteListener('code', async (query: string, args: DeviceArgs) =>
-        generalControlAutocompleteListener(query, args, ({ value }) => typeof value === 'boolean'),
+        sendingAutocompleteListener(query, args, ({ value }) => typeof value === 'boolean'),
       );
 
     this.homey.flow
@@ -99,7 +151,7 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
         },
       )
       .registerArgumentAutocompleteListener('code', async (query: string, args: DeviceArgs) =>
-        generalControlAutocompleteListener(
+        sendingAutocompleteListener(
           query,
           args,
           ({ value }) => typeof value === 'object' || TuyaOAuth2Util.hasJsonStructure(value),
@@ -111,14 +163,14 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
       .getDeviceTriggerCard('receive_status_boolean')
       .registerRunListener((args: StatusCodeArgs, state: StatusCodeState) => args.code.id === state.code)
       .registerArgumentAutocompleteListener('code', async (query: string, args: DeviceArgs) =>
-        generalControlAutocompleteListener(query, args, ({ value }) => typeof value === 'boolean'),
+        receivingAutocompleteListener(query, args, ({ value }) => typeof value === 'boolean'),
       );
 
     this.homey.flow
       .getDeviceTriggerCard('receive_status_json')
       .registerRunListener((args: StatusCodeArgs, state: StatusCodeState) => args.code.id === state.code)
       .registerArgumentAutocompleteListener('code', async (query: string, args: DeviceArgs) =>
-        generalControlAutocompleteListener(
+        receivingAutocompleteListener(
           query,
           args,
           ({ value }) => typeof value === 'object' || TuyaOAuth2Util.hasJsonStructure(value),
@@ -129,14 +181,14 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
       .getDeviceTriggerCard('receive_status_number')
       .registerRunListener((args: StatusCodeArgs, state: StatusCodeState) => args.code.id === state.code)
       .registerArgumentAutocompleteListener('code', async (query: string, args: DeviceArgs) =>
-        generalControlAutocompleteListener(query, args, ({ value }) => typeof value === 'number'),
+        receivingAutocompleteListener(query, args, ({ value }) => typeof value === 'number'),
       );
 
     this.homey.flow
       .getDeviceTriggerCard('receive_status_string')
       .registerRunListener((args: StatusCodeArgs, state: StatusCodeState) => args.code.id === state.code)
       .registerArgumentAutocompleteListener('code', async (query: string, args: DeviceArgs) =>
-        generalControlAutocompleteListener(
+        receivingAutocompleteListener(
           query,
           args,
           ({ value }) => typeof value === 'string' && !TuyaOAuth2Util.hasJsonStructure(value),
