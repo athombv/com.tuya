@@ -1,0 +1,9 @@
+{
+  "$extends": "tuya",
+  "class": "airconditioning",
+  "name": {
+    "en": "Air Conditioning",
+    "nl": "Airconditioning"
+  },
+  "capabilities": ["onoff", "target_temperature", "measure_temperature"]
+}
