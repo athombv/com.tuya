@@ -1,0 +1,49 @@
+{
+  "actions": [
+    {
+      "id": "siren_alarm_volume",
+      "title": {
+        "en": "Set alarm volume"
+      },
+      "titleFormatted": {
+        "en": "Set alarm volume to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "dropdown",
+          "title": {
+            "en": "Alarm volume"
+          },
+          "values": [
+            {
+              "id": "low",
+              "label": {
+                "en": "Low"
+              }
+            },
+            {
+              "id": "middle",
+              "label": {
+                "en": "Middle"
+              }
+            },
+            {
+              "id": "high",
+              "label": {
+                "en": "High"
+              }
+            },
+            {
+              "id": "mute",
+              "label": {
+                "en": "Muted"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditions": []
+}

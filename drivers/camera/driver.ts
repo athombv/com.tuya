@@ -1,12 +1,12 @@
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
-import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
-import { constIncludes } from '../../lib/TuyaOAuth2Util';
+import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import {
   type TuyaDeviceDataPointResponse,
   TuyaDeviceResponse,
   TuyaDeviceSpecificationResponse,
 } from '../../types/TuyaApiTypes';
+import type { StandardFlowArgs } from '../../types/TuyaTypes';
 import {
   CAMERA_ALARM_CAPABILITIES,
   CAMERA_SETTING_LABELS,
@@ -15,9 +15,6 @@ import {
   SIMPLE_CAMERA_FLOWS,
 } from './TuyaCameraConstants';
 
-type DeviceArgs = { device: TuyaOAuth2Device };
-type ValueArgs = { value: unknown };
-
 module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SMART_CAMERA] as const;
 
@@ -25,24 +22,14 @@ module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     await super.onInit();
 
     for (const capability of SIMPLE_CAMERA_FLOWS.read_write) {
-      this.homey.flow
-        .getActionCard(`camera_${capability}`)
-        .registerRunListener(async (args: DeviceArgs & ValueArgs) => {
-          await args.device.triggerCapabilityListener(capability, args.value);
-        });
+      this.homey.flow.getActionCard(`camera_${capability}`).registerRunListener(async (args: StandardFlowArgs) => {
+        await args.device.triggerCapabilityListener(capability, args.value);
+      });
     }
 
     // Apply the same way as in onSettings, but for an individual value
     for (const setting of SIMPLE_CAMERA_FLOWS.setting) {
-      this.homey.flow.getActionCard(`camera_${setting}`).registerRunListener(async (args: DeviceArgs & ValueArgs) => {
-        await args.device.sendCommand({ code: setting, value: args.value }).catch(err => {
-          if (err.tuyaCode === 2008) {
-            throw new Error(this.homey.__('setting_unsupported', { label: CAMERA_SETTING_LABELS[setting] }));
-          } else {
-            throw err;
-          }
-        });
-      });
+      this.addSettingFlowHandler(setting, CAMERA_SETTING_LABELS);
     }
   }
 
@@ -95,8 +82,8 @@ module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
     if (props.store.tuya_capabilities.includes('initiative_message')) {
       // Add the alarm capabilities based on the toggles that are available
       for (const capability of props.store.tuya_capabilities) {
-        if (capability in CAMERA_ALARM_CAPABILITIES) {
-          const alarmCapability = CAMERA_ALARM_CAPABILITIES[capability as keyof typeof CAMERA_ALARM_CAPABILITIES];
+        const alarmCapability = getFromMap(CAMERA_ALARM_CAPABILITIES, capability);
+        if (alarmCapability) {
           props.capabilities.push(alarmCapability);
         }
       }

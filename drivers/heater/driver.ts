@@ -1,15 +1,13 @@
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
-import type TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
+import { getFromMap } from '../../lib/TuyaOAuth2Util';
 import {
   type TuyaDeviceDataPointResponse,
   TuyaDeviceResponse,
   TuyaDeviceSpecificationResponse,
 } from '../../types/TuyaApiTypes';
+import type { StandardFlowArgs } from '../../types/TuyaTypes';
 import { DEFAULT_TUYA_HEATER_FAULTS, HEATER_CAPABILITIES_MAPPING } from './TuyaHeaterConstants';
-
-type DeviceArgs = { device: TuyaOAuth2Device };
-type ValueArgs = { value: unknown };
 
 module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [
@@ -20,11 +18,11 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
   async onInit(): Promise<void> {
     await super.onInit();
 
-    this.homey.flow.getActionCard('heater_set_child_lock').registerRunListener(async (args: DeviceArgs & ValueArgs) => {
+    this.homey.flow.getActionCard('heater_set_child_lock').registerRunListener(async (args: StandardFlowArgs) => {
       await args.device.triggerCapabilityListener('child_lock', args.value);
     });
 
-    this.homey.flow.getActionCard('heater_set_eco_mode').registerRunListener(async (args: DeviceArgs & ValueArgs) => {
+    this.homey.flow.getActionCard('heater_set_eco_mode').registerRunListener(async (args: StandardFlowArgs) => {
       await args.device.triggerCapabilityListener('eco_mode', args.value);
     });
   }
@@ -39,10 +37,9 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
     for (const status of device.status) {
       const tuyaCapability = status.code;
 
-      if (tuyaCapability in HEATER_CAPABILITIES_MAPPING) {
+      const homeyCapability = getFromMap(HEATER_CAPABILITIES_MAPPING, tuyaCapability);
+      if (homeyCapability) {
         props.store.tuya_capabilities.push(tuyaCapability);
-
-        const homeyCapability = HEATER_CAPABILITIES_MAPPING[tuyaCapability as keyof typeof HEATER_CAPABILITIES_MAPPING];
         props.capabilities.push(homeyCapability);
       }
     }

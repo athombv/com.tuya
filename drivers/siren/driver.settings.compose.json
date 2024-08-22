@@ -1,0 +1,42 @@
+[
+  {
+    "id": "alarm_volume",
+    "type": "dropdown",
+    "label": {
+      "en": "Alarm volume level"
+    },
+    "hint": {
+      "en": "The volume level of the siren."
+    },
+    "value": "middle",
+    "values": [
+      {
+        "id": "low",
+        "label": {
+          "en": "Low"
+        }
+      },
+      {
+        "id": "middle",
+        "label": {
+          "en": "Middle"
+        }
+      },
+      {
+        "id": "high",
+        "label": {
+          "en": "High"
+        }
+      },
+      {
+        "id": "mute",
+        "label": {
+          "en": "Muted"
+        }
+      }
+    ]
+  },
+  {
+    "$extends": "deviceSpecification"
+  }
+]

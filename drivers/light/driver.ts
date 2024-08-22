@@ -6,11 +6,12 @@ import {
   TuyaDeviceResponse,
   TuyaDeviceSpecificationResponse,
 } from '../../types/TuyaApiTypes';
+import type { StandardDeviceFlowArgs, StandardFlowArgs } from '../../types/TuyaTypes';
 import type TuyaOAuth2DeviceLight from './device';
 import { LightSettingCommand, PIR_CAPABILITIES } from './TuyaLightConstants';
 
-type DeviceArgs = { device: TuyaOAuth2DeviceLight };
-type ValueArgs = { value: unknown };
+type DeviceArgs = StandardDeviceFlowArgs<TuyaOAuth2DeviceLight>;
+type FlowArgs = StandardFlowArgs<TuyaOAuth2DeviceLight>;
 
 module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [
@@ -28,14 +29,14 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
   async onInit(): Promise<void> {
     await super.onInit();
 
-    this.homey.flow.getActionCard('light_switch_pir').registerRunListener(async (args: DeviceArgs & ValueArgs) => {
+    this.homey.flow.getActionCard('light_switch_pir').registerRunListener(async (args: FlowArgs) => {
       await args.device.sendSettingCommand({
         code: 'switch_pir',
         value: args.value as boolean,
       });
     });
 
-    this.homey.flow.getActionCard('light_standby_on').registerRunListener(async (args: DeviceArgs & ValueArgs) => {
+    this.homey.flow.getActionCard('light_standby_on').registerRunListener(async (args: FlowArgs) => {
       const device = args.device;
       const hasStandbyOn = device.store.tuya_capabilities.includes('standby_on');
       const standbyOn = args.value as boolean;
