@@ -5,8 +5,5 @@
     "en": "Dimmer",
     "nl": "Dimmer"
   },
-  "capabilities": [
-    "onoff",
-    "dim"
-  ]
+  "capabilities": ["onoff", "dim"]
 }
