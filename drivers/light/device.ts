@@ -340,7 +340,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
     light_saturation = this.getCapabilityValue('light_saturation'),
     light_temperature = this.getCapabilityValue('light_temperature'),
   }): Promise<void> {
-    const commands = [];
+    const commands: TuyaCommand[] = [];
 
     // Light mode is not available when a light only has temperature or color
     if (!this.hasCapability('light_mode')) {
@@ -349,6 +349,13 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
       } else if (this.hasCapability('light_temperature')) {
         light_mode = 'temperature';
       }
+    }
+
+    if (this.hasTuyaCapability('work_mode')) {
+      commands.push({
+        code: 'work_mode',
+        value: light_mode === 'color' ? 'colour' : 'white',
+      });
     }
 
     if (light_mode === 'color') {
