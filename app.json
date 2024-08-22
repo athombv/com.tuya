@@ -1670,7 +1670,12 @@
   },
   "drivers": [
     {
-      "capabilities": [],
+      "capabilities": [
+        "alarm_motion",
+        "alarm_sound",
+        "alarm_crying_child",
+        "alarm_pet"
+      ],
       "connectivity": [
         "cloud"
       ],
@@ -1934,7 +1939,10 @@
       ]
     },
     {
-      "capabilities": [],
+      "capabilities": [
+        "onoff",
+        "dim"
+      ],
       "connectivity": [
         "cloud"
       ],
@@ -2237,7 +2245,11 @@
       ]
     },
     {
-      "capabilities": [],
+      "capabilities": [
+        "onoff",
+        "target_temperature",
+        "measure_temperature"
+      ],
       "connectivity": [
         "cloud"
       ],

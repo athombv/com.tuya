@@ -4,5 +4,9 @@
   "name": {
     "en": "Dimmer",
     "nl": "Dimmer"
-  }
+  },
+  "capabilities": [
+    "onoff",
+    "dim"
+  ]
 }
