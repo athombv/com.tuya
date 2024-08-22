@@ -247,17 +247,27 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2Driver {
       const values = JSON.parse(functionSpecification.values);
 
       if (tuyaCapability === 'bright_value') {
-        props.store.tuya_brightness = values;
+        props.store.tuya_brightness = { ...props.store.tuya_brightness, ...values };
       } else if (tuyaCapability === 'bright_value_v2') {
-        props.store.tuya_brightness_v2 = values;
+        props.store.tuya_brightness_v2 = { ...props.store.tuya_brightness_v2, ...values };
       } else if (tuyaCapability === 'temp_value') {
-        props.store.tuya_temperature = values;
+        props.store.tuya_temperature = { ...props.store.tuya_temperature, ...values };
       } else if (tuyaCapability === 'temp_value_v2') {
-        props.store.tuya_temperature_v2 = values;
+        props.store.tuya_temperature_v2 = { ...props.store.tuya_temperature_v2, ...values };
       } else if (tuyaCapability === 'colour_data') {
-        props.store.tuya_colour = values;
+        for (const index of ['h', 's', 'v']) {
+          props.store.tuya_colour[index] = {
+            ...props.store.tuya_colour[index],
+            ...values?.[index],
+          };
+        }
       } else if (tuyaCapability === 'colour_data_v2') {
-        props.store.tuya_colour_v2 = values;
+        for (const index of ['h', 's', 'v']) {
+          props.store.tuya_colour_v2[index] = {
+            ...props.store.tuya_colour_v2[index],
+            ...values?.[index],
+          };
+        }
       }
     }
 
