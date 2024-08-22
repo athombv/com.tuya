@@ -237,6 +237,6 @@ export function constIncludes<T, S>(array: ReadonlyArray<T>, search: S): S exten
   return (array as unknown[]).includes(search) as S extends T ? true : boolean;
 }
 
-export function getFromMap(map: Record<string, string>, search: string): string | null {
+export function getFromMap<K extends string | number | symbol, V>(map: Record<K, V>, search: K): V | null {
   return map[search] ?? null;
 }

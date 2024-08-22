@@ -168,8 +168,7 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async onSettings(event: SettingsEvent<any>): Promise<string | void> {
+  async onSettings(event: SettingsEvent<Record<string, unknown>>): Promise<string | void> {
     return await TuyaOAuth2Util.onSettings(this, event, CAMERA_SETTING_LABELS);
   }
 };
