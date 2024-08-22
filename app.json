@@ -392,7 +392,7 @@
           "en": "Status [[code]] gets a new Boolean value"
         },
         "hint": {
-          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs."
+          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs. Data points available outside of this specification may not actually be reported by the device."
         },
         "args": [
           {
@@ -433,7 +433,7 @@
           "en": "Status [[code]] gets a new JSON value"
         },
         "hint": {
-          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs."
+          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs. Data points available outside of this specification may not actually be reported by the device."
         },
         "args": [
           {
@@ -474,7 +474,7 @@
           "en": "Status [[code]] gets a new Number value"
         },
         "hint": {
-          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs."
+          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs. Data points available outside of this specification may not actually be reported by the device."
         },
         "args": [
           {
@@ -515,7 +515,7 @@
           "en": "Status [[code]] gets a new String value"
         },
         "hint": {
-          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs."
+          "en": "This is an advanced Flow card, that can be used to receive any status from a Tuya device. You can find the status codes in the Tuya API documentation at https://homey.link/tuya-docs. Data points available outside of this specification may not actually be reported by the device."
         },
         "args": [
           {
