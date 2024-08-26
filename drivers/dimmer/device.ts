@@ -16,7 +16,7 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
       this.registerCapabilityListener('dim', value => this.allDim(value));
     }
 
-    for (let switch_i = 1; switch_i <= 2; switch_i++) {
+    for (let switch_i = 1; switch_i <= 3; switch_i++) {
       if (this.hasCapability(`onoff.${switch_i}`)) {
         this.registerCapabilityListener(`onoff.${switch_i}`, value =>
           this.singleOnOff(value, `switch_led_${switch_i}`),
@@ -40,7 +40,7 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
 
     let anySwitchOn = false;
 
-    for (let switch_i = 1; switch_i <= 2; switch_i++) {
+    for (let switch_i = 1; switch_i <= 3; switch_i++) {
       const tuyaSwitchCapability = `switch_led_${switch_i}`;
       const tuyaBrightnessCapability = `bright_value_${switch_i}`;
       const tuyaBrightnessMin = `brightness_min_${switch_i}`;

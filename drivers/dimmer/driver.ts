@@ -22,7 +22,7 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
   async onInit(): Promise<void> {
     await super.onInit();
 
-    for (let switch_i = 1; switch_i <= 2; switch_i++) {
+    for (let switch_i = 1; switch_i <= 3; switch_i++) {
       this.homey.flow
         .getConditionCard(`dimmer_sub_switch_${switch_i}_is_on`)
         .registerRunListener((args: DeviceArgs) => {
@@ -66,11 +66,15 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
         props.store.tuya_capabilities.push(tuyaCapability);
       }
 
-      if (tuyaCapability === 'switch_led_1' || tuyaCapability === 'switch_led_2') {
+      if (tuyaCapability === 'switch_led_1' || tuyaCapability === 'switch_led_2' || tuyaCapability === 'switch_led_3') {
         props.store.tuya_switches.push(tuyaCapability);
       }
 
-      if (tuyaCapability === 'bright_value_1' || tuyaCapability === 'bright_value_2') {
+      if (
+        tuyaCapability === 'bright_value_1' ||
+        tuyaCapability === 'bright_value_2' ||
+        tuyaCapability === 'bright_value_3'
+      ) {
         props.store.tuya_dimmers.push(tuyaCapability);
       }
     }
@@ -80,8 +84,8 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
       props.capabilities.push('onoff');
     }
 
-    if (props.store.tuya_switches.length === 2) {
-      for (let switch_i = 1; switch_i <= 2; switch_i++) {
+    if (props.store.tuya_switches.length > 1) {
+      for (let switch_i = 1; switch_i <= 3; switch_i++) {
         const subSwitchCapability = `onoff.${switch_i}`;
         props.capabilities.push(subSwitchCapability);
         props.capabilitiesOptions[subSwitchCapability] = {
@@ -110,8 +114,8 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
       props.capabilities.push('dim');
     }
 
-    if (props.store.tuya_dimmers.length === 2) {
-      for (let switch_i = 1; switch_i <= 2; switch_i++) {
+    if (props.store.tuya_dimmers.length > 1) {
+      for (let switch_i = 1; switch_i <= 3; switch_i++) {
         const subSwitchCapability = `dim.${switch_i}`;
         props.capabilities.push(subSwitchCapability);
         props.capabilitiesOptions[subSwitchCapability] = {
@@ -139,6 +143,11 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
       if (tuyaCapability === 'bright_value_2') {
         props.settings['brightness_min_2'] = values.min / TUYA_PERCENTAGE_SCALING;
         props.settings['brightness_max_2'] = values.max / TUYA_PERCENTAGE_SCALING;
+      }
+
+      if (tuyaCapability === 'bright_value_3') {
+        props.settings['brightness_min_3'] = values.min / TUYA_PERCENTAGE_SCALING;
+        props.settings['brightness_max_3'] = values.max / TUYA_PERCENTAGE_SCALING;
       }
     }
 
