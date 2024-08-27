@@ -5,12 +5,19 @@ import * as TuyaOAuth2Util from './lib/TuyaOAuth2Util';
 
 import TuyaOAuth2Device from './lib/TuyaOAuth2Device';
 import sourceMapSupport from 'source-map-support';
-import type { TuyaDeviceDataPoint, TuyaScene, TuyaStatusResponse } from './types/TuyaApiTypes';
+import type {
+  TuyaDeviceDataPoint,
+  TuyaDeviceDataPointResponse,
+  TuyaScene,
+  TuyaStatusResponse,
+} from './types/TuyaApiTypes';
 import { type ArgumentAutocompleteResults } from 'homey/lib/FlowCard';
 
 sourceMapSupport.install();
 
-const CACHE_KEY = 'scenes';
+const STATUS_CACHE_KEY = 'status';
+const DATAPOINT_CACHE_KEY = 'datapoint';
+const SCENE_CACHE_KEY = 'scenes';
 const CACHE_TTL = 30;
 
 type DeviceArgs = { device: TuyaOAuth2Device };
@@ -30,7 +37,7 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
   static OAUTH2_DEBUG = process.env.DEBUG === '1';
   static OAUTH2_MULTI_SESSION = false; // TODO: Enable this feature & make nice pairing UI
 
-  private sceneCache: NodeCache = new NodeCache({ stdTTL: CACHE_TTL });
+  private apiCache: NodeCache = new NodeCache({ stdTTL: CACHE_TTL });
 
   async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
@@ -73,11 +80,35 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
           }));
       }
 
-      const status = await args.device.getStatus();
-      const statusOptions = convert(status, false);
+      const deviceId = args.device.getData().deviceId;
+      const statusCacheKey = `${STATUS_CACHE_KEY}_${deviceId}`;
+      const datapointCacheKey = `${DATAPOINT_CACHE_KEY}_${deviceId}`;
 
-      const dataPoints = await args.device.queryDataPoints();
-      const dataPointOptions = convert(dataPoints.properties, true);
+      if (!this.apiCache.has(statusCacheKey)) {
+        this.apiCache.set<TuyaStatusResponse | null>(
+          statusCacheKey,
+          await args.device.getStatus().catch(e => {
+            this.error(e);
+            return null;
+          }),
+        );
+      }
+
+      const status = this.apiCache.get<TuyaStatusResponse | null>(statusCacheKey);
+      const statusOptions = status ? convert(status, false) : [];
+
+      if (!this.apiCache.has(datapointCacheKey)) {
+        this.apiCache.set<TuyaDeviceDataPointResponse | null>(
+          datapointCacheKey,
+          await args.device.queryDataPoints().catch(e => {
+            this.error(e);
+            return null;
+          }),
+        );
+      }
+
+      const dataPoints = this.apiCache.get<TuyaDeviceDataPointResponse | null>(datapointCacheKey);
+      const dataPointOptions = dataPoints ? convert(dataPoints.properties, true) : [];
 
       // Remove duplicates, preferring status options
       const combinedMap: Record<string, ArgumentAutocompleteResults[number]> = {};
@@ -90,7 +121,12 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
         combinedMap[statusOption.name] = statusOption;
       }
 
-      return Object.values(combinedMap);
+      const possibleValues = Object.values(combinedMap);
+      if (possibleValues.length === 0) {
+        throw new Error(this.homey.__('error_retrieving_codes'));
+      }
+
+      return possibleValues;
     };
 
     // Register Tuya Web API Flow Cards
@@ -186,7 +222,7 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
         await client.triggerScene(scene.id);
       })
       .registerArgumentAutocompleteListener('scene', async (query: string) => {
-        if (!this.sceneCache.has(CACHE_KEY)) {
+        if (!this.apiCache.has(SCENE_CACHE_KEY)) {
           this.log('Retrieving available scenes');
           const client = this.getFirstSavedOAuth2Client();
 
@@ -221,9 +257,9 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
               });
           }
 
-          this.sceneCache.set(CACHE_KEY, scenes);
+          this.apiCache.set(SCENE_CACHE_KEY, scenes);
         }
-        return (this.sceneCache.get<HomeyTuyaScene[]>(CACHE_KEY) ?? []).filter(scene =>
+        return (this.apiCache.get<HomeyTuyaScene[]>(SCENE_CACHE_KEY) ?? []).filter(scene =>
           scene.name.toLowerCase().includes(query.toLowerCase()),
         );
       });
