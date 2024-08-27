@@ -66,7 +66,7 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
         onStatus: async (statuses: TuyaStatusUpdate<unknown>[]) => {
           const changedStatusCodes = statuses.map((status: TuyaStatusUpdate<unknown>) => status.code);
 
-          console.log('changedStatusCodes', changedStatusCodes);
+          this.log('changedStatusCodes', changedStatusCodes);
           const status = TuyaOAuth2Util.convertStatusArrayToStatusObject(statuses);
           await this.__onTuyaStatus(status, changedStatusCodes);
         },
