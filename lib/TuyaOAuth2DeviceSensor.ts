@@ -3,6 +3,12 @@ import * as TuyaSensorMigrations from '../lib/migrations/TuyaSensorMigrations';
 import TuyaTimeOutAlarmDevice from './TuyaTimeOutAlarmDevice';
 
 export default class TuyaOAuth2DeviceSensor extends TuyaTimeOutAlarmDevice {
+  async onOAuth2Init(): Promise<void> {
+    await this.initAlarm('alarm_tamper', false).catch(this.error);
+
+    return super.onOAuth2Init();
+  }
+
   async performMigrations(): Promise<void> {
     await super.performMigrations();
     await TuyaSensorMigrations.performMigrations(this);

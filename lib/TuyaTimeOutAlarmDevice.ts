@@ -3,7 +3,11 @@ import TuyaOAuth2Device from './TuyaOAuth2Device';
 export default class TuyaTimeOutAlarmDevice extends TuyaOAuth2Device {
   alarmTimeouts: Record<string, NodeJS.Timeout | undefined> = {};
 
-  async initAlarm(capability: string): Promise<void> {
+  async initAlarm(capability: string, checkResetSetting = true): Promise<void> {
+    if (!this.hasCapability(capability)) {
+      return;
+    }
+
     const capabilityValue = this.getCapabilityValue(capability);
     if (typeof capabilityValue !== 'boolean') {
       // No value set, so reset it to false
@@ -15,7 +19,7 @@ export default class TuyaTimeOutAlarmDevice extends TuyaOAuth2Device {
       return;
     }
 
-    if (!this.getSetting('use_alarm_timeout')) {
+    if (!checkResetSetting || !this.getSetting('use_alarm_timeout')) {
       return;
     }
 
