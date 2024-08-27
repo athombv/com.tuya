@@ -337,10 +337,10 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
 
   onUpdateWebhook(): void {
     if (this.__updateWebhookTimeout) {
-      clearTimeout(this.__updateWebhookTimeout);
+      this.homey.clearTimeout(this.__updateWebhookTimeout);
     }
 
-    this.__updateWebhookTimeout = setTimeout(() => {
+    this.__updateWebhookTimeout = this.homey.setTimeout(() => {
       Promise.resolve()
         .then(async () => {
           const keys = Array.from(this.registeredDevices.keys());
