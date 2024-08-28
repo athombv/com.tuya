@@ -1,5 +1,16 @@
 [
   {
+    "id": "enable_light_support",
+    "type": "checkbox",
+    "label": {
+      "en": "Enable light support"
+    },
+    "hints": {
+      "en": "Some fans have light capabilities (built-in lamp) and some don't. This is not always detected correctly: if the automatic detection failed you can adjust this setting."
+    },
+    "value": false
+  },
+  {
     "$extends": "deviceSpecification"
   }
 ]
