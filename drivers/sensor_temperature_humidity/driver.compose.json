@@ -1,8 +1,0 @@
-{
-  "$extends": "tuya",
-  "class": "sensor",
-  "name": {
-    "en": "Temperature/Humidity Sensor",
-    "nl": "Temperatuur/luchtvochtigheidssensor"
-  }
-}

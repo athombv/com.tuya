@@ -1,14 +1,11 @@
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
-import {
-  TEMPERATURE_HUMIDITY_CAPABILITY_MAPPING,
-  TEMPERATURE_HUMIDITY_SENSOR_CAPABILITIES,
-} from './TuyaTemperatureHumiditySensorConstants';
+import { CLIMATE_CAPABILITY_MAPPING, CLIMATE_SENSOR_CAPABILITIES } from './TuyaClimateSensorConstants';
 import { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import TuyaOAuth2DriverSensor from '../../lib/TuyaOAuth2DriverSensor';
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import { constIncludes } from '../../lib/TuyaOAuth2Util';
 
-module.exports = class TuyaOAuth2DriverSensorTemperatureHumidity extends TuyaOAuth2DriverSensor {
+module.exports = class TuyaOAuth2DriverSensorClimate extends TuyaOAuth2DriverSensor {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.TEMP_HUMI_SENSOR];
 
   onTuyaPairListDeviceProperties(
@@ -19,8 +16,7 @@ module.exports = class TuyaOAuth2DriverSensorTemperatureHumidity extends TuyaOAu
 
     for (const status of device.status) {
       const tuyaCapability = status.code;
-      const homeyCapability =
-        TEMPERATURE_HUMIDITY_CAPABILITY_MAPPING[tuyaCapability as keyof typeof TEMPERATURE_HUMIDITY_CAPABILITY_MAPPING];
+      const homeyCapability = CLIMATE_CAPABILITY_MAPPING[tuyaCapability as keyof typeof CLIMATE_CAPABILITY_MAPPING];
 
       // Capabilities that map one to one
       if (homeyCapability) {
@@ -36,7 +32,7 @@ module.exports = class TuyaOAuth2DriverSensorTemperatureHumidity extends TuyaOAu
       const tuyaCapability = statusSpecifications.code;
       const values = JSON.parse(statusSpecifications.values);
 
-      if (constIncludes(TEMPERATURE_HUMIDITY_SENSOR_CAPABILITIES.read_only_scaled, tuyaCapability)) {
+      if (constIncludes(CLIMATE_SENSOR_CAPABILITIES.read_only_scaled, tuyaCapability)) {
         if ([0, 1, 2, 3].includes(values.scale)) {
           props.settings[`${tuyaCapability}_scaling`] = `${values.scale}`;
         } else {
