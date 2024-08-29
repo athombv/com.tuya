@@ -13,12 +13,35 @@ export default class TuyaOAuth2DriverSensor extends TuyaOAuth2Driver {
   ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
 
-    // alarm_battery
-    const hasBatteryState = device.status.some(({ code }) => code === 'battery_state');
-    if (hasBatteryState) {
-      props.store?.tuya_capabilities.push('battery_state');
-      props.capabilities?.push('alarm_battery');
-    }
+    const tuyaCodes = device.status.map(s => s.code);
+    const hasBatteryPercentage = tuyaCodes.includes('battery_percentage');
+
+    tuyaCodes.map(tuyaCode => {
+      switch (tuyaCode) {
+        case 'battery_state':
+          if (hasBatteryPercentage) {
+            // Do not add battery alarm if percentage is available
+            return;
+          }
+
+          props.capabilities.push('alarm_battery');
+          break;
+
+        case 'battery_percentage':
+          props.capabilities.push('measure_battery');
+          break;
+
+        case 'temper_alarm':
+          props.capabilities.push('alarm_tamper');
+          break;
+
+        default:
+          // Default return to not add the capability
+          return;
+      }
+
+      props.store.tuya_capabilities.push(tuyaCode);
+    });
 
     return props;
   }

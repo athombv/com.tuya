@@ -217,7 +217,7 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     return this.oAuth2Client.queryDataPoints(deviceId);
   }
 
-  setDataPoint(dataPointId: string, value: unknown): Promise<void> {
+  async setDataPoint(dataPointId: string, value: unknown): Promise<void> {
     const { deviceId } = this.data;
     return this.oAuth2Client.setDataPoint(deviceId, dataPointId, value);
   }
@@ -230,6 +230,14 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
   async getStreamingLink(type: 'RTSP' | 'HLS'): Promise<{ url: string }> {
     const { deviceId } = this.data;
     return this.oAuth2Client.getStreamingLink(deviceId, type);
+  }
+
+  async safeSetCapabilityValue(capabilityId: string, value: unknown): Promise<void> {
+    if (!this.hasCapability(capabilityId)) {
+      return;
+    }
+
+    await this.setCapabilityValue(capabilityId, value).catch(this.error);
   }
 
   log(...args: unknown[]): void {

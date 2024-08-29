@@ -32,12 +32,6 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
     }
   }
 
-  async safeSetCapabilityValue(capabilityId: string, value: unknown): Promise<void> {
-    if (this.hasCapability(capabilityId)) {
-      await this.setCapabilityValue(capabilityId, value);
-    }
-  }
-
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
     await super.onTuyaStatus(status, changedStatusCodes);
 
@@ -66,7 +60,7 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
             .catch(this.error);
         }
 
-        this.safeSetCapabilityValue(switchCapability, switchStatus).catch(this.error);
+        await this.safeSetCapabilityValue(switchCapability, switchStatus);
       }
     }
 
@@ -74,22 +68,22 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
       anySwitchOn = anySwitchOn || status['switch'];
     }
 
-    this.safeSetCapabilityValue('onoff', anySwitchOn).catch(this.error);
+    await this.safeSetCapabilityValue('onoff', anySwitchOn);
 
     if (typeof status['cur_power'] === 'number') {
       const scaling = 10.0 ** parseInt(this.getSetting('power_scaling') ?? '0');
-      this.setCapabilityValue('measure_power', status['cur_power'] / scaling).catch(this.error);
+      await this.safeSetCapabilityValue('measure_power', status['cur_power'] / scaling);
     }
 
     if (typeof status['cur_voltage'] === 'number') {
       const scaling = 10.0 ** parseInt(this.getSetting('cur_voltage_scaling') ?? '0');
-      this.setCapabilityValue('measure_voltage', status['cur_voltage'] / scaling).catch(this.error);
+      await this.safeSetCapabilityValue('measure_voltage', status['cur_voltage'] / scaling);
     }
 
     if (typeof status['cur_current'] === 'number') {
       // Additionally convert mA
       const scaling = 1000.0 * 10.0 ** parseInt(this.getSetting('cur_current_scaling') ?? '0');
-      this.setCapabilityValue('measure_current', status['cur_current'] / scaling).catch(this.error);
+      await this.safeSetCapabilityValue('measure_current', status['cur_current'] / scaling);
     }
 
     if (status['child_lock'] !== undefined) {

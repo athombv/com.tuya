@@ -29,12 +29,6 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
     }
   }
 
-  async safeSetCapabilityValue(capabilityId: string, value: unknown): Promise<void> {
-    if (this.hasCapability(capabilityId)) {
-      await this.setCapabilityValue(capabilityId, value);
-    }
-  }
-
   async onTuyaStatus(status: TuyaStatus, changed: string[]): Promise<void> {
     await super.onTuyaStatus(status, changed);
 
@@ -63,7 +57,7 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
           triggerCard.trigger(this, {}, {}).catch(this.error);
         }
 
-        await this.safeSetCapabilityValue(`onoff.${switch_i}`, switchStatus).catch(this.error);
+        await this.safeSetCapabilityValue(`onoff.${switch_i}`, switchStatus);
       }
 
       if (typeof brightnessMin === 'number') {
@@ -98,12 +92,12 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
             .catch(this.error);
         }
 
-        await this.safeSetCapabilityValue(`dim.${switch_i}`, scaledValue).catch(this.error);
-        await this.safeSetCapabilityValue(`dim`, scaledValue).catch(this.error);
+        await this.safeSetCapabilityValue(`dim.${switch_i}`, scaledValue);
+        await this.safeSetCapabilityValue(`dim`, scaledValue);
       }
     }
 
-    await this.safeSetCapabilityValue('onoff', anySwitchOn).catch(this.error);
+    await this.safeSetCapabilityValue('onoff', anySwitchOn);
   }
 
   // TODO migrate to util onSettings
