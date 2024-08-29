@@ -1,19 +1,16 @@
 /** capabilities that map one to one to a Homey capability */
 export const CLIMATE_SENSOR_CAPABILITIES = {
   read_write: ['switch'],
-  read_only: ['temper_alarm', 'battery_percentage'],
+  read_only: ['temper_alarm'],
   read_only_scaled: ['va_temperature', 'va_humidity', 'bright_value'],
   setting: [],
 } as const;
 
 export const CLIMATE_CAPABILITY_MAPPING = {
   switch: 'onoff',
-  temper_alarm: 'alarm_tamper',
   va_temperature: 'measure_temperature',
   va_humidity: 'measure_humidity',
   bright_value: 'measure_luminance',
-  battery_state: 'alarm_battery',
-  battery_percentage: 'measure_battery',
   battery_value: 'measure_battery',
   va_battery: 'measure_battery',
 } as const;

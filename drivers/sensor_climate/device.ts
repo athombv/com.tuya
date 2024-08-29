@@ -19,6 +19,7 @@ module.exports = class TuyaOAuth2DeviceSensorClimate extends TuyaOAuth2DeviceSen
   }
 
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
+    // battery_state, battery_percentage and temper_alarm are handled by the superclass
     await super.onTuyaStatus(status, changedStatusCodes);
 
     for (const tuyaCapability in status) {
@@ -38,8 +39,6 @@ module.exports = class TuyaOAuth2DeviceSensorClimate extends TuyaOAuth2DeviceSen
       }
 
       // Battery
-      // battery_state is handled by superclass
-
       if (tuyaCapability === 'battery_value') {
         const scaledValue = (value as number) / 300;
         this.setCapabilityValue(homeyCapability, scaledValue).catch(this.error);

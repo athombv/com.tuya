@@ -12,6 +12,7 @@ module.exports = class TuyaOAuth2DriverSensorClimate extends TuyaOAuth2DriverSen
     device: TuyaDeviceResponse,
     specifications: TuyaDeviceSpecificationResponse,
   ): ListDeviceProperties {
+    // battery_state, battery_percentage and temper_alarm are handled by the superclass
     const props = super.onTuyaPairListDeviceProperties(device, specifications);
 
     for (const status of device.status) {

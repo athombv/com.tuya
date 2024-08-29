@@ -2975,17 +2975,6 @@
       "id": "sensor_climate",
       "settings": [
         {
-          "id": "deviceSpecification",
-          "type": "label",
-          "label": {
-            "en": "Device Specification"
-          },
-          "hint": {
-            "en": "The Tuya specification of this device"
-          },
-          "value": "<not available>"
-        },
-        {
           "id": "va_temperature_scaling",
           "type": "dropdown",
           "label": {
@@ -3095,6 +3084,40 @@
               }
             }
           ]
+        },
+        {
+          "id": "use_alarm_timeout",
+          "type": "checkbox",
+          "hint": {
+            "en": "Turn the alarm off a set time after the start signal, even if no end signal is received."
+          },
+          "label": {
+            "en": "Use Alarm Timeout"
+          },
+          "value": false
+        },
+        {
+          "id": "alarm_timeout",
+          "type": "number",
+          "label": {
+            "en": "Alarm Timeout"
+          },
+          "value": 10,
+          "min": 1,
+          "units": {
+            "en": "seconds"
+          }
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
         }
       ]
     },

@@ -1,8 +1,5 @@
 [
   {
-    "$extends": "deviceSpecification"
-  },
-  {
     "id": "va_temperature_scaling",
     "type": "dropdown",
     "label": {
@@ -112,5 +109,14 @@
         }
       }
     ]
+  },
+  {
+    "$extends": "useAlarmTimeout"
+  },
+  {
+    "$extends": "alarmTimeout"
+  },
+  {
+    "$extends": "deviceSpecification"
   }
 ]
