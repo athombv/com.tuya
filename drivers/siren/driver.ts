@@ -8,7 +8,7 @@ import {
 } from '../../types/TuyaApiTypes';
 import { SIREN_CAPABILITIES_MAPPING, SIREN_FLOWS, SIREN_SETTING_LABELS } from './TuyaSirenConstants';
 
-module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
+module.exports = class TuyaOAuth2DriverSiren extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.SIREN_ALARM] as const;
 
   async onInit(): Promise<void> {

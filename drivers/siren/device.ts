@@ -4,7 +4,7 @@ import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import { SIREN_CAPABILITIES, SIREN_CAPABILITIES_MAPPING, SIREN_SETTING_LABELS } from './TuyaSirenConstants';
 
-module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
+module.exports = class TuyaOAuth2DeviceSiren extends TuyaOAuth2Device {
   async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
