@@ -1,53 +1,41 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import { TuyaStatus } from '../../types/TuyaTypes';
+import { FAN_CAPABILITIES, FAN_CAPABILITIES_MAPPING } from './TuyaFanConstants';
+import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
+import * as TuyaFanMigrations from '../../lib/migrations/TuyaFanMigrations';
 
-module.exports = class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor(...props: any) {
-    super(...props);
-
-    this.onCapabilityOnOff = this.onCapabilityOnOff.bind(this);
-    this.onCapabilityDim = this.onCapabilityDim.bind(this);
-  }
-
+export default class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
   async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
-    // onoff
-    if (this.hasCapability('onoff')) {
-      this.registerCapabilityListener('onoff', this.onCapabilityOnOff);
+    for (const [tuyaCapability, capability] of Object.entries(FAN_CAPABILITIES_MAPPING)) {
+      if (constIncludes(FAN_CAPABILITIES.read_write, tuyaCapability) && this.hasCapability(capability)) {
+        this.registerCapabilityListener(capability, value => this.sendCommand({ code: tuyaCapability, value }));
+      }
     }
-    // dim
-    if (this.hasCapability('dim')) {
-      this.registerCapabilityListener('dim', this.onCapabilityDim);
-    }
+  }
+
+  async performMigrations(): Promise<void> {
+    await super.performMigrations();
+    await TuyaFanMigrations.performMigrations(this);
   }
 
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
     await super.onTuyaStatus(status, changedStatusCodes);
 
-    // onoff
-    if (typeof status['switch'] === 'boolean') {
-      this.setCapabilityValue('onoff', status['switch']).catch(this.error);
+    for (const tuyaCapability in status) {
+      const value = status[tuyaCapability];
+      const homeyCapability = getFromMap(FAN_CAPABILITIES_MAPPING, tuyaCapability);
+
+      if (
+        (constIncludes(FAN_CAPABILITIES.read_write, tuyaCapability) ||
+          constIncludes(FAN_CAPABILITIES.read_only, tuyaCapability)) &&
+        homeyCapability
+      ) {
+        await this.safeSetCapabilityValue(homeyCapability, value);
+      }
     }
-
-    // dim
-    if (typeof status['fan_speed_percent'] === 'number') {
-      this.setCapabilityValue('dim', status['fan_speed_percent']).catch(this.error);
-    }
   }
+}
 
-  async onCapabilityOnOff(value: boolean): Promise<void> {
-    await this.sendCommand({
-      code: 'switch',
-      value: value,
-    });
-  }
-
-  async onCapabilityDim(value: number): Promise<void> {
-    await this.sendCommand({
-      code: 'fan_speed_percent',
-      value: value,
-    });
-  }
-};
+module.exports = TuyaOAuth2DeviceFan;
