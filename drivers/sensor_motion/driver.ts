@@ -24,6 +24,20 @@ module.exports = class TuyaOAuth2DriverSensorMotion extends TuyaOAuth2DriverSens
       props.capabilities.push('alarm_motion');
     }
 
+    if (!specifications) {
+      return props;
+    }
+
+    for (const specification of specifications.status) {
+      const tuyaCapability = specification.code;
+      const values = JSON.parse(specification.values);
+      if (tuyaCapability === 'pir') {
+        if (!values.range.includes('none')) {
+          props.settings['use_alarm_timeout'] = true;
+        }
+      }
+    }
+
     return props;
   }
 };

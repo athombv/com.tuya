@@ -154,7 +154,7 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
   async onTuyaStatus(status: TuyaStatus, _changedStatusCodes: string[]): Promise<void> {
     // Wait at least 100ms for initialization before trying to pass the barrier again
     while (this.initBarrier) {
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(resolve => this.homey.setTimeout(resolve, 100));
     }
 
     this.log('onTuyaStatus', JSON.stringify(status));

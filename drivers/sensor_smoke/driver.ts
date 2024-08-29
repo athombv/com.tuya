@@ -24,6 +24,20 @@ module.exports = class TuyaOAuth2DriverSensorSmoke extends TuyaOAuth2DriverSenso
       props.capabilities.push('alarm_smoke');
     }
 
+    if (!specifications) {
+      return props;
+    }
+
+    for (const specification of specifications.status) {
+      const tuyaCapability = specification.code;
+      const values = JSON.parse(specification.values);
+      if (tuyaCapability === 'alarm_smoke') {
+        if (!values.range.includes('normal')) {
+          props.settings['use_alarm_timeout'] = true;
+        }
+      }
+    }
+
     return props;
   }
 };

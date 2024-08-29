@@ -1,0 +1,11 @@
+{
+  "id": "use_alarm_timeout",
+  "type": "checkbox",
+  "hint": {
+    "en": "Turn the alarm off a set time after the start signal, even if no end signal is received."
+  },
+  "label": {
+    "en": "Use Alarm Timeout"
+  },
+  "value": false
+}

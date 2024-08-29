@@ -1,4 +1,3 @@
-import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
@@ -7,10 +6,9 @@ import {
   CAMERA_SETTING_LABELS,
   SIMPLE_CAMERA_CAPABILITIES,
 } from './TuyaCameraConstants';
+import TuyaTimeOutAlarmDevice from '../../lib/TuyaTimeOutAlarmDevice';
 
-module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
-  alarmTimeouts: Record<string, NodeJS.Timeout | undefined> = {};
-
+module.exports = class TuyaOAuth2DeviceCamera extends TuyaTimeOutAlarmDevice {
   async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
@@ -126,29 +124,19 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaOAuth2Device {
   }
 
   async setAlarm(capability: string): Promise<void> {
-    if (this.alarmTimeouts[capability] !== undefined) {
-      // Extend the existing timeout if already running
-      clearTimeout(this.alarmTimeouts[capability]);
-    } else {
-      // Trigger capability change if not
-      const deviceTriggerCard = this.homey.flow.getDeviceTriggerCard(`camera_${capability}_true`);
-      await deviceTriggerCard.trigger(this).catch(this.error);
-      await this.setCapabilityValue(capability, true).catch(this.error);
-    }
-    // Disable the alarm after a set time, since we only get an "on" event
-    const alarmTimeout = Math.round((this.getSetting('alarm_timeout') ?? 10) * 1000);
-    this.alarmTimeouts[capability] = setTimeout(() => this.resetAlarm(capability), alarmTimeout);
-  }
-
-  async resetAlarm(capability: string): Promise<void> {
-    // Clear the timeout for the next event
-    const currentTimeout = this.alarmTimeouts[capability];
-    clearTimeout(currentTimeout);
-    this.alarmTimeouts[capability] = undefined;
-    // Trigger capability change
-    const deviceTriggerCard = this.homey.flow.getDeviceTriggerCard(`camera_${capability}_false`);
-    await deviceTriggerCard.trigger(this).catch(this.error);
-    await this.setCapabilityValue(capability, false).catch(this.error);
+    await super.setAlarm(
+      capability,
+      async () => {
+        const deviceTriggerCard = this.homey.flow.getDeviceTriggerCard(`camera_${capability}_true`);
+        await deviceTriggerCard.trigger(this).catch(this.error);
+        await this.setCapabilityValue(capability, true).catch(this.error);
+      },
+      async () => {
+        const deviceTriggerCard = this.homey.flow.getDeviceTriggerCard(`camera_${capability}_false`);
+        await deviceTriggerCard.trigger(this).catch(this.error);
+        await this.setCapabilityValue(capability, false).catch(this.error);
+      },
+    );
   }
 
   // Map from up/idle/down to commands so the ternary UI shows arrows

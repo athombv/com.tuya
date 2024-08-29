@@ -1,8 +1,14 @@
 import { TuyaStatus } from '../types/TuyaTypes';
-import TuyaOAuth2Device from './TuyaOAuth2Device';
 import * as TuyaSensorMigrations from '../lib/migrations/TuyaSensorMigrations';
+import TuyaTimeOutAlarmDevice from './TuyaTimeOutAlarmDevice';
 
-export default class TuyaOAuth2DeviceSensor extends TuyaOAuth2Device {
+export default class TuyaOAuth2DeviceSensor extends TuyaTimeOutAlarmDevice {
+  async onOAuth2Init(): Promise<void> {
+    await this.initAlarm('alarm_tamper', false).catch(this.error);
+
+    return super.onOAuth2Init();
+  }
+
   async performMigrations(): Promise<void> {
     await super.performMigrations();
     await TuyaSensorMigrations.performMigrations(this);
@@ -24,6 +30,23 @@ export default class TuyaOAuth2DeviceSensor extends TuyaOAuth2Device {
     // alarm_tamper
     if (typeof status['temper_alarm'] === 'boolean') {
       await this.safeSetCapabilityValue('alarm_tamper', status['temper_alarm']);
+    }
+  }
+
+  async setAlarmCapabilityValue(capability: string, value: boolean): Promise<void> {
+    if (this.getSetting('use_alarm_timeout')) {
+      if (value) {
+        await this.setAlarm(
+          capability,
+          () => this.setCapabilityValue(capability, true).catch(this.error),
+          () => this.setCapabilityValue(capability, false).catch(this.error),
+        );
+      } else {
+        // If the device does send false before the timeout ends we cut it short
+        await this.resetAlarm(capability, () => this.setCapabilityValue(capability, false).catch(this.error));
+      }
+    } else {
+      await this.setCapabilityValue(capability, value);
     }
   }
 }
