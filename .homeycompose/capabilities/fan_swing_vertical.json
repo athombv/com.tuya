@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Fan Swing Vertical"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "button"
+}
