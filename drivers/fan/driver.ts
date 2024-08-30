@@ -40,6 +40,16 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
           props.capabilities.push('legacy_fan_speed');
         }
       }
+
+      if (tuyaCapability === 'colour_data') {
+        props.store.tuya_capabilities.push(tuyaCapability);
+        props.capabilities.push('light_hue');
+        props.capabilities.push('light_saturation');
+      }
+    }
+
+    if (props.store.tuya_capabilities.includes('colour_data') && !props.capabilities.includes('dim.light')) {
+      props.capabilities.push('dim.light');
     }
 
     // Only add light mode capability when both temperature and colour data is available
