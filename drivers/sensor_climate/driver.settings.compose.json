@@ -1,0 +1,122 @@
+[
+  {
+    "id": "va_temperature_scaling",
+    "type": "dropdown",
+    "label": {
+      "en": "Measured Temperature Scale"
+    },
+    "hint": {
+      "en": "By how much the temperature measured by the device is scaled."
+    },
+    "value": "1",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "1"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "1/10"
+        }
+      },
+      {
+        "id": "2",
+        "label": {
+          "en": "1/100"
+        }
+      },
+      {
+        "id": "3",
+        "label": {
+          "en": "1/1000"
+        }
+      }
+    ]
+  },
+  {
+    "id": "va_humidity_scaling",
+    "type": "dropdown",
+    "label": {
+      "en": "Measured Humidity Scale"
+    },
+    "hint": {
+      "en": "By how much the humidity measured by the device is scaled."
+    },
+    "value": "1",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "1"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "1/10"
+        }
+      },
+      {
+        "id": "2",
+        "label": {
+          "en": "1/100"
+        }
+      },
+      {
+        "id": "3",
+        "label": {
+          "en": "1/1000"
+        }
+      }
+    ]
+  },
+  {
+    "id": "bright_value_scaling",
+    "type": "dropdown",
+    "label": {
+      "en": "Measured Brightness Scale"
+    },
+    "hint": {
+      "en": "By how much the brightness measured by the device is scaled."
+    },
+    "value": "0",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "1"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "1/10"
+        }
+      },
+      {
+        "id": "2",
+        "label": {
+          "en": "1/100"
+        }
+      },
+      {
+        "id": "3",
+        "label": {
+          "en": "1/1000"
+        }
+      }
+    ]
+  },
+  {
+    "$extends": "useAlarmTimeout"
+  },
+  {
+    "$extends": "alarmTimeout"
+  },
+  {
+    "$extends": "deviceSpecification"
+  }
+]

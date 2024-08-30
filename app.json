@@ -400,7 +400,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -441,7 +441,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -482,7 +482,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -523,7 +523,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -920,7 +920,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -958,7 +958,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -996,7 +996,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -1034,7 +1034,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|dimmer|doorbell|fan|heater|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -2911,6 +2911,206 @@
       },
       "id": "other",
       "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
+    },
+    {
+      "capabilities": [
+        "measure_temperature",
+        "measure_humidity"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/sensor_climate/assets/images/small.png",
+        "large": "/drivers/sensor_climate/assets/images/large.png",
+        "xlarge": "/drivers/sensor_climate/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "sensor",
+      "name": {
+        "en": "Climate Sensor",
+        "nl": "Klimaatsensor"
+      },
+      "id": "sensor_climate",
+      "settings": [
+        {
+          "id": "va_temperature_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Measured Temperature Scale"
+          },
+          "hint": {
+            "en": "By how much the temperature measured by the device is scaled."
+          },
+          "value": "1",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "va_humidity_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Measured Humidity Scale"
+          },
+          "hint": {
+            "en": "By how much the humidity measured by the device is scaled."
+          },
+          "value": "1",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "bright_value_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Measured Brightness Scale"
+          },
+          "hint": {
+            "en": "By how much the brightness measured by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "use_alarm_timeout",
+          "type": "checkbox",
+          "hint": {
+            "en": "Turn the alarm off a set time after the start signal, even if no end signal is received."
+          },
+          "label": {
+            "en": "Use Alarm Timeout"
+          },
+          "value": false
+        },
+        {
+          "id": "alarm_timeout",
+          "type": "number",
+          "label": {
+            "en": "Alarm Timeout"
+          },
+          "value": 10,
+          "min": 1,
+          "units": {
+            "en": "seconds"
+          }
+        },
         {
           "id": "deviceSpecification",
           "type": "label",
