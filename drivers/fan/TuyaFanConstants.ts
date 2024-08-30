@@ -14,6 +14,7 @@ export const FAN_CAPABILITIES_MAPPING = {
   switch_led: 'onoff.light',
   bright_value: 'dim.light',
   temp_value: 'light_temperature',
+  // colour_data is split between light_hue, light_saturation and dim.light
 } as const;
 
 export const FAN_CAPABILITIES = {
