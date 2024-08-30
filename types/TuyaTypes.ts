@@ -27,3 +27,5 @@ export type StandardDeviceFlowArgs<T = TuyaOAuth2Device> = { device: T };
 export type StandardValueFlowArgs<T = unknown> = { value: T };
 export type StandardFlowArgs<TDevice = TuyaOAuth2Device, TValue = unknown> = StandardDeviceFlowArgs<TDevice> &
   StandardValueFlowArgs<TValue>;
+
+export type ParsedColourData = { h: number; s: number; v: number };

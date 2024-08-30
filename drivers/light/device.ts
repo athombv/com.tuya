@@ -2,10 +2,8 @@ import * as TuyaLightMigrations from '../../lib/migrations/TuyaLightMigrations';
 import { TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import { TuyaCommand } from '../../types/TuyaApiTypes';
-import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
+import { ParsedColourData, SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import { LIGHT_SETTING_LABELS, LightSettingCommand, LightSettingKey, PIR_CAPABILITIES } from './TuyaLightConstants';
-
-type ParsedColourData = { h: number; s: number; v: number };
 
 export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
   LIGHT_COLOUR_DATA_V1_HUE_MIN = this.store.tuya_colour?.h?.min;

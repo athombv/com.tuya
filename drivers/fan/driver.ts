@@ -30,6 +30,66 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
       }
     }
 
+    // Only add light mode capability when both temperature and colour data is available
+    if (
+      props.capabilities.includes('light_temperature') &&
+      props.capabilities.includes('light_hue') &&
+      !props.capabilities.includes('light_mode')
+    ) {
+      props.capabilities.push('light_mode');
+    }
+
+    // Fix onoff when light is present
+    if (props.capabilities.includes('onoff.light')) {
+      props.capabilitiesOptions['onoff'] = {
+        title: {
+          en: `Fan`,
+        },
+        insightsTitleTrue: {
+          en: `Turned on (Fan)`,
+        },
+        insightsTitleFalse: {
+          en: `Turned off (Fan)`,
+        },
+      };
+
+      props.capabilitiesOptions['onoff.light'] = {
+        title: {
+          en: `Light`,
+        },
+        insightsTitleTrue: {
+          en: `Turned on (Light)`,
+        },
+        insightsTitleFalse: {
+          en: `Turned off (Light)`,
+        },
+      };
+    }
+
+    // Fix dim when light is present
+    if (props.capabilities.includes('dim.light')) {
+      props.capabilitiesOptions['dim'] = {
+        title: {
+          en: `Fan`,
+        },
+      };
+
+      props.capabilitiesOptions['dim.light'] = {
+        title: {
+          en: `Light`,
+        },
+      };
+    }
+
+    // Default light specifications
+    props.store.tuya_brightness = { min: 10, max: 1000, scale: 0, step: 1 };
+    props.store.tuya_temperature = { min: 0, max: 1000, scale: 0, step: 1 };
+    props.store.tuya_colour = {
+      h: { min: 0, max: 360, scale: 0, step: 1 },
+      s: { min: 0, max: 1000, scale: 0, step: 1 },
+      v: { min: 0, max: 1000, scale: 0, step: 1 },
+    };
+
     if (!specifications) {
       return props;
     }
@@ -72,6 +132,24 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
           min: values.min ?? 0,
           max: values.max ?? 50,
         };
+      }
+
+      // Light
+      if (tuyaCapability === 'bright_value') {
+        props.store.tuya_brightness = { ...props.store.tuya_brightness, ...values };
+      }
+
+      if (tuyaCapability === 'temp_value') {
+        props.store.tuya_temperature = { ...props.store.tuya_temperature, ...values };
+      }
+
+      if (tuyaCapability === 'colour_data') {
+        for (const index of ['h', 's', 'v']) {
+          props.store.tuya_colour[index] = {
+            ...props.store.tuya_colour[index],
+            ...values?.[index],
+          };
+        }
       }
     }
 
