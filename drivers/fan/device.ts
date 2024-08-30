@@ -15,6 +15,15 @@ export default class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
       }
     }
 
+    // fan_speed
+    if (this.hasCapability('legacy_fan_speed')) {
+      this.registerCapabilityListener('legacy_fan_speed', value => this.sendCommand({ code: 'fan_speed', value }));
+    }
+
+    if (this.hasCapability('dim') && this.getStoreValue('tuya_category') === 'fsd') {
+      this.registerCapabilityListener('dim', value => this.sendCommand({ code: 'fan_speed', value }));
+    }
+
     // light capabilities
     const lightCapabilities = ['dim.light', 'light_hue', 'light_saturation', 'light_temperature', 'light_mode'].filter(
       lightCapability => this.hasCapability(lightCapability),
@@ -48,10 +57,18 @@ export default class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
       ) {
         await this.safeSetCapabilityValue(homeyCapability, value);
       }
+
+      if (tuyaCapability === 'fan_speed') {
+        if (this.getStoreValue('tuya_category') === 'fsd') {
+          await this.safeSetCapabilityValue('dim', value);
+        } else {
+          await this.safeSetCapabilityValue('legacy_fan_speed', value);
+        }
+      }
     }
 
     // Light
-    const workMode = status['work_mode'] as 'white' | 'colour' | 'colourful' | undefined;
+    const workMode = status['work_mode'] as 'white' | 'colour' | 'colourful' | 'scene' | 'music' | undefined;
     const lightTemp = status['temp_value'] as number | undefined;
     const lightDim = status['bright_value'] as number | undefined;
     const lightColor = status['colour_data'] as ParsedColourData | undefined;
