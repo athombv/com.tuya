@@ -9,7 +9,10 @@ import { getFromMap } from '../../lib/TuyaOAuth2Util';
 import { FAN_CAPABILITIES_MAPPING } from './TuyaFanConstants';
 
 module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
-  TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.FAN] as const;
+  TUYA_DEVICE_CATEGORIES = [
+    DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.FAN,
+    DEVICE_CATEGORIES.LIGHTING.CEILING_FAN_LIGHT,
+  ] as const;
 
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
@@ -27,6 +30,15 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
       if (homeyCapability) {
         props.store.tuya_capabilities.push(tuyaCapability);
         props.capabilities.push(homeyCapability);
+      }
+
+      if (tuyaCapability === 'fan_speed') {
+        props.store.tuya_capabilities.push(tuyaCapability);
+        if (device.category === 'fsd') {
+          props.capabilities.push('dim');
+        } else {
+          props.capabilities.push('legacy_fan_speed');
+        }
       }
     }
 
