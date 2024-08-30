@@ -160,7 +160,7 @@ export default class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
 
       // Temperature
       if (light_temperature && this.hasTuyaCapability('temp_value')) {
-        const specs = this.store.tuya_brightness;
+        const specs = this.store.tuya_temperature;
         const tempValue = specs.min + light_temperature * (specs.max - specs.min);
 
         commands.push({
