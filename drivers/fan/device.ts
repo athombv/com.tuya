@@ -1,6 +1,6 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import { ParsedColourData, TuyaStatus } from '../../types/TuyaTypes';
-import { FAN_CAPABILITIES, FAN_CAPABILITIES_MAPPING } from './TuyaFanConstants';
+import { ParsedColourData, SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
+import { FAN_CAPABILITIES, FAN_CAPABILITIES_MAPPING, HomeyFanSettings } from './TuyaFanConstants';
 import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import * as TuyaFanMigrations from '../../lib/migrations/TuyaFanMigrations';
 import { TuyaCommand } from '../../types/TuyaApiTypes';
@@ -168,6 +168,38 @@ export default class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
 
     if (commands.length) {
       await this.sendCommands(commands);
+    }
+  }
+
+  async onSettings(event: SettingsEvent<HomeyFanSettings>): Promise<string | void> {
+    if (event.changedKeys.includes('enable_light_support')) {
+      if (event.newSettings['enable_light_support']) {
+        for (const lightTuyaCapability of ['light', 'switch_led', 'bright_value', 'temp_value'] as const) {
+          if (this.hasTuyaCapability(lightTuyaCapability)) {
+            const homeyCapability = FAN_CAPABILITIES_MAPPING[lightTuyaCapability];
+            if (!this.hasCapability(homeyCapability)) await this.addCapability(homeyCapability);
+          }
+        }
+        if (this.hasTuyaCapability('colour')) {
+          if (!this.hasCapability('light_hue')) await this.addCapability('light_hue');
+          if (!this.hasCapability('light_saturation')) await this.addCapability('light_saturation');
+          if (!this.hasCapability('dim.light')) await this.addCapability('dim.light');
+        }
+        if (this.hasCapability('light_temperature') && this.hasCapability('light_hue')) {
+          if (!this.hasCapability('light_mode')) await this.addCapability('light_mode');
+        }
+      } else {
+        for (const lightCapability of [
+          'onoff.light',
+          'dim.light',
+          'light_mode',
+          'light_temperature',
+          'light_hue',
+          'light_saturation',
+        ]) {
+          if (this.hasCapability(lightCapability)) await this.removeCapability(lightCapability);
+        }
+      }
     }
   }
 }

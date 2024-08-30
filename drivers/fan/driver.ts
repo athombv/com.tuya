@@ -48,6 +48,10 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
       }
     }
 
+    if (props.store.tuya_capabilities.includes('light') || props.store.tuya_capabilities.includes('switch_led')) {
+      props.settings['enable_light_support'] = true;
+    }
+
     if (props.store.tuya_capabilities.includes('colour_data') && !props.capabilities.includes('dim.light')) {
       props.capabilities.push('dim.light');
     }

@@ -32,3 +32,9 @@ export const FAN_CAPABILITIES = {
   ],
   read_only: ['temp_current'],
 } as const;
+
+export type HomeyFanSettings = {
+  enable_light_support: boolean;
+};
+
+export type TuyaFanSettings = Record<string, never>;
