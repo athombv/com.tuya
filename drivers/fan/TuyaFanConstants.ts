@@ -13,6 +13,13 @@ export const FAN_CAPABILITIES_MAPPING = {
   switch_led: 'onoff.light',
 } as const;
 
+export const FAN_LIGHT_CAPABILITIES_MAPPING = {
+  light: 'onoff.light',
+  switch_led: 'onoff.light',
+  bright_value: 'dim.light',
+  temp_value: 'light_temperature',
+} as const;
+
 export const FAN_CAPABILITIES = {
   read_write: [
     'switch',
