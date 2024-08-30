@@ -10,7 +10,11 @@ export default class TuyaOAuth2DeviceFan extends TuyaOAuth2Device {
     await super.onOAuth2Init();
 
     for (const [tuyaCapability, capability] of Object.entries(FAN_CAPABILITIES_MAPPING)) {
-      if (constIncludes(FAN_CAPABILITIES.read_write, tuyaCapability) && this.hasCapability(capability)) {
+      if (
+        constIncludes(FAN_CAPABILITIES.read_write, tuyaCapability) &&
+        this.hasCapability(capability) &&
+        this.hasTuyaCapability(tuyaCapability)
+      ) {
         this.registerCapabilityListener(capability, value => this.sendCommand({ code: tuyaCapability, value }));
       }
     }
