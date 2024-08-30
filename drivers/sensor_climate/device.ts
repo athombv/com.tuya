@@ -5,7 +5,7 @@ import {
   CLIMATE_SENSOR_SETTING_LABELS,
 } from './TuyaClimateSensorConstants';
 import TuyaOAuth2DeviceSensor from '../../lib/TuyaOAuth2DeviceSensor';
-import { constIncludes } from '../../lib/TuyaOAuth2Util';
+import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 
@@ -23,30 +23,31 @@ module.exports = class TuyaOAuth2DeviceSensorClimate extends TuyaOAuth2DeviceSen
     await super.onTuyaStatus(status, changedStatusCodes);
 
     for (const tuyaCapability in status) {
-      const homeyCapability = CLIMATE_CAPABILITY_MAPPING[tuyaCapability as keyof typeof CLIMATE_CAPABILITY_MAPPING];
+      const homeyCapability = getFromMap(CLIMATE_CAPABILITY_MAPPING, tuyaCapability);
       const value = status[tuyaCapability];
 
       if (
-        constIncludes(CLIMATE_SENSOR_CAPABILITIES.read_only, tuyaCapability) ||
-        constIncludes(CLIMATE_SENSOR_CAPABILITIES.read_write, tuyaCapability)
+        (constIncludes(CLIMATE_SENSOR_CAPABILITIES.read_only, tuyaCapability) ||
+          constIncludes(CLIMATE_SENSOR_CAPABILITIES.read_write, tuyaCapability)) &&
+        homeyCapability
       ) {
-        this.setCapabilityValue(homeyCapability, value).catch(this.error);
+        await this.safeSetCapabilityValue(homeyCapability, value);
       }
 
-      if (constIncludes(CLIMATE_SENSOR_CAPABILITIES.read_only_scaled, tuyaCapability)) {
+      if (constIncludes(CLIMATE_SENSOR_CAPABILITIES.read_only_scaled, tuyaCapability) && homeyCapability) {
         const scaling = 10.0 ** Number.parseInt(this.getSetting(`${tuyaCapability}_scaling`) ?? '0', 10);
-        this.setCapabilityValue(homeyCapability, (status[tuyaCapability] as number) / scaling).catch(this.error);
+        await this.safeSetCapabilityValue(homeyCapability, (status[tuyaCapability] as number) / scaling);
       }
 
       // Battery
-      if (tuyaCapability === 'battery_value') {
+      if (tuyaCapability === 'battery_value' && homeyCapability) {
         const scaledValue = (value as number) / 300;
-        this.setCapabilityValue(homeyCapability, scaledValue).catch(this.error);
+        await this.safeSetCapabilityValue(homeyCapability, scaledValue);
       }
 
-      if (tuyaCapability === 'va_battery') {
+      if (tuyaCapability === 'va_battery' && homeyCapability) {
         const scaledValue = (value as number) / 100;
-        this.setCapabilityValue(homeyCapability, scaledValue).catch(this.error);
+        await this.safeSetCapabilityValue(homeyCapability, scaledValue);
       }
     }
   }

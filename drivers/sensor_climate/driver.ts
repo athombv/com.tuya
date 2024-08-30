@@ -3,7 +3,7 @@ import { CLIMATE_CAPABILITY_MAPPING, CLIMATE_SENSOR_CAPABILITIES } from './TuyaC
 import { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import TuyaOAuth2DriverSensor from '../../lib/TuyaOAuth2DriverSensor';
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
-import { constIncludes } from '../../lib/TuyaOAuth2Util';
+import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 
 module.exports = class TuyaOAuth2DriverSensorClimate extends TuyaOAuth2DriverSensor {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SECURITY_VIDEO_SURV.TEMP_HUMI_SENSOR];
@@ -17,7 +17,7 @@ module.exports = class TuyaOAuth2DriverSensorClimate extends TuyaOAuth2DriverSen
 
     for (const status of device.status) {
       const tuyaCapability = status.code;
-      const homeyCapability = CLIMATE_CAPABILITY_MAPPING[tuyaCapability as keyof typeof CLIMATE_CAPABILITY_MAPPING];
+      const homeyCapability = getFromMap(CLIMATE_CAPABILITY_MAPPING, tuyaCapability);
 
       // Capabilities that map one to one
       if (homeyCapability) {
