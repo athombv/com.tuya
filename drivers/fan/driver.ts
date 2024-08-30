@@ -1,5 +1,5 @@
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
-import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
+import { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import {
   type TuyaDeviceDataPointResponse,
   TuyaDeviceResponse,
@@ -7,8 +7,9 @@ import {
 } from '../../types/TuyaApiTypes';
 import { getFromMap } from '../../lib/TuyaOAuth2Util';
 import { FAN_CAPABILITIES_MAPPING } from './TuyaFanConstants';
+import TuyaOAuth2DriverWithLight from '../../lib/TuyaOAuth2DriverWithLight';
 
-module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
+module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2DriverWithLight {
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.FAN,
     DEVICE_CATEGORIES.LIGHTING.CEILING_FAN_LIGHT,
@@ -19,6 +20,7 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
     specifications?: TuyaDeviceSpecificationResponse,
     dataPoints?: TuyaDeviceDataPointResponse,
   ): ListDeviceProperties {
+    // superclass handles light capabilities, except onoff.light
     const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
 
     props.store['_migrations'] = ['fan_tuya_capabilities'];
@@ -46,23 +48,6 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
         props.capabilities.push('light_hue');
         props.capabilities.push('light_saturation');
       }
-    }
-
-    if (props.store.tuya_capabilities.includes('light') || props.store.tuya_capabilities.includes('switch_led')) {
-      props.settings['enable_light_support'] = true;
-    }
-
-    if (props.store.tuya_capabilities.includes('colour_data') && !props.capabilities.includes('dim.light')) {
-      props.capabilities.push('dim.light');
-    }
-
-    // Only add light mode capability when both temperature and colour data is available
-    if (
-      props.capabilities.includes('light_temperature') &&
-      props.capabilities.includes('light_hue') &&
-      !props.capabilities.includes('light_mode')
-    ) {
-      props.capabilities.push('light_mode');
     }
 
     // Fix onoff when light is present
@@ -107,15 +92,6 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
       };
     }
 
-    // Default light specifications
-    props.store.tuya_brightness = { min: 10, max: 1000, scale: 0, step: 1 };
-    props.store.tuya_temperature = { min: 0, max: 1000, scale: 0, step: 1 };
-    props.store.tuya_colour = {
-      h: { min: 0, max: 360, scale: 0, step: 1 },
-      s: { min: 0, max: 1000, scale: 0, step: 1 },
-      v: { min: 0, max: 1000, scale: 0, step: 1 },
-    };
-
     if (!specifications) {
       return props;
     }
@@ -158,24 +134,6 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2Driver {
           min: values.min ?? 0,
           max: values.max ?? 50,
         };
-      }
-
-      // Light
-      if (tuyaCapability === 'bright_value') {
-        props.store.tuya_brightness = { ...props.store.tuya_brightness, ...values };
-      }
-
-      if (tuyaCapability === 'temp_value') {
-        props.store.tuya_temperature = { ...props.store.tuya_temperature, ...values };
-      }
-
-      if (tuyaCapability === 'colour_data') {
-        for (const index of ['h', 's', 'v']) {
-          props.store.tuya_colour[index] = {
-            ...props.store.tuya_colour[index],
-            ...values?.[index],
-          };
-        }
       }
     }
 
