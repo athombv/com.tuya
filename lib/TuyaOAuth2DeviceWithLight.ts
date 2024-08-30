@@ -56,7 +56,7 @@ export default class TuyaOAuth2DeviceWithLight extends TuyaOAuth2Device {
 
     if (lightTemp) {
       const specs = this.store[this.LIGHT_TEMP_TUYA_SPECS];
-      const light_temperature = (lightTemp - specs.min) / (specs.max - specs.min);
+      const light_temperature = 1 - (lightTemp - specs.min) / (specs.max - specs.min);
       await this.safeSetCapabilityValue('light_temperature', light_temperature);
     }
 
@@ -107,9 +107,9 @@ export default class TuyaOAuth2DeviceWithLight extends TuyaOAuth2Device {
 
     if (light_mode === 'color') {
       const specs = this.store[this.LIGHT_COLOR_TUYA_SPECS];
-      const h = specs.h.min + light_hue * (specs.h.max - specs.h.min);
-      const s = specs.s.min + light_saturation * (specs.s.max - specs.s.min);
-      const v = specs.v.min + light_dim * (specs.v.max - specs.v.min);
+      const h = Math.round(specs.h.min + light_hue * (specs.h.max - specs.h.min));
+      const s = Math.round(specs.s.min + light_saturation * (specs.s.max - specs.s.min));
+      const v = Math.round(specs.v.min + light_dim * (specs.v.max - specs.v.min));
 
       commands.push({
         code: this.LIGHT_COLOR_TUYA_CAPABILITY,
@@ -119,7 +119,7 @@ export default class TuyaOAuth2DeviceWithLight extends TuyaOAuth2Device {
       // Dim
       if (light_dim && this.hasTuyaCapability(this.LIGHT_DIM_TUYA_CAPABILITY)) {
         const specs = this.store[this.LIGHT_DIM_TUYA_SPECS];
-        const brightValue = specs.min + light_dim * (specs.max - specs.min);
+        const brightValue = Math.round(specs.min + light_dim * (specs.max - specs.min));
 
         commands.push({
           code: this.LIGHT_DIM_TUYA_CAPABILITY,
@@ -130,7 +130,7 @@ export default class TuyaOAuth2DeviceWithLight extends TuyaOAuth2Device {
       // Temperature
       if (light_temperature && this.hasTuyaCapability(this.LIGHT_TEMP_TUYA_CAPABILITY)) {
         const specs = this.store[this.LIGHT_TEMP_TUYA_SPECS];
-        const tempValue = specs.min + light_temperature * (specs.max - specs.min);
+        const tempValue = Math.round(specs.min + (1 - light_temperature) * (specs.max - specs.min));
 
         commands.push({
           code: this.LIGHT_TEMP_TUYA_CAPABILITY,
