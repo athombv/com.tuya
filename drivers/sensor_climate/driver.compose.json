@@ -4,5 +4,6 @@
   "name": {
     "en": "Climate Sensor",
     "nl": "Klimaatsensor"
-  }
+  },
+  "capabilities": ["measure_temperature", "measure_humidity"]
 }

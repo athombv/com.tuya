@@ -2925,7 +2925,10 @@
       ]
     },
     {
-      "capabilities": [],
+      "capabilities": [
+        "measure_temperature",
+        "measure_humidity"
+      ],
       "connectivity": [
         "cloud"
       ],
