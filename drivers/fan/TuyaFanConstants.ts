@@ -8,13 +8,9 @@ export const FAN_CAPABILITIES_MAPPING = {
   child_lock: 'child_lock',
   temp: 'target_temperature',
   temp_current: 'measure_temperature',
-  // light
-  work_mode: 'light_mode',
+  // light - handled by superclass
   light: 'onoff.light',
   switch_led: 'onoff.light',
-  bright_value: 'dim.light',
-  temp_value: 'light_temperature',
-  // colour_data is split between light_hue, light_saturation and dim.light
 } as const;
 
 export const FAN_CAPABILITIES = {

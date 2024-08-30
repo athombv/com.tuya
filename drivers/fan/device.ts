@@ -5,8 +5,9 @@ import * as TuyaFanMigrations from '../../lib/migrations/TuyaFanMigrations';
 import TuyaOAuth2DeviceWithLight from '../../lib/TuyaOAuth2DeviceWithLight';
 
 export default class TuyaOAuth2DeviceFan extends TuyaOAuth2DeviceWithLight {
+  LIGHT_DIM_CAPABILITY = 'dim.light';
+
   async onOAuth2Init(): Promise<void> {
-    this.LIGHT_DIM_CAPABILITY = 'dim.light';
     // superclass handles light capabilities, except onoff.light
     await super.onOAuth2Init();
 
