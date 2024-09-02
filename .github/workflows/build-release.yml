@@ -51,9 +51,10 @@ jobs:
         run: |
           echo "App release to be managed at ${{ steps.publish.outputs.url }}" >> $GITHUB_STEP_SUMMARY
 
-      - name: Create Github Release
+      - name: Generate Github Release
         uses: softprops/action-gh-release@v2
         with:
           body: ${{ inputs.changelog }}
           generate_release_notes: true
           make_latest: true
+          tag_name: v${{ steps.update_app_version.outputs.version }}
