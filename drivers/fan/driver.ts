@@ -128,7 +128,7 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2DriverWithLight {
         props.capabilitiesOptions['dim'] = {
           min: values.min ?? 1,
           max: values.max ?? 100,
-          step: values.step ?? 0,
+          step: values.step ?? 1,
         };
       }
 
