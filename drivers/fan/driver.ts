@@ -115,7 +115,7 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2DriverWithLight {
       };
     }
 
-    if (!specifications) {
+    if (!specifications || !specifications.status) {
       return props;
     }
 

@@ -44,7 +44,7 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       }
     }
 
-    if (!specifications || !specifications.functions) {
+    if (!specifications || !specifications.status) {
       return props;
     }
 

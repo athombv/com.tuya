@@ -185,7 +185,7 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
 
     // TODO: USB sockets (?)
 
-    if (!specifications) {
+    if (!specifications || !specifications.status) {
       return props;
     }
 
