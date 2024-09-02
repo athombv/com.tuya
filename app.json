@@ -1556,6 +1556,46 @@
         ]
       },
       {
+        "id": "fan_fan_direction",
+        "title": {
+          "en": "Set fan direction"
+        },
+        "titleFormatted": {
+          "en": "Set fan direction to [[value]]"
+        },
+        "hint": {
+          "en": "CAUTION: This setting is not supported by every fan."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fan"
+          },
+          {
+            "name": "value",
+            "title": {
+              "en": "Direction"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "forward",
+                "title": {
+                  "en": "Forward"
+                }
+              },
+              {
+                "id": "backward",
+                "title": {
+                  "en": "Backward"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "heater_set_child_lock",
         "title": {
           "en": "Set child lock"
@@ -2580,6 +2620,28 @@
             "en": "Some fans have light capabilities (built-in lamp) and some don't. This is not always detected correctly: if the automatic detection failed you can adjust this setting."
           },
           "value": false
+        },
+        {
+          "id": "fan_direction",
+          "type": "dropdown",
+          "label": {
+            "en": "Fan direction"
+          },
+          "value": "forward",
+          "values": [
+            {
+              "id": "forward",
+              "label": {
+                "en": "Forward"
+              }
+            },
+            {
+              "id": "backward",
+              "label": {
+                "en": "Backward"
+              }
+            }
+          ]
         },
         {
           "id": "deviceSpecification",

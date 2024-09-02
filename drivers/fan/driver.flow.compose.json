@@ -81,6 +81,41 @@
           "labelDecimals": 0
         }
       ]
+    },
+    {
+      "id": "fan_fan_direction",
+      "title": {
+        "en": "Set fan direction"
+      },
+      "titleFormatted": {
+        "en": "Set fan direction to [[value]]"
+      },
+      "hint": {
+        "en": "CAUTION: This setting is not supported by every fan."
+      },
+      "args": [
+        {
+          "name": "value",
+          "title": {
+            "en": "Direction"
+          },
+          "type": "dropdown",
+          "values": [
+            {
+              "id": "forward",
+              "title": {
+                "en": "Forward"
+              }
+            },
+            {
+              "id": "backward",
+              "title": {
+                "en": "Backward"
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

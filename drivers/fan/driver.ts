@@ -6,7 +6,7 @@ import {
   TuyaDeviceSpecificationResponse,
 } from '../../types/TuyaApiTypes';
 import { getFromMap } from '../../lib/TuyaOAuth2Util';
-import { FAN_CAPABILITIES_MAPPING } from './TuyaFanConstants';
+import { FAN_CAPABILITIES_MAPPING, FAN_SETTING_LABELS } from './TuyaFanConstants';
 import TuyaOAuth2DriverWithLight from '../../lib/TuyaOAuth2DriverWithLight';
 import { StandardDeviceFlowArgs, StandardFlowArgs } from '../../types/TuyaTypes';
 
@@ -34,6 +34,8 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2DriverWithLight {
     this.homey.flow.getConditionCard('fan_light_is_on').registerRunListener((args: StandardDeviceFlowArgs) => {
       return args.device.getCapabilityValue('onoff.light').catch(args.device.error);
     });
+
+    this.addSettingFlowHandler('fan_direction', FAN_SETTING_LABELS);
   }
 
   onTuyaPairListDeviceProperties(

@@ -3,8 +3,11 @@ import {
   FAN_CAPABILITIES,
   FAN_CAPABILITIES_MAPPING,
   FAN_LIGHT_CAPABILITIES_MAPPING,
+  FAN_SETTING_LABELS,
   HomeyFanSettings,
+  TuyaFanSettings,
 } from './TuyaFanConstants';
+import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import * as TuyaFanMigrations from '../../lib/migrations/TuyaFanMigrations';
 import TuyaOAuth2DeviceWithLight from '../../lib/TuyaOAuth2DeviceWithLight';
@@ -55,6 +58,12 @@ export default class TuyaOAuth2DeviceFan extends TuyaOAuth2DeviceWithLight {
         homeyCapability
       ) {
         await this.safeSetCapabilityValue(homeyCapability, value);
+      }
+
+      if (constIncludes(FAN_CAPABILITIES.setting, tuyaCapability)) {
+        await this.setSettings({
+          [tuyaCapability]: value,
+        });
       }
 
       if (tuyaCapability === 'fan_speed') {
@@ -115,6 +124,12 @@ export default class TuyaOAuth2DeviceFan extends TuyaOAuth2DeviceWithLight {
         }
       }
     }
+
+    const tuyaSettingsEvent = TuyaOAuth2Util.filterTuyaSettings<HomeyFanSettings, TuyaFanSettings>(event, [
+      'fan_direction',
+    ]);
+
+    return TuyaOAuth2Util.onSettings(this, tuyaSettingsEvent, FAN_SETTING_LABELS);
   }
 }
 

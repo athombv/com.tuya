@@ -34,10 +34,18 @@ export const FAN_CAPABILITIES = {
     'switch_led',
   ],
   read_only: ['temp_current'],
+  setting: ['fan_direction'],
 } as const;
 
 export type HomeyFanSettings = {
   enable_light_support: boolean;
+  fan_direction: 'forward' | 'backward';
 };
 
-export type TuyaFanSettings = Record<string, never>;
+export type TuyaFanSettings = {
+  fan_direction: 'forward' | 'backward';
+};
+
+export const FAN_SETTING_LABELS = {
+  fan_direction: 'Fan direction',
+};
