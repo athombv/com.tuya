@@ -76,22 +76,27 @@ export default class TuyaOAuth2DeviceFan extends TuyaOAuth2DeviceWithLight {
     }
 
     // flows
-    if (changedStatusCodes.includes('bright_value')) {
-      await this.homey.flow
-        .getDeviceTriggerCard('fan_light_dim_changed')
-        .trigger(this, { value: status['bright_value'] })
-        .catch(this.error);
-    }
+    if (this.getSetting('enable_light_support')) {
+      if (changedStatusCodes.includes('bright_value')) {
+        await this.homey.flow
+          .getDeviceTriggerCard('fan_light_dim_changed')
+          .trigger(this, { value: status['bright_value'] })
+          .catch(this.error);
+      }
 
-    if (changedStatusCodes.includes('light')) {
-      await this.homey.flow.getDeviceTriggerCard(`fan_light_onoff_${status['light']}`).trigger(this).catch(this.error);
-    }
+      if (changedStatusCodes.includes('light')) {
+        await this.homey.flow
+          .getDeviceTriggerCard(`fan_light_onoff_${status['light']}`)
+          .trigger(this)
+          .catch(this.error);
+      }
 
-    if (changedStatusCodes.includes('switch_led')) {
-      await this.homey.flow
-        .getDeviceTriggerCard(`fan_light_onoff_${status['switch_led']}`)
-        .trigger(this)
-        .catch(this.error);
+      if (changedStatusCodes.includes('switch_led')) {
+        await this.homey.flow
+          .getDeviceTriggerCard(`fan_light_onoff_${status['switch_led']}`)
+          .trigger(this)
+          .catch(this.error);
+      }
     }
   }
 
