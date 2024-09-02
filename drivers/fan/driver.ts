@@ -8,12 +8,33 @@ import {
 import { getFromMap } from '../../lib/TuyaOAuth2Util';
 import { FAN_CAPABILITIES_MAPPING } from './TuyaFanConstants';
 import TuyaOAuth2DriverWithLight from '../../lib/TuyaOAuth2DriverWithLight';
+import { StandardDeviceFlowArgs, StandardFlowArgs } from '../../types/TuyaTypes';
 
 module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2DriverWithLight {
   TUYA_DEVICE_CATEGORIES = [
     DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.FAN,
     DEVICE_CATEGORIES.LIGHTING.CEILING_FAN_LIGHT,
   ] as const;
+
+  async onInit(): Promise<void> {
+    await super.onInit();
+
+    this.homey.flow.getActionCard('fan_light_on').registerRunListener(async (args: StandardDeviceFlowArgs) => {
+      await args.device.triggerCapabilityListener('onoff.light', true).catch(args.device.error);
+    });
+
+    this.homey.flow.getActionCard('fan_light_off').registerRunListener(async (args: StandardDeviceFlowArgs) => {
+      await args.device.triggerCapabilityListener('onoff.light', false).catch(args.device.error);
+    });
+
+    this.homey.flow.getActionCard('fan_light_dim').registerRunListener(async (args: StandardFlowArgs) => {
+      await args.device.triggerCapabilityListener('dim.light', args.value).catch(args.device.error);
+    });
+
+    this.homey.flow.getConditionCard('fan_light_is_on').registerRunListener((args: StandardDeviceFlowArgs) => {
+      return args.device.getCapabilityValue('onoff.light').catch(args.device.error);
+    });
+  }
 
   onTuyaPairListDeviceProperties(
     device: TuyaDeviceResponse,
