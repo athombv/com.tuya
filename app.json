@@ -837,6 +837,78 @@
         ]
       },
       {
+        "id": "irrigator_rain_sensor_true",
+        "title": {
+          "en": "Rain detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=irrigator&capabilities=rain_sensor"
+          }
+        ]
+      },
+      {
+        "id": "irrigator_rain_sensor_false",
+        "title": {
+          "en": "Rain no longer detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=irrigator&capabilities=rain_sensor"
+          }
+        ]
+      },
+      {
+        "id": "irrigator_measure_battery.rain_sensor_changed",
+        "title": {
+          "en": "The rain sensor battery level changed"
+        },
+        "tokens": [
+          {
+            "name": "value",
+            "title": {
+              "en": "Battery"
+            },
+            "type": "number",
+            "example": 99
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=irrigator&capabilities=measure_battery.rain_sensor"
+          }
+        ]
+      },
+      {
+        "id": "irrigator_measure_battery.climate_sensor_changed",
+        "title": {
+          "en": "The climate sensor battery level changed"
+        },
+        "tokens": [
+          {
+            "name": "value",
+            "title": {
+              "en": "Battery"
+            },
+            "type": "number",
+            "example": 99
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=irrigator&capabilities=measure_battery.climate_sensor"
+          }
+        ]
+      },
+      {
         "id": "light_switch_led_turned_on",
         "highlight": true,
         "title": {
@@ -1936,6 +2008,19 @@
         ]
       },
       {
+        "id": "irrigator_rain_sensor_is_true",
+        "title": {
+          "en": "Rain !{{is|is not}} detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=irrigator&capabilities=rain_sensor"
+          }
+        ]
+      },
+      {
         "id": "light_switch_led_is_on",
         "highlight": true,
         "title": {
@@ -2793,6 +2878,221 @@
             "en": "By how much the power measured by the device is scaled."
           },
           "type": "dropdown",
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
+    },
+    {
+      "capabilities": [
+        "measure_water",
+        "meter_water",
+        "rain_sensor"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/irrigator/assets/images/small.png",
+        "large": "/drivers/irrigator/assets/images/large.png",
+        "xlarge": "/drivers/irrigator/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "watervalve",
+      "name": {
+        "en": "Water Valve",
+        "nl": "Waterkraan"
+      },
+      "id": "irrigator",
+      "settings": [
+        {
+          "id": "temp_current_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Measured Temperature Scale"
+          },
+          "hint": {
+            "en": "By how much the temperature measured by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "humidity_current_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Measured Humidity Scale"
+          },
+          "hint": {
+            "en": "By how much the humidity measured by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "water_current_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Measured Water Flow Scale"
+          },
+          "hint": {
+            "en": "By how much the water flow measured by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "water_total_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Metered Water Flow Scale"
+          },
+          "hint": {
+            "en": "By how much the water flow metered by the device is scaled."
+          },
           "value": "0",
           "values": [
             {
@@ -4139,6 +4439,23 @@
           }
         }
       ]
+    },
+    "rain_sensor": {
+      "type": "boolean",
+      "title": {
+        "en": "Rain Detected"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Rain Detected"
+      },
+      "insightsTitleFalse": {
+        "en": "Rain No Longer Detected"
+      },
+      "icon": "assets/capabilities/rain-sensor.svg"
     },
     "siren_switch": {
       "type": "boolean",

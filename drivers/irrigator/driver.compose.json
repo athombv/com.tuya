@@ -1,0 +1,9 @@
+{
+  "$extends": "tuya",
+  "class": "watervalve",
+  "name": {
+    "en": "Water Valve",
+    "nl": "Waterkraan"
+  },
+  "capabilities": ["measure_water", "meter_water", "rain_sensor"]
+}
