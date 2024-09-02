@@ -89,8 +89,8 @@ type TuyaSpecificationDatum = {
 
 export type TuyaDeviceSpecificationResponse = {
   category: string;
-  functions: TuyaSpecificationDatum[];
-  status: TuyaSpecificationDatum[];
+  functions?: TuyaSpecificationDatum[];
+  status?: TuyaSpecificationDatum[];
 };
 
 export type TuyaDeviceDataPointResponse = {

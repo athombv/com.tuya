@@ -29,6 +29,10 @@ module.exports = class TuyaOAuth2DriverSensorClimate extends TuyaOAuth2DriverSen
     // Remove duplicate capabilities
     props.capabilities = [...new Set(props.capabilities)];
 
+    if (!specifications || !specifications.status) {
+      return props;
+    }
+
     for (const statusSpecifications of specifications.status) {
       const tuyaCapability = statusSpecifications.code;
       const values = JSON.parse(statusSpecifications.values);

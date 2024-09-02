@@ -231,6 +231,35 @@ export async function onSettings<T extends { [key: string]: unknown }>(
   );
 }
 
+/**
+ * Filters Tuya settings that map to Tuya capabilities from a Homey settings event
+ * @param homeySettingsEvent - The original settings event
+ * @param tuyaSettingsKeys - A list of settings that map to Tuya capabilities
+ * @returns A new settings event with only Tuya capabilities in the changedKeys
+ */
+export function filterTuyaSettings<H extends T, T extends { [key: string]: unknown }>(
+  homeySettingsEvent: SettingsEvent<H>,
+  tuyaSettingsKeys: (keyof T)[],
+): SettingsEvent<T> {
+  // only include settings that can be mapped one-to-one with a Tuya capability
+  function filterTuyaChangedKeys(changedKeys: (keyof H)[]): (keyof T)[] {
+    return changedKeys.filter(key => constIncludes(tuyaSettingsKeys, key)) as (keyof T)[];
+  }
+
+  // original settings event is immutable, so a copy is needed
+  const tuyaSettingsEvent: SettingsEvent<T> = {
+    oldSettings: {
+      ...homeySettingsEvent.oldSettings,
+    },
+    newSettings: {
+      ...homeySettingsEvent.newSettings,
+    },
+    changedKeys: filterTuyaChangedKeys(homeySettingsEvent.changedKeys),
+  };
+
+  return tuyaSettingsEvent;
+}
+
 // The standard TypeScript definition of Array.includes does not work for const arrays.
 // This typing gives a boolean for an unknown S, and true if S is known to be in T from its type.
 export function constIncludes<T, S>(array: ReadonlyArray<T>, search: S): S extends T ? true : boolean {

@@ -1,44 +1,35 @@
 import * as TuyaLightMigrations from '../../lib/migrations/TuyaLightMigrations';
 import { TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
-import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import { TuyaCommand } from '../../types/TuyaApiTypes';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import { LIGHT_SETTING_LABELS, LightSettingCommand, LightSettingKey, PIR_CAPABILITIES } from './TuyaLightConstants';
+import TuyaOAuth2DeviceWithLight from '../../lib/TuyaOAuth2DeviceWithLight';
 
-type ParsedColourData = { h: number; s: number; v: number };
-
-export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
-  LIGHT_COLOUR_DATA_V1_HUE_MIN = this.store.tuya_colour?.h?.min;
-  LIGHT_COLOUR_DATA_V1_HUE_MAX = this.store.tuya_colour?.h?.max;
-  LIGHT_COLOUR_DATA_V1_SATURATION_MIN = this.store.tuya_colour?.s?.min;
-  LIGHT_COLOUR_DATA_V1_SATURATION_MAX = this.store.tuya_colour?.s?.max;
-  LIGHT_COLOUR_DATA_V1_VALUE_MIN = this.store.tuya_colour?.v?.min;
-  LIGHT_COLOUR_DATA_V1_VALUE_MAX = this.store.tuya_colour?.v?.max;
-
-  LIGHT_COLOUR_DATA_V2_HUE_MIN = this.store.tuya_colour_v2?.h?.min;
-  LIGHT_COLOUR_DATA_V2_HUE_MAX = this.store.tuya_colour_v2?.h?.max;
-  LIGHT_COLOUR_DATA_V2_SATURATION_MIN = this.store.tuya_colour_v2?.s?.min;
-  LIGHT_COLOUR_DATA_V2_SATURATION_MAX = this.store.tuya_colour_v2?.s?.max;
-  LIGHT_COLOUR_DATA_V2_VALUE_MIN = this.store.tuya_colour_v2?.v?.min;
-  LIGHT_COLOUR_DATA_V2_VALUE_MAX = this.store.tuya_colour_v2?.v?.max;
-
-  LIGHT_TEMP_VALUE_V1_MIN = this.store.tuya_temperature?.min;
-  LIGHT_TEMP_VALUE_V1_MAX = this.store.tuya_temperature?.max;
-  LIGHT_TEMP_VALUE_V2_MIN = this.store.tuya_temperature_v2?.min;
-  LIGHT_TEMP_VALUE_V2_MAX = this.store.tuya_temperature_v2?.max;
-
-  LIGHT_BRIGHT_VALUE_V1_MIN = this.store.tuya_brightness?.min;
-  LIGHT_BRIGHT_VALUE_V1_MAX = this.store.tuya_brightness?.max;
-
-  LIGHT_BRIGHT_VALUE_V2_MIN = this.store.tuya_brightness_v2?.min;
-  LIGHT_BRIGHT_VALUE_V2_MAX = this.store.tuya_brightness_v2?.max;
-
+export default class TuyaOAuth2DeviceLight extends TuyaOAuth2DeviceWithLight {
   async performMigrations(): Promise<void> {
     await super.performMigrations();
     await TuyaLightMigrations.performMigrations(this);
   }
 
   async onOAuth2Init(): Promise<void> {
+    if (this.getStoreValue('tuya_category') === 'dj') {
+      // Check if we need to use v2 Tuya capabilities
+      if (this.hasTuyaCapability('bright_value_v2')) {
+        this.LIGHT_DIM_TUYA_CAPABILITY = 'bright_value_v2';
+        this.LIGHT_DIM_TUYA_SPECS = 'tuya_brightness_v2';
+      }
+
+      if (this.hasTuyaCapability('temp_value_v2')) {
+        this.LIGHT_TEMP_TUYA_CAPABILITY = 'temp_value_v2';
+        this.LIGHT_TEMP_TUYA_SPECS = 'tuya_temperature_v2';
+      }
+
+      if (this.hasTuyaCapability('colour_data_v2')) {
+        this.LIGHT_COLOR_TUYA_CAPABILITY = 'colour_data_v2';
+        this.LIGHT_COLOR_TUYA_SPECS = 'tuya_colour_v2';
+      }
+    }
+    // superclass handles all light capabilities, except for onoff
     await super.onOAuth2Init();
 
     // onoff
@@ -53,25 +44,10 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
         this.registerCapabilityListener(`onoff.${tuyaSwitch}`, value => this.switchOnOff(value, tuyaSwitch));
       }
     }
-
-    // light capabilities
-    const lightCapabilities = [];
-    if (this.hasCapability('dim')) lightCapabilities.push('dim');
-    if (this.hasCapability('light_hue')) lightCapabilities.push('light_hue');
-    if (this.hasCapability('light_saturation')) lightCapabilities.push('light_saturation');
-    if (this.hasCapability('light_temperature')) lightCapabilities.push('light_temperature');
-    if (this.hasCapability('light_mode')) lightCapabilities.push('light_mode');
-
-    if (lightCapabilities.length > 0) {
-      this.registerMultipleCapabilityListener(
-        lightCapabilities,
-        capabilityValues => this.onCapabilitiesLight(capabilityValues),
-        150,
-      );
-    }
   }
 
   async onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[]): Promise<void> {
+    // superclass handles all light capabilities, except for onoff
     await super.onTuyaStatus(status, changedStatusCodes);
 
     // onoff
@@ -101,171 +77,6 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
 
     if (this.hasCapability('onoff')) {
       this.setCapabilityValue('onoff', anySwitchOn).catch(this.error);
-    }
-
-    // light_temperature
-    if (typeof status['temp_value'] === 'number') {
-      const light_temperature = Math.min(
-        1,
-        Math.max(
-          0,
-          1 -
-            (status['temp_value'] - this.LIGHT_TEMP_VALUE_V1_MIN) /
-              (this.LIGHT_TEMP_VALUE_V1_MAX - this.LIGHT_TEMP_VALUE_V1_MIN),
-        ),
-      );
-      this.setCapabilityValue('light_temperature', light_temperature).catch(this.error);
-    }
-
-    if (typeof status['temp_value_v2'] === 'number') {
-      const light_temperature = Math.min(
-        1,
-        Math.max(
-          0,
-          1 -
-            (status['temp_value_v2'] - this.LIGHT_TEMP_VALUE_V2_MIN) /
-              (this.LIGHT_TEMP_VALUE_V2_MAX - this.LIGHT_TEMP_VALUE_V2_MIN),
-        ),
-      );
-      this.setCapabilityValue('light_temperature', light_temperature).catch(this.error);
-    }
-
-    // light_hue, light_saturation
-    const colourData = status['colour_data'] as ParsedColourData | undefined;
-    const colourDataV2 = status['colour_data_v2'] as ParsedColourData | undefined;
-
-    if (colourData) {
-      const light_hue = Math.min(
-        1,
-        Math.max(
-          0,
-          (colourData['h'] - this.LIGHT_COLOUR_DATA_V1_HUE_MIN) /
-            (this.LIGHT_COLOUR_DATA_V1_HUE_MAX - this.LIGHT_COLOUR_DATA_V1_HUE_MIN),
-        ),
-      );
-      this.setCapabilityValue('light_hue', light_hue).catch(this.error);
-
-      const light_saturation = Math.min(
-        1,
-        Math.max(
-          0,
-          (colourData['s'] - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN) /
-            (this.LIGHT_COLOUR_DATA_V1_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN),
-        ),
-      );
-      this.setCapabilityValue('light_saturation', light_saturation).catch(this.error);
-    }
-
-    if (colourDataV2) {
-      const light_hue = Math.min(
-        1,
-        Math.max(
-          0,
-          (colourDataV2['h'] - this.LIGHT_COLOUR_DATA_V2_HUE_MIN) /
-            (this.LIGHT_COLOUR_DATA_V2_HUE_MAX - this.LIGHT_COLOUR_DATA_V2_HUE_MIN),
-        ),
-      );
-      this.setCapabilityValue('light_hue', light_hue).catch(this.error);
-
-      const light_saturation = Math.min(
-        1,
-        Math.max(
-          0,
-          (colourDataV2['s'] - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN) /
-            (this.LIGHT_COLOUR_DATA_V2_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN),
-        ),
-      );
-      this.setCapabilityValue('light_saturation', light_saturation).catch(this.error);
-    }
-
-    // light_mode
-    if (status['work_mode']) {
-      if (status['work_mode'] === 'colour') {
-        if (this.hasCapability('light_mode')) {
-          this.setCapabilityValue('light_mode', 'color').catch(this.error);
-        }
-
-        // dim
-        if (colourData) {
-          const dim = Math.min(
-            1,
-            Math.max(
-              0,
-              (colourData['v'] - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN) /
-                (this.LIGHT_COLOUR_DATA_V1_VALUE_MAX - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN),
-            ),
-          );
-          this.setCapabilityValue('dim', dim).catch(this.error);
-        }
-
-        if (colourDataV2) {
-          const dim = Math.min(
-            1,
-            Math.max(
-              0,
-              (colourDataV2['v'] - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN) /
-                (this.LIGHT_COLOUR_DATA_V2_VALUE_MAX - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN),
-            ),
-          );
-          this.setCapabilityValue('dim', dim).catch(this.error);
-        }
-      }
-
-      if (status['work_mode'] === 'white') {
-        if (this.hasCapability('light_mode')) {
-          this.setCapabilityValue('light_mode', 'temperature').catch(this.error);
-        }
-
-        // dim
-        if (typeof status['bright_value'] === 'number') {
-          const dim = Math.min(
-            1,
-            Math.max(
-              0,
-              (status['bright_value'] - this.LIGHT_BRIGHT_VALUE_V1_MIN) /
-                (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN),
-            ),
-          );
-          this.setCapabilityValue('dim', dim).catch(this.error);
-        }
-
-        if (typeof status['bright_value_v2'] === 'number') {
-          const dim = Math.min(
-            1,
-            Math.max(
-              0,
-              (status['bright_value_v2'] - this.LIGHT_BRIGHT_VALUE_V2_MIN) /
-                (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN),
-            ),
-          );
-          this.setCapabilityValue('dim', dim).catch(this.error);
-        }
-      }
-    } else {
-      // dim
-      if (typeof status['bright_value'] === 'number') {
-        const dim = Math.min(
-          1,
-          Math.max(
-            0,
-            (status['bright_value'] - this.LIGHT_BRIGHT_VALUE_V1_MIN) /
-              (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN),
-          ),
-        );
-        this.setCapabilityValue('dim', dim).catch(this.error);
-      }
-
-      if (typeof status['bright_value_v2'] === 'number') {
-        const dim = Math.min(
-          1,
-          Math.max(
-            0,
-            (status['bright_value_v2'] - this.LIGHT_BRIGHT_VALUE_V2_MIN) /
-              (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN),
-          ),
-        );
-        this.setCapabilityValue('dim', dim).catch(this.error);
-      }
     }
 
     // PIR
@@ -331,216 +142,6 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2Device {
       code: tuya_switch,
       value: value,
     });
-  }
-
-  async onCapabilitiesLight({
-    dim = this.getCapabilityValue('dim'),
-    light_mode = this.getCapabilityValue('light_mode'),
-    light_hue = this.getCapabilityValue('light_hue'),
-    light_saturation = this.getCapabilityValue('light_saturation'),
-    light_temperature = this.getCapabilityValue('light_temperature'),
-  }): Promise<void> {
-    const commands: TuyaCommand[] = [];
-
-    // Light mode is not available when a light only has temperature or color
-    if (!this.hasCapability('light_mode')) {
-      if (this.hasCapability('light_hue')) {
-        light_mode = 'color';
-      } else if (this.hasCapability('light_temperature')) {
-        light_mode = 'temperature';
-      }
-    }
-
-    if (this.hasTuyaCapability('work_mode')) {
-      commands.push({
-        code: 'work_mode',
-        value: light_mode === 'color' ? 'colour' : 'white',
-      });
-    }
-
-    if (light_mode === 'color') {
-      if (this.hasTuyaCapability('colour_data')) {
-        commands.push({
-          code: 'colour_data',
-          value: {
-            h: Math.min(
-              this.LIGHT_COLOUR_DATA_V1_HUE_MAX,
-              Math.max(
-                this.LIGHT_COLOUR_DATA_V1_HUE_MIN,
-                Math.round(
-                  this.LIGHT_COLOUR_DATA_V1_HUE_MIN +
-                    light_hue * (this.LIGHT_COLOUR_DATA_V1_HUE_MAX - this.LIGHT_COLOUR_DATA_V1_HUE_MIN),
-                ),
-              ),
-            ),
-            s: Math.min(
-              this.LIGHT_COLOUR_DATA_V1_SATURATION_MAX,
-              Math.max(
-                this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN,
-                Math.round(
-                  this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN +
-                    light_saturation *
-                      (this.LIGHT_COLOUR_DATA_V1_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V1_SATURATION_MIN),
-                ),
-              ),
-            ),
-            // Prevent a value of 0, which causes unwanted behavior
-            v: Math.min(
-              this.LIGHT_COLOUR_DATA_V1_VALUE_MAX,
-              Math.max(
-                1,
-                this.LIGHT_COLOUR_DATA_V1_VALUE_MIN,
-                Math.round(
-                  this.LIGHT_COLOUR_DATA_V1_VALUE_MIN +
-                    dim * (this.LIGHT_COLOUR_DATA_V1_VALUE_MAX - this.LIGHT_COLOUR_DATA_V1_VALUE_MIN),
-                ),
-              ),
-            ),
-          },
-        });
-      }
-
-      if (this.hasTuyaCapability('colour_data_v2')) {
-        commands.push({
-          code: 'colour_data_v2',
-          value: {
-            h: Math.min(
-              this.LIGHT_COLOUR_DATA_V2_HUE_MAX,
-              Math.max(
-                this.LIGHT_COLOUR_DATA_V2_HUE_MIN,
-                Math.round(
-                  this.LIGHT_COLOUR_DATA_V2_HUE_MIN +
-                    light_hue * (this.LIGHT_COLOUR_DATA_V2_HUE_MAX - this.LIGHT_COLOUR_DATA_V2_HUE_MIN),
-                ),
-              ),
-            ),
-            s: Math.min(
-              this.LIGHT_COLOUR_DATA_V2_SATURATION_MAX,
-              Math.max(
-                this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN,
-                Math.round(
-                  this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN +
-                    light_saturation *
-                      (this.LIGHT_COLOUR_DATA_V2_SATURATION_MAX - this.LIGHT_COLOUR_DATA_V2_SATURATION_MIN),
-                ),
-              ),
-            ),
-            // Prevent a value of 0, which causes unwanted behavior
-            v: Math.min(
-              this.LIGHT_COLOUR_DATA_V2_VALUE_MAX,
-              Math.max(
-                1,
-                this.LIGHT_COLOUR_DATA_V2_VALUE_MIN,
-                Math.round(
-                  this.LIGHT_COLOUR_DATA_V2_VALUE_MIN +
-                    dim * (this.LIGHT_COLOUR_DATA_V2_VALUE_MAX - this.LIGHT_COLOUR_DATA_V2_VALUE_MIN),
-                ),
-              ),
-            ),
-          },
-        });
-      }
-    } else if (light_mode === 'temperature') {
-      if (this.hasTuyaCapability('bright_value')) {
-        commands.push({
-          code: 'bright_value',
-          value: Math.min(
-            this.LIGHT_BRIGHT_VALUE_V1_MAX,
-            Math.max(
-              this.LIGHT_BRIGHT_VALUE_V1_MIN,
-              Math.round(
-                this.LIGHT_BRIGHT_VALUE_V1_MIN +
-                  dim * (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN),
-              ),
-            ),
-          ),
-        });
-      }
-
-      if (this.hasTuyaCapability('bright_value_v2')) {
-        commands.push({
-          code: 'bright_value_v2',
-          value: Math.min(
-            this.LIGHT_BRIGHT_VALUE_V2_MAX,
-            Math.max(
-              this.LIGHT_BRIGHT_VALUE_V2_MIN,
-              Math.round(
-                this.LIGHT_BRIGHT_VALUE_V2_MIN +
-                  dim * (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN),
-              ),
-            ),
-          ),
-        });
-      }
-
-      if (this.hasTuyaCapability('temp_value')) {
-        commands.push({
-          code: 'temp_value',
-          value: Math.min(
-            this.LIGHT_TEMP_VALUE_V1_MAX,
-            Math.max(
-              this.LIGHT_TEMP_VALUE_V1_MIN,
-              Math.round(
-                this.LIGHT_TEMP_VALUE_V1_MIN +
-                  (1 - light_temperature) * (this.LIGHT_TEMP_VALUE_V1_MAX - this.LIGHT_TEMP_VALUE_V1_MIN),
-              ),
-            ),
-          ),
-        });
-      }
-
-      if (this.hasTuyaCapability('temp_value_v2')) {
-        commands.push({
-          code: 'temp_value_v2',
-          value: Math.min(
-            this.LIGHT_TEMP_VALUE_V2_MAX,
-            Math.max(
-              this.LIGHT_TEMP_VALUE_V2_MIN,
-              Math.round(
-                this.LIGHT_TEMP_VALUE_V2_MIN +
-                  (1 - light_temperature) * (this.LIGHT_TEMP_VALUE_V2_MAX - this.LIGHT_TEMP_VALUE_V2_MIN),
-              ),
-            ),
-          ),
-        });
-      }
-    } else if (this.hasCapability('dim')) {
-      if (this.hasTuyaCapability('bright_value')) {
-        commands.push({
-          code: 'bright_value',
-          value: Math.min(
-            this.LIGHT_BRIGHT_VALUE_V1_MAX,
-            Math.max(
-              this.LIGHT_BRIGHT_VALUE_V1_MIN,
-              Math.round(
-                this.LIGHT_BRIGHT_VALUE_V1_MIN +
-                  dim * (this.LIGHT_BRIGHT_VALUE_V1_MAX - this.LIGHT_BRIGHT_VALUE_V1_MIN),
-              ),
-            ),
-          ),
-        });
-      }
-
-      if (this.hasTuyaCapability('bright_value_v2')) {
-        commands.push({
-          code: 'bright_value_v2',
-          value: Math.min(
-            this.LIGHT_BRIGHT_VALUE_V2_MAX,
-            Math.max(
-              this.LIGHT_BRIGHT_VALUE_V2_MIN,
-              Math.round(
-                this.LIGHT_BRIGHT_VALUE_V2_MIN +
-                  dim * (this.LIGHT_BRIGHT_VALUE_V2_MAX - this.LIGHT_BRIGHT_VALUE_V2_MIN),
-              ),
-            ),
-          ),
-        });
-      }
-    }
-
-    if (commands.length) {
-      await this.sendCommands(commands);
-    }
   }
 
   // TODO migrate to util sendSettingCommand

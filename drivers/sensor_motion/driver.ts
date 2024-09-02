@@ -24,7 +24,7 @@ module.exports = class TuyaOAuth2DriverSensorMotion extends TuyaOAuth2DriverSens
       props.capabilities.push('alarm_motion');
     }
 
-    if (!specifications) {
+    if (!specifications || !specifications.status) {
       return props;
     }
 

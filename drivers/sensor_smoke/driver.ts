@@ -24,7 +24,7 @@ module.exports = class TuyaOAuth2DriverSensorSmoke extends TuyaOAuth2DriverSenso
       props.capabilities.push('alarm_smoke');
     }
 
-    if (!specifications) {
+    if (!specifications || !specifications.status) {
       return props;
     }
 

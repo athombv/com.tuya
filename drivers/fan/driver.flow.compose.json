@@ -1,0 +1,121 @@
+{
+  "triggers": [
+    {
+      "id": "fan_light_onoff_true",
+      "title": {
+        "en": "Light turned on"
+      },
+      "$filter": "capabilities=onoff.light"
+    },
+    {
+      "id": "fan_light_onoff_false",
+      "title": {
+        "en": "Light turned off"
+      },
+      "$filter": "capabilities=onoff.light"
+    },
+    {
+      "id": "fan_light_dim_changed",
+      "title": {
+        "en": "Light dim-level changed"
+      },
+      "$filter": "capabilities=dim.light",
+      "tokens": [
+        {
+          "name": "value",
+          "type": "number",
+          "title": {
+            "en": "Level"
+          },
+          "example": 0.5
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "fan_light_is_on",
+      "$filter": "capabilities=onoff.light",
+      "title": {
+        "en": "Light is turned !{{on|off}}"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "id": "fan_light_on",
+      "$filter": "capabilities=onoff.light",
+      "title": {
+        "en": "Turn light on"
+      }
+    },
+    {
+      "id": "fan_light_off",
+      "$filter": "capabilities=onoff.light",
+      "title": {
+        "en": "Turn light off"
+      }
+    },
+    {
+      "id": "fan_light_dim",
+      "$filter": "capabilities=dim.light",
+      "title": {
+        "en": "Dim light"
+      },
+      "titleFormatted": {
+        "en": "Dim light to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "title": {
+            "en": "Level"
+          },
+          "type": "range",
+          "min": 0,
+          "max": 1,
+          "step": 0.01,
+          "value": 0.5,
+          "label": "%",
+          "labelMultiplier": 100,
+          "labelDecimals": 0
+        }
+      ]
+    },
+    {
+      "id": "fan_fan_direction",
+      "title": {
+        "en": "Set fan direction"
+      },
+      "titleFormatted": {
+        "en": "Set fan direction to [[value]]"
+      },
+      "hint": {
+        "en": "CAUTION: This setting is not supported by every fan."
+      },
+      "args": [
+        {
+          "name": "value",
+          "title": {
+            "en": "Direction"
+          },
+          "type": "dropdown",
+          "values": [
+            {
+              "id": "forward",
+              "title": {
+                "en": "Forward"
+              }
+            },
+            {
+              "id": "backward",
+              "title": {
+                "en": "Backward"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

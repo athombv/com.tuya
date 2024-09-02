@@ -2,7 +2,7 @@
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.tuya",
   "version": "1.2.3",
-  "compatibility": ">=12.0.0",
+  "compatibility": ">=12.0.1",
   "brandColor": "#FF4800",
   "sdk": 3,
   "platforms": [
@@ -788,6 +788,55 @@
         ]
       },
       {
+        "id": "fan_light_onoff_true",
+        "title": {
+          "en": "Light turned on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fan&capabilities=onoff.light"
+          }
+        ]
+      },
+      {
+        "id": "fan_light_onoff_false",
+        "title": {
+          "en": "Light turned off"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fan&capabilities=onoff.light"
+          }
+        ]
+      },
+      {
+        "id": "fan_light_dim_changed",
+        "title": {
+          "en": "Light dim-level changed"
+        },
+        "tokens": [
+          {
+            "name": "value",
+            "type": "number",
+            "title": {
+              "en": "Level"
+            },
+            "example": 0.5
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fan&capabilities=dim.light"
+          }
+        ]
+      },
+      {
         "id": "light_switch_led_turned_on",
         "highlight": true,
         "title": {
@@ -1451,6 +1500,102 @@
         ]
       },
       {
+        "id": "fan_light_on",
+        "title": {
+          "en": "Turn light on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fan&capabilities=onoff.light"
+          }
+        ]
+      },
+      {
+        "id": "fan_light_off",
+        "title": {
+          "en": "Turn light off"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fan&capabilities=onoff.light"
+          }
+        ]
+      },
+      {
+        "id": "fan_light_dim",
+        "title": {
+          "en": "Dim light"
+        },
+        "titleFormatted": {
+          "en": "Dim light to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fan&capabilities=dim.light"
+          },
+          {
+            "name": "value",
+            "title": {
+              "en": "Level"
+            },
+            "type": "range",
+            "min": 0,
+            "max": 1,
+            "step": 0.01,
+            "value": 0.5,
+            "label": "%",
+            "labelMultiplier": 100,
+            "labelDecimals": 0
+          }
+        ]
+      },
+      {
+        "id": "fan_fan_direction",
+        "title": {
+          "en": "Set fan direction"
+        },
+        "titleFormatted": {
+          "en": "Set fan direction to [[value]]"
+        },
+        "hint": {
+          "en": "CAUTION: This setting is not supported by every fan."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fan"
+          },
+          {
+            "name": "value",
+            "title": {
+              "en": "Direction"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "forward",
+                "title": {
+                  "en": "Forward"
+                }
+              },
+              {
+                "id": "backward",
+                "title": {
+                  "en": "Backward"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "heater_set_child_lock",
         "title": {
           "en": "Set child lock"
@@ -1774,6 +1919,19 @@
             "type": "device",
             "name": "device",
             "filter": "driver_id=dimmer&capabilities=onoff.3"
+          }
+        ]
+      },
+      {
+        "id": "fan_light_is_on",
+        "title": {
+          "en": "Light is turned !{{on|off}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=fan&capabilities=onoff.light"
           }
         ]
       },
@@ -2452,6 +2610,39 @@
       },
       "id": "fan",
       "settings": [
+        {
+          "id": "enable_light_support",
+          "type": "checkbox",
+          "label": {
+            "en": "Enable light support"
+          },
+          "hints": {
+            "en": "Some fans have light capabilities (built-in lamp) and some don't. This is not always detected correctly: if the automatic detection failed you can adjust this setting."
+          },
+          "value": false
+        },
+        {
+          "id": "fan_direction",
+          "type": "dropdown",
+          "label": {
+            "en": "Fan direction"
+          },
+          "value": "forward",
+          "values": [
+            {
+              "id": "forward",
+              "label": {
+                "en": "Forward"
+              }
+            },
+            {
+              "id": "backward",
+              "label": {
+                "en": "Backward"
+              }
+            }
+          ]
+        },
         {
           "id": "deviceSpecification",
           "type": "label",
@@ -3800,6 +3991,24 @@
       "uiComponent": "button",
       "icon": "assets/capabilities/eco.svg"
     },
+    "fan_swing_horizontal": {
+      "type": "boolean",
+      "title": {
+        "en": "Fan Swing Horizontal"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
+    "fan_swing_vertical": {
+      "type": "boolean",
+      "title": {
+        "en": "Fan Swing Vertical"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button"
+    },
     "fault": {
       "type": "string",
       "title": {
@@ -3808,6 +4017,41 @@
       "getable": true,
       "setable": false,
       "uiComponent": "sensor"
+    },
+    "legacy_fan_speed": {
+      "type": "enum",
+      "title": {
+        "en": "Fan Speed"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "4",
+          "title": {
+            "en": "4"
+          }
+        },
+        {
+          "id": "3",
+          "title": {
+            "en": "3"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "2"
+          }
+        },
+        {
+          "id": "1",
+          "title": {
+            "en": "1"
+          }
+        }
+      ]
     },
     "ptz_control_horizontal": {
       "type": "enum",
