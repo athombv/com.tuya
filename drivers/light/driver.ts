@@ -94,7 +94,12 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2DriverWithLight {
     const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
     props.store.tuya_switches = [];
 
-    props.store._migrations = [...(props.store._migrations ?? []), 'light_fix_undefined_specifications'];
+    props.store._migrations = [
+      ...(props.store._migrations ?? []),
+      'light_fix_undefined_specifications',
+      'light_switch_capability',
+      'light_switch_on_dim',
+    ];
 
     // Add this before the sub-capabilities, so it becomes the quick toggle
     props.capabilities.push('onoff');
