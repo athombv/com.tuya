@@ -121,7 +121,7 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2DriverWithLight {
 
     for (const statusSpecification of specifications.status) {
       const tuyaCapability = statusSpecification.code;
-      const values = JSON.parse(statusSpecification.values);
+      const values: Record<string, unknown> = JSON.parse(statusSpecification.values);
 
       // Fan
       if (tuyaCapability === 'fan_speed_percent') {
@@ -132,9 +132,11 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2DriverWithLight {
         };
       }
 
-      if (tuyaCapability === 'fan_speed') {
+      const speeds = (values.range as never[] | undefined)?.length;
+
+      if (tuyaCapability === 'fan_speed' && speeds) {
         const legacyFanSpeedsEnum = [];
-        for (let i = values.range.length; i >= 1; i--) {
+        for (let i = speeds; i >= 1; i--) {
           legacyFanSpeedsEnum.push({
             id: `${i}`,
             title: `${i}`,
