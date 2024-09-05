@@ -1,5 +1,7 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import { TuyaStatus } from '../../types/TuyaTypes';
+import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
+import { HEATER_CAPABILITIES_MAPPING, HomeyHeaterSettings } from './TuyaHeaterConstants';
+import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 
 module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
   async onOAuth2Init(): Promise<void> {
@@ -117,6 +119,15 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
         code: 'mode_eco',
         value: value,
       });
+    }
+  }
+
+  async onSettings(event: SettingsEvent<HomeyHeaterSettings>): Promise<string | void> {
+    for (const tuyaCapability of ['temp_set', 'temp_current', 'work_power'] as const) {
+      const homeyCapability = HEATER_CAPABILITIES_MAPPING[tuyaCapability];
+      await TuyaOAuth2Util.handleScaleSetting(this, event, `${tuyaCapability}_scaling`, homeyCapability).catch(
+        this.error,
+      );
     }
   }
 };

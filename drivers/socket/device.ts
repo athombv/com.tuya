@@ -139,6 +139,14 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
   }
 
   async onSettings(event: SettingsEvent<HomeySocketSettings>): Promise<string | void> {
+    for (const [settingKey, homeyCapability] of [
+      ['power_scaling', 'measure_power'],
+      ['cur_current_scaling', 'measure_current'],
+      ['cur_voltage_scaling', 'measure_voltage'],
+    ] as const) {
+      await TuyaOAuth2Util.handleScaleSetting(this, event, settingKey, homeyCapability).catch(this.error);
+    }
+
     const tuyaSettingsEvent = TuyaOAuth2Util.filterTuyaSettings<HomeySocketSettings, TuyaSocketSettings>(event, [
       'child_lock',
       'relay_status',
