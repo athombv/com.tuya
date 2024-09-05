@@ -19,12 +19,16 @@ export const CLIMATE_SENSOR_SETTING_LABELS = {
   va_temperature_scaling: 'Measured Temperature Scale',
   va_humidity_scaling: 'Measured Humidity Scale',
   bright_value_scaling: 'Measured Brightness Scale',
+  use_alarm_timeout: 'Use Alarm Timeout',
+  alarm_timeout: 'Alarm Timeout',
 } as const;
 
 export type HomeyClimateSensorSettings = {
   va_temperature_scaling: '0' | '1' | '2' | '3';
   va_humidity_scaling: '0' | '1' | '2' | '3';
   bright_value_scaling: '0' | '1' | '2' | '3';
+  use_alarm_timeout: boolean;
+  alarm_timeout: number;
 };
 
 export type TuyaClimateSensorSettings = Record<string, never>;

@@ -2,7 +2,8 @@ import { TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import { TuyaCommand } from '../../types/TuyaApiTypes';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
-import { DIMMER_SETTING_LABELS } from './TuyaDimmerConstants';
+import { DIMMER_SETTING_LABELS, HomeyDimmerSettings, TuyaDimmerSettings } from './TuyaDimmerConstants';
+import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 
 export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
   async onOAuth2Init(): Promise<void> {
@@ -100,55 +101,8 @@ export default class TuyaOAuth2DeviceDimmer extends TuyaOAuth2Device {
     await this.safeSetCapabilityValue('onoff', anySwitchOn);
   }
 
-  // TODO migrate to util onSettings
-  // TODO define settings
-  async onSettings({
-    newSettings,
-    changedKeys,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }: SettingsEvent<Record<string, any>>): Promise<string | void> {
-    const unsupportedSettings: string[] = [];
-    const unsupportedValues: string[] = [];
-
-    for (const changedKey of changedKeys) {
-      const newValue = newSettings[changedKey];
-      await this.sendCommand({
-        code: changedKey,
-        value: typeof newValue === 'number' ? newValue * TUYA_PERCENTAGE_SCALING : newValue,
-      }).catch(err => {
-        if (err.tuyaCode === 2008) {
-          unsupportedSettings.push(changedKey);
-        } else if (err.tuyaCode === 501) {
-          unsupportedValues.push(changedKey);
-        } else {
-          throw err;
-        }
-      });
-    }
-
-    // Report back which capabilities and values are unsupported,
-    // since we cannot programmatically remove settings.
-    const messages = [];
-
-    if (unsupportedSettings.length > 0) {
-      let unsupportedSettingsMessage = this.homey.__('settings_unsupported') + ' ';
-      const mappedSettingNames = unsupportedSettings.map(
-        settingKey => DIMMER_SETTING_LABELS[settingKey as keyof typeof DIMMER_SETTING_LABELS],
-      );
-      unsupportedSettingsMessage += mappedSettingNames.join(', ');
-      messages.push(unsupportedSettingsMessage);
-    }
-    if (unsupportedValues.length > 0) {
-      let unsupportedValuesMessage = this.homey.__('setting_values_unsupported') + ' ';
-      const mappedSettingNames = unsupportedValues.map(
-        settingKey => DIMMER_SETTING_LABELS[settingKey as keyof typeof DIMMER_SETTING_LABELS],
-      );
-      unsupportedValuesMessage += mappedSettingNames.join(', ');
-      messages.push(unsupportedValuesMessage);
-    }
-    if (messages.length > 0) {
-      return messages.join('\n');
-    }
+  async onSettings(event: SettingsEvent<HomeyDimmerSettings>): Promise<string | void> {
+    return TuyaOAuth2Util.onSettings<TuyaDimmerSettings>(this, event, DIMMER_SETTING_LABELS);
   }
 
   async commandAll(codes: string[], value: unknown): Promise<void> {

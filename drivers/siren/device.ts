@@ -2,7 +2,13 @@ import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
-import { SIREN_CAPABILITIES, SIREN_CAPABILITIES_MAPPING, SIREN_SETTING_LABELS } from './TuyaSirenConstants';
+import {
+  HomeSirenSettings,
+  SIREN_CAPABILITIES,
+  SIREN_CAPABILITIES_MAPPING,
+  SIREN_SETTING_LABELS,
+  TuyaSirenSettings,
+} from './TuyaSirenConstants';
 
 module.exports = class TuyaOAuth2DeviceSiren extends TuyaOAuth2Device {
   async onOAuth2Init(): Promise<void> {
@@ -38,7 +44,7 @@ module.exports = class TuyaOAuth2DeviceSiren extends TuyaOAuth2Device {
     }
   }
 
-  async onSettings(event: SettingsEvent<Record<string, unknown>>): Promise<string | void> {
-    return await TuyaOAuth2Util.onSettings(this, event, SIREN_SETTING_LABELS);
+  async onSettings(event: SettingsEvent<HomeSirenSettings>): Promise<string | void> {
+    return await TuyaOAuth2Util.onSettings<TuyaSirenSettings>(this, event, SIREN_SETTING_LABELS);
   }
 };

@@ -1,9 +1,9 @@
 import * as TuyaLightMigrations from '../../lib/migrations/TuyaLightMigrations';
 import { TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
-import { TuyaCommand } from '../../types/TuyaApiTypes';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
-import { LIGHT_SETTING_LABELS, LightSettingCommand, LightSettingKey, PIR_CAPABILITIES } from './TuyaLightConstants';
+import { HomeyLightSettings, LIGHT_SETTING_LABELS, PIR_CAPABILITIES, TuyaLightSettings } from './TuyaLightConstants';
 import TuyaOAuth2DeviceWithLight from '../../lib/TuyaOAuth2DeviceWithLight';
+import { filterTuyaSettings, reportUnsupportedSettings, sendSettings } from '../../lib/TuyaOAuth2Util';
 
 export default class TuyaOAuth2DeviceLight extends TuyaOAuth2DeviceWithLight {
   async performMigrations(): Promise<void> {
@@ -144,121 +144,57 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2DeviceWithLight {
     });
   }
 
-  // TODO migrate to util sendSettingCommand
-  async sendSettingCommand({ code, value }: LightSettingCommand): Promise<void> {
-    await this.sendCommand({
-      code: code,
-      value: value,
-    }).catch(err => {
-      if (err.tuyaCode === 2008) {
-        throw new Error(
-          this.homey.__('setting_unsupported', {
-            label: LIGHT_SETTING_LABELS[code],
-          }),
-        );
-      } else if (err.tuyaCode === 501) {
-        throw new Error(
-          this.homey.__('setting_value_unsupported', {
-            label: LIGHT_SETTING_LABELS[code],
-          }),
-        );
+  async onSettings(event: SettingsEvent<HomeyLightSettings>): Promise<string | void> {
+    const nonStandbySettings = filterTuyaSettings<HomeyLightSettings, TuyaLightSettings>(event, [
+      'switch_pir',
+      'pir_sensitivity',
+      'pir_delay',
+      'cds',
+      'standby_time',
+    ]);
+
+    const [unsupportedSettings, unsupportedValues] = await sendSettings(this, nonStandbySettings);
+
+    if (event.changedKeys.includes('standby_on') || event.changedKeys.includes('standby_bright')) {
+      const standbyOn = event.newSettings['standby_on'];
+      const standbyBrightness = event.newSettings['standby_bright'] as number;
+
+      if (!this.hasTuyaCapability('standby_on')) {
+        await this.sendCommand({
+          code: 'standby_bright',
+          value: standbyOn ? standbyBrightness * TUYA_PERCENTAGE_SCALING : 0,
+        }).catch(err => {
+          if (err.tuyaCode === 2008) {
+            unsupportedSettings.push('standby_bright');
+          } else if (err.tuyaCode === 501) {
+            unsupportedValues.push('standby_bright');
+          } else {
+            throw err;
+          }
+        });
       } else {
-        throw err;
-      }
-    });
-  }
-
-  // TODO migrate to util onSettings
-  // TODO define settings
-  async onSettings({
-    newSettings,
-    changedKeys,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }: SettingsEvent<Record<LightSettingKey, any>>): Promise<string | void> {
-    const unsupportedSettings: string[] = [];
-    const unsupportedValues: string[] = [];
-
-    // Accumulate rejected settings so the user can be notified gracefully
-    const sendSetting = async (command: TuyaCommand): Promise<void> =>
-      this.sendCommand(command).catch(err => {
-        if (err.tuyaCode === 2008) {
-          unsupportedSettings.push(command.code);
-        } else if (err.tuyaCode === 501) {
-          unsupportedValues.push(command.code);
-        } else {
-          throw err;
-        }
-      });
-
-    // Only send the standby commands once for both settings
-    let changedStandby = false;
-
-    for (const changedKey of changedKeys) {
-      const newValue = newSettings[changedKey];
-
-      if (changedKey === 'standby_on' || changedKey === 'standby_bright') {
-        // Only send the standby commands once for both settings
-        if (changedStandby) {
-          continue;
-        } else {
-          changedStandby = true;
-        }
-
-        const hasStandbyOn = this.store.tuya_capabilities.includes('standby_on');
-        const standbyOn = newSettings['standby_on'];
-        const standbyBrightness = newSettings['standby_bright'] as number;
-        let commands;
-
-        if (!hasStandbyOn) {
-          commands = [
-            {
-              code: 'standby_bright',
-              value: standbyOn ? standbyBrightness * TUYA_PERCENTAGE_SCALING : 0,
-            },
-          ];
-        } else {
-          commands = [
-            {
-              code: 'standby_bright',
-              value: standbyBrightness * TUYA_PERCENTAGE_SCALING,
-            },
-            {
-              code: 'standby_on',
-              value: standbyOn,
-            },
-          ];
-        }
-
-        for (const command of commands) {
-          await sendSetting(command);
-        }
-      } else {
-        await sendSetting({
-          code: changedKey,
-          value: newValue,
+        await this.sendCommands([
+          {
+            code: 'standby_bright',
+            value: standbyBrightness * TUYA_PERCENTAGE_SCALING,
+          },
+          {
+            code: 'standby_on',
+            value: standbyOn,
+          },
+        ]).catch(err => {
+          if (err.tuyaCode === 2008) {
+            unsupportedSettings.push('standby_bright', 'standby_on');
+          } else if (err.tuyaCode === 501) {
+            unsupportedValues.push('standby_bright', 'standby_on');
+          } else {
+            throw err;
+          }
         });
       }
     }
 
-    // Report back which capabilities and values are unsupported,
-    // since we cannot programmatically remove settings.
-    const messages = [];
-
-    if (unsupportedSettings.length > 0) {
-      const mappedSettingNames = unsupportedSettings.map(
-        settingKey => LIGHT_SETTING_LABELS[settingKey as LightSettingKey],
-      );
-      messages.push(this.homey.__('settings_unsupported') + ' ' + mappedSettingNames.join(', '));
-    }
-    if (unsupportedValues.length > 0) {
-      const mappedSettingNames = unsupportedValues.map(
-        settingKey => LIGHT_SETTING_LABELS[settingKey as LightSettingKey],
-      );
-      messages.push(this.homey.__('setting_values_unsupported') + ' ' + mappedSettingNames.join(', '));
-    }
-    if (messages.length > 0) {
-      return messages.join('\n');
-    }
+    return reportUnsupportedSettings(this, unsupportedSettings, unsupportedValues, LIGHT_SETTING_LABELS);
   }
 }
 

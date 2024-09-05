@@ -1,6 +1,6 @@
 import { DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
 import { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
-import { constIncludes } from '../../lib/TuyaOAuth2Util';
+import { constIncludes, sendSetting } from '../../lib/TuyaOAuth2Util';
 import {
   type TuyaDeviceDataPointResponse,
   TuyaDeviceResponse,
@@ -8,7 +8,7 @@ import {
 } from '../../types/TuyaApiTypes';
 import type { StandardDeviceFlowArgs, StandardFlowArgs } from '../../types/TuyaTypes';
 import type TuyaOAuth2DeviceLight from './device';
-import { LightSettingCommand, PIR_CAPABILITIES } from './TuyaLightConstants';
+import { LIGHT_SETTING_LABELS, LightSettingCommand, PIR_CAPABILITIES } from './TuyaLightConstants';
 import TuyaOAuth2DriverWithLight from '../../lib/TuyaOAuth2DriverWithLight';
 
 type DeviceArgs = StandardDeviceFlowArgs<TuyaOAuth2DeviceLight>;
@@ -30,12 +30,11 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2DriverWithLight {
   async onInit(): Promise<void> {
     await super.onInit();
 
-    this.homey.flow.getActionCard('light_switch_pir').registerRunListener(async (args: FlowArgs) => {
-      await args.device.sendSettingCommand({
-        code: 'switch_pir',
-        value: args.value as boolean,
-      });
-    });
+    this.homey.flow
+      .getActionCard('light_switch_pir')
+      .registerRunListener(async (args: FlowArgs) =>
+        sendSetting(args.device, 'switch_pir', args.value, LIGHT_SETTING_LABELS),
+      );
 
     this.homey.flow.getActionCard('light_standby_on').registerRunListener(async (args: FlowArgs) => {
       const device = args.device;
@@ -65,7 +64,7 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2DriverWithLight {
       }
 
       for (const command of commands) {
-        await args.device.sendSettingCommand(command);
+        await sendSetting(args.device, command.code, command.value, LIGHT_SETTING_LABELS);
       }
     });
 
