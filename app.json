@@ -2711,17 +2711,6 @@
       "id": "heater",
       "settings": [
         {
-          "id": "deviceSpecification",
-          "type": "label",
-          "label": {
-            "en": "Device Specification"
-          },
-          "hint": {
-            "en": "The Tuya specification of this device"
-          },
-          "value": "<not available>"
-        },
-        {
           "id": "temp_set_scaling",
           "type": "dropdown",
           "label": {
@@ -2831,6 +2820,17 @@
               }
             }
           ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
         }
       ]
     },

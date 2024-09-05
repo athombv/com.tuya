@@ -1,8 +1,5 @@
 [
   {
-    "$extends": "deviceSpecification"
-  },
-  {
     "id": "temp_set_scaling",
     "type": "dropdown",
     "label": {
@@ -112,5 +109,8 @@
         }
       }
     ]
+  },
+  {
+    "$extends": "deviceSpecification"
   }
 ]
