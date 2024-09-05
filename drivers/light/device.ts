@@ -2,7 +2,13 @@ import * as TuyaLightMigrations from '../../lib/migrations/TuyaLightMigrations';
 import { TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
 import { TuyaCommand } from '../../types/TuyaApiTypes';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
-import { LIGHT_SETTING_LABELS, LightSettingCommand, LightSettingKey, PIR_CAPABILITIES } from './TuyaLightConstants';
+import {
+  HomeyLightSettings,
+  LIGHT_SETTING_LABELS,
+  LightSettingCommand,
+  LightSettingKey,
+  PIR_CAPABILITIES,
+} from './TuyaLightConstants';
 import TuyaOAuth2DeviceWithLight from '../../lib/TuyaOAuth2DeviceWithLight';
 
 export default class TuyaOAuth2DeviceLight extends TuyaOAuth2DeviceWithLight {
@@ -169,12 +175,7 @@ export default class TuyaOAuth2DeviceLight extends TuyaOAuth2DeviceWithLight {
   }
 
   // TODO migrate to util onSettings
-  // TODO define settings
-  async onSettings({
-    newSettings,
-    changedKeys,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }: SettingsEvent<Record<LightSettingKey, any>>): Promise<string | void> {
+  async onSettings({ newSettings, changedKeys }: SettingsEvent<HomeyLightSettings>): Promise<string | void> {
     const unsupportedSettings: string[] = [];
     const unsupportedValues: string[] = [];
 

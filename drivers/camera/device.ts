@@ -4,7 +4,9 @@ import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import {
   CAMERA_ALARM_EVENT_CAPABILITIES,
   CAMERA_SETTING_LABELS,
+  HomeyCameraSettings,
   SIMPLE_CAMERA_CAPABILITIES,
+  TuyaCameraSettings,
 } from './TuyaCameraConstants';
 import TuyaTimeOutAlarmDevice from '../../lib/TuyaTimeOutAlarmDevice';
 
@@ -156,7 +158,22 @@ module.exports = class TuyaOAuth2DeviceCamera extends TuyaTimeOutAlarmDevice {
     }
   }
 
-  async onSettings(event: SettingsEvent<Record<string, unknown>>): Promise<string | void> {
-    return await TuyaOAuth2Util.onSettings(this, event, CAMERA_SETTING_LABELS);
+  async onSettings(event: SettingsEvent<HomeyCameraSettings>): Promise<string | void> {
+    const tuyaSettingsEvent = TuyaOAuth2Util.filterTuyaSettings<HomeyCameraSettings, TuyaCameraSettings>(event, [
+      'motion_switch',
+      'motion_tracking',
+      'decibel_switch',
+      'cry_detection_switch',
+      'pet_detection',
+      'motion_sensitivity',
+      'decibel_sensitivity',
+      'basic_nightvision',
+      'basic_device_volume',
+      'basic_anti_flicker',
+      'basic_osd',
+      'basic_flip',
+      'basic_indicator',
+    ]);
+    return await TuyaOAuth2Util.onSettings<TuyaCameraSettings>(this, tuyaSettingsEvent, CAMERA_SETTING_LABELS);
   }
 };

@@ -134,7 +134,7 @@ export default class TuyaOAuth2DeviceFan extends TuyaOAuth2DeviceWithLight {
       'fan_direction',
     ]);
 
-    return TuyaOAuth2Util.onSettings(this, tuyaSettingsEvent, FAN_SETTING_LABELS);
+    return TuyaOAuth2Util.onSettings<TuyaFanSettings>(this, tuyaSettingsEvent, FAN_SETTING_LABELS);
   }
 }
 
