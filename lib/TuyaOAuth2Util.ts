@@ -110,17 +110,19 @@ export function hasJsonStructure(str: unknown): boolean {
   }
 }
 
-/**
- * @returns {boolean} - Whether the scaling was successfully changed
- */
 export async function handleScaleSetting<T extends string, S extends Record<T, string>>(
   device: TuyaOAuth2Device,
   event: SettingsEvent<S>,
   settingKey: T,
   homeyCapability: string | undefined,
-): Promise<boolean> {
-  if (!event.changedKeys.includes(settingKey)) return true;
-  if (!homeyCapability || !device.hasCapability(homeyCapability)) return false;
+): Promise<void> {
+  if (!event.changedKeys.includes(settingKey)) {
+    return;
+  }
+
+  if (!homeyCapability || !device.hasCapability(homeyCapability)) {
+    return;
+  }
 
   const oldScaling = 10.0 ** Number.parseInt(event.oldSettings[settingKey] ?? '0', 10);
   const newScaling = 10.0 ** Number.parseInt(event.newSettings[settingKey] ?? '0', 10);
@@ -128,7 +130,6 @@ export async function handleScaleSetting<T extends string, S extends Record<T, s
   const newValue = (oldValue * oldScaling) / newScaling;
 
   await device.setCapabilityValue(homeyCapability, newValue);
-  return true;
 }
 
 /**
