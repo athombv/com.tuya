@@ -14,6 +14,7 @@ export const CAMERA_SETTING_LABELS = {
   basic_osd: 'Video Timestamp',
   basic_flip: 'Flip Video',
   basic_indicator: 'Status Indicator',
+  alarm_timeout: 'Alarm Timeout',
 } as const;
 
 // Capabilities that are simple commands/statuses
@@ -76,3 +77,36 @@ export const CAMERA_ALARM_EVENT_CAPABILITIES = {
   ipc_baby_cry: 'alarm_crying_child',
   ipc_cat: 'alarm_pet',
 } as const;
+
+export type HomeyCameraSettings = {
+  motion_switch: boolean;
+  motion_tracking: boolean;
+  decibel_switch: boolean;
+  cry_detection_switch: boolean;
+  pet_detection: boolean;
+  motion_sensitivity: '0' | '1' | '2';
+  decibel_sensitivity: '0' | '1';
+  basic_nightvision: '0' | '1' | '2';
+  basic_device_volume: number;
+  basic_anti_flicker: '0' | '1' | '2';
+  basic_osd: boolean;
+  basic_flip: boolean;
+  basic_indicator: boolean;
+  alarm_timeout: number;
+};
+
+export type TuyaCameraSettings = {
+  motion_switch: boolean;
+  motion_tracking: boolean;
+  decibel_switch: boolean;
+  cry_detection_switch: boolean;
+  pet_detection: boolean;
+  motion_sensitivity: '0' | '1' | '2';
+  decibel_sensitivity: '0' | '1';
+  basic_nightvision: '0' | '1' | '2';
+  basic_device_volume: number;
+  basic_anti_flicker: '0' | '1' | '2';
+  basic_osd: boolean;
+  basic_flip: boolean;
+  basic_indicator: boolean;
+};

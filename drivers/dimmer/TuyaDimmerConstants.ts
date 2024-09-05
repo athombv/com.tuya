@@ -27,3 +27,27 @@ export const SIMPLE_DIMMER_CAPABILITIES = {
     'led_type_3',
   ],
 } as const;
+
+export type HomeyDimmerSettings = {
+  brightness_min_1: number;
+  brightness_max_1: number;
+  brightness_min_2: number;
+  brightness_max_2: number;
+  brightness_min_3: number;
+  brightness_max_3: number;
+  led_type_1: 'led' | 'incandescent' | 'halogen';
+  led_type_2: 'led' | 'incandescent' | 'halogen';
+  led_type_3: 'led' | 'incandescent' | 'halogen';
+};
+
+export type TuyaDimmerSettings = {
+  brightness_min_1: number;
+  brightness_max_1: number;
+  brightness_min_2: number;
+  brightness_max_2: number;
+  brightness_min_3: number;
+  brightness_max_3: number;
+  led_type_1: 'led' | 'incandescent' | 'halogen';
+  led_type_2: 'led' | 'incandescent' | 'halogen';
+  led_type_3: 'led' | 'incandescent' | 'halogen';
+};

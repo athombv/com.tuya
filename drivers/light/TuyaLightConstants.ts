@@ -22,3 +22,23 @@ export const LIGHT_SETTING_LABELS = {
 
 export type LightSettingKey = keyof typeof LIGHT_SETTING_LABELS;
 export type LightSettingCommand = { code: LightSettingKey; value: boolean | number };
+
+export type HomeyLightSettings = {
+  switch_pir: boolean;
+  pir_sensitivity: 'low' | 'middle' | 'high';
+  pir_delay: number;
+  cds: '5lux' | '10lux' | '300lux' | '2000lux' | 'now';
+  standby_on: boolean;
+  standby_time: number;
+  standby_bright: number;
+};
+
+export type TuyaLightSettings = {
+  switch_pir: boolean;
+  pir_sensitivity: 'low' | 'middle' | 'high';
+  pir_delay: number;
+  cds: '5lux' | '10lux' | '300lux' | '2000lux' | 'now';
+  standby_on: boolean;
+  standby_time: number;
+  standby_bright: number;
+};

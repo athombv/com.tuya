@@ -15,3 +15,11 @@ export const SIREN_CAPABILITIES = {
 export const SIREN_FLOWS = {
   setting: ['alarm_volume'],
 } as const;
+
+export type HomeSirenSettings = {
+  alarm_volume: 'low' | 'middle' | 'high';
+};
+
+export type TuyaSirenSettings = {
+  alarm_volume: 'low' | 'middle' | 'high';
+};
