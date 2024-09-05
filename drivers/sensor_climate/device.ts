@@ -2,7 +2,6 @@ import {
   HomeyClimateSensorSettings,
   CLIMATE_CAPABILITY_MAPPING,
   CLIMATE_SENSOR_CAPABILITIES,
-  CLIMATE_SENSOR_SETTING_LABELS,
 } from './TuyaClimateSensorConstants';
 import TuyaOAuth2DeviceSensor from '../../lib/TuyaOAuth2DeviceSensor';
 import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
@@ -53,6 +52,11 @@ module.exports = class TuyaOAuth2DeviceSensorClimate extends TuyaOAuth2DeviceSen
   }
 
   async onSettings(event: SettingsEvent<HomeyClimateSensorSettings>): Promise<string | void> {
-    return await TuyaOAuth2Util.onSettings(this, event, CLIMATE_SENSOR_SETTING_LABELS);
+    for (const tuyaCapability of ['va_temperature', 'va_humidity', 'bright_value'] as const) {
+      const homeyCapability = CLIMATE_CAPABILITY_MAPPING[tuyaCapability];
+      await TuyaOAuth2Util.handleScaleSetting(this, event, `${tuyaCapability}_scaling`, homeyCapability).catch(
+        this.error,
+      );
+    }
   }
 };
