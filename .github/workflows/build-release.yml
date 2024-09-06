@@ -31,15 +31,10 @@ jobs:
           changelog: ${{ inputs.changelog }}
 
       - name: Commit and push generated version
-        run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add -A
-          git commit -m "Update Homey App Version to v${{ steps.update_app_version.outputs.version }}"
-          git tag "v${{ steps.update_app_version.outputs.version }}"
-
-          git push origin HEAD --tags
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update Homey App Version to v${{ steps.update_app_version.outputs.version }}
+          tagging_message: v${{ steps.update_app_version.outputs.version }}
 
       - name: Publish app
         uses: athombv/github-action-homey-app-publish@master
