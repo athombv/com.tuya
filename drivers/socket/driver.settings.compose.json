@@ -50,115 +50,35 @@
     ]
   },
   {
+    "$extends": "scaledProperty",
     "id": "power_scaling",
-    "type": "dropdown",
     "label": {
       "en": "Power Measurement Scale"
     },
     "hint": {
       "en": "By how much the power reported by the device is scaled."
-    },
-    "value": "0",
-    "values": [
-      {
-        "id": "0",
-        "label": {
-          "en": "1"
-        }
-      },
-      {
-        "id": "1",
-        "label": {
-          "en": "1/10"
-        }
-      },
-      {
-        "id": "2",
-        "label": {
-          "en": "1/100"
-        }
-      },
-      {
-        "id": "3",
-        "label": {
-          "en": "1/1000"
-        }
-      }
-    ]
+    }
   },
   {
+    "$extends": "scaledProperty",
     "id": "cur_current_scaling",
-    "type": "dropdown",
     "label": {
       "en": "Current Measurement Scale"
     },
     "hint": {
       "en": "By how much the current reported by the device is scaled."
-    },
-    "value": "0",
-    "values": [
-      {
-        "id": "0",
-        "label": {
-          "en": "1"
-        }
-      },
-      {
-        "id": "1",
-        "label": {
-          "en": "1/10"
-        }
-      },
-      {
-        "id": "2",
-        "label": {
-          "en": "1/100"
-        }
-      },
-      {
-        "id": "3",
-        "label": {
-          "en": "1/1000"
-        }
-      }
-    ]
+    }
   },
   {
+    "$extends": "scaledProperty",
     "id": "cur_voltage_scaling",
-    "type": "dropdown",
     "label": {
       "en": "Voltage Measurement Scale"
     },
     "hint": {
       "en": "By how much the voltage reported by the device is scaled."
     },
-    "value": "1",
-    "values": [
-      {
-        "id": "0",
-        "label": {
-          "en": "1"
-        }
-      },
-      {
-        "id": "1",
-        "label": {
-          "en": "1/10"
-        }
-      },
-      {
-        "id": "2",
-        "label": {
-          "en": "1/100"
-        }
-      },
-      {
-        "id": "3",
-        "label": {
-          "en": "1/1000"
-        }
-      }
-    ]
+    "value": "1"
   },
   {
     "$extends": "deviceSpecification"

@@ -2712,13 +2712,13 @@
       "settings": [
         {
           "id": "temp_set_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Target Temperature Scale"
           },
           "hint": {
             "en": "By how much the temperature targeted by the device is scaled."
           },
+          "type": "dropdown",
           "value": "0",
           "values": [
             {
@@ -2749,13 +2749,13 @@
         },
         {
           "id": "temp_current_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Measured Temperature Scale"
           },
           "hint": {
             "en": "By how much the temperature measured by the device is scaled."
           },
+          "type": "dropdown",
           "value": "0",
           "values": [
             {
@@ -2786,13 +2786,13 @@
         },
         {
           "id": "work_power_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Measured Power Scale"
           },
           "hint": {
             "en": "By how much the power measured by the device is scaled."
           },
+          "type": "dropdown",
           "value": "0",
           "values": [
             {
@@ -3170,7 +3170,6 @@
       "settings": [
         {
           "id": "va_temperature_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Measured Temperature Scale"
           },
@@ -3178,6 +3177,7 @@
             "en": "By how much the temperature measured by the device is scaled."
           },
           "value": "1",
+          "type": "dropdown",
           "values": [
             {
               "id": "0",
@@ -3207,7 +3207,6 @@
         },
         {
           "id": "va_humidity_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Measured Humidity Scale"
           },
@@ -3215,6 +3214,7 @@
             "en": "By how much the humidity measured by the device is scaled."
           },
           "value": "1",
+          "type": "dropdown",
           "values": [
             {
               "id": "0",
@@ -3244,13 +3244,13 @@
         },
         {
           "id": "bright_value_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Measured Brightness Scale"
           },
           "hint": {
             "en": "By how much the brightness measured by the device is scaled."
           },
+          "type": "dropdown",
           "value": "0",
           "values": [
             {
@@ -3786,13 +3786,13 @@
         },
         {
           "id": "power_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Power Measurement Scale"
           },
           "hint": {
             "en": "By how much the power reported by the device is scaled."
           },
+          "type": "dropdown",
           "value": "0",
           "values": [
             {
@@ -3823,13 +3823,13 @@
         },
         {
           "id": "cur_current_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Current Measurement Scale"
           },
           "hint": {
             "en": "By how much the current reported by the device is scaled."
           },
+          "type": "dropdown",
           "value": "0",
           "values": [
             {
@@ -3860,7 +3860,6 @@
         },
         {
           "id": "cur_voltage_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Voltage Measurement Scale"
           },
@@ -3868,6 +3867,7 @@
             "en": "By how much the voltage reported by the device is scaled."
           },
           "value": "1",
+          "type": "dropdown",
           "values": [
             {
               "id": "0",
