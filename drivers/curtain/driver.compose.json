@@ -1,0 +1,9 @@
+{
+  "$extends": "tuya",
+  "class": "curtain",
+  "name": {
+    "en": "Curtain",
+    "nl": "Gordijn"
+  },
+  "capabilities": ["windowcoverings_state", "windowcoverings_set"]
+}

@@ -1,0 +1,33 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "CAUTION: Some settings are not supported by every device."
+    },
+    "children": [
+      {
+        "id": "percent_control",
+        "type": "number",
+        "label": {
+          "en": "Motor torque"
+        },
+        "value": 0,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "units": "%"
+      },
+      {
+        "id": "inverse",
+        "type": "checkbox",
+        "label": {
+          "en": "Inverse direction"
+        },
+        "value": false
+      }
+    ]
+  },
+  {
+    "$extends": "deviceSpecification"
+  }
+]

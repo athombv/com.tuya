@@ -1,0 +1,104 @@
+import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
+import { filterTuyaSettings, getFromMap } from '../../lib/TuyaOAuth2Util';
+import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
+import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
+import {
+  CURTAIN_CAPABILITY_MAPPING,
+  CURTAIN_SETTING_LABELS,
+  HomeyCurtainSettings,
+  TuyaCurtainSettings,
+} from './TuyaCurtainConstants';
+
+module.exports = class TuyaOAuth2DeviceCurtain extends TuyaOAuth2Device {
+  async onOAuth2Init(): Promise<void> {
+    await super.onOAuth2Init();
+
+    if (this.hasCapability('windowcoverings_state')) {
+      if (this.hasTuyaCapability('control')) {
+        this.registerCapabilityListener('windowcoverings_state', value => {
+          let mappedValue = 'stop';
+          if (value === 'up') mappedValue = 'open';
+          if (value === 'down') mappedValue = 'close';
+          return this.sendCommand({
+            code: 'control',
+            value: mappedValue,
+          });
+        });
+      } else if (this.hasTuyaCapability('mach_operate')) {
+        this.registerCapabilityListener('windowcoverings_state', value => {
+          let mappedValue = 'STOP';
+          if (value === 'up') mappedValue = 'ZZ';
+          if (value === 'down') mappedValue = 'FZ';
+          return this.sendCommand({
+            code: 'mach_operate',
+            value: mappedValue,
+          });
+        });
+      }
+    }
+
+    if (this.hasCapability('windowcoverings_set')) {
+      this.registerCapabilityListener('windowcoverings_set', value =>
+        this.sendCommand({ code: 'position', value: Math.round(value * 100) }),
+      );
+    }
+  }
+
+  async onTuyaStatus(status: TuyaStatus, changed: string[]): Promise<void> {
+    await super.onTuyaStatus(status, changed);
+
+    for (const tuyaCapability in status) {
+      const value = status[tuyaCapability];
+      const homeyCapability = getFromMap(CURTAIN_CAPABILITY_MAPPING, tuyaCapability);
+
+      if (['control', 'mach_operate'].includes(tuyaCapability) && homeyCapability) {
+        let mappedValue;
+        if (value === 'open' || value === 'ZZ') {
+          mappedValue = 'up';
+        } else if (value === 'close' || value === 'FZ') {
+          mappedValue = 'down';
+        } else {
+          mappedValue = 'idle';
+        }
+        await this.safeSetCapabilityValue(homeyCapability, mappedValue);
+      }
+
+      if (tuyaCapability === 'position' && homeyCapability) {
+        await this.safeSetCapabilityValue(homeyCapability, (value as number) / 100);
+      }
+
+      if (tuyaCapability === 'percent_control') {
+        await this.setSettings({ [tuyaCapability]: value }).catch(this.error);
+      }
+
+      if (['opposite', 'control_back'].includes(tuyaCapability)) {
+        await this.setSettings({ inverse: value }).catch(this.error);
+      }
+
+      if (tuyaCapability === 'control_back_mode') {
+        await this.setSettings({ inverse: value === 'back' }).catch(this.error);
+      }
+    }
+  }
+
+  async onSettings(event: SettingsEvent<HomeyCurtainSettings>): Promise<string | void> {
+    const tuyaSettings = filterTuyaSettings(event, [
+      'percent_control',
+    ]) as unknown as SettingsEvent<TuyaCurtainSettings>;
+
+    if (event.changedKeys.includes('inverse')) {
+      if (this.hasTuyaCapability('control_back')) {
+        tuyaSettings.changedKeys.push('control_back');
+        tuyaSettings.newSettings['control_back'] = event.newSettings['inverse'];
+      } else if (this.hasTuyaCapability('opposite')) {
+        tuyaSettings.changedKeys.push('opposite');
+        tuyaSettings.newSettings['opposite'] = event.newSettings['inverse'];
+      } else {
+        tuyaSettings.changedKeys.push('control_back_mode');
+        tuyaSettings.newSettings['control_back_mode'] = event.newSettings['inverse'] ? 'back' : 'forward';
+      }
+    }
+
+    return TuyaOAuth2Util.onSettings(this, tuyaSettings, CURTAIN_SETTING_LABELS);
+  }
+};
