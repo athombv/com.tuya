@@ -32,7 +32,7 @@ module.exports = class TuyaOAuth2DeviceIrrigator extends TuyaOAuth2Device {
       }
 
       if (constIncludes(IRRIGATOR_CAPABILITIES.read_only_scaled, tuyaCapability) && homeyCapability) {
-        const scaling = 10.0 ** Number.parseInt(this.getSetting(`${tuyaCapability}_scaling`) ?? '0', 10);
+        const scaling = 10.0 ** Number.parseInt(this.getSetting(`${homeyCapability}_scaling`) ?? '0', 10);
         await this.safeSetCapabilityValue(homeyCapability, (value as number) / scaling);
       }
 
@@ -59,7 +59,7 @@ module.exports = class TuyaOAuth2DeviceIrrigator extends TuyaOAuth2Device {
   async onSettings(event: SettingsEvent<HomeyIrrigatorSettings>): Promise<string | void> {
     for (const tuyaCapability of IRRIGATOR_CAPABILITIES.read_only_scaled) {
       const homeyCapability = IRRIGATOR_CAPABILITIES_MAPPING[tuyaCapability];
-      await handleScaleSetting(this, event, `${tuyaCapability}_scaling`, homeyCapability).catch(this.error);
+      await handleScaleSetting(this, event, `${homeyCapability}_scaling`, homeyCapability).catch(this.error);
     }
   }
 };

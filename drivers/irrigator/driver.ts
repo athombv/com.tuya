@@ -57,11 +57,13 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
       const tuyaCapability = status.code;
       const values = JSON.parse(status.values);
 
+      const homeyCapability = getFromMap(IRRIGATOR_CAPABILITIES_MAPPING, tuyaCapability);
+
       if (constIncludes(IRRIGATOR_CAPABILITIES.read_only_scaled, tuyaCapability)) {
         if ([0, 1, 2, 3].includes(values.scale)) {
-          props.settings[`${tuyaCapability}_scaling`] = `${values.scale}`;
+          props.settings[`${homeyCapability}_scaling`] = `${values.scale}`;
         } else {
-          this.error(`Unsupported ${tuyaCapability} scale:`, values.scale);
+          this.error(`Unsupported ${homeyCapability} scale:`, values.scale);
         }
       }
     }

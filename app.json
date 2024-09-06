@@ -2974,7 +2974,7 @@
       "id": "irrigator",
       "settings": [
         {
-          "id": "temp_current_scaling",
+          "id": "measure_temperature_scaling",
           "type": "dropdown",
           "label": {
             "en": "Measured Temperature Scale"
@@ -3011,7 +3011,7 @@
           ]
         },
         {
-          "id": "humidity_current_scaling",
+          "id": "measure_humidity_scaling",
           "type": "dropdown",
           "label": {
             "en": "Measured Humidity Scale"
@@ -3048,7 +3048,7 @@
           ]
         },
         {
-          "id": "water_current_scaling",
+          "id": "measure_water_scaling",
           "type": "dropdown",
           "label": {
             "en": "Measured Water Flow Scale"
@@ -3085,7 +3085,7 @@
           ]
         },
         {
-          "id": "water_total_scaling",
+          "id": "meter_water_scaling",
           "type": "dropdown",
           "label": {
             "en": "Metered Water Flow Scale"
