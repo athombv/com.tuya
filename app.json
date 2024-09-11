@@ -2971,17 +2971,29 @@
         "en": "Water Valve",
         "nl": "Waterkraan"
       },
+      "capabilitiesOptions": {
+        "measure_battery.rain_sensor": {
+          "title": {
+            "en": "Rain sensor battery"
+          }
+        },
+        "measure_battery.climate_sensor": {
+          "title": {
+            "en": "Climate sensor battery"
+          }
+        }
+      },
       "id": "irrigator",
       "settings": [
         {
           "id": "measure_temperature_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Measured Temperature Scale"
           },
           "hint": {
             "en": "By how much the temperature measured by the device is scaled."
           },
+          "type": "dropdown",
           "value": "0",
           "values": [
             {
@@ -3012,13 +3024,13 @@
         },
         {
           "id": "measure_humidity_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Measured Humidity Scale"
           },
           "hint": {
             "en": "By how much the humidity measured by the device is scaled."
           },
+          "type": "dropdown",
           "value": "0",
           "values": [
             {
@@ -3049,13 +3061,13 @@
         },
         {
           "id": "measure_water_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Measured Water Flow Scale"
           },
           "hint": {
             "en": "By how much the water flow measured by the device is scaled."
           },
+          "type": "dropdown",
           "value": "0",
           "values": [
             {
@@ -3086,13 +3098,13 @@
         },
         {
           "id": "meter_water_scaling",
-          "type": "dropdown",
           "label": {
             "en": "Metered Water Flow Scale"
           },
           "hint": {
             "en": "By how much the water flow metered by the device is scaled."
           },
+          "type": "dropdown",
           "value": "0",
           "values": [
             {

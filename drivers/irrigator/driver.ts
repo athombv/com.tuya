@@ -1,5 +1,5 @@
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
-import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
+import TuyaOAuth2Driver, { type ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
 import {
   type TuyaDeviceDataPointResponse,
   TuyaDeviceResponse,
@@ -7,7 +7,7 @@ import {
 } from '../../types/TuyaApiTypes';
 import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import { IRRIGATOR_CAPABILITIES, IRRIGATOR_CAPABILITIES_MAPPING } from './TuyaIrrigatorConstants';
-import { StandardDeviceFlowArgs } from '../../types/TuyaTypes';
+import type { StandardDeviceFlowArgs } from '../../types/TuyaTypes';
 
 module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.IRRIGATOR, 'sfkzq'] as const;
@@ -36,18 +36,6 @@ module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
         props.capabilities.push(homeyCapability);
       }
     }
-
-    props.capabilitiesOptions['measure_battery.rain_sensor'] = {
-      title: {
-        en: 'Rain sensor battery',
-      },
-    };
-
-    props.capabilitiesOptions['measure_battery.climate_sensor'] = {
-      title: {
-        en: 'Climate sensor battery',
-      },
-    };
 
     if (!specifications || !specifications.status) {
       return props;

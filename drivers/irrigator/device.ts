@@ -1,5 +1,5 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
+import type { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import {
   HomeyIrrigatorSettings,
   IRRIGATOR_CAPABILITIES,
