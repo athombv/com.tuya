@@ -12,18 +12,15 @@ export const CURTAIN_CAPABILITIES = {
 
 export type HomeyCurtainSettings = {
   inverse: boolean;
-  percent_control: number;
 };
 
 export type TuyaCurtainSettings = {
-  percent_control: number;
   opposite: boolean; // inverse
   control_back: boolean; // inverse
   control_back_mode: 'forward' | 'back'; // inverse
 };
 
 export const CURTAIN_SETTING_LABELS = {
-  percent_control: 'Motor torque',
   opposite: 'Inverse direction',
   control_back: 'Inverse direction',
   control_back_mode: 'Inverse direction',

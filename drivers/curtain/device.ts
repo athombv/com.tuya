@@ -1,5 +1,5 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
-import { filterTuyaSettings, getFromMap } from '../../lib/TuyaOAuth2Util';
+import { getFromMap } from '../../lib/TuyaOAuth2Util';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import {
@@ -67,10 +67,6 @@ module.exports = class TuyaOAuth2DeviceCurtain extends TuyaOAuth2Device {
         await this.safeSetCapabilityValue(homeyCapability, (value as number) / 100);
       }
 
-      if (tuyaCapability === 'percent_control') {
-        await this.setSettings({ [tuyaCapability]: value }).catch(this.error);
-      }
-
       if (['opposite', 'control_back'].includes(tuyaCapability)) {
         await this.setSettings({ inverse: value }).catch(this.error);
       }
@@ -82,9 +78,11 @@ module.exports = class TuyaOAuth2DeviceCurtain extends TuyaOAuth2Device {
   }
 
   async onSettings(event: SettingsEvent<HomeyCurtainSettings>): Promise<string | void> {
-    const tuyaSettings = filterTuyaSettings(event, [
-      'percent_control',
-    ]) as unknown as SettingsEvent<TuyaCurtainSettings>;
+    const tuyaSettings: SettingsEvent<Partial<TuyaCurtainSettings>> = {
+      newSettings: {},
+      oldSettings: {},
+      changedKeys: [],
+    };
 
     if (event.changedKeys.includes('inverse')) {
       if (this.hasTuyaCapability('control_back')) {
