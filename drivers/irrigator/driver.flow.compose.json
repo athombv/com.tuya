@@ -1,0 +1,62 @@
+{
+  "actions": [],
+  "conditions": [
+    {
+      "id": "irrigator_rain_sensor_is_true",
+      "title": {
+        "en": "Rain !{{is|is not}} detected"
+      },
+      "$filter": "capabilities=rain_sensor"
+    }
+  ],
+  "triggers": [
+    {
+      "id": "irrigator_rain_sensor_true",
+      "title": {
+        "en": "Rain detected"
+      },
+      "$filter": "capabilities=rain_sensor"
+    },
+    {
+      "id": "irrigator_rain_sensor_false",
+      "title": {
+        "en": "Rain no longer detected"
+      },
+      "$filter": "capabilities=rain_sensor"
+    },
+    {
+      "id": "irrigator_measure_battery.rain_sensor_changed",
+      "$filter": "capabilities=measure_battery.rain_sensor",
+      "title": {
+        "en": "The rain sensor battery level changed"
+      },
+      "tokens": [
+        {
+          "name": "value",
+          "title": {
+            "en": "Battery"
+          },
+          "type": "number",
+          "example": 99
+        }
+      ]
+    },
+    {
+      "id": "irrigator_measure_battery.climate_sensor_changed",
+      "$filter": "capabilities=measure_battery.climate_sensor",
+      "title": {
+        "en": "The climate sensor battery level changed"
+      },
+      "tokens": [
+        {
+          "name": "value",
+          "title": {
+            "en": "Battery"
+          },
+          "type": "number",
+          "example": 99
+        }
+      ]
+    }
+  ]
+}

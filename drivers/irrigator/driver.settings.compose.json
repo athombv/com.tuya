@@ -1,0 +1,45 @@
+[
+  {
+    "$extends": "scaledProperty",
+    "id": "measure_temperature_scaling",
+    "label": {
+      "en": "Measured Temperature Scale"
+    },
+    "hint": {
+      "en": "By how much the temperature measured by the device is scaled."
+    }
+  },
+  {
+    "$extends": "scaledProperty",
+    "id": "measure_humidity_scaling",
+    "label": {
+      "en": "Measured Humidity Scale"
+    },
+    "hint": {
+      "en": "By how much the humidity measured by the device is scaled."
+    }
+  },
+  {
+    "$extends": "scaledProperty",
+    "id": "measure_water_scaling",
+    "label": {
+      "en": "Measured Water Flow Scale"
+    },
+    "hint": {
+      "en": "By how much the water flow measured by the device is scaled."
+    }
+  },
+  {
+    "$extends": "scaledProperty",
+    "id": "meter_water_scaling",
+    "label": {
+      "en": "Metered Water Flow Scale"
+    },
+    "hint": {
+      "en": "By how much the water flow metered by the device is scaled."
+    }
+  },
+  {
+    "$extends": "deviceSpecification"
+  }
+]

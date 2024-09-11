@@ -1,0 +1,17 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Rain Detected"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "Rain Detected"
+  },
+  "insightsTitleFalse": {
+    "en": "Rain No Longer Detected"
+  },
+  "icon": "assets/capabilities/rain-sensor.svg"
+}

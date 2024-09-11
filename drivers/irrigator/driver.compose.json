@@ -1,0 +1,21 @@
+{
+  "$extends": "tuya",
+  "class": "watervalve",
+  "name": {
+    "en": "Water Valve",
+    "nl": "Waterkraan"
+  },
+  "capabilities": ["measure_water", "meter_water", "rain_sensor"],
+  "capabilitiesOptions": {
+    "measure_battery.rain_sensor": {
+      "title": {
+        "en": "Rain sensor battery"
+      }
+    },
+    "measure_battery.climate_sensor": {
+      "title": {
+        "en": "Climate sensor battery"
+      }
+    }
+  }
+}
