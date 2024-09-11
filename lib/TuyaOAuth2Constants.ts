@@ -119,7 +119,7 @@ export const DEVICE_CATEGORIES = {
   ENERGY: {
     SMART_ELECTRIC_METER: 'zndb',
     SMART_WATER_METER: 'znsb',
-    // CIRCUIT_BREAKER
+    CIRCUIT_BREAKER: 'dlq',
   },
   DIGITAL_ENTERTAINMENT: {
     TV: 'ds',

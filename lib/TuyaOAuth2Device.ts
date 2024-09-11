@@ -240,6 +240,12 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     await this.setCapabilityValue(capabilityId, value).catch(this.error);
   }
 
+  async safeSetSettingValue(settingKey: string, value: unknown): Promise<void> {
+    await this.setSettings({
+      [settingKey]: value,
+    }).catch(this.error);
+  }
+
   log(...args: unknown[]): void {
     super.log(`[tc:${this.getStoreValue('tuya_category')}]`, ...args);
   }

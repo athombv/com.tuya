@@ -1,0 +1,25 @@
+{
+  "actions": [
+    {
+      "id": "circuit_breaker_child_lock",
+      "title": {
+        "en": "Set child lock"
+      },
+      "titleFormatted": {
+        "en": "Set child lock [[value]]"
+      },
+      "hint": {
+        "en": "CAUTION: This setting is not supported by every circuit breaker."
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    }
+  ],
+  "conditions": [],
+  "triggers": []
+}
