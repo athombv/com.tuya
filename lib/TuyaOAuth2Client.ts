@@ -401,7 +401,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
                           break;
                         }
                         default: {
-                          this.error(`Unknown Webhook Event: ${message.event}`);
+                          this.error(`Unknown Webhook Event: ${message.body.event}`);
                         }
                       }
                     })
