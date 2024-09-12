@@ -38,8 +38,9 @@ module.exports = class TuyaOAuth2DeviceCurtain extends TuyaOAuth2Device {
     }
 
     if (this.hasCapability('windowcoverings_set')) {
+      const code = this.hasTuyaCapability('percent_control') ? 'percent_control' : 'position';
       this.registerCapabilityListener('windowcoverings_set', value =>
-        this.sendCommand({ code: 'position', value: Math.round(value * 100) }),
+        this.sendCommand({ code: code, value: Math.round(value * 100) }),
       );
     }
   }
@@ -63,7 +64,11 @@ module.exports = class TuyaOAuth2DeviceCurtain extends TuyaOAuth2Device {
         await this.safeSetCapabilityValue(homeyCapability, mappedValue);
       }
 
-      if (tuyaCapability === 'position' && homeyCapability) {
+      if (tuyaCapability === 'percent_control' && homeyCapability && !this.hasTuyaCapability('percent_state')) {
+        await this.safeSetCapabilityValue(homeyCapability, (value as number) / 100);
+      }
+
+      if (['position', 'percent_state'].includes(tuyaCapability) && homeyCapability) {
         await this.safeSetCapabilityValue(homeyCapability, (value as number) / 100);
       }
 

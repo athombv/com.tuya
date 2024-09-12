@@ -22,16 +22,12 @@ module.exports = class TuyaOAuth2DriverCurtain extends TuyaOAuth2Driver {
       const tuyaCapability = status.code;
 
       const homeyCapability = getFromMap(CURTAIN_CAPABILITY_MAPPING, tuyaCapability);
-      if (
-        (constIncludes(CURTAIN_CAPABILITIES.read_write, tuyaCapability) ||
-          constIncludes(CURTAIN_CAPABILITIES.read_only, tuyaCapability)) &&
-        homeyCapability
-      ) {
+      if (constIncludes(CURTAIN_CAPABILITIES.read_write, tuyaCapability) && homeyCapability) {
         props.store.tuya_capabilities.push(tuyaCapability);
         props.capabilities.push(homeyCapability);
       }
 
-      if (constIncludes(CURTAIN_CAPABILITIES.setting, tuyaCapability)) {
+      if (constIncludes(CURTAIN_CAPABILITIES.setting, tuyaCapability) || tuyaCapability === 'percent_state') {
         props.store.tuya_capabilities.push(tuyaCapability);
       }
     }
