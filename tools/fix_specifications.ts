@@ -26,7 +26,7 @@ if (result) {
 }
 
 // Fix 1: quote values
-const step1 = new RegExp(/("values?":\s?"\{)([\w",:{}[\]]+)(\}"\s?},?)/g);
+const step1 = new RegExp(/("values?":\s?"\{)([\w",:{}[\]\-℃%]+)(\}"\s?},?)/g);
 spec = spec.replaceAll(step1, (_substring, group1: string, group2: string, group3: string) => {
   return `${group1}${group2.replaceAll('"', '\\"')}${group3}`;
 });
