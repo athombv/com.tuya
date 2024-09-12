@@ -1,0 +1,21 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "CAUTION: Some settings are not supported by every device."
+    },
+    "children": [
+      {
+        "id": "inverse",
+        "type": "checkbox",
+        "label": {
+          "en": "Inverse direction"
+        },
+        "value": false
+      }
+    ]
+  },
+  {
+    "$extends": "deviceSpecification"
+  }
+]

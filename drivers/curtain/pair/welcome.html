@@ -1,0 +1,60 @@
+<style type="text/css">
+  .tuya-welcome-title {
+    text-align: center;
+  }
+
+  .tuya-welcome-text {
+    text-align: center;
+    font-size: 17px;
+    line-height: 24px;
+    color: #1c1c1c;
+  }
+
+  .tuya-welcome-link {
+    color: #0082fa;
+    text-decoration: none;
+    font-size: 0;
+  }
+
+  .tuya-welcome-link > span {
+    vertical-align: middle;
+    font-size: 17px;
+  }
+
+  .tuya-welcome-link:hover > span {
+    text-decoration: underline;
+  }
+
+  .tuya-welcome-link > img {
+    height: 17px;
+    vertical-align: middle;
+    margin-top: 2px;
+  }
+
+  .tuya-welcome-logos {
+    height: 184px;
+    margin-top: 50px;
+  }
+</style>
+
+<h1 class="homey-title tuya-welcome-title" data-i18n="pair.welcome.title"></h1>
+
+<p class="tuya-welcome-text">
+  <span data-i18n="pair.welcome.text"></span>
+</p>
+
+<p class="tuya-welcome-text">
+  <a
+    href="https://support.homey.app/hc/en-us/articles/14504423087644-Connecting-Tuya-with-Homey"
+    target="_blank"
+    onclick="Homey.popup(this.href); return false;"
+    class="tuya-welcome-link"
+  >
+    <span data-i18n="pair.welcome.link"></span>
+    <img src="./welcome.assets/chevron-right.png" />
+  </a>
+</p>
+
+<p class="tuya-welcome-text">
+  <img class="tuya-welcome-logos" src="./welcome.assets/logos.png" />
+</p>
