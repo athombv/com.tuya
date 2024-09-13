@@ -4844,7 +4844,8 @@
       },
       "insightsTitleFalse": {
         "en": "Human No Longer Detected"
-      }
+      },
+      "icon": "assets/capabilities/alarm-human.svg"
     },
     "alarm_pet": {
       "type": "boolean",
