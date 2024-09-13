@@ -1,7 +1,7 @@
 import { OAuth2Device } from 'homey-oauth2app';
-import { TuyaCommand, TuyaDeviceDataPointResponse, TuyaStatusResponse, TuyaWebRTC } from '../types/TuyaApiTypes';
+import type { TuyaCommand, TuyaDeviceDataPointResponse, TuyaStatusResponse, TuyaWebRTC } from '../types/TuyaApiTypes';
 
-import { TuyaStatus, TuyaStatusUpdate } from '../types/TuyaTypes';
+import type { TuyaStatus } from '../types/TuyaTypes';
 import TuyaOAuth2Client from './TuyaOAuth2Client';
 import * as TuyaOAuth2Util from './TuyaOAuth2Util';
 import * as GeneralMigrations from './migrations/GeneralMigrations';
@@ -63,23 +63,7 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     this.oAuth2Client.registerDevice(
       {
         ...this.data,
-        onStatus: async (statuses: TuyaStatusUpdate<unknown>[]) => {
-          const changedStatusCodes = statuses.map((status: TuyaStatusUpdate<unknown>) => status.code);
-
-          this.log('changedStatusCodes', changedStatusCodes);
-          const status = TuyaOAuth2Util.convertStatusArrayToStatusObject(statuses);
-          await this.__onTuyaStatus(status, changedStatusCodes);
-        },
-        onOnline: async () => {
-          await this.__onTuyaStatus({
-            online: true,
-          });
-        },
-        onOffline: async () => {
-          await this.__onTuyaStatus({
-            online: false,
-          });
-        },
+        onStatus: this.__onTuyaStatus.bind(this),
       },
       isOtherDevice,
     );
