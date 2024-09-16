@@ -17,7 +17,11 @@ import TuyaOAuth2Device from './TuyaOAuth2Device';
  * @param {Array} statuses
  * @returns {Object}
  */
-export function convertStatusArrayToStatusObject(statuses: TuyaStatusResponse): TuyaStatus {
+export function convertStatusArrayToStatusObject(statuses?: TuyaStatusResponse): TuyaStatus {
+  if (!Array.isArray(statuses)) {
+    return {};
+  }
+
   return statuses.reduce((obj, item) => {
     obj[item.code] = item.value;
 

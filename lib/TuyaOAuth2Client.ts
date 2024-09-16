@@ -24,6 +24,7 @@ import TuyaOAuth2Error from './TuyaOAuth2Error';
 
 import TuyaOAuth2Token from './TuyaOAuth2Token';
 import * as TuyaOAuth2Util from './TuyaOAuth2Util';
+import TuyaWebhookParser from './webhooks/TuyaWebhookParser';
 
 type BuildRequest = { opts: { method: unknown; body: unknown; headers: object }; url: string };
 type OAuth2SessionInformation = { id: string; title: string };
@@ -34,9 +35,6 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
   static TOKEN_URL = '<dummy>';
   static AUTHORIZATION_URL = 'https://openapi.tuyaus.com/login';
   static REDIRECT_URL = 'https://tuya.athom.com/callback';
-
-  __updateWebhookTimeout?: NodeJS.Timeout;
-  webhook?: CloudWebhook;
 
   // We save this information to eventually enable OAUTH2_MULTI_SESSION.
   // We can then list all authenticated users by name, e-mail and country flag.
@@ -298,21 +296,18 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
   /*
    * Webhooks
    */
-  registeredDevices = new Map<string, DeviceRegistration>();
+  private __updateWebhookTimeout?: NodeJS.Timeout;
+  private webhook?: CloudWebhook;
+  private webhookParser = new TuyaWebhookParser(this);
+  private registeredDevices = new Map<string, DeviceRegistration>();
   // Devices that are added as 'other' may be duplicates
-  registeredOtherDevices = new Map<string, DeviceRegistration>();
+  private registeredOtherDevices = new Map<string, DeviceRegistration>();
 
   registerDevice(
     {
       productId,
       deviceId,
       onStatus = async (): Promise<void> => {
-        /* empty */
-      },
-      onOnline = async (): Promise<void> => {
-        /* empty */
-      },
-      onOffline = async (): Promise<void> => {
         /* empty */
       },
     }: DeviceRegistration,
@@ -323,8 +318,6 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
       productId,
       deviceId,
       onStatus,
-      onOnline,
-      onOffline,
     });
     this.onUpdateWebhook();
   }
@@ -333,6 +326,11 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     const register = other ? this.registeredOtherDevices : this.registeredDevices;
     register.delete(`${productId}:${deviceId}`);
     this.onUpdateWebhook();
+  }
+
+  isRegistered(productId: string, deviceId: string, other = false): boolean {
+    const register = other ? this.registeredOtherDevices : this.registeredDevices;
+    return register.has(`${productId}:${deviceId}`);
   }
 
   onUpdateWebhook(): void {
@@ -348,71 +346,38 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
           // Remove duplicate registrations
           const combinedKeys = Array.from(new Set([...keys, ...otherKeys]));
 
-          if (combinedKeys.length === 0 && this.webhook) {
-            await this.webhook.unregister();
-            this.log('Unregistered Webhook');
+          if (this.webhook) {
+            await this.webhook
+              .unregister()
+              .then(() => this.log('Unregistered existing webhook'))
+              .catch(this.error);
           }
 
           if (combinedKeys.length > 0) {
             this.webhook = await this.homey.cloud.createWebhook(Homey.env.WEBHOOK_ID, Homey.env.WEBHOOK_SECRET, {
               $keys: combinedKeys,
             });
-            this.webhook?.on('message', message => {
-              this.log('onWebhookMessage', JSON.stringify(message));
 
-              Promise.resolve()
-                .then(async () => {
-                  const key = message.headers['x-tuya-key'];
+            this.webhook?.on('message', async message => {
+              this.log('Incoming webhook', JSON.stringify(message));
 
-                  const registeredDevice = this.registeredDevices.get(key);
-                  const registeredOtherDevice = this.registeredOtherDevices.get(key);
-                  if (!registeredDevice && !registeredOtherDevice) return;
+              const key = message.headers['x-tuya-key'];
+              const registeredDevice = this.registeredDevices.get(key) ?? null;
+              const registeredOtherDevice = this.registeredOtherDevices.get(key) ?? null;
+              if (!registeredDevice && !registeredOtherDevice) {
+                this.log('No matching devices found for webhook data');
+                return;
+              }
 
-                  Promise.resolve()
-                    .then(async () => {
-                      switch (message.body.event) {
-                        case 'status': {
-                          if (!Array.isArray(message.body.data.deviceStatus)) return;
-
-                          if (registeredDevice) {
-                            await registeredDevice.onStatus(message.body.data.deviceStatus);
-                          }
-                          if (registeredOtherDevice) {
-                            await registeredOtherDevice.onStatus(message.body.data.deviceStatus);
-                          }
-                          break;
-                        }
-                        case 'online': {
-                          if (registeredDevice) {
-                            await registeredDevice.onOnline();
-                          }
-                          if (registeredOtherDevice) {
-                            await registeredOtherDevice.onOnline();
-                          }
-                          break;
-                        }
-                        case 'offline': {
-                          if (registeredDevice) {
-                            await registeredDevice.onOffline();
-                          }
-                          if (registeredOtherDevice) {
-                            await registeredOtherDevice.onOffline();
-                          }
-                          break;
-                        }
-                        default: {
-                          this.error(`Unknown Webhook Event: ${message.event}`);
-                        }
-                      }
-                    })
-                    .catch(err => this.error(err));
-                })
+              await this.webhookParser
+                .handle([registeredDevice, registeredOtherDevice], message.body)
                 .catch(err => this.error(`Error Handling Webhook Message: ${err.message}`));
             });
-            this.log('Registered Webhook');
+
+            this.log('Registered webhook', JSON.stringify(combinedKeys));
           }
         })
-        .catch(err => this.error(`Error Updating Webhook: ${err.message}`));
+        .catch(err => this.error(`Error updating webhook: ${err.message}`));
     }, 1000);
   }
 }
