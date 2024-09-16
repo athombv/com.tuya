@@ -328,6 +328,11 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     this.onUpdateWebhook();
   }
 
+  isRegistered(productId: string, deviceId: string, other = false): boolean {
+    const register = other ? this.registeredOtherDevices : this.registeredDevices;
+    return register.has(`${productId}:${deviceId}`);
+  }
+
   onUpdateWebhook(): void {
     if (this.__updateWebhookTimeout) {
       this.homey.clearTimeout(this.__updateWebhookTimeout);
