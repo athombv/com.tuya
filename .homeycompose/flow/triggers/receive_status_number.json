@@ -13,7 +13,7 @@
       "name": "device",
       "type": "device",
       "filter": {
-        "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket"
+        "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket"
       },
       "title": {
         "en": "Device"
