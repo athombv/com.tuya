@@ -341,9 +341,11 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
           // Remove duplicate registrations
           const combinedKeys = Array.from(new Set([...keys, ...otherKeys]));
 
-          if (combinedKeys.length === 0 && this.webhook) {
-            await this.webhook.unregister();
-            this.log('Unregistered Webhook');
+          if (this.webhook) {
+            await this.webhook
+              .unregister()
+              .then(() => this.log('Unregistered existing webhook'))
+              .catch(this.error);
           }
 
           if (combinedKeys.length > 0) {
@@ -367,10 +369,10 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
                 .catch(err => this.error(`Error Handling Webhook Message: ${err.message}`));
             });
 
-            this.log('Registered Webhook');
+            this.log('Registered webhook', JSON.stringify(combinedKeys));
           }
         })
-        .catch(err => this.error(`Error Updating Webhook: ${err.message}`));
+        .catch(err => this.error(`Error updating webhook: ${err.message}`));
     }, 1000);
   }
 }
