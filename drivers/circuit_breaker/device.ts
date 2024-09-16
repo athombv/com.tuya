@@ -38,8 +38,7 @@ module.exports = class TuyaOAuth2DeviceCircuitBreaker extends TuyaOAuth2Device {
       }
 
       if (constIncludes(CIRCUIT_BREAKER_CAPABILITIES.setting, tuyaCapability)) {
-        const setting = `${homeyCapability}_scaling`;
-        await this.safeSetSettingValue(setting, value);
+        await this.safeSetSettingValue(tuyaCapability, value);
       }
     }
   }
