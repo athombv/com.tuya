@@ -92,7 +92,7 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
     };
   }
 
-  protected addSettingFlowHandler(setting: string, labels: Record<string, string>): void {
+  protected addSettingFlowHandler<K extends string, L extends Record<K, string>>(setting: K, labels: L): void {
     this.homey.flow
       .getActionCard(`${this.id}_${setting}`)
       .registerRunListener(

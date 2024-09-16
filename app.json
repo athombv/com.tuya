@@ -311,6 +311,44 @@
     "triggers": [
       {
         "title": {
+          "en": "Human no longer detected"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "sensor_human",
+              "capabilities": "alarm_human"
+            },
+            "title": {
+              "en": "Device"
+            }
+          }
+        ],
+        "id": "alarm_human_false"
+      },
+      {
+        "title": {
+          "en": "Human detected"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "sensor_human",
+              "capabilities": "alarm_human"
+            },
+            "title": {
+              "en": "Device"
+            }
+          }
+        ],
+        "id": "alarm_human_true"
+      },
+      {
+        "title": {
           "en": "Child lock disabled"
         },
         "args": [
@@ -400,7 +438,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -441,7 +479,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -482,7 +520,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -523,7 +561,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -1041,7 +1079,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -1079,7 +1117,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -1117,7 +1155,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -1155,7 +1193,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_motion|sensor_smoke|siren|socket"
+              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket"
             },
             "title": {
               "en": "Device"
@@ -1845,6 +1883,84 @@
         ]
       },
       {
+        "id": "sensor_human_sensitivity",
+        "title": {
+          "en": "Set sensitivity"
+        },
+        "titleFormatted": {
+          "en": "Set sensitivity to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=sensor_human"
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "title": {
+              "en": "Sensitivity"
+            },
+            "step": 1
+          }
+        ]
+      },
+      {
+        "id": "sensor_human_near_detection",
+        "title": {
+          "en": "Set nearest detection distance"
+        },
+        "titleFormatted": {
+          "en": "Set nearest detection distance to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=sensor_human"
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "title": {
+              "en": "Distance"
+            },
+            "placeholder": {
+              "en": "cm"
+            },
+            "step": 1
+          }
+        ]
+      },
+      {
+        "id": "sensor_human_far_detection",
+        "title": {
+          "en": "Set furthest detection distance"
+        },
+        "titleFormatted": {
+          "en": "Set furthest detection distance to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=sensor_human"
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "title": {
+              "en": "Distance"
+            },
+            "placeholder": {
+              "en": "cm"
+            },
+            "step": 1
+          }
+        ]
+      },
+      {
         "id": "siren_alarm_volume",
         "title": {
           "en": "Set alarm volume"
@@ -2071,6 +2187,19 @@
             "type": "device",
             "name": "device",
             "filter": "driver_id=light&capabilities=onoff.switch"
+          }
+        ]
+      },
+      {
+        "id": "sensor_human_alarm_human_is_true",
+        "title": {
+          "en": "Human !{{is|is not}} detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=sensor_human&capabilities=alarm_human"
           }
         ]
       },
@@ -4054,6 +4183,131 @@
     },
     {
       "capabilities": [
+        "alarm_human"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/sensor_human/assets/images/small.png",
+        "large": "/drivers/sensor_human/assets/images/large.png",
+        "xlarge": "/drivers/sensor_human/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "sensor",
+      "name": {
+        "en": "Human Presence Sensor",
+        "nl": "Menselijke Aanwezigheid Sensor"
+      },
+      "id": "sensor_human",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "NOTE: Some settings are not supported by every presence sensor."
+          },
+          "children": [
+            {
+              "id": "sensitivity",
+              "type": "number",
+              "label": {
+                "en": "Sensitivity"
+              },
+              "step": 1,
+              "value": 9
+            },
+            {
+              "id": "near_detection",
+              "type": "number",
+              "label": {
+                "en": "Nearest detection distance"
+              },
+              "step": 1,
+              "units": "cm",
+              "value": 450
+            },
+            {
+              "id": "far_detection",
+              "type": "number",
+              "label": {
+                "en": "Furthest detection distance"
+              },
+              "step": 1,
+              "units": "cm",
+              "value": 650
+            }
+          ]
+        },
+        {
+          "id": "use_alarm_timeout",
+          "type": "checkbox",
+          "hint": {
+            "en": "Turn the alarm off a set time after the start signal, even if no end signal is received."
+          },
+          "label": {
+            "en": "Use Alarm Timeout"
+          },
+          "value": false
+        },
+        {
+          "id": "alarm_timeout",
+          "type": "number",
+          "label": {
+            "en": "Alarm Timeout"
+          },
+          "value": 10,
+          "min": 1,
+          "units": {
+            "en": "seconds"
+          }
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
+    },
+    {
+      "capabilities": [
         "alarm_motion"
       ],
       "connectivity": [
@@ -4575,6 +4829,23 @@
         "en": "Crying Child No Longer Detected"
       },
       "icon": "assets/capabilities/detect-baby.svg"
+    },
+    "alarm_human": {
+      "type": "boolean",
+      "title": {
+        "en": "Human Detected"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Human Detected"
+      },
+      "insightsTitleFalse": {
+        "en": "Human No Longer Detected"
+      },
+      "icon": "assets/capabilities/alarm-human.svg"
     },
     "alarm_pet": {
       "type": "boolean",

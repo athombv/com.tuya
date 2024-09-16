@@ -1,0 +1,17 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Human Detected"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "Human Detected"
+  },
+  "insightsTitleFalse": {
+    "en": "Human No Longer Detected"
+  },
+  "icon": "assets/capabilities/alarm-human.svg"
+}

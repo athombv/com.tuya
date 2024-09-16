@@ -1,0 +1,48 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "NOTE: Some settings are not supported by every presence sensor."
+    },
+    "children": [
+      {
+        "id": "sensitivity",
+        "type": "number",
+        "label": {
+          "en": "Sensitivity"
+        },
+        "step": 1,
+        "value": 9
+      },
+      {
+        "id": "near_detection",
+        "type": "number",
+        "label": {
+          "en": "Nearest detection distance"
+        },
+        "step": 1,
+        "units": "cm",
+        "value": 450
+      },
+      {
+        "id": "far_detection",
+        "type": "number",
+        "label": {
+          "en": "Furthest detection distance"
+        },
+        "step": 1,
+        "units": "cm",
+        "value": 650
+      }
+    ]
+  },
+  {
+    "$extends": "useAlarmTimeout"
+  },
+  {
+    "$extends": "alarmTimeout"
+  },
+  {
+    "$extends": "deviceSpecification"
+  }
+]

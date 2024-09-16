@@ -1,0 +1,77 @@
+{
+  "actions": [
+    {
+      "id": "sensor_human_sensitivity",
+      "title": {
+        "en": "Set sensitivity"
+      },
+      "titleFormatted": {
+        "en": "Set sensitivity to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "number",
+          "title": {
+            "en": "Sensitivity"
+          },
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "sensor_human_near_detection",
+      "title": {
+        "en": "Set nearest detection distance"
+      },
+      "titleFormatted": {
+        "en": "Set nearest detection distance to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "number",
+          "title": {
+            "en": "Distance"
+          },
+          "placeholder": {
+            "en": "cm"
+          },
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "sensor_human_far_detection",
+      "title": {
+        "en": "Set furthest detection distance"
+      },
+      "titleFormatted": {
+        "en": "Set furthest detection distance to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "number",
+          "title": {
+            "en": "Distance"
+          },
+          "placeholder": {
+            "en": "cm"
+          },
+          "step": 1
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "sensor_human_alarm_human_is_true",
+      "title": {
+        "en": "Human !{{is|is not}} detected"
+      },
+      "$filter": "capabilities=alarm_human"
+    }
+  ],
+  "triggers": []
+}
