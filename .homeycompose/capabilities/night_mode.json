@@ -1,0 +1,9 @@
+{
+  "title": {
+    "en": "Night Mode"
+  },
+  "type": "boolean",
+  "uiComponent": "button",
+  "getable": true,
+  "setable": true
+}

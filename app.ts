@@ -34,7 +34,7 @@ type AutoCompleteArg = {
 
 module.exports = class TuyaOAuth2App extends OAuth2App {
   static OAUTH2_CLIENT = TuyaOAuth2Client;
-  static OAUTH2_DEBUG = process.env.DEBUG === '1';
+  static OAUTH2_DEBUG = false;
   static OAUTH2_MULTI_SESSION = false; // TODO: Enable this feature & make nice pairing UI
 
   private apiCache: NodeCache = new NodeCache({ stdTTL: CACHE_TTL });

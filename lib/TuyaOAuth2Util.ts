@@ -265,7 +265,7 @@ export async function onSettings<T extends { [key: string]: unknown }>(
  */
 export function filterTuyaSettings<H extends T, T extends { [key: string]: unknown }>(
   homeySettingsEvent: SettingsEvent<H>,
-  tuyaSettingsKeys: (keyof T)[],
+  tuyaSettingsKeys: (keyof T)[] | readonly (keyof T)[],
 ): SettingsEvent<T> {
   // only include settings that can be mapped one-to-one with a Tuya capability
   function filterTuyaChangedKeys(changedKeys: (keyof H)[]): (keyof T)[] {

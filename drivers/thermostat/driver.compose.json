@@ -1,0 +1,45 @@
+{
+  "$extends": "tuya",
+  "class": "thermostat",
+  "name": {
+    "en": "Thermostat",
+    "nl": "Thermostaat"
+  },
+  "capabilities": ["measure_temperature", "target_temperature"],
+  "capabilitiesOptions": {
+    "legacy_fan_speed": {
+      "values": [
+        {
+          "id": "high",
+          "title": {
+            "en": "High"
+          }
+        },
+        {
+          "id": "middle",
+          "title": {
+            "en": "Middle"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low"
+          }
+        },
+        {
+          "id": "closed",
+          "title": {
+            "en": "Closed"
+          }
+        },
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto"
+          }
+        }
+      ]
+    }
+  }
+}

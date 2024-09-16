@@ -36,3 +36,5 @@ export type StandardFlowArgs<TDevice = TuyaOAuth2Device, TValue = unknown> = Sta
   StandardValueFlowArgs<TValue>;
 
 export type ParsedColourData = { h: number; s: number; v: number };
+
+export type ScaledProperty = '0' | '1' | '2' | '3';

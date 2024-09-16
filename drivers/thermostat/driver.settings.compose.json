@@ -1,0 +1,114 @@
+[
+  {
+    "$extends": "scaledProperty",
+    "id": "target_temperature_scaling",
+    "label": {
+      "en": "Target Temperature Scale"
+    },
+    "hint": {
+      "en": "By how much the temperature targeted by the device is scaled."
+    }
+  },
+  {
+    "$extends": "scaledProperty",
+    "id": "measure_temperature_scaling",
+    "label": {
+      "en": "Measured Temperature Scale"
+    },
+    "hint": {
+      "en": "By how much the temperature measured by the device is scaled."
+    }
+  },
+  {
+    "$extends": "scaledProperty",
+    "id": "measure_humidity_scaling",
+    "label": {
+      "en": "Measured Humidity Scale"
+    },
+    "hint": {
+      "en": "By how much the humidity measured by the device is scaled."
+    }
+  },
+  {
+    "$extends": "scaledProperty",
+    "id": "measure_power_scaling",
+    "label": {
+      "en": "Measured Power Scale"
+    },
+    "hint": {
+      "en": "By how much the power measured by the device is scaled."
+    }
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "NOTE: Some settings are not supported by every device."
+    },
+    "children": [
+      {
+        "id": "capacity_set",
+        "type": "dropdown",
+        "label": {
+          "en": "Power Setting"
+        },
+        "values": [
+          { "id": "2000W", "label": { "en": "2000 W" } },
+          { "id": "3000W", "label": { "en": "3000 W" } },
+          { "id": "5000W", "label": { "en": "5000 W" } }
+        ]
+      },
+      {
+        "id": "temp_correction",
+        "type": "number",
+        "label": {
+          "en": "Temperature Calibration"
+        },
+        "step": 1
+      },
+      {
+        "id": "sensor_choose",
+        "type": "dropdown",
+        "label": {
+          "en": "Sensor Selection"
+        },
+        "values": [
+          { "id": "in", "label": { "en": "Internal" } },
+          { "id": "out", "label": { "en": "3000 W" } }
+        ]
+      },
+      {
+        "id": "backlight",
+        "type": "number",
+        "label": {
+          "en": "Backlight Brightness"
+        },
+        "step": 1,
+        "units": "%",
+        "min": 0,
+        "max": 100
+      },
+      {
+        "id": "backlight_enum",
+        "type": "dropdown",
+        "label": {
+          "en": "Quick Backlight Brightness"
+        },
+        "values": [
+          { "id": "closed", "label": { "en": "Off" } },
+          { "id": "half_bright", "label": { "en": "Half brightness" } },
+          { "id": "full_bright", "label": { "en": "Full brightness" } }
+        ]
+      },
+      {
+        "id": "window_check",
+        "type": "checkbox",
+        "label": {
+          "en": "Open Window Detection"
+        }
+      }
+    ]
+  },
+  {
+    "$extends": "deviceSpecification"
+  }
+]
