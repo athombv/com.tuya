@@ -1,16 +1,24 @@
 [
   {
-    "id": "tr_timecon",
-    "type": "number",
+    "type": "group",
     "label": {
-      "en": "Door travel time"
+      "en": "NOTE: Some settings are not supported by every device."
     },
-    "hint": {
-      "en": "The time it takes for the door to open or close."
-    },
-    "units": {
-      "en": "seconds"
-    }
+    "children": [
+      {
+        "id": "tr_timecon",
+        "type": "number",
+        "label": {
+          "en": "Door travel time"
+        },
+        "hint": {
+          "en": "The time it takes for the door to open or close."
+        },
+        "units": {
+          "en": "seconds"
+        }
+      }
+    ]
   },
   {
     "$extends": "deviceSpecification"

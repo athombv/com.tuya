@@ -1,3 +1,5 @@
+import TRANSLATIONS from './translations.json';
+
 export const HUMAN_SENSOR_CAPABILITIES = {
   setting: ['sensitivity', 'near_detection', 'far_detection'],
 } as const;
@@ -20,8 +22,4 @@ export type TuyaHumanSensorSettings = {
   far_detection: number;
 };
 
-export const HUMAN_SENSOR_SETTING_LABELS = {
-  sensitivity: 'Sensitivity',
-  near_detection: 'Nearest detection distance',
-  far_detection: 'Furthest detection distance',
-} as const;
+export const HUMAN_SENSOR_SETTING_LABELS = TRANSLATIONS.setting_labels;

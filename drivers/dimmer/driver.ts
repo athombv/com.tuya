@@ -1,6 +1,6 @@
 import { DEVICE_CATEGORIES, TUYA_PERCENTAGE_SCALING } from '../../lib/TuyaOAuth2Constants';
 import TuyaOAuth2Driver, { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
-import { constIncludes } from '../../lib/TuyaOAuth2Util';
+import { constIncludes, fillTranslatableObject } from '../../lib/TuyaOAuth2Util';
 import {
   type TuyaDeviceDataPointResponse,
   TuyaDeviceResponse,
@@ -9,6 +9,7 @@ import {
 import type { StandardDeviceFlowArgs, StandardFlowArgs } from '../../types/TuyaTypes';
 import TuyaOAuth2DeviceDimmer from './device';
 import { SIMPLE_DIMMER_CAPABILITIES } from './TuyaDimmerConstants';
+import TRANSLATIONS from './translations.json';
 
 type DeviceArgs = StandardDeviceFlowArgs<TuyaOAuth2DeviceDimmer>;
 type FlowArgs = StandardFlowArgs<TuyaOAuth2DeviceDimmer>;
@@ -88,23 +89,14 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
       for (let switch_i = 1; switch_i <= 3; switch_i++) {
         const subSwitchCapability = `onoff.${switch_i}`;
         props.capabilities.push(subSwitchCapability);
-        props.capabilitiesOptions[subSwitchCapability] = {
-          title: {
-            en: `Switch ${switch_i}`,
-          },
-          insightsTitleTrue: {
-            en: `Turned on (Switch ${switch_i})`,
-          },
-          insightsTitleFalse: {
-            en: `Turned off (Switch ${switch_i})`,
-          },
-        };
+        props.capabilitiesOptions[subSwitchCapability] = fillTranslatableObject(
+          TRANSLATIONS.capabilitiesOptions['onoff.subSwitch'],
+          { index: `${switch_i}` },
+        );
       }
 
       props.capabilitiesOptions['onoff'] = {
-        title: {
-          en: 'Switch All',
-        },
+        ...TRANSLATIONS.capabilitiesOptions['onoff.all'],
         preventInsights: true,
       };
     }
@@ -118,10 +110,11 @@ module.exports = class TuyaOAuth2DriverDimmer extends TuyaOAuth2Driver {
       for (let switch_i = 1; switch_i <= 3; switch_i++) {
         const subSwitchCapability = `dim.${switch_i}`;
         props.capabilities.push(subSwitchCapability);
+        const translations = fillTranslatableObject(TRANSLATIONS.capabilitiesOptions['dim.subSwitch'], {
+          index: `${switch_i}`,
+        });
         props.capabilitiesOptions[subSwitchCapability] = {
-          title: {
-            en: `Dim ${switch_i}`,
-          },
+          ...translations,
           preventInsights: true,
         };
       }

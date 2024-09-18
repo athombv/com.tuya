@@ -11,24 +11,32 @@
     "value": false
   },
   {
-    "id": "fan_direction",
-    "type": "dropdown",
+    "type": "group",
     "label": {
-      "en": "Fan direction"
+      "en": "NOTE: Some settings are not supported by every device."
     },
-    "value": "forward",
-    "values": [
+    "children": [
       {
-        "id": "forward",
+        "id": "fan_direction",
+        "type": "dropdown",
         "label": {
-          "en": "Forward"
-        }
-      },
-      {
-        "id": "backward",
-        "label": {
-          "en": "Backward"
-        }
+          "en": "Fan direction"
+        },
+        "value": "forward",
+        "values": [
+          {
+            "id": "forward",
+            "label": {
+              "en": "Forward"
+            }
+          },
+          {
+            "id": "backward",
+            "label": {
+              "en": "Backward"
+            }
+          }
+        ]
       }
     ]
   },

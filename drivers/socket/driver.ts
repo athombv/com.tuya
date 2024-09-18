@@ -9,6 +9,8 @@ import {
 } from '../../types/TuyaApiTypes';
 import type TuyaOAuth2DeviceSocket from './device';
 import { SOCKET_SETTING_LABELS } from './TuyaSocketConstants';
+import { fillTranslatableObject } from '../../lib/TuyaOAuth2Util';
+import TRANSLATIONS from './translations.json';
 
 type DeviceArgs = { device: TuyaOAuth2DeviceSocket };
 type SwitchArgs = { switch: { name: string; id: string } };
@@ -132,18 +134,10 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
 
           const homeyCapability = `onoff.switch_${switch_i}`;
           props.capabilities.push(homeyCapability);
-
-          props.capabilitiesOptions[homeyCapability] = {
-            title: {
-              en: `Switch ${switch_i}`,
-            },
-            insightsTitleTrue: {
-              en: `Turned on (Switch ${switch_i})`,
-            },
-            insightsTitleFalse: {
-              en: `Turned off (Switch ${switch_i})`,
-            },
-          };
+          props.capabilitiesOptions[homeyCapability] = fillTranslatableObject(
+            TRANSLATIONS.capabilitiesOptions['onoff.subSwitch'],
+            { index: `${switch_i}` },
+          );
         }
       }
     }
@@ -157,10 +151,9 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
       // Remove the sub-capability in favor of the regular 'onoff' capability
       props.capabilities.pop();
     } else {
+      const translations = TRANSLATIONS.capabilitiesOptions['onoff.all'];
       props.capabilitiesOptions['onoff'] = {
-        title: {
-          en: 'Switch All',
-        },
+        ...translations,
         preventInsights: true,
       };
     }

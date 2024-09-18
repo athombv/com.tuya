@@ -1,0 +1,7 @@
+{
+  "setting_labels": {
+    "sensitivity": { "en": "Sensitivity" },
+    "near_detection": { "en": "Nearest detection distance" },
+    "far_detection": { "en": "Furthest detection distance" }
+  }
+}

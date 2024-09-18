@@ -1,7 +1,6 @@
-export const SOCKET_SETTING_LABELS = {
-  child_lock: 'Child Lock',
-  relay_status: 'Turn On Behavior',
-} as const;
+import TRANSLATIONS from './translations.json';
+
+export const SOCKET_SETTING_LABELS = TRANSLATIONS.setting_labels;
 
 export type HomeySocketSettings = {
   child_lock: boolean;

@@ -1,38 +1,46 @@
 [
   {
-    "id": "alarm_volume",
-    "type": "dropdown",
+    "type": "group",
     "label": {
-      "en": "Alarm volume level"
+      "en": "NOTE: Some settings are not supported by every device."
     },
-    "hint": {
-      "en": "The volume level of the siren."
-    },
-    "value": "middle",
-    "values": [
+    "children": [
       {
-        "id": "low",
+        "id": "alarm_volume",
+        "type": "dropdown",
         "label": {
-          "en": "Low"
-        }
-      },
-      {
-        "id": "middle",
-        "label": {
-          "en": "Middle"
-        }
-      },
-      {
-        "id": "high",
-        "label": {
-          "en": "High"
-        }
-      },
-      {
-        "id": "mute",
-        "label": {
-          "en": "Muted"
-        }
+          "en": "Alarm volume level"
+        },
+        "hint": {
+          "en": "The volume level of the siren."
+        },
+        "value": "middle",
+        "values": [
+          {
+            "id": "low",
+            "label": {
+              "en": "Low"
+            }
+          },
+          {
+            "id": "middle",
+            "label": {
+              "en": "Middle"
+            }
+          },
+          {
+            "id": "high",
+            "label": {
+              "en": "High"
+            }
+          },
+          {
+            "id": "mute",
+            "label": {
+              "en": "Muted"
+            }
+          }
+        ]
       }
     ]
   },

@@ -89,15 +89,6 @@ module.exports = class TuyaOAuth2DriverCamera extends TuyaOAuth2Driver {
       }
     }
 
-    // Match title to other camera alarms
-    if (props.capabilities.includes('alarm_motion')) {
-      props.capabilitiesOptions['alarm_motion'] = {
-        title: {
-          en: 'Motion Detected',
-        },
-      };
-    }
-
     return props;
   }
 };

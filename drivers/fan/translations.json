@@ -1,0 +1,39 @@
+{
+  "setting_labels": {
+    "fan_direction": { "en": "Fan direction" }
+  },
+  "capabilitiesOptions": {
+    "onoff.fan": {
+      "title": {
+        "en": "Fan"
+      },
+      "insightsTitleTrue": {
+        "en": "Turned on (Fan)"
+      },
+      "insightsTitleFalse": {
+        "en": "Turned off (Fan)"
+      }
+    },
+    "onoff.light": {
+      "title": {
+        "en": "Light"
+      },
+      "insightsTitleTrue": {
+        "en": "Turned on (Light)"
+      },
+      "insightsTitleFalse": {
+        "en": "Turned off (Light)"
+      }
+    },
+    "dim.fan": {
+      "title": {
+        "en": "Fan"
+      }
+    },
+    "dim.light": {
+      "title": {
+        "en": "Light"
+      }
+    }
+  }
+}

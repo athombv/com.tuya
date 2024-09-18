@@ -1,0 +1,6 @@
+{
+  "setting_labels": {
+    "child_lock": { "en": "Child Lock" },
+    "relay_status": { "en": "Turn On Behavior" }
+  }
+}

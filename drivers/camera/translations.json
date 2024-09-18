@@ -1,0 +1,18 @@
+{
+  "setting_labels": {
+    "motion_switch": { "en": "Motion Detection" },
+    "motion_tracking": { "en": "Motion Tracking" },
+    "decibel_switch": { "en": "Sound Detection" },
+    "cry_detection_switch": { "en": "Crying Baby Detection" },
+    "pet_detection": { "en": "Pet Detection" },
+    "motion_sensitivity": { "en": "Motion Sensitivity" },
+    "decibel_sensitivity": { "en": "Sound Sensitivity" },
+    "basic_nightvision": { "en": "Night Mode" },
+    "basic_device_volume": { "en": "Device Volume" },
+    "basic_anti_flicker": { "en": "Anti-Flicker" },
+    "basic_osd": { "en": "Video Timestamp" },
+    "basic_flip": { "en": "Flip Video" },
+    "basic_indicator": { "en": "Status Indicator" },
+    "alarm_timeout": { "en": "Alarm Timeout" }
+  }
+}

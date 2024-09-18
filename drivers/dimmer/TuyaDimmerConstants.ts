@@ -1,16 +1,7 @@
-// TODO make translatable
+import TRANSLATIONS from './translations.json';
+
 // Map from setting id to human-readable label
-export const DIMMER_SETTING_LABELS = {
-  brightness_min_1: 'Minimum Brightness 1',
-  brightness_max_1: 'Maximum Brightness 1',
-  brightness_min_2: 'Minimum Brightness 2',
-  brightness_max_2: 'Maximum Brightness 2',
-  brightness_min_3: 'Minimum Brightness 3',
-  brightness_max_3: 'Maximum Brightness 3',
-  led_type_1: 'Lamp Type 1',
-  led_type_2: 'Lamp Type 2',
-  led_type_3: 'Lamp Type 3',
-} as const;
+export const DIMMER_SETTING_LABELS = TRANSLATIONS.setting_labels;
 
 export const SIMPLE_DIMMER_CAPABILITIES = {
   read_write: ['switch_led_1', 'bright_value_1', 'switch_led_2', 'bright_value_2', 'switch_led_3', 'bright_value_3'],

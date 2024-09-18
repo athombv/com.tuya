@@ -1,0 +1,40 @@
+{
+  "setting_labels": {
+    "switch_pir": { "en": "Motion Detection" },
+    "pir_sensitivity": { "en": "Motion Sensitivity" },
+    "pir_delay": { "en": "Motion Delay" },
+    "cds": { "en": "Luminance Detection" },
+    "standby_on": { "en": "Standby Light" },
+    "standby_time": { "en": "Standby Time" },
+    "standby_bright": { "en": "Standby Brightness" }
+  },
+  "capabilitiesOptions": {
+    "onoff.switch_led": {
+      "title": {
+        "en": "Light"
+      },
+      "insightsTitleTrue": {
+        "en": "Turned on (Light)"
+      },
+      "insightsTitleFalse": {
+        "en": "Turned off (Light)"
+      }
+    },
+    "onoff.switch": {
+      "title": {
+        "en": "Other"
+      },
+      "insightsTitleTrue": {
+        "en": "Turned on (Other)"
+      },
+      "insightsTitleFalse": {
+        "en": "Turned off (Other)"
+      }
+    },
+    "onoff.all": {
+      "title": {
+        "en": "Switch All"
+      }
+    }
+  }
+}
