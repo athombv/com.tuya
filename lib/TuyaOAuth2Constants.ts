@@ -35,6 +35,7 @@ export const DEVICE_CATEGORIES = {
     CURTAIN_SWITCH: 'clkg',
     GARAGE_DOOR_OPEN: 'ckmkzq',
     DIMMER_SWITCH: 'tgkg',
+    WIRELESS_SWITCH: 'wxkg',
   },
   LARGE_HOME_APPLIANCES: {
     HEATER: 'rs',
