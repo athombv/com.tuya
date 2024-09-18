@@ -9,6 +9,23 @@ import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import { THERMOSTAT_CAPABILITIES, THERMOSTAT_CAPABILITIES_MAPPING, THERMOSTAT_FLOWS } from './TuyaThermostatConstants';
 import type { StandardFlowArgs } from '../../types/TuyaTypes';
 
+function generateThermostatModeTitles(values: string[]): {
+  id: string;
+  title: {
+    en: string;
+  };
+}[] {
+  return values.map(value => {
+    const capitalized = (value.charAt(0).toUpperCase() + value.slice(1)).replaceAll('_', ' ');
+    return {
+      id: value,
+      title: {
+        en: capitalized,
+      },
+    };
+  });
+}
+
 module.exports = class TuyaOAuth2DriverThermostat extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.THERMOSTAT] as const;
 
@@ -61,7 +78,7 @@ module.exports = class TuyaOAuth2DriverThermostat extends TuyaOAuth2Driver {
     if (work_state) {
       props.store.tuya_capabilities.push('work_state');
       props.capabilities.push('thermostat_mode');
-      const values = [
+      const values = generateThermostatModeTitles([
         'cold',
         'hot',
         'wind',
@@ -76,15 +93,7 @@ module.exports = class TuyaOAuth2DriverThermostat extends TuyaOAuth2Driver {
         'program',
         'floor_heat',
         'auxiliary_heat',
-      ].map(value => {
-        const capitalized = value.charAt(0).toUpperCase() + value.slice(1);
-        return {
-          id: value,
-          title: {
-            en: capitalized,
-          },
-        };
-      });
+      ]);
 
       props.capabilitiesOptions['thermostat_mode'] = {
         values: values,
@@ -130,15 +139,7 @@ module.exports = class TuyaOAuth2DriverThermostat extends TuyaOAuth2Driver {
           continue;
         }
 
-        const modeOptions = (values.range as string[]).map(value => {
-          const capitalized = value.charAt(0).toUpperCase() + value.slice(1);
-          return {
-            id: value,
-            title: {
-              en: capitalized,
-            },
-          };
-        });
+        const modeOptions = generateThermostatModeTitles(values.range as string[]);
 
         props.capabilitiesOptions['thermostat_mode'] = {
           values: modeOptions,
