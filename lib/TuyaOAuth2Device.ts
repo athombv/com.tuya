@@ -1,7 +1,7 @@
 import { OAuth2Device } from 'homey-oauth2app';
 import type { TuyaCommand, TuyaDeviceDataPointResponse, TuyaStatusResponse, TuyaWebRTC } from '../types/TuyaApiTypes';
 
-import type { TuyaStatus } from '../types/TuyaTypes';
+import type { TuyaStatus, TuyaStatusSource } from '../types/TuyaTypes';
 import TuyaOAuth2Client from './TuyaOAuth2Client';
 import * as TuyaOAuth2Util from './TuyaOAuth2Util';
 import * as GeneralMigrations from './migrations/GeneralMigrations';
@@ -68,6 +68,12 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
       isOtherDevice,
     );
 
+    const statusSourceUpdateCodes = this.getStoreValue('status_source_update_codes');
+    if (Array.isArray(statusSourceUpdateCodes)) {
+      this.log('Restoring status source update codes: ', JSON.stringify(statusSourceUpdateCodes));
+      statusSourceUpdateCodes.forEach(c => this.tuyaStatusSourceUpdateCodes.add(c));
+    }
+
     if (typeof TuyaOAuth2Device.SYNC_INTERVAL === 'number') {
       this.__syncInterval = this.homey.setInterval(this.__sync, TuyaOAuth2Device.SYNC_INTERVAL);
     }
@@ -91,12 +97,56 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
   /*
    * Tuya
    */
-  async __onTuyaStatus(status: TuyaStatus, changedStatusCodes: string[] = []): Promise<void> {
+  private tuyaStatusSourceUpdateCodes: Set<string> = new Set();
+
+  private async __onTuyaStatus(
+    source: TuyaStatusSource,
+    status: TuyaStatus,
+    changedStatusCodes: string[] = [],
+  ): Promise<void> {
+    // Wait at least 100ms for initialization before trying to pass the barrier again
+    while (this.initBarrier) {
+      await new Promise(resolve => this.homey.setTimeout(resolve, 100));
+    }
+
+    // Filter duplicated data
+    if (source === 'status') {
+      changedStatusCodes.forEach(c => {
+        if (this.tuyaStatusSourceUpdateCodes.has(c)) {
+          return;
+        }
+
+        this.log('Add status source update code', c);
+        this.tuyaStatusSourceUpdateCodes.add(c);
+        this.setStoreValue('status_source_update_codes', Array.from(this.tuyaStatusSourceUpdateCodes));
+      });
+    }
+
+    if (source === 'iot_core_status') {
+      // GH-239: As we have two data sources, certain data point updates can come in twice.
+      // When a code has been reported with the status event, we should no longer listen to that code
+      // when coming in from the iot_core_status event.
+      for (const changedStatusCode of changedStatusCodes) {
+        if (!this.tuyaStatusSourceUpdateCodes.has(changedStatusCode)) {
+          continue;
+        }
+
+        this.log('Ignoring iot_core_status code change', changedStatusCode);
+        delete status[changedStatusCode];
+      }
+
+      // Recompute changed status codes
+      changedStatusCodes = Object.keys(status);
+    }
+
     this.__status = {
       ...this.__status,
       ...status,
     };
 
+    this.log('onTuyaStatus', source, JSON.stringify(this.__status));
+
+    // Trigger the custom code cards
     for (const changedStatusCode of changedStatusCodes) {
       let changedStatusValue = status[changedStatusCode];
 
@@ -131,30 +181,26 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
         .catch(this.error);
     }
 
-    await this.onTuyaStatus(this.__status, changedStatusCodes);
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async onTuyaStatus(status: TuyaStatus, _changedStatusCodes: string[]): Promise<void> {
-    // Wait at least 100ms for initialization before trying to pass the barrier again
-    while (this.initBarrier) {
-      await new Promise(resolve => this.homey.setTimeout(resolve, 100));
-    }
-
-    this.log('onTuyaStatus', JSON.stringify(status));
-
     if (status.online === true) {
       this.setAvailable().catch(this.error);
     }
 
     if (status.online === false) {
       this.setUnavailable(this.homey.__('device_offline')).catch(this.error);
+
+      // Prevent further updates that would mark the device as available
+      return;
     }
 
+    await this.onTuyaStatus(this.__status, changedStatusCodes);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async onTuyaStatus(_status: TuyaStatus, _changedStatusCodes: string[]): Promise<void> {
     // Overload Me
   }
 
-  async __sync(): Promise<void> {
+  private async __sync(): Promise<void> {
     Promise.resolve()
       .then(async () => {
         this.log('Syncing...');
@@ -162,7 +208,7 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
         const device = await this.oAuth2Client.getDevice({ deviceId });
 
         const status = TuyaOAuth2Util.convertStatusArrayToStatusObject(device.status);
-        await this.__onTuyaStatus({
+        await this.__onTuyaStatus('sync', {
           ...status,
           online: device.online,
         });
