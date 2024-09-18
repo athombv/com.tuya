@@ -51,10 +51,6 @@ module.exports = class TuyaOAuth2DeviceThermostat extends TuyaOAuth2Device {
         await this.safeSetCapabilityValue(homeyCapability, (value as number) / scaling);
       }
 
-      if (tuyaCapability === 'battery_percentage') {
-        await this.safeSetCapabilityValue(homeyCapability, (value as number) / 100);
-      }
-
       if (constIncludes(THERMOSTAT_CAPABILITIES.setting, tuyaCapability)) {
         await this.safeSetSettingValue(tuyaCapability, value);
       }

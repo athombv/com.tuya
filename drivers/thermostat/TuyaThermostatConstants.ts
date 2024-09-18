@@ -19,7 +19,7 @@ export const THERMOSTAT_CAPABILITIES_MAPPING = {
 
 export const THERMOSTAT_CAPABILITIES = {
   read_write: ['switch', 'eco', 'child_lock', 'switch_vertical', 'switch_horizontal', 'sleep', 'frost', 'level'],
-  read_only: ['window_state'],
+  read_only: ['window_state', 'battery_percentage'],
   read_scaled: ['temp_set', 'work_power', 'temp_current', 'humidity'],
   setting: ['capacity_set', 'temp_correction', 'sensor_choose', 'backlight', 'backlight_enum', 'window_check'],
 } as const;
