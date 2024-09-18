@@ -1,0 +1,7 @@
+{
+  "type": "string",
+  "title": "hidden",
+  "getable": false,
+  "setable": false,
+  "uiComponent": null
+}

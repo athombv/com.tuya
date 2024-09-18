@@ -588,6 +588,121 @@
         "id": "receive_status_string"
       },
       {
+        "id": "button_sub_switch_pressed",
+        "title": {
+          "en": "Pressed switch"
+        },
+        "titleFormatted": {
+          "en": "Pressed [[switch]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=button"
+          },
+          {
+            "name": "switch",
+            "type": "autocomplete",
+            "title": {
+              "en": "Switch"
+            },
+            "placeholder": {
+              "en": "Switch 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "button_sub_switch_clicked",
+        "title": {
+          "en": "Clicked switch"
+        },
+        "titleFormatted": {
+          "en": "Clicked [[switch]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=button"
+          },
+          {
+            "name": "switch",
+            "type": "autocomplete",
+            "title": {
+              "en": "Switch"
+            },
+            "placeholder": {
+              "en": "Switch 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "button_sub_switch_double_clicked",
+        "title": {
+          "en": "Double clicked switch"
+        },
+        "titleFormatted": {
+          "en": "Double clicked [[switch]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=button"
+          },
+          {
+            "name": "switch",
+            "type": "autocomplete",
+            "title": {
+              "en": "Switch"
+            },
+            "placeholder": {
+              "en": "Switch 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "button_knob_turned",
+        "title": {
+          "en": "Knob turned"
+        },
+        "titleFormatted": {
+          "en": "Knob turned [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=button&capabilities=hidden.knob_switch_mode_1"
+          },
+          {
+            "name": "value",
+            "type": "dropdown",
+            "title": {
+              "en": "Direction"
+            },
+            "values": [
+              {
+                "id": "clockwise_rotation",
+                "title": {
+                  "en": "Clockwise"
+                }
+              },
+              {
+                "id": "anticlockwise_rotation",
+                "title": {
+                  "en": "Counterclockwise"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "camera_alarm_crying_child_true",
         "title": {
           "en": "A crying child was detected"
@@ -1259,6 +1374,84 @@
           }
         ],
         "id": "trigger_scene"
+      },
+      {
+        "id": "button_sub_switch_press",
+        "title": {
+          "en": "Press switch"
+        },
+        "titleFormatted": {
+          "en": "Press [[switch]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=button"
+          },
+          {
+            "name": "switch",
+            "type": "autocomplete",
+            "title": {
+              "en": "Switch"
+            },
+            "placeholder": {
+              "en": "Switch 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "button_sub_switch_click",
+        "title": {
+          "en": "Click switch"
+        },
+        "titleFormatted": {
+          "en": "Click [[switch]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=button"
+          },
+          {
+            "name": "switch",
+            "type": "autocomplete",
+            "title": {
+              "en": "Switch"
+            },
+            "placeholder": {
+              "en": "Switch 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "button_sub_switch_double_click",
+        "title": {
+          "en": "Double click switch"
+        },
+        "titleFormatted": {
+          "en": "Double click [[switch]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=button"
+          },
+          {
+            "name": "switch",
+            "type": "autocomplete",
+            "title": {
+              "en": "Switch"
+            },
+            "placeholder": {
+              "en": "Switch 1"
+            }
+          }
+        ]
       },
       {
         "id": "camera_cruise_switch",
@@ -2455,6 +2648,69 @@
     ]
   },
   "drivers": [
+    {
+      "capabilities": [],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/button/assets/images/small.png",
+        "large": "/drivers/button/assets/images/large.png",
+        "xlarge": "/drivers/button/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "button",
+      "name": {
+        "en": "Wireless Button",
+        "nl": "Draadloze Knop"
+      },
+      "id": "button",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
+    },
     {
       "capabilities": [
         "alarm_motion",
@@ -5649,6 +5905,13 @@
       "uiComponent": "button",
       "getable": true,
       "setable": true
+    },
+    "hidden": {
+      "type": "string",
+      "title": "hidden",
+      "getable": false,
+      "setable": false,
+      "uiComponent": null
     },
     "legacy_fan_speed": {
       "type": "enum",
