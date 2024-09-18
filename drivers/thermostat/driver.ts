@@ -29,6 +29,9 @@ module.exports = class TuyaOAuth2DriverThermostat extends TuyaOAuth2Driver {
   ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
 
+    let mode = false;
+    let work_state = false;
+
     for (const status of device.status) {
       const tuyaCapability = status.code;
       const homeyCapability = getFromMap(THERMOSTAT_CAPABILITIES_MAPPING, tuyaCapability);
@@ -36,9 +39,57 @@ module.exports = class TuyaOAuth2DriverThermostat extends TuyaOAuth2Driver {
       if (homeyCapability) {
         props.store.tuya_capabilities.push(tuyaCapability);
         props.capabilities.push(homeyCapability);
-      } else if (constIncludes(THERMOSTAT_CAPABILITIES.setting, tuyaCapability)) {
+      }
+
+      if (constIncludes(THERMOSTAT_CAPABILITIES.setting, tuyaCapability)) {
         props.store.tuya_capabilities.push(tuyaCapability);
       }
+
+      if (tuyaCapability === 'mode') {
+        mode = true;
+      }
+
+      if (tuyaCapability === 'work_state') {
+        work_state = true;
+      }
+    }
+
+    if (mode) {
+      work_state = false;
+    }
+
+    if (work_state) {
+      props.store.tuya_capabilities.push('work_state');
+      props.capabilities.push('thermostat_mode');
+      const values = [
+        'cold',
+        'hot',
+        'wind',
+        'comfortable',
+        'energy',
+        'auto',
+        'holiday',
+        'eco',
+        'manual',
+        'sleep',
+        'dry',
+        'program',
+        'floor_heat',
+        'auxiliary_heat',
+      ].map(value => {
+        const capitalized = value.charAt(0).toUpperCase() + value.slice(1);
+        return {
+          id: value,
+          title: {
+            en: capitalized,
+          },
+        };
+      });
+
+      props.capabilitiesOptions['thermostat_mode'] = {
+        values: values,
+        setable: false,
+      };
     }
 
     if (!specifications || !specifications.status) {
@@ -72,6 +123,26 @@ module.exports = class TuyaOAuth2DriverThermostat extends TuyaOAuth2Driver {
         } else {
           this.error(`Unsupported ${tuyaCapability} scale:`, values.scale);
         }
+      }
+
+      if (tuyaCapability === 'mode' || (work_state && tuyaCapability === 'work_state')) {
+        if (!values.range || values.range.length === 0) {
+          continue;
+        }
+
+        const modeOptions = (values.range as string[]).map(value => {
+          const capitalized = value.charAt(0).toUpperCase() + value.slice(1);
+          return {
+            id: value,
+            title: {
+              en: capitalized,
+            },
+          };
+        });
+
+        props.capabilitiesOptions['thermostat_mode'] = {
+          values: modeOptions,
+        };
       }
     }
 

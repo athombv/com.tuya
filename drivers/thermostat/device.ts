@@ -54,6 +54,10 @@ module.exports = class TuyaOAuth2DeviceThermostat extends TuyaOAuth2Device {
       if (constIncludes(THERMOSTAT_CAPABILITIES.setting, tuyaCapability)) {
         await this.safeSetSettingValue(tuyaCapability, value);
       }
+
+      if (tuyaCapability === 'work_state' && !this.hasTuyaCapability('mode')) {
+        await this.safeSetCapabilityValue(homeyCapability, value);
+      }
     }
 
     for (const tuyaCapability of changed) {
