@@ -438,7 +438,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
             },
             "title": {
               "en": "Device"
@@ -479,7 +479,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
             },
             "title": {
               "en": "Device"
@@ -520,7 +520,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
             },
             "title": {
               "en": "Device"
@@ -561,7 +561,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
             },
             "title": {
               "en": "Device"
@@ -1220,7 +1220,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
             },
             "title": {
               "en": "Device"
@@ -1258,7 +1258,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
             },
             "title": {
               "en": "Device"
@@ -1296,7 +1296,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
             },
             "title": {
               "en": "Device"
@@ -1334,7 +1334,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
             },
             "title": {
               "en": "Device"
