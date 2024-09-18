@@ -1,0 +1,9 @@
+{
+  "title": {
+    "en": "Frost Guard"
+  },
+  "type": "boolean",
+  "uiComponent": "button",
+  "getable": true,
+  "setable": true
+}

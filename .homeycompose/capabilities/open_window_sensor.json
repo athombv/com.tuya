@@ -1,0 +1,17 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Open Window Detected"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "Open Window Detected"
+  },
+  "insightsTitleFalse": {
+    "en": "Open Window No Longer Detected"
+  },
+  "icon": "assets/capabilities/open-window.svg"
+}

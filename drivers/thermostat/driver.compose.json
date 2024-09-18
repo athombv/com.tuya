@@ -1,0 +1,91 @@
+{
+  "$extends": "tuya",
+  "class": "thermostat",
+  "name": {
+    "en": "Thermostat",
+    "nl": "Thermostaat"
+  },
+  "capabilities": ["measure_temperature", "target_temperature"],
+  "capabilitiesOptions": {
+    "thermostat_mode": {
+      "values": [
+        {
+          "id": "cold",
+          "title": {
+            "en": "Cold"
+          }
+        },
+        {
+          "id": "hot",
+          "title": {
+            "en": "Hot"
+          }
+        },
+        {
+          "id": "wind",
+          "title": {
+            "en": "Wind"
+          }
+        },
+        {
+          "id": "comfortable",
+          "title": {
+            "en": "Comfortable"
+          }
+        },
+        {
+          "id": "energy",
+          "title": {
+            "en": "Energy"
+          }
+        },
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "holiday",
+          "title": {
+            "en": "Holiday"
+          }
+        }
+      ]
+    },
+    "legacy_fan_speed": {
+      "values": [
+        {
+          "id": "high",
+          "title": {
+            "en": "High"
+          }
+        },
+        {
+          "id": "middle",
+          "title": {
+            "en": "Middle"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low"
+          }
+        },
+        {
+          "id": "closed",
+          "title": {
+            "en": "Closed"
+          }
+        },
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto"
+          }
+        }
+      ]
+    }
+  }
+}

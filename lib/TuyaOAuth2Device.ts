@@ -216,8 +216,8 @@ export default class TuyaOAuth2Device extends OAuth2Device<TuyaOAuth2Client> {
     return this.oAuth2Client.getStreamingLink(deviceId, type);
   }
 
-  async safeSetCapabilityValue(capabilityId: string, value: unknown): Promise<void> {
-    if (!this.hasCapability(capabilityId)) {
+  async safeSetCapabilityValue(capabilityId: string | undefined | null, value: unknown): Promise<void> {
+    if (!capabilityId || !this.hasCapability(capabilityId)) {
       return;
     }
 
