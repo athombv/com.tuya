@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { TuyaDeviceResponse, TuyaStatusResponse } from '../types/TuyaApiTypes';
-import { SettingsEvent, TuyaStatus } from '../types/TuyaTypes';
+import { Locale, SettingsEvent, Translation, TuyaStatus } from '../types/TuyaTypes';
 import TuyaOAuth2Device from './TuyaOAuth2Device';
 
 /**
@@ -147,7 +147,7 @@ export async function sendSetting(
   device: TuyaOAuth2Device,
   code: string,
   value: unknown,
-  settingLabels: Record<string, string>,
+  settingLabels: Record<string, Translation>,
 ): Promise<void> {
   await device
     .sendCommand({
@@ -158,13 +158,13 @@ export async function sendSetting(
       if (err.tuyaCode === 2008) {
         throw new Error(
           device.homey.__('setting_unsupported', {
-            label: settingLabels[code],
+            label: settingLabels[code][device.homey.i18n.getLanguage() as Locale],
           }),
         );
       } else if (err.tuyaCode === 501) {
         throw new Error(
           device.homey.__('setting_value_unsupported', {
-            label: settingLabels[code],
+            label: settingLabels[code][device.homey.i18n.getLanguage() as Locale],
           }),
         );
       } else {
@@ -214,7 +214,7 @@ export async function sendSettings<T extends { [key: string]: unknown }>(
  * @param unsupportedValues - Settings for which the new value is unsupported
  * @param settingLabels - A mapping from setting keys to their user-friendly label
  */
-export function reportUnsupportedSettings<T extends Record<string, string>>(
+export function reportUnsupportedSettings<T extends Record<string, Translation>>(
   device: TuyaOAuth2Device,
   unsupportedSettings: (keyof T)[],
   unsupportedValues: (keyof T)[],
@@ -225,11 +225,15 @@ export function reportUnsupportedSettings<T extends Record<string, string>>(
   const messages = [];
 
   if (unsupportedSettings.length > 0) {
-    const mappedSettingNames = unsupportedSettings.map(settingKey => settingLabels[settingKey]);
+    const mappedSettingNames = unsupportedSettings.map(
+      settingKey => settingLabels[settingKey][device.homey.i18n.getLanguage() as Locale],
+    );
     messages.push(device.homey.__('settings_unsupported') + ' ' + mappedSettingNames.join(', '));
   }
   if (unsupportedValues.length > 0) {
-    const mappedSettingNames = unsupportedValues.map(settingKey => settingLabels[settingKey]);
+    const mappedSettingNames = unsupportedValues.map(
+      settingKey => settingLabels[settingKey][device.homey.i18n.getLanguage() as Locale],
+    );
     messages.push(device.homey.__('setting_values_unsupported') + ' ' + mappedSettingNames.join(', '));
   }
   if (messages.length > 0) {
@@ -246,7 +250,7 @@ export function reportUnsupportedSettings<T extends Record<string, string>>(
 export async function onSettings<T extends { [key: string]: unknown }>(
   device: TuyaOAuth2Device,
   event: SettingsEvent<T>,
-  settingLabels: Record<keyof T, string>,
+  settingLabels: Record<keyof T, Translation>,
 ): Promise<string | void> {
   const [unsupportedSettings, unsupportedValues] = await sendSettings(device, event);
   return reportUnsupportedSettings(
@@ -294,4 +298,39 @@ export function constIncludes<T, S>(array: ReadonlyArray<T>, search: S): S exten
 
 export function getFromMap<K extends string | number | symbol, V>(map: Record<K, V>, search: K): V | null {
   return map[search] ?? null;
+}
+
+export function fillTemplateString(template: string, values: Record<string, string>): string {
+  let filledTemplate = template;
+
+  for (const key in values) {
+    const keyTemplate = `__${key}__`;
+    const value = values[key];
+    filledTemplate = filledTemplate.replaceAll(keyTemplate, value);
+  }
+
+  return filledTemplate;
+}
+
+export function fillTemplateTranslation(template: Translation, values: Record<string, string>): Translation {
+  const filledTranslation = { ...template };
+
+  for (const locale in template) {
+    filledTranslation[locale as Locale] = fillTemplateString(template[locale as Locale], values);
+  }
+
+  return filledTranslation;
+}
+
+export function fillTranslatableObject(
+  translatable: Record<string, Translation>,
+  values: Record<string, string>,
+): Record<string, Translation> {
+  const translated = { ...translatable };
+
+  for (const key in translatable) {
+    translated[key] = fillTemplateTranslation(translatable[key], values);
+  }
+
+  return translated;
 }

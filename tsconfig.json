@@ -2,6 +2,7 @@
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
     "outDir": ".homeybuild/",
-    "sourceMap": true
+    "sourceMap": true,
+    "resolveJsonModule": true
   }
 }

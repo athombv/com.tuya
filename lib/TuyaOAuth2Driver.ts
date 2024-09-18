@@ -4,7 +4,7 @@ import {
   TuyaDeviceResponse,
   TuyaDeviceSpecificationResponse,
 } from '../types/TuyaApiTypes';
-import type { StandardFlowArgs } from '../types/TuyaTypes';
+import type { StandardFlowArgs, Translation } from '../types/TuyaTypes';
 import TuyaOAuth2Client from './TuyaOAuth2Client';
 import { sendSetting } from './TuyaOAuth2Util';
 
@@ -95,7 +95,7 @@ export default class TuyaOAuth2Driver extends OAuth2Driver<TuyaOAuth2Client> {
     };
   }
 
-  protected addSettingFlowHandler<K extends string, L extends Record<K, string>>(setting: K, labels: L): void {
+  protected addSettingFlowHandler<K extends string, L extends Record<K, Translation>>(setting: K, labels: L): void {
     this.homey.flow
       .getActionCard(`${this.id}_${setting}`)
       .registerRunListener(
