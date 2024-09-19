@@ -1,0 +1,88 @@
+{
+  "actions": [],
+  "conditions": [],
+  "triggers": [
+    {
+      "id": "button_sub_switch_pressed",
+      "title": {
+        "en": "Pressed switch"
+      },
+      "titleFormatted": {
+        "en": "Pressed [[switch]]"
+      },
+      "args": [
+        {
+          "name": "switch",
+          "type": "autocomplete",
+          "title": { "en": "Switch" },
+          "placeholder": { "en": "Switch 1" }
+        }
+      ]
+    },
+    {
+      "id": "button_sub_switch_clicked",
+      "title": {
+        "en": "Clicked switch"
+      },
+      "titleFormatted": {
+        "en": "Clicked [[switch]]"
+      },
+      "args": [
+        {
+          "name": "switch",
+          "type": "autocomplete",
+          "title": { "en": "Switch" },
+          "placeholder": { "en": "Switch 1" }
+        }
+      ]
+    },
+    {
+      "id": "button_sub_switch_double_clicked",
+      "title": {
+        "en": "Double clicked switch"
+      },
+      "titleFormatted": {
+        "en": "Double clicked [[switch]]"
+      },
+      "args": [
+        {
+          "name": "switch",
+          "type": "autocomplete",
+          "title": { "en": "Switch" },
+          "placeholder": { "en": "Switch 1" }
+        }
+      ]
+    },
+    {
+      "id": "button_knob_turned",
+      "$filter": "capabilities=hidden.knob_switch_mode_1",
+      "title": {
+        "en": "Knob turned"
+      },
+      "titleFormatted": {
+        "en": "Knob turned [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "dropdown",
+          "title": { "en": "Direction" },
+          "values": [
+            {
+              "id": "clockwise_rotation",
+              "title": {
+                "en": "Clockwise"
+              }
+            },
+            {
+              "id": "anticlockwise_rotation",
+              "title": {
+                "en": "Counterclockwise"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

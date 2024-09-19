@@ -1,0 +1,12 @@
+{
+  "$extends": "tuya",
+  "class": "button",
+  "name": {
+    "en": "Wireless Button",
+    "nl": "Draadloze Knop"
+  },
+  "capabilities": ["measure_battery"],
+  "energy": {
+    "batteries": ["OTHER"]
+  }
+}
