@@ -75,7 +75,7 @@ module.exports = class TuyaOAuth2DeviceHeater extends TuyaOAuth2Device {
 
       const faultString = faults.join(', ');
 
-      this.setCapabilityValue('fault', faults.length === 0 ? 'OK' : faultString).catch(this.error);
+      this.setCapabilityValue('fault', faults.length === 0 ? null : faultString).catch(this.error);
     }
   }
 

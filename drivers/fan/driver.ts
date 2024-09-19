@@ -9,6 +9,7 @@ import { getFromMap } from '../../lib/TuyaOAuth2Util';
 import { FAN_CAPABILITIES_MAPPING, FAN_SETTING_LABELS } from './TuyaFanConstants';
 import TuyaOAuth2DriverWithLight from '../../lib/TuyaOAuth2DriverWithLight';
 import { StandardDeviceFlowArgs, StandardFlowArgs } from '../../types/TuyaTypes';
+import TRANSLATIONS from './translations.json';
 
 module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2DriverWithLight {
   TUYA_DEVICE_CATEGORIES = [
@@ -75,44 +76,14 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2DriverWithLight {
 
     // Fix onoff when light is present
     if (props.capabilities.includes('onoff.light')) {
-      props.capabilitiesOptions['onoff'] = {
-        title: {
-          en: `Fan`,
-        },
-        insightsTitleTrue: {
-          en: `Turned on (Fan)`,
-        },
-        insightsTitleFalse: {
-          en: `Turned off (Fan)`,
-        },
-      };
-
-      props.capabilitiesOptions['onoff.light'] = {
-        title: {
-          en: `Light`,
-        },
-        insightsTitleTrue: {
-          en: `Turned on (Light)`,
-        },
-        insightsTitleFalse: {
-          en: `Turned off (Light)`,
-        },
-      };
+      props.capabilitiesOptions['onoff'] = TRANSLATIONS.capabilitiesOptions['onoff.fan'];
+      props.capabilitiesOptions['onoff.light'] = TRANSLATIONS.capabilitiesOptions['onoff.light'];
     }
 
     // Fix dim when light is present
     if (props.capabilities.includes('dim.light')) {
-      props.capabilitiesOptions['dim'] = {
-        title: {
-          en: `Fan`,
-        },
-      };
-
-      props.capabilitiesOptions['dim.light'] = {
-        title: {
-          en: `Light`,
-        },
-      };
+      props.capabilitiesOptions['dim'] = TRANSLATIONS.capabilitiesOptions['dim.fan'];
+      props.capabilitiesOptions['dim.light'] = TRANSLATIONS.capabilitiesOptions['dim.light'];
     }
 
     if (!specifications || !specifications.status) {
@@ -132,16 +103,13 @@ module.exports = class TuyaOAuth2DriverFan extends TuyaOAuth2DriverWithLight {
         };
       }
 
-      const speeds = (values.range as never[] | undefined)?.length;
+      const speeds = values.range as string[] | undefined;
 
       if (tuyaCapability === 'fan_speed' && speeds) {
-        const legacyFanSpeedsEnum = [];
-        for (let i = speeds; i >= 1; i--) {
-          legacyFanSpeedsEnum.push({
-            id: `${i}`,
-            title: `${i}`,
-          });
-        }
+        const legacyFanSpeedsEnum = speeds.map(value => ({
+          id: value,
+          title: value,
+        }));
         props.capabilitiesOptions['legacy_fan_speed'] = {
           values: legacyFanSpeedsEnum,
         };

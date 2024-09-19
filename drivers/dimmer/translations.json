@@ -1,0 +1,36 @@
+{
+  "setting_labels": {
+    "brightness_min_1": { "en": "Minimum Brightness 1" },
+    "brightness_max_1": { "en": "Maximum Brightness 1" },
+    "brightness_min_2": { "en": "Minimum Brightness 2" },
+    "brightness_max_2": { "en": "Maximum Brightness 2" },
+    "brightness_min_3": { "en": "Minimum Brightness 3" },
+    "brightness_max_3": { "en": "Maximum Brightness 3" },
+    "led_type_1": { "en": "Lamp Type 1" },
+    "led_type_2": { "en": "Lamp Type 2" },
+    "led_type_3": { "en": "Lamp Type 3" }
+  },
+  "capabilitiesOptions": {
+    "onoff.subSwitch": {
+      "title": {
+        "en": "Switch __index__"
+      },
+      "insightsTitleTrue": {
+        "en": "Turned on (Switch __index__)"
+      },
+      "insightsTitleFalse": {
+        "en": "Turned off (Switch __index__)"
+      }
+    },
+    "onoff.all": {
+      "title": {
+        "en": "Switch All"
+      }
+    },
+    "dim.subSwitch": {
+      "title": {
+        "en": "Dim __index__"
+      }
+    }
+  }
+}

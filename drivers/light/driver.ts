@@ -10,6 +10,7 @@ import type { StandardDeviceFlowArgs, StandardFlowArgs } from '../../types/TuyaT
 import type TuyaOAuth2DeviceLight from './device';
 import { LIGHT_SETTING_LABELS, LightSettingCommand, PIR_CAPABILITIES } from './TuyaLightConstants';
 import TuyaOAuth2DriverWithLight from '../../lib/TuyaOAuth2DriverWithLight';
+import TRANSLATIONS from './translations.json';
 
 type DeviceArgs = StandardDeviceFlowArgs<TuyaOAuth2DeviceLight>;
 type FlowArgs = StandardFlowArgs<TuyaOAuth2DeviceLight>;
@@ -112,18 +113,7 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2DriverWithLight {
         props.store.tuya_capabilities.push(tuyaCapability);
         const homeyCapability = 'onoff.switch_led';
         props.capabilities.push(homeyCapability);
-
-        props.capabilitiesOptions[homeyCapability] = {
-          title: {
-            en: `Light`,
-          },
-          insightsTitleTrue: {
-            en: `Turned on (Light)`,
-          },
-          insightsTitleFalse: {
-            en: `Turned off (Light)`,
-          },
-        };
+        props.capabilitiesOptions[homeyCapability] = TRANSLATIONS.capabilitiesOptions[homeyCapability];
       }
 
       if (tuyaCapability === 'switch') {
@@ -131,18 +121,7 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2DriverWithLight {
         props.store.tuya_switches.push(tuyaCapability);
         const homeyCapability = 'onoff.switch';
         props.capabilities.push(homeyCapability);
-
-        props.capabilitiesOptions[homeyCapability] = {
-          title: {
-            en: `Other`,
-          },
-          insightsTitleTrue: {
-            en: `Turned on (Other)`,
-          },
-          insightsTitleFalse: {
-            en: `Turned off (Other)`,
-          },
-        };
+        props.capabilitiesOptions[homeyCapability] = TRANSLATIONS.capabilitiesOptions[homeyCapability];
       }
     }
 
@@ -155,10 +134,9 @@ module.exports = class TuyaOAuth2DriverLight extends TuyaOAuth2DriverWithLight {
       // Remove the sub-capability in favor of the regular 'onoff' capability
       props.capabilities.pop();
     } else {
+      const translations = TRANSLATIONS.capabilitiesOptions['onoff.all'];
       props.capabilitiesOptions['onoff'] = {
-        title: {
-          en: 'Switch All',
-        },
+        ...translations,
         setOnDim: false,
         preventInsights: true,
       };

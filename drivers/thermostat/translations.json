@@ -1,0 +1,10 @@
+{
+  "setting_labels": {
+    "capacity_set": { "en": "Power Setting" },
+    "temp_correction": { "en": "Temperature Calibration" },
+    "sensor_choose": { "en": "Sensor Selection" },
+    "backlight": { "en": "Backlight Brightness" },
+    "backlight_enum": { "en": "Quick Backlight Brightness" },
+    "window_check": { "en": "Open Window Detection" }
+  }
+}

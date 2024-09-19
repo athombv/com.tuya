@@ -1,21 +1,6 @@
-// TODO make translatable
+import TRANSLATIONS from './translations.json';
 // Map from setting id to human-readable label
-export const CAMERA_SETTING_LABELS = {
-  motion_switch: 'Motion Detection',
-  motion_tracking: 'Motion Tracking',
-  decibel_switch: 'Sound Detection',
-  cry_detection_switch: 'Crying Baby Detection',
-  pet_detection: 'Pet Detection',
-  motion_sensitivity: 'Motion Sensitivity',
-  decibel_sensitivity: 'Sound Sensitivity',
-  basic_nightvision: 'Night Mode',
-  basic_device_volume: 'Device Volume',
-  basic_anti_flicker: 'Anti-Flicker',
-  basic_osd: 'Video Timestamp',
-  basic_flip: 'Flip Video',
-  basic_indicator: 'Status Indicator',
-  alarm_timeout: 'Alarm Timeout',
-} as const;
+export const CAMERA_SETTING_LABELS = TRANSLATIONS.setting_labels;
 
 // Capabilities that are simple commands/statuses
 export const SIMPLE_CAMERA_CAPABILITIES = {

@@ -2,7 +2,7 @@
   {
     "type": "group",
     "label": {
-      "en": "CAUTION: Some settings are not supported by every socket."
+      "en": "NOTE: Some settings are not supported by every socket."
     },
     "children": [
       {

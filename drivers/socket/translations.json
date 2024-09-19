@@ -1,0 +1,24 @@
+{
+  "setting_labels": {
+    "child_lock": { "en": "Child Lock" },
+    "relay_status": { "en": "Turn On Behavior" }
+  },
+  "capabilitiesOptions": {
+    "onoff.subSwitch": {
+      "title": {
+        "en": "Switch __index__"
+      },
+      "insightsTitleTrue": {
+        "en": "Turned on (Switch __index__)"
+      },
+      "insightsTitleFalse": {
+        "en": "Turned off (Switch __index__)"
+      }
+    },
+    "onoff.all": {
+      "title": {
+        "en": "Switch All"
+      }
+    }
+  }
+}
