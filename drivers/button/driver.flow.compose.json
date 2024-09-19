@@ -1,57 +1,5 @@
 {
-  "actions": [
-    {
-      "id": "button_sub_switch_press",
-      "title": {
-        "en": "Press switch"
-      },
-      "titleFormatted": {
-        "en": "Press [[switch]]"
-      },
-      "args": [
-        {
-          "name": "switch",
-          "type": "autocomplete",
-          "title": { "en": "Switch" },
-          "placeholder": { "en": "Switch 1" }
-        }
-      ]
-    },
-    {
-      "id": "button_sub_switch_click",
-      "title": {
-        "en": "Click switch"
-      },
-      "titleFormatted": {
-        "en": "Click [[switch]]"
-      },
-      "args": [
-        {
-          "name": "switch",
-          "type": "autocomplete",
-          "title": { "en": "Switch" },
-          "placeholder": { "en": "Switch 1" }
-        }
-      ]
-    },
-    {
-      "id": "button_sub_switch_double_click",
-      "title": {
-        "en": "Double click switch"
-      },
-      "titleFormatted": {
-        "en": "Double click [[switch]]"
-      },
-      "args": [
-        {
-          "name": "switch",
-          "type": "autocomplete",
-          "title": { "en": "Switch" },
-          "placeholder": { "en": "Switch 1" }
-        }
-      ]
-    }
-  ],
+  "actions": [],
   "conditions": [],
   "triggers": [
     {

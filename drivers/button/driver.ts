@@ -32,20 +32,6 @@ module.exports = class TuyaOAuth2DriverButton extends TuyaOAuth2Driver {
       });
     };
 
-    for (const action of ['press', 'click', 'double_click']) {
-      this.homey.flow
-        .getActionCard(`button_sub_switch_${action}`)
-        .registerArgumentAutocompleteListener('switch', (query: string, args: StandardDeviceFlowArgs) =>
-          switchAutocompleteListener(query, args),
-        )
-        .registerRunListener((args: StandardDeviceFlowArgs & SwitchArgs) =>
-          args.device.sendCommand({
-            code: args.switch.id,
-            value: action,
-          }),
-        );
-    }
-
     for (const trigger of ['pressed', 'clicked', 'double_clicked']) {
       this.homey.flow
         .getDeviceTriggerCard(`button_sub_switch_${trigger}`)
