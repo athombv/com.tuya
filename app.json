@@ -2571,7 +2571,9 @@
   },
   "drivers": [
     {
-      "capabilities": [],
+      "capabilities": [
+        "measure_battery"
+      ],
       "connectivity": [
         "cloud"
       ],
@@ -2617,6 +2619,11 @@
       "name": {
         "en": "Wireless Button",
         "nl": "Draadloze Knop"
+      },
+      "energy": {
+        "batteries": [
+          "OTHER"
+        ]
       },
       "id": "button",
       "settings": [

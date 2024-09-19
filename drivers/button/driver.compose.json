@@ -5,5 +5,8 @@
     "en": "Wireless Button",
     "nl": "Draadloze Knop"
   },
-  "capabilities": []
+  "capabilities": ["measure_battery"],
+  "energy": {
+    "batteries": ["OTHER"]
+  }
 }
