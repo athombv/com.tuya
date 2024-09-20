@@ -102,10 +102,17 @@ abstract class TuyaOAuth2DeviceWithCamera extends TuyaTimeOutAlarmDevice {
       }
 
       // Event messages
-      if (
-        (statusKey === 'initiative_message' && changed.includes('initiative_message')) ||
-        (statusKey === 'alarm_message' && changed.includes('alarm_message'))
-      ) {
+      if (statusKey === 'event_message' && changed.includes('event_message')) {
+        const event_message = value as { etype: string };
+        if (event_message.etype === 'ac_doorbell') {
+          if (!this.hasCapability('hidden.doorbell')) {
+            await this.addCapability('hidden.doorbell').catch(this.error);
+          } else {
+            await this.homey.flow.getDeviceTriggerCard(this.DOORBELL_TRIGGER_FLOW).trigger(this).catch(this.error);
+          }
+        }
+      }
+
       if (statusKey === 'initiative_message' && changed.includes('initiative_message')) {
         // Event messages are base64 encoded JSON
         const encoded = status[statusKey] as string;

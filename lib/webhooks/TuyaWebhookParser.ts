@@ -18,8 +18,15 @@ type IotCoreStatusEvent = {
     properties?: Array<TuyaIotCoreStatusUpdate<unknown>>;
   };
 };
+type EventEvent = {
+  event: 'event';
+  data: {
+    etype: string;
+    edata: string;
+  };
+};
 
-type TuyaWebhookData = OnlineEvent | OfflineEvent | StatusEvent | IotCoreStatusEvent;
+export type TuyaWebhookData = OnlineEvent | OfflineEvent | StatusEvent | IotCoreStatusEvent | EventEvent;
 
 export default class TuyaWebhookParser {
   private readonly logContext;
@@ -39,14 +46,15 @@ export default class TuyaWebhookParser {
         break;
       case 'status':
         statusUpdate = convertStatusArrayToStatusObject(message.data.deviceStatus);
-
         break;
       case 'iot_core_status':
         statusUpdate = convertStatusArrayToStatusObject(message.data.properties);
-
+        break;
+      case 'event':
+        statusUpdate = { event_message: message.data };
         break;
       default:
-        throw new Error(`Unknown Webhook Event: ${message}`);
+        throw new Error(`Unknown Webhook Event: ${JSON.stringify(message)}`);
     }
 
     const changedStatusCodes = Object.keys(statusUpdate);

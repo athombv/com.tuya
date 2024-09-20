@@ -53,6 +53,7 @@ export const CAMERA_ALARM_CAPABILITIES = {
   decibel_switch: 'alarm_sound',
   cry_detection_switch: 'alarm_crying_child',
   pet_detection: 'alarm_pet',
+  doorbell_active: 'hidden.doorbell',
 } as const;
 
 // Map from an event to an alarm capability

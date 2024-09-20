@@ -53,7 +53,10 @@ class TuyaOAuth2DriverWithCamera extends TuyaOAuth2Driver {
       }
 
       // More complicated capabilities
-      if (constIncludes(COMPLEX_CAMERA_CAPABILITIES, capability)) {
+      if (
+        constIncludes(COMPLEX_CAMERA_CAPABILITIES, capability) ||
+        constIncludes(SIMPLE_CAMERA_CAPABILITIES.setting, capability)
+      ) {
         props.store.tuya_capabilities.push(capability);
       }
     }
