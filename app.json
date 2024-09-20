@@ -781,6 +781,19 @@
         ]
       },
       {
+        "id": "camera_doorbell_rang",
+        "title": {
+          "en": "Doorbell rang"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera&capabilities=hidden.doorbell"
+          }
+        ]
+      },
+      {
         "id": "dimmer_sub_switch_1_turned_off",
         "title": {
           "en": "Turned channel 1 off"
@@ -928,9 +941,87 @@
         ]
       },
       {
+        "id": "doorbell_alarm_crying_child_true",
+        "title": {
+          "en": "A crying child was detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=alarm_crying_child"
+          }
+        ]
+      },
+      {
+        "id": "doorbell_alarm_crying_child_false",
+        "title": {
+          "en": "Crying is no longer detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=alarm_crying_child"
+          }
+        ]
+      },
+      {
+        "id": "doorbell_alarm_pet_true",
+        "title": {
+          "en": "A pet was detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=alarm_pet"
+          }
+        ]
+      },
+      {
+        "id": "doorbell_alarm_pet_false",
+        "title": {
+          "en": "Pet is no longer detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=alarm_pet"
+          }
+        ]
+      },
+      {
+        "id": "doorbell_alarm_sound_true",
+        "title": {
+          "en": "A sound was detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=alarm_sound"
+          }
+        ]
+      },
+      {
+        "id": "doorbell_alarm_sound_false",
+        "title": {
+          "en": "Sound is no longer detected"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=alarm_sound"
+          }
+        ]
+      },
+      {
         "id": "doorbell_rang",
         "title": {
-          "en": "The doorbell rang"
+          "en": "Doorbell rang"
         },
         "args": [
           {
@@ -1773,6 +1864,210 @@
             "label": "%",
             "labelMultiplier": 100,
             "labelDecimals": 0
+          }
+        ]
+      },
+      {
+        "id": "doorbell_cruise_switch",
+        "title": {
+          "en": "Set auto patrol"
+        },
+        "titleFormatted": {
+          "en": "Set auto patrol [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=cruise_switch"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "doorbell_siren_switch",
+        "title": {
+          "en": "Set siren"
+        },
+        "titleFormatted": {
+          "en": "Set siren [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=siren_switch"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "doorbell_motion_switch",
+        "title": {
+          "en": "Set motion detection"
+        },
+        "titleFormatted": {
+          "en": "Set motion detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=alarm_motion"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "doorbell_motion_tracking",
+        "title": {
+          "en": "Set motion tracking"
+        },
+        "titleFormatted": {
+          "en": "Set motion tracking [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "doorbell_decibel_switch",
+        "title": {
+          "en": "Set sound detection"
+        },
+        "titleFormatted": {
+          "en": "Set sound detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=alarm_sound"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "doorbell_cry_detection_switch",
+        "title": {
+          "en": "Set crying baby detection"
+        },
+        "titleFormatted": {
+          "en": "Set crying baby detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=alarm_crying_child"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "doorbell_pet_detection",
+        "title": {
+          "en": "Set pet detection"
+        },
+        "titleFormatted": {
+          "en": "Set pet detection [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell&capabilities=alarm_pet"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "doorbell_basic_nightvision",
+        "title": {
+          "en": "Set night mode"
+        },
+        "titleFormatted": {
+          "en": "Set night mode to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=doorbell"
+          },
+          {
+            "name": "value",
+            "type": "dropdown",
+            "title": {
+              "en": "Value"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Auto"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Off"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "On"
+                }
+              }
+            ]
           }
         ]
       },
@@ -3458,7 +3753,10 @@
       ]
     },
     {
-      "capabilities": [],
+      "capabilities": [
+        "alarm_motion",
+        "alarm_sound"
+      ],
       "connectivity": [
         "cloud"
       ],
@@ -3505,8 +3803,216 @@
         "en": "Doorbell",
         "nl": "Deurbel"
       },
+      "capabilitiesOptions": {
+        "alarm_motion": {
+          "title": {
+            "en": "Motion Detected"
+          }
+        }
+      },
       "id": "doorbell",
       "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "NOTE: Some settings are not supported by every doorbell."
+          },
+          "children": [
+            {
+              "id": "motion_switch",
+              "type": "checkbox",
+              "label": {
+                "en": "Motion Detection"
+              },
+              "value": false
+            },
+            {
+              "id": "motion_tracking",
+              "type": "checkbox",
+              "label": {
+                "en": "Motion Tracking"
+              },
+              "value": false
+            },
+            {
+              "id": "decibel_switch",
+              "type": "checkbox",
+              "label": {
+                "en": "Sound Detection"
+              },
+              "value": false
+            },
+            {
+              "id": "cry_detection_switch",
+              "type": "checkbox",
+              "label": {
+                "en": "Crying Baby Detection"
+              },
+              "value": false
+            },
+            {
+              "id": "pet_detection",
+              "type": "checkbox",
+              "label": {
+                "en": "Pet Detection"
+              },
+              "value": false
+            },
+            {
+              "id": "motion_sensitivity",
+              "type": "dropdown",
+              "label": {
+                "en": "Motion Sensitivity"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Low"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Medium"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "High"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "decibel_sensitivity",
+              "type": "dropdown",
+              "label": {
+                "en": "Sound Sensitivity"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Low"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "High"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "basic_nightvision",
+              "type": "dropdown",
+              "label": {
+                "en": "Night Mode"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Auto"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Off"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "On"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "basic_device_volume",
+              "type": "number",
+              "label": {
+                "en": "Device Volume"
+              },
+              "value": 8,
+              "min": 1,
+              "max": 10,
+              "step": 1
+            },
+            {
+              "id": "basic_anti_flicker",
+              "type": "dropdown",
+              "label": {
+                "en": "Anti-Flicker"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Disabled"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "50 Hz"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "60 Hz"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "basic_osd",
+              "type": "checkbox",
+              "label": {
+                "en": "Video Timestamp"
+              },
+              "value": true
+            },
+            {
+              "id": "basic_flip",
+              "type": "checkbox",
+              "label": {
+                "en": "Flip Video"
+              },
+              "value": false
+            },
+            {
+              "id": "basic_indicator",
+              "type": "checkbox",
+              "label": {
+                "en": "Status Indicator"
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "alarm_timeout",
+          "type": "number",
+          "label": {
+            "en": "Alarm Timeout"
+          },
+          "value": 10,
+          "min": 1,
+          "units": {
+            "en": "seconds"
+          }
+        },
         {
           "id": "deviceSpecification",
           "type": "label",

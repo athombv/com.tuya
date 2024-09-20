@@ -1,9 +1,208 @@
 {
+  "actions": [
+    {
+      "id": "doorbell_cruise_switch",
+      "$filter": "capabilities=cruise_switch",
+      "title": {
+        "en": "Set auto patrol"
+      },
+      "titleFormatted": {
+        "en": "Set auto patrol [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "doorbell_siren_switch",
+      "$filter": "capabilities=siren_switch",
+      "title": {
+        "en": "Set siren"
+      },
+      "titleFormatted": {
+        "en": "Set siren [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "doorbell_motion_switch",
+      "$filter": "capabilities=alarm_motion",
+      "title": {
+        "en": "Set motion detection"
+      },
+      "titleFormatted": {
+        "en": "Set motion detection [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "doorbell_motion_tracking",
+      "title": {
+        "en": "Set motion tracking"
+      },
+      "titleFormatted": {
+        "en": "Set motion tracking [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "doorbell_decibel_switch",
+      "$filter": "capabilities=alarm_sound",
+      "title": {
+        "en": "Set sound detection"
+      },
+      "titleFormatted": {
+        "en": "Set sound detection [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "doorbell_cry_detection_switch",
+      "$filter": "capabilities=alarm_crying_child",
+      "title": {
+        "en": "Set crying baby detection"
+      },
+      "titleFormatted": {
+        "en": "Set crying baby detection [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "doorbell_pet_detection",
+      "$filter": "capabilities=alarm_pet",
+      "title": {
+        "en": "Set pet detection"
+      },
+      "titleFormatted": {
+        "en": "Set pet detection [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "doorbell_basic_nightvision",
+      "title": {
+        "en": "Set night mode"
+      },
+      "titleFormatted": {
+        "en": "Set night mode to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "dropdown",
+          "title": { "en": "Value" },
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Auto"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Off"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "On"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditions": [],
   "triggers": [
+    {
+      "id": "doorbell_alarm_crying_child_true",
+      "title": {
+        "en": "A crying child was detected"
+      },
+      "$filter": "capabilities=alarm_crying_child"
+    },
+    {
+      "id": "doorbell_alarm_crying_child_false",
+      "title": {
+        "en": "Crying is no longer detected"
+      },
+      "$filter": "capabilities=alarm_crying_child"
+    },
+    {
+      "id": "doorbell_alarm_pet_true",
+      "title": {
+        "en": "A pet was detected"
+      },
+      "$filter": "capabilities=alarm_pet"
+    },
+    {
+      "id": "doorbell_alarm_pet_false",
+      "title": {
+        "en": "Pet is no longer detected"
+      },
+      "$filter": "capabilities=alarm_pet"
+    },
+    {
+      "id": "doorbell_alarm_sound_true",
+      "title": {
+        "en": "A sound was detected"
+      },
+      "$filter": "capabilities=alarm_sound"
+    },
+    {
+      "id": "doorbell_alarm_sound_false",
+      "title": {
+        "en": "Sound is no longer detected"
+      },
+      "$filter": "capabilities=alarm_sound"
+    },
     {
       "id": "doorbell_rang",
       "title": {
-        "en": "The doorbell rang"
+        "en": "Doorbell rang"
       }
     }
   ]

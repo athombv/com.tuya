@@ -198,6 +198,13 @@
         "en": "Sound is no longer detected"
       },
       "$filter": "capabilities=alarm_sound"
+    },
+    {
+      "id": "camera_doorbell_rang",
+      "title": {
+        "en": "Doorbell rang"
+      },
+      "$filter": "capabilities=hidden.doorbell"
     }
   ]
 }
