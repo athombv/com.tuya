@@ -9,7 +9,7 @@ import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import { IRRIGATOR_CAPABILITIES, IRRIGATOR_CAPABILITIES_MAPPING } from './TuyaIrrigatorConstants';
 import type { StandardDeviceFlowArgs } from '../../types/TuyaTypes';
 
-module.exports = class TuyaOAuth2DriverHeater extends TuyaOAuth2Driver {
+module.exports = class TuyaOAuth2DriverIrrigator extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.IRRIGATOR, 'sfkzq'] as const;
 
   async onInit(): Promise<void> {
