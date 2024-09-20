@@ -1,0 +1,102 @@
+{
+  "type": "group",
+  "label": {
+    "en": "NOTE: Some settings are not supported by every device."
+  },
+  "children": [
+    {
+      "id": "muffling",
+      "type": "checkbox",
+      "label": {
+        "en": "Mute Alarm"
+      }
+    },
+    {
+      "id": "alarm_volume",
+      "type": "dropdown",
+      "label": {
+        "en": "Alarm Volume"
+      },
+      "values": [
+        {
+          "id": "low",
+          "label": {
+            "en": "Low"
+          }
+        },
+        {
+          "id": "middle",
+          "label": {
+            "en": "Middle"
+          }
+        },
+        {
+          "id": "high",
+          "label": {
+            "en": "High"
+          }
+        },
+        {
+          "id": "mute",
+          "label": {
+            "en": "Mute"
+          }
+        }
+      ]
+    },
+    {
+      "id": "alarm_time",
+      "type": "number",
+      "label": {
+        "en": "Alarm Duration"
+      },
+      "min": 1,
+      "step": 1,
+      "value": 1,
+      "units": {
+        "en": "seconds"
+      }
+    },
+    {
+      "id": "alarm_ringtone",
+      "type": "dropdown",
+      "label": {
+        "en": "Alarm Tone"
+      },
+      "values": [
+        {
+          "id": "1",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "label": "2"
+        },
+        {
+          "id": "3",
+          "label": "3"
+        },
+        {
+          "id": "4",
+          "label": "4"
+        },
+        {
+          "id": "5",
+          "label": "5"
+        }
+      ]
+    },
+    {
+      "id": "alarm_bright",
+      "type": "number",
+      "label": {
+        "en": "Alarm Brightness"
+      },
+      "min": 0,
+      "step": 1,
+      "max": 100,
+      "value": 100,
+      "units": "%"
+    }
+  ]
+}

@@ -274,6 +274,14 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
         return scenes.filter(scene => scene.name.toLowerCase().includes(trimmedQuery.toLowerCase()));
       });
 
+    // Sensor alarm
+    this.homey.flow
+      .getActionCard('alarm_switch_on')
+      .registerRunListener((args: DeviceArgs) => args.device.triggerCapabilityListener('onoff.alarm_switch', true));
+    this.homey.flow
+      .getActionCard('alarm_switch_off')
+      .registerRunListener((args: DeviceArgs) => args.device.triggerCapabilityListener('onoff.alarm_switch', false));
+
     this.log('Tuya started');
   }
 

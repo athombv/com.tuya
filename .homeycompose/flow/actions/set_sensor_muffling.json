@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "Set mute alarm"
+  },
+  "titleFormatted": {
+    "en": "Set mute alarm to [[value]]"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": {
+        "driver_id": "sensor_smoke",
+        "capabilities": "hidden.muffling"
+      },
+      "title": {
+        "en": "Device"
+      }
+    },
+    {
+      "name": "value",
+      "type": "checkbox",
+      "title": {
+        "en": "Value"
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import TuyaOAuth2DeviceSensor from '../../lib/TuyaOAuth2DeviceSensor';
+import TuyaOAuth2DeviceSensor from '../../lib/sensor/TuyaOAuth2DeviceSensor';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import { constIncludes, filterTuyaSettings } from '../../lib/TuyaOAuth2Util';
 import * as Util from '../../lib/TuyaOAuth2Util';

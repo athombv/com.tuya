@@ -1,4 +1,4 @@
-import TuyaOAuth2DeviceSensor from '../../lib/TuyaOAuth2DeviceSensor';
+import TuyaOAuth2DeviceSensor from '../../lib/sensor/TuyaOAuth2DeviceSensor';
 import { TuyaStatus } from '../../types/TuyaTypes';
 
 module.exports = class TuyaOAuth2DeviceSensorContact extends TuyaOAuth2DeviceSensor {

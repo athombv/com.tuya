@@ -1,0 +1,54 @@
+{
+  "title": {
+    "en": "Set alarm volume"
+  },
+  "titleFormatted": {
+    "en": "Set alarm volume to [[value]]"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": {
+        "driver_id": "sensor_smoke",
+        "capabilities": "hidden.alarm_volume"
+      },
+      "title": {
+        "en": "Device"
+      }
+    },
+    {
+      "name": "value",
+      "type": "dropdown",
+      "title": {
+        "en": "Value"
+      },
+      "values": [
+        {
+          "id": "low",
+          "title": {
+            "en": "Low"
+          }
+        },
+        {
+          "id": "middle",
+          "title": {
+            "en": "Middle"
+          }
+        },
+        {
+          "id": "high",
+          "title": {
+            "en": "High"
+          }
+        },
+        {
+          "id": "mute",
+          "title": {
+            "en": "Mute"
+          }
+        }
+      ]
+    }
+  ]
+}

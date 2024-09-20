@@ -1,5 +1,7 @@
-import TuyaOAuth2DeviceSensor from '../../lib/TuyaOAuth2DeviceSensor';
-import { TuyaStatus } from '../../types/TuyaTypes';
+import TuyaOAuth2DeviceSensor from '../../lib/sensor/TuyaOAuth2DeviceSensor';
+import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
+import { HomeySensorSettings, SENSOR_SETTING_LABELS } from '../../lib/sensor/TuyaSensorConstants';
+import * as Util from '../../lib/TuyaOAuth2Util';
 
 module.exports = class TuyaOAuth2DeviceSensorSmoke extends TuyaOAuth2DeviceSensor {
   async onOAuth2Init(): Promise<void> {
@@ -18,5 +20,10 @@ module.exports = class TuyaOAuth2DeviceSensorSmoke extends TuyaOAuth2DeviceSenso
     ) {
       this.setAlarmCapabilityValue('alarm_smoke', status['smoke_sensor_status'] === 'alarm').catch(this.error);
     }
+  }
+
+  async onSettings(event: SettingsEvent<HomeySensorSettings>): Promise<string | void> {
+    const [unsupportedSettings, unsupportedValues] = await super.onAlarmSettings(event);
+    return Util.reportUnsupportedSettings(this, unsupportedSettings, unsupportedValues, SENSOR_SETTING_LABELS);
   }
 };

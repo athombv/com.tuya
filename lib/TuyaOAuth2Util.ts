@@ -177,6 +177,7 @@ export async function sendSetting(
  * Send basic settings to the given device
  * @param device - The device for which the settings are updated
  * @param event - The settings event
+ * @returns Promise<[string[], string[]]> - a list of unsupported settings, and a list of unsupported values
  */
 export async function sendSettings<T extends { [key: string]: unknown }>(
   device: TuyaOAuth2Device,

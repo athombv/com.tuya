@@ -1,7 +1,7 @@
 import { TuyaDeviceResponse, TuyaDeviceSpecificationResponse } from '../../types/TuyaApiTypes';
 import { CLIMATE_CAPABILITY_MAPPING, CLIMATE_SENSOR_CAPABILITIES } from './TuyaClimateSensorConstants';
 import { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
-import TuyaOAuth2DriverSensor from '../../lib/TuyaOAuth2DriverSensor';
+import TuyaOAuth2DriverSensor from '../../lib/sensor/TuyaOAuth2DriverSensor';
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 

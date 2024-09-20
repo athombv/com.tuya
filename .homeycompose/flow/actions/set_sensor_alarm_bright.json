@@ -1,0 +1,34 @@
+{
+  "title": {
+    "en": "Set alarm brightness"
+  },
+  "titleFormatted": {
+    "en": "Set alarm brightness to [[value]]"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": {
+        "driver_id": "sensor_smoke",
+        "capabilities": "hidden.alarm_bright"
+      },
+      "title": {
+        "en": "Device"
+      }
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "min": 0,
+      "step": 1,
+      "max": 100,
+      "title": {
+        "en": "Value"
+      },
+      "placeholder": {
+        "en": "%"
+      }
+    }
+  ]
+}
