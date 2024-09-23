@@ -59,7 +59,7 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
     };
 
     const autocompleteListener = async (
-      query: string,
+      query: string | undefined,
       args: DeviceArgs,
       filter: ({ value }: { value: unknown }) => boolean,
     ): Promise<ArgumentAutocompleteResults> => {
@@ -67,17 +67,21 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
         values: TuyaStatusResponse | Array<TuyaDeviceDataPoint>,
         dataPoints: boolean,
       ): ArgumentAutocompleteResults {
-        return values
-          .filter(filter)
-          .filter(({ code }: { code: string }) => {
-            return code.toLowerCase().includes(query.toLowerCase());
-          })
-          .map(value => ({
-            name: value.code,
-            id: value.code,
-            title: value.code,
-            dataPoint: dataPoints,
-          }));
+        values = values.filter(filter);
+
+        const trimmedQuery = (query ?? '').trim();
+        if (trimmedQuery) {
+          values = values.filter(({ code }: { code: string }) =>
+            code.toLowerCase().includes(trimmedQuery.toLowerCase()),
+          );
+        }
+
+        return values.map(value => ({
+          name: value.code,
+          id: value.code,
+          title: value.code,
+          dataPoint: dataPoints,
+        }));
       }
 
       const deviceId = args.device.getData().deviceId;
@@ -221,7 +225,7 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
         const client = this.getFirstSavedOAuth2Client();
         await client.triggerScene(scene.id);
       })
-      .registerArgumentAutocompleteListener('scene', async (query: string) => {
+      .registerArgumentAutocompleteListener('scene', async (query?: string) => {
         if (!this.apiCache.has(SCENE_CACHE_KEY)) {
           this.log('Retrieving available scenes');
           const client = this.getFirstSavedOAuth2Client();
@@ -259,9 +263,15 @@ module.exports = class TuyaOAuth2App extends OAuth2App {
 
           this.apiCache.set(SCENE_CACHE_KEY, scenes);
         }
-        return (this.apiCache.get<HomeyTuyaScene[]>(SCENE_CACHE_KEY) ?? []).filter(scene =>
-          scene.name.toLowerCase().includes(query.toLowerCase()),
-        );
+
+        const scenes = this.apiCache.get<HomeyTuyaScene[]>(SCENE_CACHE_KEY) ?? [];
+
+        const trimmedQuery = (query ?? '').trim();
+        if (!trimmedQuery) {
+          return scenes;
+        }
+
+        return scenes.filter(scene => scene.name.toLowerCase().includes(trimmedQuery.toLowerCase()));
       });
 
     this.log('Tuya started');

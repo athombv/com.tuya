@@ -1,6 +1,7 @@
 import type TuyaOAuth2Device from '../lib/TuyaOAuth2Device';
 
 export type TuyaStatus = Record<string, unknown>;
+export type TuyaStatusSource = 'sync' | 'online' | 'offline' | 'status' | 'iot_core_status';
 
 // Legacy status update
 export type TuyaStatusUpdate<T> = {
@@ -21,7 +22,7 @@ export type TuyaIotCoreStatusUpdate<T> = {
 export type DeviceRegistration = {
   productId: string;
   deviceId: string;
-  onStatus: (status: TuyaStatus, changedStatusCodes: string[]) => Promise<void>;
+  onStatus: (source: TuyaStatusSource, status: TuyaStatus, changedStatusCodes: string[]) => Promise<void>;
 };
 
 export type SettingsEvent<T extends { [key: string]: unknown }> = {
