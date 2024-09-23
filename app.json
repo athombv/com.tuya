@@ -7417,6 +7417,16 @@
       "uiComponent": "button",
       "icon": "assets/capabilities/eco.svg"
     },
+    "enum": {
+      "type": "enum",
+      "title": {
+        "en": "Enum"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "values": []
+    },
     "fan_swing_horizontal": {
       "type": "boolean",
       "title": {
