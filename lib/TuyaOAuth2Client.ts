@@ -198,7 +198,7 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
     return this._get(`/v1.0/users/${this.getToken().uid}/devices`);
   }
 
-  getDevice({ deviceId }: { deviceId: string }): Promise<TuyaDeviceResponse> {
+  async getDevice({ deviceId }: { deviceId: string }): Promise<TuyaDeviceResponse> {
     // https://developer.tuya.com/en/docs/cloud/device-management?id=K9g6rfntdz78a
     return this._get(`/v1.0/devices/${deviceId}`);
   }
