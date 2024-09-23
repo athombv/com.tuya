@@ -69,8 +69,8 @@
       ]
     },
     {
-      "id": "dehumidifier_dehumidifier_mode",
-      "$filter": "capabilities=dehumidifier_mode",
+      "id": "dehumidifier_enum.dehumidifier_mode",
+      "$filter": "capabilities=enum.dehumidifier_mode",
       "title": {
         "en": "Set dehumidifier mode"
       },
@@ -103,8 +103,8 @@
       ]
     },
     {
-      "id": "dehumidifier_target_humidity_enum",
-      "$filter": "capabilities=target_humidity_enum",
+      "id": "dehumidifier_enum.target_humidity",
+      "$filter": "capabilities=enum.target_humidity",
       "title": {
         "en": "Set target humidity"
       },

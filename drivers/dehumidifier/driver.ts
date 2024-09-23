@@ -8,8 +8,6 @@ import {
 import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import { DEHUMIDIFIER_CAPABILITIES, DEHUMIDIFIER_CAPABILITY_MAPPING } from './DehumidifierConstants';
 import { StandardFlowArgs } from '../../types/TuyaTypes';
-import dehumidifier_mode from '../../.homeycompose/capabilities/dehumidifier_mode.json';
-import target_humidity_enum from '../../.homeycompose/capabilities/target_humidity_enum.json';
 import driver_compose from './driver.compose.json';
 
 module.exports = class TuyaOAuth2DriverDehumidifier extends TuyaOAuth2Driver {
@@ -51,14 +49,9 @@ module.exports = class TuyaOAuth2DriverDehumidifier extends TuyaOAuth2Driver {
     }
 
     // Default values, since capabilitiesOptions is not filled from the capability definitions
-    props.capabilitiesOptions['dehumidifier_mode'] = {
-      values: dehumidifier_mode.values,
-    };
-    props.capabilitiesOptions['legacy_fan_speed'] = {
-      values: driver_compose.capabilitiesOptions.legacy_fan_speed.values,
-    };
-    props.capabilitiesOptions['target_humidity_enum'] = {
-      values: target_humidity_enum.values,
+    props.capabilitiesOptions = {
+      ...props.capabilitiesOptions,
+      ...driver_compose.capabilitiesOptions,
     };
 
     if (!specifications || !specifications.status) {
