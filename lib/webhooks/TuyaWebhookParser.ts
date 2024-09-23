@@ -18,7 +18,7 @@ type IotCoreStatusEvent = {
     properties?: Array<TuyaIotCoreStatusUpdate<unknown>>;
   };
 };
-type EventEvent = {
+export type EventEvent = {
   event: 'event';
   data: {
     etype: string;

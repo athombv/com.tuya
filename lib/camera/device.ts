@@ -9,6 +9,7 @@ import {
   TuyaCameraSettings,
 } from './TuyaCameraConstants';
 import TuyaTimeOutAlarmDevice from '../TuyaTimeOutAlarmDevice';
+import { EventEvent } from '../webhooks/TuyaWebhookParser';
 
 abstract class TuyaOAuth2DeviceWithCamera extends TuyaTimeOutAlarmDevice {
   abstract DOORBELL_TRIGGER_FLOW: string;
@@ -103,8 +104,7 @@ abstract class TuyaOAuth2DeviceWithCamera extends TuyaTimeOutAlarmDevice {
 
       // Event messages
       if (statusKey === 'event_message' && changed.includes('event_message')) {
-        const event_message = value as { etype: string; edata: string };
-        this.log('Event message:', event_message.etype, event_message.edata);
+        const event_message = value as EventEvent['data'];
         if (event_message.etype === 'ac_doorbell') {
           if (!this.hasCapability('hidden.doorbell')) {
             await this.addCapability('hidden.doorbell').catch(this.error);
