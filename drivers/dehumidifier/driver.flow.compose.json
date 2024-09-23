@@ -1,0 +1,125 @@
+{
+  "actions": [
+    {
+      "id": "dehumidifier_child_lock",
+      "$filter": "capabilities=child_lock",
+      "title": {
+        "en": "Set child lock"
+      },
+      "titleFormatted": {
+        "en": "Set child lock to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "dehumidifier_night_mode",
+      "$filter": "capabilities=night_mode",
+      "title": {
+        "en": "Set night mode"
+      },
+      "titleFormatted": {
+        "en": "Set night mode to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "dehumidifier_frost_guard",
+      "$filter": "capabilities=frost_guard",
+      "title": {
+        "en": "Set defrost"
+      },
+      "titleFormatted": {
+        "en": "Set defrost to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "dehumidifier_fan_swing_horizontal",
+      "$filter": "capabilities=fan_swing_horizontal",
+      "title": {
+        "en": "Set fan swing"
+      },
+      "titleFormatted": {
+        "en": "Set fan swing to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "dehumidifier_dehumidifier_mode",
+      "$filter": "capabilities=dehumidifier_mode",
+      "title": {
+        "en": "Set dehumidifier mode"
+      },
+      "titleFormatted": {
+        "en": "Set dehumidifier mode to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "autocomplete",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "dehumidifier_legacy_fan_speed",
+      "$filter": "capabilities=legacy_fan_speed",
+      "title": {
+        "en": "Set fan speed"
+      },
+      "titleFormatted": {
+        "en": "Set fan speed to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "autocomplete",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "dehumidifier_target_humidity_enum",
+      "$filter": "capabilities=target_humidity_enum",
+      "title": {
+        "en": "Set target humidity"
+      },
+      "titleFormatted": {
+        "en": "Set target humidity to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "autocomplete",
+          "title": { "en": "Value" }
+        }
+      ]
+    }
+  ],
+  "conditions": [],
+  "triggers": []
+}

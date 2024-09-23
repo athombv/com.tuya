@@ -1,0 +1,32 @@
+{
+  "title": {
+    "en": "Target humidity"
+  },
+  "type": "enum",
+  "uiComponent": "picker",
+  "insights": true,
+  "getable": true,
+  "setable": true,
+  "values": [
+    {
+      "id": "10",
+      "title": "10%"
+    },
+    {
+      "id": "20",
+      "title": "20%"
+    },
+    {
+      "id": "30",
+      "title": "30%"
+    },
+    {
+      "id": "40",
+      "title": "40%"
+    },
+    {
+      "id": "50",
+      "title": "50%"
+    }
+  ]
+}

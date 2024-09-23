@@ -1,0 +1,43 @@
+{
+  "$extends": "tuya",
+  "class": "dehumidifier",
+  "name": {
+    "en": "Dehumidifier",
+    "nl": "Luchtontvochtiger"
+  },
+  "capabilities": ["onoff", "target_humidity", "measure_humidity"],
+  "capabilitiesOptions": {
+    "legacy_fan_speed": {
+      "values": [
+        {
+          "id": "high",
+          "title": {
+            "en": "High"
+          }
+        },
+        {
+          "id": "mid",
+          "title": {
+            "en": "Mid"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low"
+          }
+        }
+      ]
+    },
+    "fan_swing_horizontal": {
+      "title": {
+        "en": "Fan Swing"
+      }
+    },
+    "frost_guard": {
+      "title": {
+        "en": "Defrost"
+      }
+    }
+  }
+}

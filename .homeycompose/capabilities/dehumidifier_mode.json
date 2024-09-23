@@ -1,0 +1,29 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Dehumidifier mode"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "values": [
+    {
+      "id": "low",
+      "title": {
+        "en": "Low"
+      }
+    },
+    {
+      "id": "mid",
+      "title": {
+        "en": "Middle"
+      }
+    },
+    {
+      "id": "high",
+      "title": {
+        "en": "High"
+      }
+    }
+  ]
+}

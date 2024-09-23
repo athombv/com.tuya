@@ -2,7 +2,7 @@
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.tuya",
   "version": "1.4.2",
-  "compatibility": ">=12.0.1",
+  "compatibility": ">=12.2.0",
   "brandColor": "#FF4800",
   "sdk": 3,
   "platforms": [
@@ -1939,6 +1939,167 @@
         ]
       },
       {
+        "id": "dehumidifier_child_lock",
+        "title": {
+          "en": "Set child lock"
+        },
+        "titleFormatted": {
+          "en": "Set child lock to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dehumidifier&capabilities=child_lock"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "dehumidifier_night_mode",
+        "title": {
+          "en": "Set night mode"
+        },
+        "titleFormatted": {
+          "en": "Set night mode to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dehumidifier&capabilities=night_mode"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "dehumidifier_frost_guard",
+        "title": {
+          "en": "Set defrost"
+        },
+        "titleFormatted": {
+          "en": "Set defrost to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dehumidifier&capabilities=frost_guard"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "dehumidifier_fan_swing_horizontal",
+        "title": {
+          "en": "Set fan swing"
+        },
+        "titleFormatted": {
+          "en": "Set fan swing to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dehumidifier&capabilities=fan_swing_horizontal"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "dehumidifier_dehumidifier_mode",
+        "title": {
+          "en": "Set dehumidifier mode"
+        },
+        "titleFormatted": {
+          "en": "Set dehumidifier mode to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dehumidifier&capabilities=dehumidifier_mode"
+          },
+          {
+            "name": "value",
+            "type": "autocomplete",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "dehumidifier_legacy_fan_speed",
+        "title": {
+          "en": "Set fan speed"
+        },
+        "titleFormatted": {
+          "en": "Set fan speed to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dehumidifier&capabilities=legacy_fan_speed"
+          },
+          {
+            "name": "value",
+            "type": "autocomplete",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
+        "id": "dehumidifier_target_humidity_enum",
+        "title": {
+          "en": "Set target humidity"
+        },
+        "titleFormatted": {
+          "en": "Set target humidity to [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=dehumidifier&capabilities=target_humidity_enum"
+          },
+          {
+            "name": "value",
+            "type": "autocomplete",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
+      },
+      {
         "id": "dimmer_sub_switch_1_off",
         "title": {
           "en": "Turn channel 1 off"
@@ -3717,6 +3878,218 @@
           },
           "value": "1",
           "type": "dropdown",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
+    },
+    {
+      "capabilities": [
+        "onoff",
+        "target_humidity",
+        "measure_humidity"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/dehumidifier/assets/images/small.png",
+        "large": "/drivers/dehumidifier/assets/images/large.png",
+        "xlarge": "/drivers/dehumidifier/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "dehumidifier",
+      "name": {
+        "en": "Dehumidifier",
+        "nl": "Luchtontvochtiger"
+      },
+      "capabilitiesOptions": {
+        "legacy_fan_speed": {
+          "values": [
+            {
+              "id": "high",
+              "title": {
+                "en": "High"
+              }
+            },
+            {
+              "id": "mid",
+              "title": {
+                "en": "Mid"
+              }
+            },
+            {
+              "id": "low",
+              "title": {
+                "en": "Low"
+              }
+            }
+          ]
+        },
+        "fan_swing_horizontal": {
+          "title": {
+            "en": "Fan Swing"
+          }
+        },
+        "frost_guard": {
+          "title": {
+            "en": "Defrost"
+          }
+        }
+      },
+      "id": "dehumidifier",
+      "settings": [
+        {
+          "id": "measure_humidity_scaling",
+          "label": {
+            "en": "Measured Humidity Scale"
+          },
+          "hint": {
+            "en": "By how much the humidity measured by the device is scaled."
+          },
+          "type": "dropdown",
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "measure_temperature_scaling",
+          "label": {
+            "en": "Measured Temperature Scale"
+          },
+          "hint": {
+            "en": "By how much the temperature measured by the device is scaled."
+          },
+          "type": "dropdown",
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "measure_pm25_scaling",
+          "label": {
+            "en": "Measured PM2.5 Scale"
+          },
+          "hint": {
+            "en": "By how much the PM2.5 measured by the device is scaled."
+          },
+          "type": "dropdown",
+          "value": "0",
           "values": [
             {
               "id": "0",
@@ -7005,6 +7378,35 @@
       "uiComponent": "button",
       "icon": "assets/capabilities/auto_patrol.svg"
     },
+    "dehumidifier_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Dehumidifier mode"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "low",
+          "title": {
+            "en": "Low"
+          }
+        },
+        {
+          "id": "mid",
+          "title": {
+            "en": "Middle"
+          }
+        },
+        {
+          "id": "high",
+          "title": {
+            "en": "High"
+          }
+        }
+      ]
+    },
     "eco_mode": {
       "type": "boolean",
       "title": {
@@ -7277,6 +7679,38 @@
       "setable": true,
       "uiComponent": "button",
       "icon": "assets/capabilities/alarm_siren.svg"
+    },
+    "target_humidity_enum": {
+      "title": {
+        "en": "Target humidity"
+      },
+      "type": "enum",
+      "uiComponent": "picker",
+      "insights": true,
+      "getable": true,
+      "setable": true,
+      "values": [
+        {
+          "id": "10",
+          "title": "10%"
+        },
+        {
+          "id": "20",
+          "title": "20%"
+        },
+        {
+          "id": "30",
+          "title": "30%"
+        },
+        {
+          "id": "40",
+          "title": "40%"
+        },
+        {
+          "id": "50",
+          "title": "50%"
+        }
+      ]
     }
   }
 }
