@@ -103,7 +103,8 @@ abstract class TuyaOAuth2DeviceWithCamera extends TuyaTimeOutAlarmDevice {
 
       // Event messages
       if (statusKey === 'event_message' && changed.includes('event_message')) {
-        const event_message = value as { etype: string };
+        const event_message = value as { etype: string; edata: string };
+        this.log('Event message:', event_message.etype, event_message.edata);
         if (event_message.etype === 'ac_doorbell') {
           if (!this.hasCapability('hidden.doorbell')) {
             await this.addCapability('hidden.doorbell').catch(this.error);
@@ -120,7 +121,7 @@ abstract class TuyaOAuth2DeviceWithCamera extends TuyaTimeOutAlarmDevice {
         const data = JSON.parse(decoded.toString());
         const notificationType = data.cmd;
         const dataType = data.type;
-        this.log('Notification:', notificationType, dataType);
+        this.log('Initiative message:', notificationType, dataType);
 
         // Check if the event is for a known alarm
         if (notificationType in CAMERA_ALARM_EVENT_CAPABILITIES) {
