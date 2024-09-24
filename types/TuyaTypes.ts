@@ -1,7 +1,8 @@
 import type TuyaOAuth2Device from '../lib/TuyaOAuth2Device';
+import { TuyaWebhookData } from '../lib/webhooks/TuyaWebhookParser';
 
 export type TuyaStatus = Record<string, unknown>;
-export type TuyaStatusSource = 'sync' | 'online' | 'offline' | 'status' | 'iot_core_status';
+export type TuyaStatusSource = 'sync' | TuyaWebhookData['event'];
 
 // Legacy status update
 export type TuyaStatusUpdate<T> = {
