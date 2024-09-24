@@ -6,5 +6,5 @@
   "getable": true,
   "setable": true,
   "uiComponent": "button",
-  "icon": "assets/capabilities/auto-patrol.svg"
+  "icon": "assets/capabilities/auto_patrol.svg"
 }

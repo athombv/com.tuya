@@ -6,5 +6,5 @@
   "getable": true,
   "setable": true,
   "uiComponent": "button",
-  "icon": "assets/capabilities/alarm-siren.svg"
+  "icon": "assets/capabilities/alarm_siren.svg"
 }

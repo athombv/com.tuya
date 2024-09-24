@@ -6253,7 +6253,7 @@
       "insightsTitleFalse": {
         "en": "Crying Child No Longer Detected"
       },
-      "icon": "assets/capabilities/detect-baby.svg"
+      "icon": "assets/capabilities/detect_baby.svg"
     },
     "alarm_human": {
       "type": "boolean",
@@ -6270,7 +6270,7 @@
       "insightsTitleFalse": {
         "en": "Human No Longer Detected"
       },
-      "icon": "assets/capabilities/alarm-human.svg"
+      "icon": "assets/capabilities/alarm_human.svg"
     },
     "alarm_pet": {
       "type": "boolean",
@@ -6287,7 +6287,7 @@
       "insightsTitleFalse": {
         "en": "Pet No Longer Detected"
       },
-      "icon": "assets/capabilities/detect-pet.svg"
+      "icon": "assets/capabilities/detect_pet.svg"
     },
     "alarm_sound": {
       "type": "boolean",
@@ -6304,7 +6304,7 @@
       "insightsTitleFalse": {
         "en": "Sound No Longer Detected"
       },
-      "icon": "assets/capabilities/detect-sound.svg"
+      "icon": "assets/capabilities/detect_sound.svg"
     },
     "child_lock": {
       "title": {
@@ -6324,7 +6324,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "button",
-      "icon": "assets/capabilities/auto-patrol.svg"
+      "icon": "assets/capabilities/auto_patrol.svg"
     },
     "eco_mode": {
       "type": "boolean",
@@ -6343,7 +6343,8 @@
       },
       "getable": true,
       "setable": true,
-      "uiComponent": "button"
+      "uiComponent": "button",
+      "icon": "assets/capabilities/fan_swing_horizontal.svg"
     },
     "fan_swing_vertical": {
       "type": "boolean",
@@ -6352,7 +6353,8 @@
       },
       "getable": true,
       "setable": true,
-      "uiComponent": "button"
+      "uiComponent": "button",
+      "icon": "assets/capabilities/fan_swing_vertical.svg"
     },
     "fault": {
       "type": "string",
@@ -6361,7 +6363,8 @@
       },
       "getable": true,
       "setable": false,
-      "uiComponent": "sensor"
+      "uiComponent": "sensor",
+      "icon": "assets/capabilities/fault.svg"
     },
     "frost_guard": {
       "title": {
@@ -6370,7 +6373,8 @@
       "type": "boolean",
       "uiComponent": "button",
       "getable": true,
-      "setable": true
+      "setable": true,
+      "icon": "assets/capabilities/anti_frost_mode.svg"
     },
     "hidden": {
       "type": "string",
@@ -6421,7 +6425,8 @@
       "type": "boolean",
       "uiComponent": "button",
       "getable": true,
-      "setable": true
+      "setable": true,
+      "icon": "assets/capabilities/sleep_mode.svg"
     },
     "open_window_sensor": {
       "type": "boolean",
@@ -6438,7 +6443,7 @@
       "insightsTitleFalse": {
         "en": "Open Window No Longer Detected"
       },
-      "icon": "assets/capabilities/open-window.svg"
+      "icon": "assets/capabilities/open_window.svg"
     },
     "ptz_control_horizontal": {
       "type": "enum",
@@ -6542,7 +6547,7 @@
       "insightsTitleFalse": {
         "en": "Rain No Longer Detected"
       },
-      "icon": "assets/capabilities/rain-sensor.svg"
+      "icon": "assets/capabilities/rain_sensor.svg"
     },
     "siren_switch": {
       "type": "boolean",
@@ -6552,7 +6557,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "button",
-      "icon": "assets/capabilities/alarm-siren.svg"
+      "icon": "assets/capabilities/alarm_siren.svg"
     }
   }
 }

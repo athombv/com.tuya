@@ -13,5 +13,5 @@
   "insightsTitleFalse": {
     "en": "Rain No Longer Detected"
   },
-  "icon": "assets/capabilities/rain-sensor.svg"
+  "icon": "assets/capabilities/rain_sensor.svg"
 }
