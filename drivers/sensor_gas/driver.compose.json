@@ -1,0 +1,9 @@
+{
+  "$extends": "tuya",
+  "class": "sensor",
+  "name": {
+    "en": "Gas Detector",
+    "nl": "Gasmelder"
+  },
+  "capabilities": ["alarm_gas", "measure_gas"]
+}

@@ -1209,6 +1209,28 @@
         ]
       },
       {
+        "id": "sensor_gas_measure_gas_changed",
+        "title": {
+          "en": "The gas-level changed"
+        },
+        "tokens": [
+          {
+            "name": "value",
+            "type": "number",
+            "title": {
+              "en": "Gas"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=sensor_gas&capabilities=measure_gas"
+          }
+        ]
+      },
+      {
         "id": "socket_sub_switch_turned_off",
         "highlight": true,
         "title": {
@@ -6445,6 +6467,198 @@
     },
     {
       "capabilities": [
+        "alarm_gas",
+        "measure_gas"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/sensor_gas/assets/images/small.png",
+        "large": "/drivers/sensor_gas/assets/images/large.png",
+        "xlarge": "/drivers/sensor_gas/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "sensor",
+      "name": {
+        "en": "Gas Detector",
+        "nl": "Gasmelder"
+      },
+      "id": "sensor_gas",
+      "settings": [
+        {
+          "id": "use_alarm_timeout",
+          "type": "checkbox",
+          "hint": {
+            "en": "Turn the alarm off a set time after the start signal, even if no end signal is received."
+          },
+          "label": {
+            "en": "Use Alarm Timeout"
+          },
+          "value": false
+        },
+        {
+          "id": "alarm_timeout",
+          "type": "number",
+          "label": {
+            "en": "Alarm Timeout"
+          },
+          "value": 10,
+          "min": 1,
+          "units": {
+            "en": "seconds"
+          }
+        },
+        {
+          "id": "sensor_alarm_group",
+          "type": "group",
+          "label": {
+            "en": "NOTE: Some settings are not supported by every device."
+          },
+          "children": [
+            {
+              "id": "muffling",
+              "type": "checkbox",
+              "label": {
+                "en": "Mute Alarm"
+              }
+            },
+            {
+              "id": "alarm_volume",
+              "type": "dropdown",
+              "label": {
+                "en": "Alarm Volume"
+              },
+              "values": [
+                {
+                  "id": "low",
+                  "label": {
+                    "en": "Low"
+                  }
+                },
+                {
+                  "id": "middle",
+                  "label": {
+                    "en": "Middle"
+                  }
+                },
+                {
+                  "id": "high",
+                  "label": {
+                    "en": "High"
+                  }
+                },
+                {
+                  "id": "mute",
+                  "label": {
+                    "en": "Mute"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "alarm_time",
+              "type": "number",
+              "label": {
+                "en": "Alarm Duration"
+              },
+              "min": 1,
+              "step": 1,
+              "value": 1,
+              "units": {
+                "en": "seconds"
+              }
+            },
+            {
+              "id": "alarm_ringtone",
+              "type": "dropdown",
+              "label": {
+                "en": "Alarm Tone"
+              },
+              "values": [
+                {
+                  "id": "1",
+                  "label": "1"
+                },
+                {
+                  "id": "2",
+                  "label": "2"
+                },
+                {
+                  "id": "3",
+                  "label": "3"
+                },
+                {
+                  "id": "4",
+                  "label": "4"
+                },
+                {
+                  "id": "5",
+                  "label": "5"
+                }
+              ]
+            },
+            {
+              "id": "alarm_bright",
+              "type": "number",
+              "label": {
+                "en": "Alarm Brightness"
+              },
+              "min": 0,
+              "step": 1,
+              "max": 100,
+              "value": 100,
+              "units": "%"
+            }
+          ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
+    },
+    {
+      "capabilities": [
         "alarm_human"
       ],
       "connectivity": [
@@ -8128,6 +8342,25 @@
           }
         }
       ]
+    },
+    "measure_gas": {
+      "type": "number",
+      "title": {
+        "en": "Gas"
+      },
+      "units": {
+        "en": "ppm"
+      },
+      "insights": true,
+      "desc": {
+        "en": "Gas in Parts-per-million (ppm)"
+      },
+      "chartType": "spline",
+      "decimals": 2,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "assets/capabilities/measure_gas.svg"
     },
     "mute_button": {
       "type": "boolean",

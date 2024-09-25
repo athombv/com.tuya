@@ -1,0 +1,22 @@
+{
+  "actions": [],
+  "conditions": [],
+  "triggers": [
+    {
+      "id": "sensor_gas_measure_gas_changed",
+      "title": {
+        "en": "The gas-level changed"
+      },
+      "$filter": "capabilities=measure_gas",
+      "tokens": [
+        {
+          "name": "value",
+          "type": "number",
+          "title": {
+            "en": "Gas"
+          }
+        }
+      ]
+    }
+  ]
+}
