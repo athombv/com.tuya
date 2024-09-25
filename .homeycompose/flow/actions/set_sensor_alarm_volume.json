@@ -10,7 +10,7 @@
       "name": "device",
       "type": "device",
       "filter": {
-        "driver_id": "sensor_smoke|sensor_co2",
+        "driver_id": "sensor_co2|sensor_pm2.5|sensor_smoke",
         "capabilities": "hidden.alarm_volume"
       },
       "title": {
