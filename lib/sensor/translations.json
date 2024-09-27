@@ -1,0 +1,9 @@
+{
+  "setting_labels": {
+    "muffling": { "en": "Mute Alarm" },
+    "alarm_volume": { "en": "Alarm Volume" },
+    "alarm_time": { "en": "Alarm Duration" },
+    "alarm_ringtone": { "en": "Alarm Tone" },
+    "alarm_bright": { "en": "Alarm Brightness" }
+  }
+}

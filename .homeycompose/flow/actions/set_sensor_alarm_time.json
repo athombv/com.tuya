@@ -1,0 +1,33 @@
+{
+  "title": {
+    "en": "Set alarm duration"
+  },
+  "titleFormatted": {
+    "en": "Set alarm duration to [[value]]"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": {
+        "driver_id": "sensor_smoke",
+        "capabilities": "hidden.alarm_time"
+      },
+      "title": {
+        "en": "Device"
+      }
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "min": 1,
+      "step": 1,
+      "title": {
+        "en": "Value"
+      },
+      "placeholder": {
+        "en": "In seconds"
+      }
+    }
+  ]
+}

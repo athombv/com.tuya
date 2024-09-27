@@ -3,7 +3,7 @@ import {
   CLIMATE_CAPABILITY_MAPPING,
   CLIMATE_SENSOR_CAPABILITIES,
 } from './TuyaClimateSensorConstants';
-import TuyaOAuth2DeviceSensor from '../../lib/TuyaOAuth2DeviceSensor';
+import TuyaOAuth2DeviceSensor from '../../lib/sensor/TuyaOAuth2DeviceSensor';
 import { constIncludes, getFromMap } from '../../lib/TuyaOAuth2Util';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';

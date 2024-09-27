@@ -1298,6 +1298,44 @@
     "actions": [
       {
         "title": {
+          "en": "Turn alarm off"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "sensor_smoke",
+              "capabilities": "onoff.alarm_switch"
+            },
+            "title": {
+              "en": "Device"
+            }
+          }
+        ],
+        "id": "alarm_switch_off"
+      },
+      {
+        "title": {
+          "en": "Turn alarm on"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "sensor_smoke",
+              "capabilities": "onoff.alarm_switch"
+            },
+            "title": {
+              "en": "Device"
+            }
+          }
+        ],
+        "id": "alarm_switch_on"
+      },
+      {
+        "title": {
           "en": "Send a Tuya Command (Boolean)"
         },
         "titleFormatted": {
@@ -1447,6 +1485,210 @@
           }
         ],
         "id": "send_command_string"
+      },
+      {
+        "title": {
+          "en": "Set alarm brightness"
+        },
+        "titleFormatted": {
+          "en": "Set alarm brightness to [[value]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "sensor_smoke",
+              "capabilities": "hidden.alarm_bright"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "min": 0,
+            "step": 1,
+            "max": 100,
+            "title": {
+              "en": "Value"
+            },
+            "placeholder": {
+              "en": "%"
+            }
+          }
+        ],
+        "id": "set_sensor_alarm_bright"
+      },
+      {
+        "title": {
+          "en": "Set alarm tone"
+        },
+        "titleFormatted": {
+          "en": "Set alarm tone to [[value]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "sensor_smoke",
+              "capabilities": "hidden.alarm_ringtone"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "value",
+            "type": "dropdown",
+            "title": {
+              "en": "Value"
+            },
+            "values": [
+              {
+                "id": "1",
+                "title": "1"
+              },
+              {
+                "id": "2",
+                "title": "2"
+              },
+              {
+                "id": "3",
+                "title": "3"
+              },
+              {
+                "id": "4",
+                "title": "4"
+              },
+              {
+                "id": "5",
+                "title": "5"
+              }
+            ]
+          }
+        ],
+        "id": "set_sensor_alarm_ringtone"
+      },
+      {
+        "title": {
+          "en": "Set alarm duration"
+        },
+        "titleFormatted": {
+          "en": "Set alarm duration to [[value]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "sensor_smoke",
+              "capabilities": "hidden.alarm_time"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "min": 1,
+            "step": 1,
+            "title": {
+              "en": "Value"
+            },
+            "placeholder": {
+              "en": "In seconds"
+            }
+          }
+        ],
+        "id": "set_sensor_alarm_time"
+      },
+      {
+        "title": {
+          "en": "Set alarm volume"
+        },
+        "titleFormatted": {
+          "en": "Set alarm volume to [[value]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "sensor_smoke",
+              "capabilities": "hidden.alarm_volume"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "value",
+            "type": "dropdown",
+            "title": {
+              "en": "Value"
+            },
+            "values": [
+              {
+                "id": "low",
+                "title": {
+                  "en": "Low"
+                }
+              },
+              {
+                "id": "middle",
+                "title": {
+                  "en": "Middle"
+                }
+              },
+              {
+                "id": "high",
+                "title": {
+                  "en": "High"
+                }
+              },
+              {
+                "id": "mute",
+                "title": {
+                  "en": "Mute"
+                }
+              }
+            ]
+          }
+        ],
+        "id": "set_sensor_alarm_volume"
+      },
+      {
+        "title": {
+          "en": "Set mute alarm"
+        },
+        "titleFormatted": {
+          "en": "Set mute alarm to [[value]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": {
+              "driver_id": "sensor_smoke",
+              "capabilities": "hidden.muffling"
+            },
+            "title": {
+              "en": "Device"
+            }
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ],
+        "id": "set_sensor_muffling"
       },
       {
         "title": {
@@ -5480,6 +5722,109 @@
           "units": {
             "en": "seconds"
           }
+        },
+        {
+          "id": "sensor_alarm_group",
+          "type": "group",
+          "label": {
+            "en": "NOTE: Some settings are not supported by every device."
+          },
+          "children": [
+            {
+              "id": "muffling",
+              "type": "checkbox",
+              "label": {
+                "en": "Mute Alarm"
+              }
+            },
+            {
+              "id": "alarm_volume",
+              "type": "dropdown",
+              "label": {
+                "en": "Alarm Volume"
+              },
+              "values": [
+                {
+                  "id": "low",
+                  "label": {
+                    "en": "Low"
+                  }
+                },
+                {
+                  "id": "middle",
+                  "label": {
+                    "en": "Middle"
+                  }
+                },
+                {
+                  "id": "high",
+                  "label": {
+                    "en": "High"
+                  }
+                },
+                {
+                  "id": "mute",
+                  "label": {
+                    "en": "Mute"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "alarm_time",
+              "type": "number",
+              "label": {
+                "en": "Alarm Duration"
+              },
+              "min": 1,
+              "step": 1,
+              "value": 1,
+              "units": {
+                "en": "seconds"
+              }
+            },
+            {
+              "id": "alarm_ringtone",
+              "type": "dropdown",
+              "label": {
+                "en": "Alarm Tone"
+              },
+              "values": [
+                {
+                  "id": "1",
+                  "label": "1"
+                },
+                {
+                  "id": "2",
+                  "label": "2"
+                },
+                {
+                  "id": "3",
+                  "label": "3"
+                },
+                {
+                  "id": "4",
+                  "label": "4"
+                },
+                {
+                  "id": "5",
+                  "label": "5"
+                }
+              ]
+            },
+            {
+              "id": "alarm_bright",
+              "type": "number",
+              "label": {
+                "en": "Alarm Brightness"
+              },
+              "min": 0,
+              "step": 1,
+              "max": 100,
+              "value": 100,
+              "units": "%"
+            }
+          ]
         },
         {
           "id": "deviceSpecification",

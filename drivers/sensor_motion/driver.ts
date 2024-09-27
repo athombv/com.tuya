@@ -1,6 +1,6 @@
 import { DEVICE_CATEGORIES } from '../../lib/TuyaOAuth2Constants';
 import { ListDeviceProperties } from '../../lib/TuyaOAuth2Driver';
-import TuyaOAuth2DriverSensor from '../../lib/TuyaOAuth2DriverSensor';
+import TuyaOAuth2DriverSensor from '../../lib/sensor/TuyaOAuth2DriverSensor';
 import {
   type TuyaDeviceDataPointResponse,
   TuyaDeviceResponse,
