@@ -68,6 +68,11 @@ async function addAlarmSetting(device: TuyaOAuth2DeviceSensor): Promise<void> {
       }
     }
 
+    await device.setStoreValue('tuya_capabilities', [
+      ...device.getStoreValue('tuya_capabilities'),
+      ...foundCapabilities,
+    ]);
+
     device.log('Finished adding alarm settings:', foundCapabilities);
   });
 }
