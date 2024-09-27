@@ -1327,7 +1327,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "sensor_co2|sensor_pm2.5|sensor_smoke",
+              "driver_id": "sensor_co2|sensor_gas|sensor_pm2.5|sensor_smoke",
               "capabilities": "onoff.alarm_switch"
             },
             "title": {
@@ -1346,7 +1346,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "sensor_co2|sensor_pm2.5|sensor_smoke",
+              "driver_id": "sensor_co2|sensor_gas|sensor_pm2.5|sensor_smoke",
               "capabilities": "onoff.alarm_switch"
             },
             "title": {
@@ -1520,7 +1520,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "sensor_co2|sensor_pm2.5|sensor_smoke",
+              "driver_id": "sensor_co2|sensor_gas|sensor_pm2.5|sensor_smoke",
               "capabilities": "hidden.alarm_bright"
             },
             "title": {
@@ -1555,7 +1555,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "sensor_co2|sensor_pm2.5|sensor_smoke",
+              "driver_id": "sensor_co2|sensor_gas|sensor_pm2.5|sensor_smoke",
               "capabilities": "hidden.alarm_ringtone"
             },
             "title": {
@@ -1606,7 +1606,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "sensor_co2|sensor_pm2.5|sensor_smoke",
+              "driver_id": "sensor_co2|sensor_gas|sensor_pm2.5|sensor_smoke",
               "capabilities": "hidden.alarm_time"
             },
             "title": {
@@ -1640,7 +1640,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "sensor_co2|sensor_pm2.5|sensor_smoke",
+              "driver_id": "sensor_co2|sensor_gas|sensor_pm2.5|sensor_smoke",
               "capabilities": "hidden.alarm_volume"
             },
             "title": {
@@ -1695,7 +1695,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "sensor_co2|sensor_pm2.5|sensor_smoke",
+              "driver_id": "sensor_co2|sensor_gas|sensor_pm2.5|sensor_smoke",
               "capabilities": "hidden.muffling"
             },
             "title": {
