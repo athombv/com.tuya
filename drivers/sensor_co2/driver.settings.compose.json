@@ -1,0 +1,14 @@
+[
+  {
+    "$extends": "useAlarmTimeout"
+  },
+  {
+    "$extends": "alarmTimeout"
+  },
+  {
+    "$extends": "sensor_alarm_group"
+  },
+  {
+    "$extends": "deviceSpecification"
+  }
+]
