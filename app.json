@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.tuya",
-  "version": "1.3.5",
+  "version": "1.4.0",
   "compatibility": ">=12.0.1",
   "brandColor": "#FF4800",
   "sdk": 3,
@@ -438,7 +438,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -479,7 +479,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -520,7 +520,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -561,7 +561,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1349,7 +1349,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1387,7 +1387,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1425,7 +1425,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1463,7 +1463,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|curtain|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat"
+              "driver_id": "button|camera|circuit_breaker|dimmer|doorbell|fan|garage_door|heater|irrigator|light|other|sensor_climate|sensor_contact|sensor_human|sensor_motion|sensor_smoke|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -3666,88 +3666,6 @@
               "label": {
                 "en": "1/1000"
               }
-            }
-          ]
-        },
-        {
-          "id": "deviceSpecification",
-          "type": "label",
-          "label": {
-            "en": "Device Specification"
-          },
-          "hint": {
-            "en": "The Tuya specification of this device"
-          },
-          "value": "<not available>"
-        }
-      ]
-    },
-    {
-      "capabilities": [
-        "windowcoverings_state",
-        "windowcoverings_set"
-      ],
-      "connectivity": [
-        "cloud"
-      ],
-      "platforms": [
-        "local",
-        "cloud"
-      ],
-      "images": {
-        "small": "/drivers/curtain/assets/images/small.png",
-        "large": "/drivers/curtain/assets/images/large.png",
-        "xlarge": "/drivers/curtain/assets/images/xlarge.png"
-      },
-      "pair": [
-        {
-          "id": "welcome",
-          "navigation": {
-            "next": "login_oauth2"
-          }
-        },
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2"
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "repair": [
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2"
-        }
-      ],
-      "class": "curtain",
-      "name": {
-        "en": "Curtain",
-        "nl": "Gordijn"
-      },
-      "id": "curtain",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "NOTE: Some settings are not supported by every device."
-          },
-          "children": [
-            {
-              "id": "inverse",
-              "type": "checkbox",
-              "label": {
-                "en": "Inverse direction"
-              },
-              "value": false
             }
           ]
         },
@@ -6565,6 +6483,88 @@
               "label": {
                 "en": "Open Window Detection"
               }
+            }
+          ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
+    },
+    {
+      "capabilities": [
+        "windowcoverings_state",
+        "windowcoverings_set"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/window_coverings/assets/images/small.png",
+        "large": "/drivers/window_coverings/assets/images/large.png",
+        "xlarge": "/drivers/window_coverings/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "windowcoverings",
+      "name": {
+        "en": "Window coverings",
+        "nl": "Raambekleding"
+      },
+      "id": "window_coverings",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "NOTE: Some settings are not supported by every device."
+          },
+          "children": [
+            {
+              "id": "inverse",
+              "type": "checkbox",
+              "label": {
+                "en": "Inverse direction"
+              },
+              "value": false
             }
           ]
         },

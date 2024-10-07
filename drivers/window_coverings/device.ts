@@ -3,13 +3,13 @@ import { getFromMap } from '../../lib/TuyaOAuth2Util';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import { SettingsEvent, TuyaStatus } from '../../types/TuyaTypes';
 import {
-  CURTAIN_CAPABILITY_MAPPING,
-  CURTAIN_SETTING_LABELS,
-  HomeyCurtainSettings,
-  TuyaCurtainSettings,
-} from './TuyaCurtainConstants';
+  WINDOW_COVERINGS_CAPABILITY_MAPPING,
+  WINDOW_COVERINGS_SETTING_LABELS,
+  HomeyWindowCoveringsSettings,
+  TuyaWindowCoveringsSettings,
+} from './TuyaWindowCoveringsConstants';
 
-module.exports = class TuyaOAuth2DeviceCurtain extends TuyaOAuth2Device {
+module.exports = class TuyaOAuth2DeviceWindowCoverings extends TuyaOAuth2Device {
   async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
@@ -50,7 +50,7 @@ module.exports = class TuyaOAuth2DeviceCurtain extends TuyaOAuth2Device {
 
     for (const tuyaCapability in status) {
       const value = status[tuyaCapability];
-      const homeyCapability = getFromMap(CURTAIN_CAPABILITY_MAPPING, tuyaCapability);
+      const homeyCapability = getFromMap(WINDOW_COVERINGS_CAPABILITY_MAPPING, tuyaCapability);
 
       if (['control', 'mach_operate'].includes(tuyaCapability) && homeyCapability) {
         let mappedValue;
@@ -82,8 +82,8 @@ module.exports = class TuyaOAuth2DeviceCurtain extends TuyaOAuth2Device {
     }
   }
 
-  async onSettings(event: SettingsEvent<HomeyCurtainSettings>): Promise<string | void> {
-    const tuyaSettings: SettingsEvent<Partial<TuyaCurtainSettings>> = {
+  async onSettings(event: SettingsEvent<HomeyWindowCoveringsSettings>): Promise<string | void> {
+    const tuyaSettings: SettingsEvent<Partial<TuyaWindowCoveringsSettings>> = {
       newSettings: {},
       oldSettings: {},
       changedKeys: [],
@@ -102,6 +102,6 @@ module.exports = class TuyaOAuth2DeviceCurtain extends TuyaOAuth2Device {
       }
     }
 
-    return TuyaOAuth2Util.onSettings(this, tuyaSettings, CURTAIN_SETTING_LABELS);
+    return TuyaOAuth2Util.onSettings(this, tuyaSettings, WINDOW_COVERINGS_SETTING_LABELS);
   }
 };

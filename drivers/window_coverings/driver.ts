@@ -6,9 +6,9 @@ import {
   TuyaDeviceResponse,
   TuyaDeviceSpecificationResponse,
 } from '../../types/TuyaApiTypes';
-import { CURTAIN_CAPABILITIES, CURTAIN_CAPABILITY_MAPPING } from './TuyaCurtainConstants';
+import { WINDOW_COVERINGS_CAPABILITIES, WINDOW_COVERINGS_CAPABILITY_MAPPING } from './TuyaWindowCoveringsConstants';
 
-module.exports = class TuyaOAuth2DriverCurtain extends TuyaOAuth2Driver {
+module.exports = class TuyaOAuth2DriverWindowCoverings extends TuyaOAuth2Driver {
   TUYA_DEVICE_CATEGORIES = [DEVICE_CATEGORIES.SMALL_HOME_APPLIANCES.CURTAIN] as const;
 
   onTuyaPairListDeviceProperties(
@@ -21,13 +21,13 @@ module.exports = class TuyaOAuth2DriverCurtain extends TuyaOAuth2Driver {
     for (const status of device.status) {
       const tuyaCapability = status.code;
 
-      const homeyCapability = getFromMap(CURTAIN_CAPABILITY_MAPPING, tuyaCapability);
-      if (constIncludes(CURTAIN_CAPABILITIES.read_write, tuyaCapability) && homeyCapability) {
+      const homeyCapability = getFromMap(WINDOW_COVERINGS_CAPABILITY_MAPPING, tuyaCapability);
+      if (constIncludes(WINDOW_COVERINGS_CAPABILITIES.read_write, tuyaCapability) && homeyCapability) {
         props.store.tuya_capabilities.push(tuyaCapability);
         props.capabilities.push(homeyCapability);
       }
 
-      if (constIncludes(CURTAIN_CAPABILITIES.setting, tuyaCapability) || tuyaCapability === 'percent_state') {
+      if (constIncludes(WINDOW_COVERINGS_CAPABILITIES.setting, tuyaCapability) || tuyaCapability === 'percent_state') {
         props.store.tuya_capabilities.push(tuyaCapability);
       }
     }
