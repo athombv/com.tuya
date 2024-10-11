@@ -32,7 +32,11 @@ module.exports = class TuyaOAuth2DriverHuman extends TuyaOAuth2DriverSensor {
   ): ListDeviceProperties {
     const props = super.onTuyaPairListDeviceProperties(device, specifications, dataPoints);
 
-    for (const tuyaCapability in device.status) {
+    props.store._migrations = [...(props.store._migrations ?? []), 'sensor_human_capabilities'];
+
+    for (const status of device.status) {
+      const tuyaCapability = status.code;
+
       if (tuyaCapability === 'presence_state') {
         props.store.tuya_capabilities.push(tuyaCapability);
         props.capabilities.push('alarm_human');
