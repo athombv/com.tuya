@@ -7,7 +7,6 @@ export async function performMigrations(device: TuyaOAuth2DeviceSensor): Promise
   await addBatteryPercentageMigration(device).catch(device.error);
   await addTemperAlarmMigration(device).catch(device.error);
 
-  device.log('device.getClass()', device.driver.id);
   if (device.driver.id === 'sensor_human') {
     await redoHumanPresenceCapabilities(device).catch(device.error);
   }
