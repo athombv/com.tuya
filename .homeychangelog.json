@@ -76,5 +76,8 @@
   },
   "1.4.0": {
     "en": "Add support for new device types: Circuit Breaker, Garage Door Opener, Human Presence Sensor, Thermostat, Water Valve, Window Coverings & Wireless Button. Improved Camera & Doorbell support."
+  },
+  "1.4.1": {
+    "en": "Fix missing human alarm capability for Human Presence Sensor"
   }
 }
