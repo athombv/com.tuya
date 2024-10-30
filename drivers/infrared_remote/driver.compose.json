@@ -1,0 +1,9 @@
+{
+  "$extends": "tuya",
+  "class": "remote",
+  "name": {
+    "en": "Infrared Remote",
+    "nl": "Infrarood Afstandsbediening"
+  },
+  "capabilities": ["on_button", "off_button", "mute_button"]
+}

@@ -10,6 +10,8 @@ import {
   TuyaDeviceResponse,
   TuyaDeviceSpecificationResponse,
   TuyaHome,
+  TuyaIrRemoteKeysResponse,
+  TuyaIrRemoteResponse,
   TuyaScenesResponse,
   TuyaStatusResponse,
   TuyaToken,
@@ -290,6 +292,43 @@ export default class TuyaOAuth2Client extends OAuth2Client<TuyaOAuth2Token> {
       this.log('POST Response', requestId, JSON.stringify(result));
 
       return result;
+    });
+  }
+
+  /*
+   * Infrared
+   */
+  async getRemotes(infraredControllerId: string): Promise<TuyaIrRemoteResponse[]> {
+    return this._get(`/v2.0/infrareds/${infraredControllerId}/remotes`);
+  }
+
+  async getRemoteKeys(infraredControllerId: string, infraredRemoteId: string): Promise<TuyaIrRemoteKeysResponse> {
+    return this._get(`/v2.0/infrareds/${infraredControllerId}/remotes/${infraredRemoteId}/keys`);
+  }
+
+  async sendKeyCommand(
+    infraredControllerId: string,
+    infraredRemoteId: string,
+    categoryId: number,
+    keyId?: number,
+    keyString?: string,
+  ): Promise<boolean> {
+    return this._post(`/v2.0/infrareds/${infraredControllerId}/remotes/${infraredRemoteId}/raw/command`, {
+      category_id: categoryId,
+      key_id: keyId,
+      key: keyString,
+    });
+  }
+
+  async sendAircoCommand(
+    infraredControllerId: string,
+    infraredRemoteId: string,
+    code: string,
+    value: number,
+  ): Promise<boolean> {
+    return this._post(`/v2.0/infrareds/${infraredControllerId}/air-conditioners/${infraredRemoteId}/command`, {
+      code: code,
+      value: value,
     });
   }
 

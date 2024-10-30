@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Mute"
+  },
+  "getable": false,
+  "setable": true,
+  "uiComponent": "button"
+}

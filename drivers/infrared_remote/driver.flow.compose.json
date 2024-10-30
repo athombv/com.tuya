@@ -1,0 +1,50 @@
+{
+  "actions": [
+    {
+      "id": "infrared_remote_press",
+      "title": {
+        "en": "Press button"
+      },
+      "titleFormatted": {
+        "en": "Press [[button]]"
+      },
+      "args": [
+        {
+          "name": "button",
+          "type": "autocomplete",
+          "title": { "en": "Button" }
+        }
+      ]
+    },
+    {
+      "id": "infrared_remote_mute_button",
+      "title": {
+        "en": "Press mute button"
+      },
+      "$filter": "capabilities=mute_button"
+    },
+    {
+      "id": "infrared_remote_power_button",
+      "title": {
+        "en": "Press power button"
+      },
+      "$filter": "capabilities=power_button"
+    },
+    {
+      "id": "infrared_remote_on_button",
+      "title": {
+        "en": "Press on button"
+      },
+      "$filter": "capabilities=on_button"
+    },
+    {
+      "id": "infrared_remote_off_button",
+      "title": {
+        "en": "Press off button"
+      },
+      "$filter": "capabilities=off_button"
+    }
+  ],
+  "conditions": [],
+  "triggers": []
+}
