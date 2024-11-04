@@ -244,7 +244,7 @@ module.exports = class TuyaOAuth2DriverIrController extends OAuth2Driver<TuyaOAu
 
       const tuyaRemoteKeys = remoteKeys !== undefined ? generateKeys(remoteKeys) : [];
 
-      const deviceProperties = {
+      const deviceProperties: OAuth2DeviceResult = {
         capabilities: capabilities,
         store: {
           tuya_capabilities: [],
@@ -265,6 +265,67 @@ module.exports = class TuyaOAuth2DriverIrController extends OAuth2Driver<TuyaOAu
           controllerId: remote.controllerId,
         },
       };
+
+      switch (remoteKeys?.category_id) {
+        case 1:
+        // Set-top box
+        // eslint-disable-next-line no-fallthrough
+        case 3:
+          // Television box
+          deviceProperties.class = 'settopbox';
+          deviceProperties.icon = 'device_classes/set-top-box.svg';
+          break;
+        case 2:
+          // Television
+          deviceProperties.class = 'tv';
+          deviceProperties.icon = 'device_classes/tv.svg';
+          break;
+        case 4:
+          // DVD
+          deviceProperties.class = 'mediaplayer';
+          deviceProperties.icon = 'device_classes/dvd-bluray.svg';
+          break;
+        case 5:
+          // Air conditioner
+          deviceProperties.class = 'airconditioning';
+          deviceProperties.icon = 'device_classes/climate.svg';
+          break;
+        case 6:
+          // Projector
+          deviceProperties.class = 'tv';
+          deviceProperties.icon = 'device_classes/projector.svg';
+          break;
+        case 7:
+          // Speaker
+          deviceProperties.class = 'speaker';
+          deviceProperties.icon = 'device_classes/speaker.svg';
+          break;
+        case 8:
+          // Fan
+          deviceProperties.class = 'fan';
+          deviceProperties.icon = 'device_classes/fan.svg';
+          break;
+        case 9:
+          // Camera
+          deviceProperties.class = 'camera';
+          deviceProperties.icon = 'device_classes/camera.svg';
+          break;
+        case 10:
+          // Light
+          deviceProperties.class = 'light';
+          deviceProperties.icon = 'device_classes/light-bulb2.svg';
+          break;
+        case 11:
+          // Purifier
+          deviceProperties.class = 'airpurifier';
+          deviceProperties.icon = 'device_classes/air-purifier.svg';
+          break;
+        case 12:
+          // Water heater
+          deviceProperties.class = 'kettle';
+          deviceProperties.icon = 'device_classes/kettle.svg';
+          break;
+      }
 
       this.log('Props:', JSON.stringify(deviceProperties));
 
