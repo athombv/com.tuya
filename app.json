@@ -7104,7 +7104,8 @@
       },
       "getable": false,
       "setable": true,
-      "uiComponent": "button"
+      "uiComponent": "button",
+      "icon": "assets/capabilities/button_mute.svg"
     },
     "night_mode": {
       "title": {
@@ -7123,7 +7124,8 @@
       },
       "getable": false,
       "setable": true,
-      "uiComponent": "button"
+      "uiComponent": "button",
+      "icon": "assets/capabilities/button_off.svg"
     },
     "on_button": {
       "type": "boolean",
@@ -7132,7 +7134,8 @@
       },
       "getable": false,
       "setable": true,
-      "uiComponent": "button"
+      "uiComponent": "button",
+      "icon": "assets/capabilities/button_on.svg"
     },
     "open_window_sensor": {
       "type": "boolean",
@@ -7158,7 +7161,8 @@
       },
       "getable": false,
       "setable": true,
-      "uiComponent": "button"
+      "uiComponent": "button",
+      "icon": "assets/capabilities/button_power.svg"
     },
     "ptz_control_horizontal": {
       "type": "enum",
