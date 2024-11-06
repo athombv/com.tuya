@@ -7,7 +7,7 @@ import {
   TuyaDeviceSpecificationResponse,
 } from '../../types/TuyaApiTypes';
 import type { StandardDeviceFlowArgs, StandardFlowArgs } from '../../types/TuyaTypes';
-import TuyaOAuth2DeviceDimmer from './device';
+import type TuyaOAuth2DeviceDimmer from './device';
 import { SIMPLE_DIMMER_CAPABILITIES } from './TuyaDimmerConstants';
 import TRANSLATIONS from './translations.json';
 

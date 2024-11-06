@@ -2456,6 +2456,81 @@
         ]
       },
       {
+        "id": "infrared_remote_press",
+        "title": {
+          "en": "Press button"
+        },
+        "titleFormatted": {
+          "en": "Press [[button]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=infrared_remote"
+          },
+          {
+            "name": "button",
+            "type": "autocomplete",
+            "title": {
+              "en": "Button"
+            }
+          }
+        ]
+      },
+      {
+        "id": "infrared_remote_mute_button",
+        "title": {
+          "en": "Press mute button"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=infrared_remote&capabilities=mute_button"
+          }
+        ]
+      },
+      {
+        "id": "infrared_remote_power_button",
+        "title": {
+          "en": "Press power button"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=infrared_remote&capabilities=power_button"
+          }
+        ]
+      },
+      {
+        "id": "infrared_remote_on_button",
+        "title": {
+          "en": "Press on button"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=infrared_remote&capabilities=on_button"
+          }
+        ]
+      },
+      {
+        "id": "infrared_remote_off_button",
+        "title": {
+          "en": "Press off button"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=infrared_remote&capabilities=off_button"
+          }
+        ]
+      },
+      {
         "id": "light_switch_pir",
         "title": {
           "en": "Set motion detection"
@@ -4544,6 +4619,73 @@
             }
           ]
         },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
+    },
+    {
+      "capabilities": [
+        "on_button",
+        "off_button",
+        "mute_button"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/infrared_remote/assets/images/small.png",
+        "large": "/drivers/infrared_remote/assets/images/large.png",
+        "xlarge": "/drivers/infrared_remote/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "remote",
+      "name": {
+        "en": "Infrared Remote",
+        "nl": "Infrarood Afstandsbediening"
+      },
+      "id": "infrared_remote",
+      "settings": [
         {
           "id": "deviceSpecification",
           "type": "label",
@@ -6955,6 +7097,16 @@
         }
       ]
     },
+    "mute_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Mute"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "assets/capabilities/button_mute.svg"
+    },
     "night_mode": {
       "title": {
         "en": "Night Mode"
@@ -6964,6 +7116,26 @@
       "getable": true,
       "setable": true,
       "icon": "assets/capabilities/sleep_mode.svg"
+    },
+    "off_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Off"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "assets/capabilities/button_off.svg"
+    },
+    "on_button": {
+      "type": "boolean",
+      "title": {
+        "en": "On"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "assets/capabilities/button_on.svg"
     },
     "open_window_sensor": {
       "type": "boolean",
@@ -6981,6 +7153,16 @@
         "en": "Open Window No Longer Detected"
       },
       "icon": "assets/capabilities/open_window.svg"
+    },
+    "power_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Power"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "assets/capabilities/button_power.svg"
     },
     "ptz_control_horizontal": {
       "type": "enum",
