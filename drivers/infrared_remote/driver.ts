@@ -3,7 +3,7 @@ import TuyaOAuth2Client from '../../lib/TuyaOAuth2Client';
 import { TuyaDeviceResponse, TuyaIrRemoteKeysResponse, TuyaIrRemoteResponse } from '../../types/TuyaApiTypes';
 import * as TuyaOAuth2Util from '../../lib/TuyaOAuth2Util';
 import { StandardDeviceFlowArgs } from '../../types/TuyaTypes';
-import TuyaOAuth2DeviceIrController from './device';
+import type TuyaOAuth2DeviceIrController from './device';
 import { ArgumentAutocompleteResults } from 'homey/lib/FlowCard';
 
 type PairingRemote = TuyaIrRemoteResponse & {

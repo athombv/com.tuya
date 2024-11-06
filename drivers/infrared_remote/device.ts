@@ -1,6 +1,6 @@
 import TuyaOAuth2Device from '../../lib/TuyaOAuth2Device';
 
-class TuyaOAuth2DeviceIrController extends TuyaOAuth2Device {
+export default class TuyaOAuth2DeviceIrController extends TuyaOAuth2Device {
   async onOAuth2Init(): Promise<void> {
     await super.onOAuth2Init();
 
@@ -35,5 +35,4 @@ class TuyaOAuth2DeviceIrController extends TuyaOAuth2Device {
   }
 }
 
-export default TuyaOAuth2DeviceIrController;
 module.exports = TuyaOAuth2DeviceIrController;
