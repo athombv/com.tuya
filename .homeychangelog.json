@@ -79,5 +79,8 @@
   },
   "1.4.1": {
     "en": "Fix missing human alarm capability for Human Presence Sensor"
+  },
+  "1.4.2": {
+    "en": "Add broken notice"
   }
 }
