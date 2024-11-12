@@ -1,0 +1,11 @@
+[
+  {
+    "$extends": "useAlarmTimeout"
+  },
+  {
+    "$extends": "alarmTimeout"
+  },
+  {
+    "$extends": "deviceSpecification"
+  }
+]

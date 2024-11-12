@@ -1,0 +1,9 @@
+{
+  "$extends": "tuya",
+  "class": "sensor",
+  "name": {
+    "en": "Vibration Sensor",
+    "nl": "Trillingssensor"
+  },
+  "capabilities": ["alarm_vibration"]
+}

@@ -438,7 +438,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|siren|socket|thermostat|window_coverings"
+              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -479,7 +479,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|siren|socket|thermostat|window_coverings"
+              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -520,7 +520,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|siren|socket|thermostat|window_coverings"
+              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -561,7 +561,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|siren|socket|thermostat|window_coverings"
+              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1371,7 +1371,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|siren|socket|thermostat|window_coverings"
+              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1409,7 +1409,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|siren|socket|thermostat|window_coverings"
+              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1447,7 +1447,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|siren|socket|thermostat|window_coverings"
+              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1485,7 +1485,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|siren|socket|thermostat|window_coverings"
+              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -7313,6 +7313,94 @@
               "units": "%"
             }
           ]
+        },
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        }
+      ]
+    },
+    {
+      "capabilities": [
+        "alarm_vibration"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/sensor_vibration/assets/images/small.png",
+        "large": "/drivers/sensor_vibration/assets/images/large.png",
+        "xlarge": "/drivers/sensor_vibration/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "sensor",
+      "name": {
+        "en": "Vibration Sensor",
+        "nl": "Trillingssensor"
+      },
+      "id": "sensor_vibration",
+      "settings": [
+        {
+          "id": "use_alarm_timeout",
+          "type": "checkbox",
+          "hint": {
+            "en": "Turn the alarm off a set time after the start signal, even if no end signal is received."
+          },
+          "label": {
+            "en": "Use Alarm Timeout"
+          },
+          "value": false
+        },
+        {
+          "id": "alarm_timeout",
+          "type": "number",
+          "label": {
+            "en": "Alarm Timeout"
+          },
+          "value": 10,
+          "min": 1,
+          "units": {
+            "en": "seconds"
+          }
         },
         {
           "id": "deviceSpecification",
