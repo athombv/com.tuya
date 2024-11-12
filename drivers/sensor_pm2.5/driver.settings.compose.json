@@ -1,0 +1,36 @@
+[
+  {
+    "$extends": "scaledProperty",
+    "id": "measure_temperature_scaling",
+    "label": {
+      "en": "Measured Temperature Scale"
+    },
+    "hint": {
+      "en": "By how much the temperature measured by the device is scaled."
+    },
+    "value": "1"
+  },
+  {
+    "$extends": "scaledProperty",
+    "id": "measure_humidity_scaling",
+    "label": {
+      "en": "Measured Humidity Scale"
+    },
+    "hint": {
+      "en": "By how much the humidity measured by the device is scaled."
+    },
+    "value": "1"
+  },
+  {
+    "$extends": "useAlarmTimeout"
+  },
+  {
+    "$extends": "alarmTimeout"
+  },
+  {
+    "$extends": "sensor_alarm_group"
+  },
+  {
+    "$extends": "deviceSpecification"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "$extends": "tuya",
+  "class": "sensor",
+  "name": {
+    "en": "PM2.5 Detector",
+    "nl": "PM2.5 Meter"
+  },
+  "capabilities": ["alarm_pm25", "measure_pm25"]
+}
