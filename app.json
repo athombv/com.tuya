@@ -438,7 +438,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
+              "driver_id": "airco|button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -479,7 +479,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
+              "driver_id": "airco|button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -520,7 +520,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
+              "driver_id": "airco|button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -561,7 +561,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
+              "driver_id": "airco|button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1371,7 +1371,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
+              "driver_id": "airco|button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1409,7 +1409,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
+              "driver_id": "airco|button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1447,7 +1447,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
+              "driver_id": "airco|button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1485,7 +1485,7 @@
             "name": "device",
             "type": "device",
             "filter": {
-              "driver_id": "button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
+              "driver_id": "airco|button|camera|circuit_breaker|dehumidifier|dimmer|doorbell|fan|garage_door|heater|humidifier|irrigator|light|other|sensor_climate|sensor_co2|sensor_contact|sensor_gas|sensor_human|sensor_motion|sensor_pm2.5|sensor_smoke|sensor_vibration|siren|socket|thermostat|window_coverings"
             },
             "title": {
               "en": "Device"
@@ -1729,6 +1729,29 @@
           }
         ],
         "id": "trigger_scene"
+      },
+      {
+        "id": "airco_set_child_lock",
+        "title": {
+          "en": "Set child lock"
+        },
+        "titleFormatted": {
+          "en": "Set child lock [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=airco&capabilities=child_lock"
+          },
+          {
+            "name": "value",
+            "type": "checkbox",
+            "title": {
+              "en": "Value"
+            }
+          }
+        ]
       },
       {
         "id": "camera_cruise_switch",
@@ -3512,6 +3535,221 @@
     ]
   },
   "drivers": [
+    {
+      "capabilities": [
+        "onoff",
+        "target_temperature",
+        "measure_temperature"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/airco/assets/images/small.png",
+        "large": "/drivers/airco/assets/images/large.png",
+        "xlarge": "/drivers/airco/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "welcome",
+          "navigation": {
+            "next": "login_oauth2"
+          }
+        },
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "class": "airconditioning",
+      "name": {
+        "en": "Air Conditioning",
+        "nl": "Airconditioning"
+      },
+      "id": "airco",
+      "settings": [
+        {
+          "id": "deviceSpecification",
+          "type": "label",
+          "label": {
+            "en": "Device Specification"
+          },
+          "hint": {
+            "en": "The Tuya specification of this device"
+          },
+          "value": "<not available>"
+        },
+        {
+          "id": "temp_set_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Target Temperature Scale"
+          },
+          "hint": {
+            "en": "By how much the temperature targeted by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "temp_current_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Measured Temperature Scale"
+          },
+          "hint": {
+            "en": "By how much the temperature measured by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "humidity_set_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Target Humidity Scale"
+          },
+          "hint": {
+            "en": "By how much the humidity targeted by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        },
+        {
+          "id": "humidity_current_scaling",
+          "type": "dropdown",
+          "label": {
+            "en": "Measured Humidity Scale"
+          },
+          "hint": {
+            "en": "By how much the humidity measured by the device is scaled."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1/10"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "1/100"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "1/1000"
+              }
+            }
+          ]
+        }
+      ]
+    },
     {
       "capabilities": [
         "measure_battery"
