@@ -1,0 +1,100 @@
+{
+  "actions": [
+    {
+      "id": "humidifier_onoff.spray_true",
+      "$filter": "capabilities=onoff.spray",
+      "title": {
+        "en": "Turn spray on"
+      }
+    },
+    {
+      "id": "humidifier_onoff.spray_false",
+      "$filter": "capabilities=onoff.spray",
+      "title": {
+        "en": "Turn spray off"
+      }
+    },
+    {
+      "id": "humidifier_onoff.light_true",
+      "$filter": "capabilities=onoff.light",
+      "title": {
+        "en": "Turn light on"
+      }
+    },
+    {
+      "id": "humidifier_onoff.light_false",
+      "$filter": "capabilities=onoff.light",
+      "title": {
+        "en": "Turn light off"
+      }
+    },
+    {
+      "id": "humidifier_night_mode",
+      "$filter": "capabilities=night_mode",
+      "title": {
+        "en": "Set night mode"
+      },
+      "titleFormatted": {
+        "en": "Set night mode to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "checkbox",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "humidifier_enum.spray_mode",
+      "$filter": "capabilities=enum.spray_mode",
+      "title": {
+        "en": "Set spray mode"
+      },
+      "titleFormatted": {
+        "en": "Set spray mode to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "autocomplete",
+          "title": { "en": "Value" }
+        }
+      ]
+    },
+    {
+      "id": "humidifier_enum.spray_level",
+      "$filter": "capabilities=enum.spraylevel",
+      "title": {
+        "en": "Set spray level"
+      },
+      "titleFormatted": {
+        "en": "Set spray level to [[value]]"
+      },
+      "args": [
+        {
+          "name": "value",
+          "type": "autocomplete",
+          "title": { "en": "Value" }
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "humidifier_onoff.spray_is_true",
+      "$filter": "capabilities=onoff.spray",
+      "title": {
+        "en": "Spray is !{{on|off}}"
+      }
+    },
+    {
+      "id": "humidifier_onoff.light_is_true",
+      "$filter": "capabilities=onoff.light",
+      "title": {
+        "en": "Light is !{{on|off}}"
+      }
+    }
+  ],
+  "triggers": []
+}

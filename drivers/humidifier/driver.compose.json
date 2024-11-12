@@ -1,0 +1,126 @@
+{
+  "$extends": "tuya",
+  "class": "humidifier",
+  "name": {
+    "en": "Humidifier",
+    "nl": "Luchtbevochtiger"
+  },
+  "capabilities": ["onoff", "measure_humidity", "target_humidity"],
+  "capabilitiesOptions": {
+    "onoff.spray": {
+      "title": {
+        "en": "Spray"
+      }
+    },
+    "onoff.light": {
+      "title": {
+        "en": "Light"
+      }
+    },
+    "enum.fog_mode": {
+      "title": {
+        "en": "Fog Mode"
+      },
+      "values": [
+        {
+          "id": "large",
+          "title": "Large"
+        },
+        {
+          "id": "middle",
+          "title": "Middle"
+        },
+        {
+          "id": "small",
+          "title": "Small"
+        },
+        {
+          "id": "interval",
+          "title": "Interval"
+        },
+        {
+          "id": "continuous",
+          "title": "Continuous"
+        }
+      ]
+    },
+    "enum.spray_mode": {
+      "title": {
+        "en": "Spray Mode"
+      },
+      "values": [
+        {
+          "id": "auto",
+          "title": "Auto"
+        },
+        {
+          "id": "health",
+          "title": "Health"
+        },
+        {
+          "id": "baby",
+          "title": "Baby"
+        },
+        {
+          "id": "sleep",
+          "title": "Sleep"
+        },
+        {
+          "id": "humidity",
+          "title": "Humidity"
+        },
+        {
+          "id": "work",
+          "title": "Work"
+        }
+      ]
+    },
+    "enum.spray_level": {
+      "title": {
+        "en": "Spray Level"
+      },
+      "values": [
+        {
+          "id": "level_1",
+          "title": "1"
+        },
+        {
+          "id": "level_2",
+          "title": "2"
+        },
+        {
+          "id": "level_3",
+          "title": "3"
+        },
+        {
+          "id": "level_4",
+          "title": "4"
+        },
+        {
+          "id": "level_5",
+          "title": "5"
+        },
+        {
+          "id": "level_6",
+          "title": "6"
+        },
+        {
+          "id": "level_7",
+          "title": "7"
+        },
+        {
+          "id": "level_8",
+          "title": "8"
+        },
+        {
+          "id": "level_9",
+          "title": "9"
+        },
+        {
+          "id": "level_10",
+          "title": "10"
+        }
+      ]
+    }
+  }
+}
