@@ -10,7 +10,7 @@
       "name": "device",
       "type": "device",
       "filter": {
-        "driver_id": "sensor_co2|sensor_pm2.5|sensor_smoke",
+        "driver_id": "sensor_co2|sensor_gas|sensor_pm2.5|sensor_smoke",
         "capabilities": "hidden.alarm_ringtone"
       },
       "title": {
