@@ -1,0 +1,10 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Enum"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "values": []
+}
