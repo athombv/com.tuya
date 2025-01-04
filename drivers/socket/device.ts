@@ -70,6 +70,12 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
 
     await this.safeSetCapabilityValue('onoff', anySwitchOn);
 
+    if (typeof status['add_ele'] === 'number') {
+      const scaling = 10.0 ** parseInt(this.getSetting('energy_scaling') ?? '0');
+      const current = await this.getCapabilityValue('meter_power')
+      await this.safeSetCapabilityValue('meter_power', current + (status['add_ele'] / scaling));
+    }
+
     if (typeof status['cur_power'] === 'number') {
       const scaling = 10.0 ** parseInt(this.getSetting('power_scaling') ?? '0');
       await this.safeSetCapabilityValue('measure_power', status['cur_power'] / scaling);
@@ -141,6 +147,7 @@ export default class TuyaOAuth2DeviceSocket extends TuyaOAuth2Device {
   async onSettings(event: SettingsEvent<HomeySocketSettings>): Promise<string | void> {
     for (const [settingKey, homeyCapability] of [
       ['power_scaling', 'measure_power'],
+      ['energy_scaling', 'meter_power'],
       ['cur_current_scaling', 'measure_current'],
       ['cur_voltage_scaling', 'measure_voltage'],
     ] as const) {

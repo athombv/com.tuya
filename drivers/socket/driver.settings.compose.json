@@ -61,6 +61,16 @@
   },
   {
     "$extends": "scaledProperty",
+    "id": "energy_scaling",
+    "label": {
+      "en": "Energy Measurement Scale"
+    },
+    "hint": {
+      "en": "By how much the energy reported by the device is scaled."
+    }
+  },
+  {
+    "$extends": "scaledProperty",
     "id": "cur_current_scaling",
     "label": {
       "en": "Current Measurement Scale"
