@@ -5,5 +5,5 @@
     "en": "Plug",
     "nl": "Plug"
   },
-  "capabilities": ["onoff", "measure_power"]
+  "capabilities": ["onoff", "measure_power", "meter_power"]
 }

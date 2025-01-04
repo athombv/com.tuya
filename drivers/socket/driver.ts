@@ -160,6 +160,7 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
 
     // Power
     const powerCapabilities = {
+      add_ele: 'meter_power',
       cur_current: 'measure_current',
       cur_power: 'measure_power',
       cur_voltage: 'measure_voltage',
@@ -191,6 +192,14 @@ module.exports = class TuyaOAuth2DriverSocket extends TuyaOAuth2Driver {
           props.settings['power_scaling'] = `${values.scale}`;
         } else {
           this.error('Unsupported power scale:', values.scale);
+        }
+      }
+
+      if (tuyaCapability === 'add_ele') {
+        if ([0, 1, 2, 3].includes(values.scale)) {
+          props.settings['energy_scaling'] = `${values.scale}`;
+        } else {
+          this.error('Unsupported energy scale:', values.scale);
         }
       }
 
