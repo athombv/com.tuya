@@ -1,4 +1,4 @@
-⚠️ The official Tuya App for Homey is currently broken for new users due to Tuya revoking API access. You will get an error saying "No matching app user information". We are working together with Tuya on fixing this issue.
+⚠️ The official Tuya App for Homey is currently broken for new users due to Tuya revoking API access, you will get an error saying "No matching app user information". As there is no sight on a solution at this time, we have stopped working on this app.
 
 Connect any Tuya device with Homey & Homey Pro.
 
